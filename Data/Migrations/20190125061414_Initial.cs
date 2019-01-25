@@ -14,7 +14,7 @@ namespace Shine.Data.Migrations
                 {
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CategoryName = table.Column<string>(nullable: true)
+                    CategoryName = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,9 +45,10 @@ namespace Shine.Data.Migrations
                 {
                     ProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Specification = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
-                    ProductType = table.Column<int>(nullable: false),
+                    ProductType = table.Column<bool>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -67,11 +68,11 @@ namespace Shine.Data.Migrations
                 {
                     PeopleId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Gender = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
+                    Gender = table.Column<string>(maxLength: 5, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
+                    Email = table.Column<string>(maxLength: 50, nullable: true),
                     Telephone = table.Column<string>(nullable: true),
                     Fax = table.Column<string>(nullable: true),
                     PeopleType = table.Column<int>(nullable: false),
@@ -94,20 +95,20 @@ namespace Shine.Data.Migrations
                 {
                     InvoiceId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    InvoiceNumber = table.Column<string>(nullable: true),
-                    DateOfIssue = table.Column<DateTime>(nullable: false),
-                    PaymentDateOne = table.Column<DateTime>(nullable: false),
+                    InvoiceNumber = table.Column<string>(maxLength: 50, nullable: false),
+                    DateOfIssue = table.Column<DateTime>(type: "date", nullable: false),
+                    PaymentDateOne = table.Column<DateTime>(type: "date", nullable: false),
                     PaymentOne = table.Column<decimal>(nullable: false),
-                    PaymentDateTwo = table.Column<DateTime>(nullable: false),
+                    PaymentDateTwo = table.Column<DateTime>(type: "date", nullable: false),
                     PaymentTwo = table.Column<decimal>(nullable: false),
-                    TimeForPayment = table.Column<DateTime>(nullable: false),
-                    InvoiceType = table.Column<int>(nullable: false),
+                    TimeForPayment = table.Column<DateTime>(type: "date", nullable: false),
+                    InvoiceType = table.Column<bool>(nullable: false),
                     PeopleId = table.Column<int>(nullable: false),
-                    LocalInvoiceNumber = table.Column<string>(nullable: true),
-                    LocalDateOfIssue = table.Column<DateTime>(nullable: true),
-                    Currency = table.Column<string>(nullable: true),
-                    RateOne = table.Column<decimal>(nullable: true),
-                    RateTwo = table.Column<decimal>(nullable: true)
+                    LocalInvoiceNumber = table.Column<string>(maxLength: 50, nullable: true),
+                    LocalDateOfIssue = table.Column<DateTime>(type: "date", nullable: true),
+                    Currency = table.Column<string>(maxLength: 10, nullable: true),
+                    RateOne = table.Column<decimal>(type: "decimal(7,2)", nullable: true),
+                    RateTwo = table.Column<decimal>(type: "decimal(7,2)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -117,6 +118,51 @@ namespace Shine.Data.Migrations
                         column: x => x.PeopleId,
                         principalTable: "Peoples",
                         principalColumn: "PeopleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PeopleProducts",
+                columns: table => new
+                {
+                    PeopleId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PeopleProducts", x => new { x.PeopleId, x.ProductId });
+                    table.ForeignKey(
+                        name: "FK_PeopleProducts_Peoples_PeopleId",
+                        column: x => x.PeopleId,
+                        principalTable: "Peoples",
+                        principalColumn: "PeopleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PeopleProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cost",
+                columns: table => new
+                {
+                    CostId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Value = table.Column<decimal>(nullable: false),
+                    InvoiceId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cost", x => x.CostId);
+                    table.ForeignKey(
+                        name: "FK_Cost_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalTable: "Invoices",
+                        principalColumn: "InvoiceId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -154,9 +200,25 @@ namespace Shine.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cost_InvoiceId",
+                table: "Cost",
+                column: "InvoiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_InvoiceNumber",
+                table: "Invoices",
+                column: "InvoiceNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Invoices_PeopleId",
                 table: "Invoices",
                 column: "PeopleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PeopleProducts_ProductId",
+                table: "PeopleProducts",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Peoples_CountryId",
@@ -176,6 +238,12 @@ namespace Shine.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Cost");
+
+            migrationBuilder.DropTable(
+                name: "PeopleProducts");
+
             migrationBuilder.DropTable(
                 name: "ProductInvoices");
 

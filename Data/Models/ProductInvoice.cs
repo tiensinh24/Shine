@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Shine.Data.Models
 {
     public enum ProductInvoiceTypes
@@ -10,7 +12,9 @@ namespace Shine.Data.Models
         public int ProductId { get; set; }
         public int InvoiceId { get; set; }
         public string Specification { get; set; }
+        [Required]
         public decimal Quantity { get; set; }
+        [Required]
         public decimal Price { get; set; }        
         public decimal Tax { get; set; }
         public ProductInvoiceTypes ProductInvoiceType { get; set; }
@@ -25,6 +29,7 @@ namespace Shine.Data.Models
 
     public class ProductInvoiceBuy : ProductInvoice
     {
+        [Required]
         public decimal Rate { get; set; }
         public string Unit { get; set; }
     }

@@ -1,11 +1,8 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shine.Data.Models
-{
-    public enum ProductTypes
-    {
-        Buy, Sell
-    }
+{    
     public abstract class Product
     {
         #region Constructor
@@ -17,9 +14,11 @@ namespace Shine.Data.Models
         
         #region Properties
         public int ProductId { get; set; }
+        [Required]
         public string Name { get; set; }
+        public string Specification { get; set; }
         public decimal Price { get; set; }
-        public ProductTypes ProductType { get; set; }
+        public bool ProductType { get; set; }
 
         #endregion
 
@@ -30,6 +29,7 @@ namespace Shine.Data.Models
         #region Navigation Properties
         public Category Category { get; set; }
         public IEnumerable<ProductInvoice> ProductInvoices { get; set; }
+        public IEnumerable<PeopleProduct> PeopleProducts { get; set; }
         #endregion
     }
 

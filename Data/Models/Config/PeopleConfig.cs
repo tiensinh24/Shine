@@ -16,6 +16,9 @@ namespace Shine.Data.Models.Config
 
             builder.Property(p => p.PeopleType)
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;
+
+            builder.Property(p => p.DateOfBirth)
+                .HasColumnType("date");
         }
     }
 }

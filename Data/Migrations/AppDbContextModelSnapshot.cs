@@ -26,11 +26,34 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CategoryName");
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Shine.Data.Models.Cost", b =>
+                {
+                    b.Property<int>("CostId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InvoiceId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<decimal>("Value");
+
+                    b.HasKey("CostId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("Cost");
                 });
 
             modelBuilder.Entity("Shine.Data.Models.Country", b =>
@@ -62,15 +85,20 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateOfIssue");
+                    b.Property<DateTime>("DateOfIssue")
+                        .HasColumnType("date");
 
-                    b.Property<string>("InvoiceNumber");
+                    b.Property<string>("InvoiceNumber")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<int>("InvoiceType");
+                    b.Property<bool>("InvoiceType");
 
-                    b.Property<DateTime>("PaymentDateOne");
+                    b.Property<DateTime>("PaymentDateOne")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("PaymentDateTwo");
+                    b.Property<DateTime>("PaymentDateTwo")
+                        .HasColumnType("date");
 
                     b.Property<decimal>("PaymentOne");
 
@@ -78,15 +106,19 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("PeopleId");
 
-                    b.Property<DateTime>("TimeForPayment");
+                    b.Property<DateTime>("TimeForPayment")
+                        .HasColumnType("date");
 
                     b.HasKey("InvoiceId");
+
+                    b.HasIndex("InvoiceNumber")
+                        .IsUnique();
 
                     b.HasIndex("PeopleId");
 
                     b.ToTable("Invoices");
 
-                    b.HasDiscriminator<int>("InvoiceType");
+                    b.HasDiscriminator<bool>("InvoiceType");
                 });
 
             modelBuilder.Entity("Shine.Data.Models.People", b =>
@@ -97,17 +129,25 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CountryId");
 
-                    b.Property<DateTime>("DateOfBirth");
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("date");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Fax");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Gender");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(5);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<int>("PeopleType");
 
@@ -122,6 +162,19 @@ namespace Shine.Data.Migrations
                     b.HasDiscriminator<int>("PeopleType");
                 });
 
+            modelBuilder.Entity("Shine.Data.Models.PeopleProduct", b =>
+                {
+                    b.Property<int>("PeopleId");
+
+                    b.Property<int>("ProductId");
+
+                    b.HasKey("PeopleId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("PeopleProducts");
+                });
+
             modelBuilder.Entity("Shine.Data.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -130,11 +183,14 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int>("ProductType");
+                    b.Property<bool>("ProductType");
+
+                    b.Property<string>("Specification");
 
                     b.HasKey("ProductId");
 
@@ -142,7 +198,7 @@ namespace Shine.Data.Migrations
 
                     b.ToTable("Products");
 
-                    b.HasDiscriminator<int>("ProductType");
+                    b.HasDiscriminator<bool>("ProductType");
                 });
 
             modelBuilder.Entity("Shine.Data.Models.ProductInvoice", b =>
@@ -174,24 +230,29 @@ namespace Shine.Data.Migrations
                 {
                     b.HasBaseType("Shine.Data.Models.Invoice");
 
-                    b.Property<DateTime>("LocalDateOfIssue");
+                    b.Property<DateTime>("LocalDateOfIssue")
+                        .HasColumnType("date");
 
-                    b.Property<string>("LocalInvoiceNumber");
+                    b.Property<string>("LocalInvoiceNumber")
+                        .HasMaxLength(50);
 
-                    b.HasDiscriminator().HasValue(0);
+                    b.HasDiscriminator().HasValue(true);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.SalesInvoice", b =>
                 {
                     b.HasBaseType("Shine.Data.Models.Invoice");
 
-                    b.Property<string>("Currency");
+                    b.Property<string>("Currency")
+                        .HasMaxLength(10);
 
-                    b.Property<decimal>("RateOne");
+                    b.Property<decimal>("RateOne")
+                        .HasColumnType("decimal(7,2)");
 
-                    b.Property<decimal>("RateTwo");
+                    b.Property<decimal>("RateTwo")
+                        .HasColumnType("decimal(7,2)");
 
-                    b.HasDiscriminator().HasValue(1);
+                    b.HasDiscriminator().HasValue(false);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.Customer", b =>
@@ -226,14 +287,14 @@ namespace Shine.Data.Migrations
                 {
                     b.HasBaseType("Shine.Data.Models.Product");
 
-                    b.HasDiscriminator().HasValue(0);
+                    b.HasDiscriminator().HasValue(true);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.ProductSell", b =>
                 {
                     b.HasBaseType("Shine.Data.Models.Product");
 
-                    b.HasDiscriminator().HasValue(1);
+                    b.HasDiscriminator().HasValue(false);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.ProductInvoiceBuy", b =>
@@ -258,6 +319,14 @@ namespace Shine.Data.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
+            modelBuilder.Entity("Shine.Data.Models.Cost", b =>
+                {
+                    b.HasOne("Shine.Data.Models.Invoice", "Invoice")
+                        .WithMany("Costs")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Shine.Data.Models.Invoice", b =>
                 {
                     b.HasOne("Shine.Data.Models.People", "People")
@@ -271,6 +340,19 @@ namespace Shine.Data.Migrations
                     b.HasOne("Shine.Data.Models.Country", "Country")
                         .WithMany("Peoples")
                         .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Shine.Data.Models.PeopleProduct", b =>
+                {
+                    b.HasOne("Shine.Data.Models.People", "People")
+                        .WithMany("PeopleProducts")
+                        .HasForeignKey("PeopleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Shine.Data.Models.Product", "Product")
+                        .WithMany("PeopleProducts")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

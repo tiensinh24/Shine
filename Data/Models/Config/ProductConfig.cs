@@ -9,8 +9,8 @@ namespace Shine.Data.Models.Config
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasDiscriminator(p => p.ProductType)
-                .HasValue<ProductBuy>(ProductTypes.Buy)
-                .HasValue<ProductSell>(ProductTypes.Sell);
+                .HasValue<ProductBuy>(true)
+                .HasValue<ProductSell>(false);
             
             builder.Property(p => p.ProductType)
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;
