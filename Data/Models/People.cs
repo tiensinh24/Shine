@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 namespace Shine.Data.Models
 {
     public enum PeopleTypes
-        {
-            User, Customer, Supplier, Employee
-        }
+    {
+        User = 0, Customer = 1, Supplier = 2, Employee = 3
+    }
 
     public abstract class People
     {

@@ -13,6 +13,7 @@ namespace Shine.Data
         }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Cost> Costs { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<People> Peoples { get; set; }

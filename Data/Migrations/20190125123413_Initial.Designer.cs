@@ -11,7 +11,7 @@ using Shine.Data.Models;
 namespace Shine.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190125061414_Initial")]
+    [Migration("20190125123413_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

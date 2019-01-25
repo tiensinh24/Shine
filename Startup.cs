@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shine.Data;
+using Shine.Data.Infrastructures.Interfaces;
+using Shine.Data.Infrastructures.Repositories;
 
 namespace Shine
 {
@@ -16,7 +18,6 @@ namespace Shine
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -64,7 +65,7 @@ namespace Shine
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            
+
             // UseCors must before UseMvc
             app.UseCors("AllowAll");
 
