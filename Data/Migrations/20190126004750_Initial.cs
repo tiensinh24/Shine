@@ -146,7 +146,7 @@ namespace Shine.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cost",
+                name: "Costs",
                 columns: table => new
                 {
                     CostId = table.Column<int>(nullable: false)
@@ -157,9 +157,9 @@ namespace Shine.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cost", x => x.CostId);
+                    table.PrimaryKey("PK_Costs", x => x.CostId);
                     table.ForeignKey(
-                        name: "FK_Cost_Invoices_InvoiceId",
+                        name: "FK_Costs_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
                         principalColumn: "InvoiceId",
@@ -200,8 +200,8 @@ namespace Shine.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cost_InvoiceId",
-                table: "Cost",
+                name: "IX_Costs_InvoiceId",
+                table: "Costs",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
@@ -239,7 +239,7 @@ namespace Shine.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cost");
+                name: "Costs");
 
             migrationBuilder.DropTable(
                 name: "PeopleProducts");

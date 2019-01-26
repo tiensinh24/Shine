@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shine.Data.Models
 {
-    public class Cost
+    public class Cost : BaseEntity
     {
         #region Properties
         public int CostId { get; set; }

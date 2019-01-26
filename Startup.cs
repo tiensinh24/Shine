@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Shine.Data;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
@@ -24,7 +26,17 @@ namespace Shine
         public void ConfigureServices(IServiceCollection services)
 
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options => 
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });               
+            
+            services.AddScoped<ProductRepository>();
+            services.AddScoped<CategoryRepository>();
+            services.AddScoped<RepositoryFactory>();
+
 
             services.AddDbContext<AppDbContext>(options =>
             {

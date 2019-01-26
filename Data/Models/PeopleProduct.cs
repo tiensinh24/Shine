@@ -1,6 +1,6 @@
 namespace Shine.Data.Models
 {
-    public class PeopleProduct
+    public class PeopleProduct : BaseEntity
     {
         #region Properties
         public int PeopleId { get; set; }

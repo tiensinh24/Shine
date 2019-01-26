@@ -11,7 +11,7 @@ using Shine.Data.Models;
 namespace Shine.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190125123413_Initial")]
+    [Migration("20190126004750_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace Shine.Data.Migrations
 
                     b.HasIndex("InvoiceId");
 
-                    b.ToTable("Cost");
+                    b.ToTable("Costs");
                 });
 
             modelBuilder.Entity("Shine.Data.Models.Country", b =>

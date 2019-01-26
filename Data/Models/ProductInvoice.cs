@@ -1,12 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Shine.Data.Models
-{
-    public enum ProductInvoiceTypes
-    {
-        Buy, Sell
-    }
-    public abstract class ProductInvoice
+{    
+    public abstract class ProductInvoice : BaseEntity
     {
         #region Properties        
         public int ProductId { get; set; }
@@ -15,9 +11,9 @@ namespace Shine.Data.Models
         [Required]
         public decimal Quantity { get; set; }
         [Required]
-        public decimal Price { get; set; }        
+        public decimal Price { get; set; }
         public decimal Tax { get; set; }
-        public ProductInvoiceTypes ProductInvoiceType { get; set; }
+        public bool ProductInvoiceType { get; set; }
 
         #endregion
 

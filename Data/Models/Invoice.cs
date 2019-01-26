@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shine.Data.Models
 {    
-    public abstract class Invoice
+    public abstract class Invoice : BaseEntity
     {
         #region Properties
         public int InvoiceId { get; set; }

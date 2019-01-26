@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Shine.Data.Models
 {
-    public class Country
+    public class Country : BaseEntity
     {
         #region Properties
         public int CountryId { get; set; }        

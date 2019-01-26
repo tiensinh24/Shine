@@ -3,15 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shine.Data.Models
 {    
-    public abstract class Product
-    {
-        #region Constructor
-        public Product()
-        {
-            
-        }
-        #endregion
-        
+    public abstract class Product : BaseEntity
+    {        
         #region Properties
         public int ProductId { get; set; }
         [Required]

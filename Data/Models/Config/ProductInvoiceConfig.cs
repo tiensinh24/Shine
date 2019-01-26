@@ -11,8 +11,8 @@ namespace Shine.Data.Models.Config
             builder.HasKey(pi => new {pi.ProductId, pi.InvoiceId});
 
             builder.HasDiscriminator(pi => pi.ProductInvoiceType)
-                .HasValue<ProductInvoiceBuy>(ProductInvoiceTypes.Buy)
-                .HasValue<ProductInvoiceSell>(ProductInvoiceTypes.Sell);
+                .HasValue<ProductInvoiceBuy>(true)
+                .HasValue<ProductInvoiceSell>(false);
 
             builder.Property(pi => pi.ProductInvoiceType)
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;

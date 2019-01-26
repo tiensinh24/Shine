@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shine.Data.Models
 {
-    public class Category
+    public class Category : BaseEntity
     {
         #region Properties
         public int CategoryId { get; set; }

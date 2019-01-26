@@ -9,7 +9,7 @@ namespace Shine.Data.Models
         User = 0, Customer = 1, Supplier = 2, Employee = 3
     }
 
-    public abstract class People
+    public abstract class People : BaseEntity
     {
         #region Properties
         public int PeopleId { get; set; }
