@@ -13,11 +13,6 @@ namespace Shine.Data.Infrastructures.Repositories
             this._serviceProvider = serviceProvider;
         }
 
-        public void GetAllServices()
-        {
-            GetProductRepository();
-        }
-
         public ProductRepository GetProductRepository()
         {
             return _serviceProvider.GetService<ProductRepository>();

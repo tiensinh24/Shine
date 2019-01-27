@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
 {
-    public class Category : BaseEntity
+    public class Category : IAuditedEntityBase, ISoftDelete
     {
         #region Properties
         public int CategoryId { get; set; }

@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
 {    
-    public abstract class Invoice : BaseEntity
+    public abstract class Order : IAuditedEntityBase, ISoftDelete
     {
         #region Properties
-        public int InvoiceId { get; set; }
+        public int OrderId { get; set; }
         [Required]
         [MaxLength(50)]
-        public string InvoiceNumber { get; set; }
+        public string OrderNumber { get; set; }
         [Required]
         public DateTime DateOfIssue { get; set; }
         public DateTime PaymentDateOne { get; set; }
@@ -20,28 +21,28 @@ namespace Shine.Data.Models
         public DateTime PaymentDateTwo { get; set; }
         public decimal PaymentTwo { get; set; }        
         public DateTime TimeForPayment { get; set; }
-        public bool InvoiceType { get; set; }
+        public bool OrderType { get; set; }
         #endregion
 
         #region FK
-        public int PeopleId { get; set; }
+        public string UserId { get; set; }
         #endregion
 
         #region Navigation Properties
-        public People People { get; set; }
-        public IEnumerable<ProductInvoice> ProductInvoices { get; set; }
+        public User User { get; set; }
+        public IEnumerable<ProductOrder> ProductOrders { get; set; }
         public IEnumerable<Cost> Costs { get; set; }
         #endregion
     }
 
-    public class  PurchasesInvoice : Invoice
+    public class  BuyOrder : Order
     {
         [MaxLength(50)]
-        public string LocalInvoiceNumber { get; set; }
+        public string LocalOrderNumber { get; set; }
         public DateTime LocalDateOfIssue { get; set; }
     }
 
-    public class SalesInvoice : Invoice
+    public class SellOrder : Order
     {
         [MaxLength(10)]
         public string Currency { get; set; }        

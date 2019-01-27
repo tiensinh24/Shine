@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,6 +15,13 @@ namespace Shine.Data.Models.Config
             
             builder.Property(p => p.ProductType)
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;
+
+            #region Shadow Properties
+            builder.Property<DateTime>("CreatedAt").HasColumnType("date");
+            builder.Property<string>("CreatedBy");
+            builder.Property<DateTime>("LastUpdatedAt").HasColumnType("date");
+            builder.Property<string>("LastUpdatedBy");            
+            #endregion
         }
     }
 }

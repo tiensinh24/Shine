@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
 {
-    public class Country : BaseEntity
+    public class Country : IAuditedEntityBase, ISoftDelete
     {
         #region Properties
         public int CountryId { get; set; }        
@@ -15,7 +16,7 @@ namespace Shine.Data.Models
         #endregion
 
         #region Navigation Properties
-        public IEnumerable<People> Peoples { get; set; }
+        public IEnumerable<User> Peoples { get; set; }
         #endregion
     }
 }

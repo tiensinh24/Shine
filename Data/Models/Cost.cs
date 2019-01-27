@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
 {
-    public class Cost : BaseEntity
+    public class Cost : IAuditedEntityBase, ISoftDelete
     {
         #region Properties
         public int CostId { get; set; }
@@ -18,7 +19,7 @@ namespace Shine.Data.Models
         #endregion
 
         #region Navigation Properties
-        public Invoice Invoice { get; set; }
+        public Order Invoice { get; set; }
         #endregion
     }
 }

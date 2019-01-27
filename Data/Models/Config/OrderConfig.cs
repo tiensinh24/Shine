@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Shine.Data.Models.Config
 {
-    public class InvoiceConfig : IEntityTypeConfiguration<Invoice>
+    public class OrderConfig : IEntityTypeConfiguration<Order>
     {
-        public void Configure(EntityTypeBuilder<Invoice> builder)
+        public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.HasDiscriminator(i => i.InvoiceType)
-                .HasValue<PurchasesInvoice>(true)
-                .HasValue<SalesInvoice>(false);
+            builder.HasDiscriminator(i => i.OrderType)
+                .HasValue<BuyOrder>(true)
+                .HasValue<SellOrder>(false);
 
-            builder.Property(i => i.InvoiceType)
+            builder.Property(i => i.OrderType)
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;
 
             builder.Property(i => i.DateOfIssue)
@@ -24,23 +24,23 @@ namespace Shine.Data.Models.Config
             builder.Property(i => i.TimeForPayment)
                 .HasColumnType("date");
 
-            builder.HasIndex(i => i.InvoiceNumber).IsUnique();
+            builder.HasIndex(i => i.OrderNumber).IsUnique();
             
         }
     }
 
-    public class PurchasesInvoiceConfig : IEntityTypeConfiguration<PurchasesInvoice>
+    public class PurchasesInvoiceConfig : IEntityTypeConfiguration<BuyOrder>
     {
-        public void Configure(EntityTypeBuilder<PurchasesInvoice> builder)
+        public void Configure(EntityTypeBuilder<BuyOrder> builder)
         {
             builder.Property(bi => bi.LocalDateOfIssue)
                 .HasColumnType("date");
         }
     }
 
-    public class SalesInvoiceConfig : IEntityTypeConfiguration<SalesInvoice>
+    public class SalesInvoiceConfig : IEntityTypeConfiguration<SellOrder>
     {
-        public void Configure(EntityTypeBuilder<SalesInvoice> builder)
+        public void Configure(EntityTypeBuilder<SellOrder> builder)
         {
             builder.Property(si => si.RateOne)
                 .HasColumnType("decimal(7,2)");

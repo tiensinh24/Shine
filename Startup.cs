@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,8 @@ using Newtonsoft.Json;
 using Shine.Data;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
+using Shine.Data.Models;
+using Shine.Data.Models.Interfaces;
 
 namespace Shine
 {
@@ -26,22 +30,35 @@ namespace Shine
         public void ConfigureServices(IServiceCollection services)
 
         {
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options => 
+                .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });               
-            
+                });
+
+            // Add EF support for SqlServer
+            services.AddEntityFrameworkSqlServer();
+
+            // Add ASP.NET Identity support
+            services.AddIdentity<IdentityUser, IdentityRole>(opts =>
+            {
+                opts.Password.RequireDigit = true;
+                opts.Password.RequireLowercase = true;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequiredLength = 7;
+            }).AddEntityFrameworkStores<AppDbContext>();
+
             services.AddScoped<ProductRepository>();
             services.AddScoped<CategoryRepository>();
-            services.AddScoped<RepositoryFactory>();
+            services.AddScoped<RepositoryFactory>();            
 
-
+            // TODO: Using AddDbContextPool for performent
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            });           
 
             services.AddCors(options =>
             {
