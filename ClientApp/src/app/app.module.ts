@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -13,6 +12,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AppMaterialModule } from './app-material.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LogInComponent } from './log-in/log-in.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -30,13 +30,9 @@ import { LogInComponent } from './log-in/log-in.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ]),
     BrowserAnimationsModule,
     AppMaterialModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

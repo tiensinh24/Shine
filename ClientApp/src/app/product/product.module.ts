@@ -6,6 +6,7 @@ import { ProductHomeComponent } from './product-home/product-home.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { MatPaginatorModule, MatSortModule, MatFormFieldModule, MatTableModule, MatInputModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,12 @@ import { ProductListComponent } from './product-list/product-list.component';
   ],
   imports: [
     CommonModule,
-    ProductRoutingModule
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ProductRoutingModule,
   ]
 })
 export class ProductModule { }
