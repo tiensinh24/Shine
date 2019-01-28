@@ -25,8 +25,8 @@ namespace Shine.Data
         public DbSet<Cost> Costs { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserProduct> UserProducts { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<PersonProduct> PersonProducts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductOrder> ProductOrders { get; set; }
 
@@ -34,10 +34,10 @@ namespace Shine.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OrderConfig());
-            modelBuilder.ApplyConfiguration(new PurchasesInvoiceConfig());
-            modelBuilder.ApplyConfiguration(new SalesInvoiceConfig());
-            modelBuilder.ApplyConfiguration(new UserConfig());
-            modelBuilder.ApplyConfiguration(new UserProductConfig());
+            modelBuilder.ApplyConfiguration(new BuyOrderConfig());
+            modelBuilder.ApplyConfiguration(new SellOrderConfig());
+            modelBuilder.ApplyConfiguration(new PersonConfig());
+            modelBuilder.ApplyConfiguration(new PersonProductConfig());
             modelBuilder.ApplyConfiguration(new ProductConfig());
             modelBuilder.ApplyConfiguration(new ProductOrderConfig());
 

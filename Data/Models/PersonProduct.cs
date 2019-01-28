@@ -2,15 +2,15 @@ using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
 {
-    public class UserProduct : IAuditedEntityBase, ISoftDelete
+    public class PersonProduct : IAuditedEntityBase, ISoftDelete
     {
         #region Properties
-        public int UserId { get; set; }
+        public int PersonId { get; set; }
         public int ProductId { get; set; }
         #endregion
 
         #region Navigation Properties
-        public User User { get; set; }
+        public Person Person { get; set; }
         public Product Product { get; set; }
         #endregion
     }

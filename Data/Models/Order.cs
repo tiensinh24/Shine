@@ -25,11 +25,11 @@ namespace Shine.Data.Models
         #endregion
 
         #region FK
-        public string UserId { get; set; }
+        public string PersonId { get; set; }
         #endregion
 
         #region Navigation Properties
-        public User User { get; set; }
+        public Person Person { get; set; }
         public IEnumerable<ProductOrder> ProductOrders { get; set; }
         public IEnumerable<Cost> Costs { get; set; }
         #endregion

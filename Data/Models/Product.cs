@@ -23,7 +23,7 @@ namespace Shine.Data.Models
         #region Navigation Properties
         public Category Category { get; set; }
         public IEnumerable<ProductOrder> ProductOrder { get; set; }
-        public IEnumerable<UserProduct> UserProducts { get; set; }
+        public IEnumerable<PersonProduct> UserProducts { get; set; }
         #endregion
     }
 

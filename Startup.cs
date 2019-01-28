@@ -49,13 +49,14 @@ namespace Shine
                 opts.Password.RequireNonAlphanumeric = false;
                 opts.Password.RequiredLength = 7;
             }).AddEntityFrameworkStores<AppDbContext>();
-
+            
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ProductRepository>();
             services.AddScoped<CategoryRepository>();
-            services.AddScoped<RepositoryFactory>();            
+            // services.AddScoped<RepositoryFactory>();
 
-            // TODO: Using AddDbContextPool for performent
-            services.AddDbContext<AppDbContext>(options =>
+            // Using AddDbContextPool for performences
+            services.AddDbContextPool<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });           

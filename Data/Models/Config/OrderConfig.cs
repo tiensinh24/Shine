@@ -29,7 +29,7 @@ namespace Shine.Data.Models.Config
         }
     }
 
-    public class PurchasesInvoiceConfig : IEntityTypeConfiguration<BuyOrder>
+    public class BuyOrderConfig : IEntityTypeConfiguration<BuyOrder>
     {
         public void Configure(EntityTypeBuilder<BuyOrder> builder)
         {
@@ -38,7 +38,7 @@ namespace Shine.Data.Models.Config
         }
     }
 
-    public class SalesInvoiceConfig : IEntityTypeConfiguration<SellOrder>
+    public class SellOrderConfig : IEntityTypeConfiguration<SellOrder>
     {
         public void Configure(EntityTypeBuilder<SellOrder> builder)
         {

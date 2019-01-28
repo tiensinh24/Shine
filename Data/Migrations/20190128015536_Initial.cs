@@ -205,13 +205,9 @@ namespace Shine.Data.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     ProductType = table.Column<bool>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "date", nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedById = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "date", nullable: false),
-                    LastUpdatedBy = table.Column<string>(nullable: true),
                     ModifiedById = table.Column<int>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
                 },
@@ -227,12 +223,14 @@ namespace Shine.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Persons",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false)
+                    PersonId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Gender = table.Column<string>(maxLength: 5, nullable: false),
+                    PersonType = table.Column<int>(nullable: false),
+                    PersonNumber = table.Column<string>(nullable: true),
+                    Gender = table.Column<bool>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
@@ -247,9 +245,9 @@ namespace Shine.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Persons", x => x.PersonId);
                     table.ForeignKey(
-                        name: "FK_Users_Countries_CountryId",
+                        name: "FK_Persons_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
                         principalColumn: "CountryId",
@@ -270,8 +268,8 @@ namespace Shine.Data.Migrations
                     PaymentTwo = table.Column<decimal>(nullable: false),
                     TimeForPayment = table.Column<DateTime>(type: "date", nullable: false),
                     OrderType = table.Column<bool>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    UserId1 = table.Column<int>(nullable: true),
+                    PersonId = table.Column<string>(nullable: true),
+                    PersonId1 = table.Column<int>(nullable: true),
                     CreatedById = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -287,18 +285,18 @@ namespace Shine.Data.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
+                        name: "FK_Orders_Persons_PersonId1",
+                        column: x => x.PersonId1,
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserProducts",
+                name: "PersonProducts",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
+                    PersonId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     CreatedById = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
@@ -308,18 +306,18 @@ namespace Shine.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProducts", x => new { x.UserId, x.ProductId });
+                    table.PrimaryKey("PK_PersonProducts", x => new { x.PersonId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_UserProducts_Products_ProductId",
+                        name: "FK_PersonProducts_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserProducts_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -438,9 +436,19 @@ namespace Shine.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId1",
+                name: "IX_Orders_PersonId1",
                 table: "Orders",
-                column: "UserId1");
+                column: "PersonId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonProducts_ProductId",
+                table: "PersonProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Persons_CountryId",
+                table: "Persons",
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductOrders_OrderId",
@@ -451,16 +459,6 @@ namespace Shine.Data.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProducts_ProductId",
-                table: "UserProducts",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_CountryId",
-                table: "Users",
-                column: "CountryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -484,10 +482,10 @@ namespace Shine.Data.Migrations
                 name: "Costs");
 
             migrationBuilder.DropTable(
-                name: "ProductOrders");
+                name: "PersonProducts");
 
             migrationBuilder.DropTable(
-                name: "UserProducts");
+                name: "ProductOrders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -502,7 +500,7 @@ namespace Shine.Data.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Categories");

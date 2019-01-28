@@ -34,7 +34,7 @@ namespace Shine.Controllers
         public Product AddProduct([FromBody]Product product)
         {  
             _repository.Add(product);
-            _repository.Save();
+            _repository.Commit();
             return product;
         }
     }

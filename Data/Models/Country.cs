@@ -16,7 +16,7 @@ namespace Shine.Data.Models
         #endregion
 
         #region Navigation Properties
-        public IEnumerable<User> Peoples { get; set; }
+        public IEnumerable<Person> Peoples { get; set; }
         #endregion
     }
 }
