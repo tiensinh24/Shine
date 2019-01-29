@@ -12,11 +12,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class CategoryEditComponent implements OnInit {
   category: Category;
 
-  formGroup = new FormGroup({
-    categoryId: new FormControl(''),
-    categoryName: new FormControl('', Validators.required)
-  });
-
   constructor(private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute) {
 
@@ -26,7 +21,7 @@ export class CategoryEditComponent implements OnInit {
   ngOnInit() {
     const id = this.activatedRoute.params['id'];
 
-    this.categoryService.getCategory(2).subscribe(result => {
+    this.categoryService.getCategory(id).subscribe(result => {
       this.category = result;
     }, error => console.log(error));
   }

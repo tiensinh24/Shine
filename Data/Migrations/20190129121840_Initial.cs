@@ -54,10 +54,10 @@ namespace Shine.Data.Migrations
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryName = table.Column<string>(maxLength: 100, nullable: false),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
                 },
                 constraints: table =>
@@ -77,10 +77,10 @@ namespace Shine.Data.Migrations
                     TwoLetterCountryCode = table.Column<string>(nullable: true),
                     ThreeLetterCountryCode = table.Column<string>(nullable: true),
                     CountryNumber = table.Column<int>(nullable: false),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
                 },
                 constraints: table =>
@@ -205,10 +205,10 @@ namespace Shine.Data.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     ProductType = table.Column<bool>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
                 },
                 constraints: table =>
@@ -237,10 +237,10 @@ namespace Shine.Data.Migrations
                     Telephone = table.Column<string>(nullable: true),
                     Fax = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: false),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
                 },
                 constraints: table =>
@@ -270,10 +270,10 @@ namespace Shine.Data.Migrations
                     OrderType = table.Column<bool>(nullable: false),
                     PersonId = table.Column<string>(nullable: true),
                     PersonId1 = table.Column<int>(nullable: true),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
                     LocalOrderNumber = table.Column<string>(maxLength: 50, nullable: true),
                     LocalDateOfIssue = table.Column<DateTime>(type: "date", nullable: true),
@@ -298,10 +298,10 @@ namespace Shine.Data.Migrations
                 {
                     PersonId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
                 },
                 constraints: table =>
@@ -330,10 +330,10 @@ namespace Shine.Data.Migrations
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Value = table.Column<decimal>(nullable: false),
                     InvoiceId = table.Column<int>(nullable: false),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
                 },
                 constraints: table =>
@@ -358,10 +358,10 @@ namespace Shine.Data.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     Tax = table.Column<decimal>(nullable: false),
                     ProductOrderType = table.Column<bool>(nullable: false),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<int>(nullable: false, defaultValueSql: "0"),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
                     Rate = table.Column<decimal>(nullable: true),
                     Unit = table.Column<string>(nullable: true),

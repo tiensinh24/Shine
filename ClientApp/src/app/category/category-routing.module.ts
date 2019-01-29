@@ -8,8 +8,8 @@ const routes: Routes = [
     path: '', component: CategoryComponent, pathMatch: 'full', children:
       [
         { path: '', redirectTo: '/category/home', pathMatch: 'full' },
-        { path: 'home', component: CategoryEditComponent },
-        { path: 'edit/2', component: CategoryEditComponent }
+        { path: 'home', component: CategoryComponent },
+        { path: 'edit/:id', component: CategoryEditComponent }
       ]
   }
 ];

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ProductService } from '../_services/product.service';
-import { Product } from '../_interfaces/product';
+import { ProductSell } from '../_interfaces/product-sell';
 import { CategoryService } from 'src/app/category/_services/category.service';
 import { Category } from 'src/app/category/_interfaces/category';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { ProductBuy } from '../_interfaces/product-buy';
 
 @Component({
   selector: 'app-product-edit',
@@ -13,39 +14,42 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./product-edit.component.css']
 })
 export class ProductEditComponent implements OnInit {
-  product: Product;
+  product: ProductSell;
   categories: Category[];
 
-  formGroup = new FormGroup({
-    name: new FormControl(''),
-    specification: new FormControl(''),
-    price: new FormControl(''),
-    productType: new FormControl(''),
-    categoryId: new FormControl('')
+  formGroup = this.fb.group({
+    name: [''],
+    specification: [''],
+    price: [0],
+    categoryId: [0]
   });
 
-  constructor(private productService: ProductService,
+  constructor(private fb: FormBuilder,
+    private productService: ProductService,
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute) {
 
     this.ngOnInit();
   }
 
-
   ngOnInit() {
     const id = this.activatedRoute.params['id'];
 
-    this.productService.getProduct(2).subscribe(result => {
+    this.productService.getProductBuy(id).subscribe(result => {
       this.product = result;
-    }, error => console.error(error));
+    }, error => console.log(error));
 
     this.categoryService.getCategories().subscribe(result => {
       this.categories = result;
-    }, error => console.error(error));
+    }, error => console.log(error));
   }
 
-  onSubmit(product: Product) {
-    this.productService.onSubmit(product);
+  onSubmitSell(productSell: ProductSell) {
+    this.productService.onSubmitSell(productSell);
+  }
+
+  onSubmitBuy() {
+    this.productService.onSubmitBuy(this.formGroup.value);
   }
 
 }

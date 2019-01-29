@@ -53,6 +53,7 @@ namespace Shine
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ProductRepository>();
             services.AddScoped<CategoryRepository>();
+            
             // services.AddScoped<RepositoryFactory>();
 
             // Using AddDbContextPool for performences

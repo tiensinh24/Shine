@@ -191,15 +191,21 @@ namespace Shine.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -216,7 +222,9 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -224,9 +232,13 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("InvoiceId");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -259,15 +271,21 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CountryNumber");
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -288,7 +306,9 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -297,9 +317,13 @@ namespace Shine.Data.Migrations
                     b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("date");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -348,7 +372,9 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CountryId");
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -365,13 +391,17 @@ namespace Shine.Data.Migrations
 
                     b.Property<bool>("Gender");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -398,15 +428,21 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("ProductId");
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -427,15 +463,21 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -465,15 +507,21 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<int>("CreatedById");
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
-                    b.Property<int>("ModifiedById");
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()

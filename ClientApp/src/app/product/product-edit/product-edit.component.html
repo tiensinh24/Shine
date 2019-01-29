@@ -1,48 +1,24 @@
-<mat-card fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+<form fxLayout="column" [formGroup]="formGroup"
+    (ngSubmit)="onSubmitBuy()">
   <mat-form-field>
-    <input matInput placeholder="Product Name" value="{{product.name}}">
+    <input matInput placeholder="Product Name" formControlName="name">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Specification" value="{{product.specification}}">
+    <input matInput placeholder="Specification" formControlName="specification">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Price" value="{{product.price}}">
+    <input matInput placeholder="Price" formControlName="price">
   </mat-form-field>
-
-  <mat-form-field>    
-      <mat-select value="{{product.productType}}" placeholder="Product Type">
-          <mat-option value="true">Buy</mat-option>
-          <mat-option value="false">Sell</mat-option>
-      </mat-select>
-    </mat-form-field>  
-
-  <mat-form-field>    
-    <mat-select value="{{product.categoryId}}" placeholder="Category">
-        <mat-option *ngFor="let category of categories" value="{{category.categoryId}}">
-          {{category.categoryName}}
-        </mat-option>      
+  
+  <mat-form-field>
+    <mat-select placeholder="Category" formControlName="categoryId">
+      <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+        {{category.categoryName}}
+      </mat-option>
     </mat-select>
-  </mat-form-field>  
-  
-</mat-card>
+  </mat-form-field>
 
-
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-
-    <label>
-      CategoryId:
-      <input type="text" formControlName="categoryId">
-    </label>
-  
-    <label>
-      Category Name:
-      <input type="text" formControlName="categoryName">
-    </label>
-  
-    <button type="submit" [disabled]="!formGroup.valid">Submit</button>
-  
-  </form>
-
-
+  <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+</form>

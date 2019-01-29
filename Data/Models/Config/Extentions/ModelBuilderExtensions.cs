@@ -49,7 +49,7 @@ namespace Shine.Data.Models.Config.Extentions
         public static void SetIsDeletedShadowProperty<T>(ModelBuilder builder) where T : class, ISoftDelete
         {
             // define shadow property
-            builder.Entity<T>().Property<bool>("IsDeleted");
+            builder.Entity<T>().Property<bool>("IsDeleted").HasDefaultValueSql("0");
         }
 
         // public static void SetTenantShadowProperty<T>(ModelBuilder builder) where T : class, ITenant
@@ -65,8 +65,8 @@ namespace Shine.Data.Models.Config.Extentions
             // define shadow properties
             builder.Entity<T>().Property<DateTime>("CreatedOn").HasDefaultValueSql("GetUtcDate()");
             builder.Entity<T>().Property<DateTime>("ModifiedOn").HasDefaultValueSql("GetUtcDate()");
-            builder.Entity<T>().Property<int>("CreatedById");
-            builder.Entity<T>().Property<int>("ModifiedById");
+            builder.Entity<T>().Property<int>("CreatedById").HasDefaultValueSql("0");
+            builder.Entity<T>().Property<int>("ModifiedById").HasDefaultValueSql("0");
             // define FKs to User
             // builder.Entity<T>().HasOne<User>().WithMany().HasForeignKey("CreatedBy").OnDelete(DeleteBehavior.Restrict);
             // builder.Entity<T>().HasOne<User>().WithMany().HasForeignKey("ModifiedBy").OnDelete(DeleteBehavior.Restrict);
