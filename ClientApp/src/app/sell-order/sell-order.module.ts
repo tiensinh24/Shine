@@ -6,13 +6,15 @@ import { SellOrderHomeComponent } from './sell-order-home/sell-order-home.compon
 import { SellOrderDetailComponent } from './sell-order-detail/sell-order-detail.component';
 import { SellOrderEditComponent } from './sell-order-edit/sell-order-edit.component';
 import { SellOrderListComponent } from './sell-order-list/sell-order-list.component';
+import { SellOrderComponent } from './sell-order.component';
 
 @NgModule({
   declarations: [
     SellOrderHomeComponent,
     SellOrderDetailComponent,
     SellOrderEditComponent,
-    SellOrderListComponent
+    SellOrderListComponent,
+    SellOrderComponent
   ],
   imports: [
     CommonModule,

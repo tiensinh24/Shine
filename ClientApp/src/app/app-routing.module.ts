@@ -4,24 +4,21 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LogInComponent } from './log-in/log-in.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { CounterComponent } from './counter/counter.component';
 
 // Lazy-load child routes (good)
 const routes: Routes = [
-    // { path: 'login', component: LogInComponent },
-    // { path: 'login/:redirectUrl', component: LogInComponent },
+    { path: 'login', component: LogInComponent },
+    { path: 'login/:redirectUrl', component: LogInComponent },
     { path: 'buy-order', loadChildren: './buy-order/buy-order.module#BuyOrderModule' },
     { path: 'customer', loadChildren: './customer/customer.module#CustomerModule' },
     { path: 'employee', loadChildren: './employee/employee.module#EmployeeModule' },
     { path: 'product', loadChildren: './product/product.module#ProductModule' },
     { path: 'sell-order', loadChildren: './sell-order/sell-order.module#SellOrderModule' },
     { path: 'supplier', loadChildren: './supplier/supplier.module#SupplierModule' },
+    { path: 'category', loadChildren: './category/category.module#CategoryModule' },
     // manager parent
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
-    { path: 'counter', component: CounterComponent },
-    { path: 'fetch-data', component: FetchDataComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shine.Data;
 using Shine.Data.Dto;
 using Shine.Data.Infrastructures.Repositories;
@@ -23,21 +24,18 @@ namespace Shine.Controllers
         [HttpGet]
         public IEnumerable<ProductsDto> GetProducts()
         {
-            var query = _repository.GetAll(p => p.Category);
-            
-            var r = query.Adapt<IEnumerable<ProductsDto>>();
-            return r;
+            return _repository.GetProducts();
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Product> GetProduct(int id)
-        {
-            return _repository.GetByCondition(p => p.ProductId == id, p => p.Category);
+        public Product GetProduct(int id)
+        {            
+            return _repository.GetByCondition(p => p.ProductId == id).FirstOrDefault();
         }
 
         [HttpPost]
         public Product AddProduct([FromBody]Product product)
-        {  
+        {
             _repository.Add(product);
             _repository.Commit();
             return product;

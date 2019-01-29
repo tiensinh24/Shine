@@ -1,7 +1,13 @@
 <mat-toolbar color="primary">
   <span>Shine</span>
-  <span class="fill"></span>  
-  <span [routerLink]="['/home']" routerLinkActive="router-link-active">Home</span>
-  <span [routerLink]="['/customer/list']" routerLinkActive="router-link-active">Customer</span>
-  <span [routerLink]="['/product']" routerLinkActive="router-link-active">Product</span>
+  <span class="fill"></span>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <span [routerLink]="['/home']" routerLinkActive="router-link-active">Home</span>
+    <span [routerLink]="['/customer']" routerLinkActive="router-link-active">Customer</span>
+    <span [routerLink]="['/customer/list']" routerLinkActive="router-link-active">CustomerList</span>
+    <span [routerLink]="['/product']" routerLinkActive="router-link-active">Product</span>
+    <span [routerLink]="['/product/list']" routerLinkActive="router-link-active">ProductList</span>
+    <span [routerLink]="['/product/edit/2']" routerLinkActive="router-link-active">ProductEdit</span>
+    <span [routerLink]="['/category/edit/2']" routerLinkActive="router-link-active">CategoryEdit</span>
+  </div>
 </mat-toolbar>

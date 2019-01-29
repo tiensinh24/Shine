@@ -4,15 +4,16 @@ import { ProductHomeComponent } from './product-home/product-home.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductComponent } from './product.component';
 
 const routes: Routes = [
   {
-    path: '', component: ProductHomeComponent, children:
+    path: '', component: ProductComponent, children:
       [
         { path: '', redirectTo: '/product/home', pathMatch: 'full' },
         { path: 'home', component: ProductHomeComponent },
         { path: 'detail', component: ProductDetailComponent },
-        { path: 'edit', component: ProductEditComponent },
+        { path: 'edit/:id', component: ProductEditComponent },
         { path: 'list', component: ProductListComponent }
       ]
   }

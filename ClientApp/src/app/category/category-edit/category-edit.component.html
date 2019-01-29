@@ -1,0 +1,15 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+
+  <label>
+    CategoryId:
+    <input type="text" formControlName="categoryId">
+  </label>
+
+  <label>
+    Category Name:
+    <input type="text" formControlName="categoryName">
+  </label>
+
+  <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+
+</form>

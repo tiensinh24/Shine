@@ -6,13 +6,15 @@ import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
+import { SupplierComponent } from './supplier.component';
 
 @NgModule({
   declarations: [
     SupplierHomeComponent,
     SupplierDetailComponent,
     SupplierEditComponent,
-    SupplierListComponent
+    SupplierListComponent,
+    SupplierComponent
   ],
   imports: [
     CommonModule,

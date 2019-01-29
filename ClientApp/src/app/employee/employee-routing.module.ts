@@ -4,10 +4,11 @@ import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeComponent } from './employee.component';
 
 const routes: Routes = [
   {
-    path: '', component: EmployeeHomeComponent, children:
+    path: '', component: EmployeeComponent, children:
       [
         { path: '', redirectTo: '/employee/home', pathMatch: 'full' },
         { path: 'home', component: EmployeeHomeComponent },

@@ -4,10 +4,11 @@ import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
+import { SupplierComponent } from './supplier.component';
 
 const routes: Routes = [
   {
-    path: '', component: SupplierHomeComponent, children:
+    path: '', component: SupplierComponent, children:
       [
         { path: '', redirectTo: '/supplier/home', pathMatch: 'full' },
         { path: 'home', component: SupplierHomeComponent },

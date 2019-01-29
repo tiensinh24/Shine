@@ -4,10 +4,11 @@ import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
+import { CustomerComponent } from './customer.component';
 
 const routes: Routes = [
   {
-    path: '', component: CustomerHomeComponent, children:
+    path: '', component: CustomerComponent, children:
       [
         { path: '', redirectTo: '/customer/home', pathMatch: 'full' },
         { path: 'home', component: CustomerHomeComponent },

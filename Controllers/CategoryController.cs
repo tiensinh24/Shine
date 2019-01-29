@@ -21,13 +21,13 @@ namespace Shine.Controllers
         [HttpGet]
         public IEnumerable<Category> GetCategories()
         {
-            return _repository.GetAll(c => c.Products);
+            return _repository.GetAll();
         }
 
         [HttpGet("{id}")]
         public IEnumerable<Category> GetCategory(int id)
         {
-            return _repository.GetByCondition(c => c.CategoryId == id, c => c.Products);
+            return _repository.GetByCondition(c => c.CategoryId == id);
         }
 
 

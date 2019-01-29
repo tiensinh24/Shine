@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Shine.Data.Dto;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
@@ -13,5 +16,20 @@ namespace Shine.Data.Infrastructures.Repositories
         {
             this._context = context;
         }
+
+        public IEnumerable<ProductsDto> GetProducts()
+        {
+            var query = _context.Products.Include(p => p.Category).Select(p => new
+            {
+                p.ProductId,
+                p.Name,
+                p.Specification,
+                p.Price,
+                p.ProductType,
+                p.Category.CategoryName
+            }).AsNoTracking();
+
+            return query.Adapt<IEnumerable<ProductsDto>>();
+        }        
     }
 }

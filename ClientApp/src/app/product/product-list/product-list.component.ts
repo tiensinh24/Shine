@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ProductsDto } from '../_interfaces/productsDto';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { ProductService } from '../_services/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -9,7 +9,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  displayedColumns = ['name', 'specification', 'price', 'productType', 'categoryId'];
+  displayedColumns = ['name', 'specification', 'price', 'productType', 'categoryName'];
   dataSource: MatTableDataSource<ProductsDto> = new MatTableDataSource([]);
   paginator: MatPaginator;
   sort: MatSort;
@@ -23,10 +23,8 @@ export class ProductListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    this.http.get<ProductsDto[]>(this.baseUrl + 'api/product').subscribe(result => {
-      this.dataSource = new MatTableDataSource(result);
-    }, error => console.error(error));
+  constructor(private productService: ProductService) {
+    this.ngOnInit();
   }
 
   applyFilter(filterValue: string) {
@@ -38,6 +36,9 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.productService.getProductList().subscribe(result => {
+      this.dataSource = new MatTableDataSource(result);
+    }, error => console.error(error));
   }
 
 }

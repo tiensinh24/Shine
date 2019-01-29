@@ -6,13 +6,15 @@ import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
+import { CustomerComponent } from './customer.component';
 
 @NgModule({
   declarations: [
     CustomerHomeComponent,
     CustomerDetailComponent,
     CustomerEditComponent,
-    CustomerListComponent
+    CustomerListComponent,
+    CustomerComponent
   ],
   imports: [
     CommonModule,

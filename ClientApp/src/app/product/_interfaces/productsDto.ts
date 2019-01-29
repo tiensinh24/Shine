@@ -1,7 +1,8 @@
 export interface ProductsDto {
+    productId: number;
     name: string;
     specification: string;
     price: number;
     productType: boolean;
-    categoryId: number;
+    categoryName: string;
 }

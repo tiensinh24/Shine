@@ -8,9 +8,8 @@ namespace Shine.Data.Infrastructures.Interfaces
     public interface IRepository<T> where T : class
     {
         #region Sync
-        IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes);
-        IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition,
-            params Expression<Func<T, object>>[] includes);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition);
         void Add(T entity);
         void Update(T entity);
         void Delete(Expression<Func<T, bool>> condition);
@@ -18,9 +17,8 @@ namespace Shine.Data.Infrastructures.Interfaces
         #endregion        
 
         #region Async
-        Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includes);
-        Task<T> GetByIdAsync(Expression<Func<T, bool>> condition,
-            params Expression<Func<T, object>>[] includes);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(Expression<Func<T, bool>> condition);
         
         Task CommitAsync();
         #endregion

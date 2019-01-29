@@ -4,10 +4,11 @@ import { SellOrderHomeComponent } from './sell-order-home/sell-order-home.compon
 import { SellOrderDetailComponent } from './sell-order-detail/sell-order-detail.component';
 import { SellOrderEditComponent } from './sell-order-edit/sell-order-edit.component';
 import { SellOrderListComponent } from './sell-order-list/sell-order-list.component';
+import { SellOrderComponent } from './sell-order.component';
 
 const routes: Routes = [
   {
-    path: '', component: SellOrderHomeComponent, children:
+    path: '', component: SellOrderComponent, children:
       [
         { path: '', redirectTo: '/sell-order/home', pathMatch: 'full' },
         { path: 'home', component: SellOrderHomeComponent },

@@ -30,24 +30,14 @@ namespace Shine.Data.Infrastructures.Repositories
             _repository.Remove(entity);
         }
 
-        public IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition, params Expression<Func<T, object>>[] includes)
+        public IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition)
         {
-            var query = _repository.AsNoTracking();
-            if (includes != null)
-                if (includes.Length > 0)
-                    foreach (var include in includes)
-                        query = query.Include(include);
-            return query.Where(condition);
+            return _repository.Where(condition);
         }
 
-        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes)
+        public IEnumerable<T> GetAll()
         {
-            var query = _repository.AsNoTracking();
-            if (includes != null)
-                if (includes.Length > 0)
-                    foreach (var include in includes)
-                        query = query.Include(include);
-            return query;
+            return _repository;
         }
 
         public void Update(T entity)
@@ -62,25 +52,14 @@ namespace Shine.Data.Infrastructures.Repositories
         #endregion       
         
         #region Async
-        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
-        {
-            var query = _repository.AsNoTracking().AsQueryable();
-            if (includes != null)
-                if (includes.Length > 0)
-                    foreach (var include in includes)
-                        query = query.Include(include);
-            return await query.ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {            
+            return await _repository.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> condition,
-            params Expression<Func<T, object>>[] includes)
+        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> condition)
         {
-            var query = _repository.AsNoTracking();
-            if (includes != null)
-                if (includes.Length > 0)
-                    foreach (var include in includes)
-                        query = query.Include(include);
-            return await query.Where(condition).FirstOrDefaultAsync();            
+            return await _repository.Where(condition).FirstOrDefaultAsync();
         }
         public async Task CommitAsync()
         {
