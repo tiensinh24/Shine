@@ -12,6 +12,7 @@ import { AppMaterialModule } from './app-material.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NavSideComponent } from './nav-side/nav-side.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
     HomeComponent,
     PageNotFoundComponent,
     LogInComponent,
+    NavSideComponent,
 
   ],
   imports: [

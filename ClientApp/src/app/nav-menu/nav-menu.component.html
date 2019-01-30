@@ -1,12 +1,35 @@
-<mat-toolbar color="primary">
-  <span>Shine</span>
-  <span class="fill"></span>
-  <div fxLayout="row" fxLayoutGap="10px">
-    <span [routerLink]="['/home']" routerLinkActive="router-link-active">Home</span>
-    <span [routerLink]="['/customer']" routerLinkActive="router-link-active">Customer</span>
-    <span [routerLink]="['/customer/list']" routerLinkActive="router-link-active">CustomerList</span>
-    <span [routerLink]="['/product']" routerLinkActive="router-link-active">Product</span>
-    <span [routerLink]="['/product/list']" routerLinkActive="router-link-active">ProductList</span>
-    <span [routerLink]="['/product/create']" routerLinkActive="router-link-active">CreateProduct</span>
-  </div>
-</mat-toolbar>
+<div fxLayout="row">
+  <mat-toolbar color="primary">
+    <button mat-button>Shine</button>
+    <span class="fill"></span>
+    <div fxLayoutGap="10px">
+      <button mat-button [routerLink]="['/home']" routerLinkActive="router-link-active">Home</button>
+      <button mat-button [routerLink]="['/customer']" routerLinkActive="router-link-active">Customer</button>
+      <button mat-button [routerLink]="['/customer/list']" routerLinkActive="router-link-active">CustomerList</button>
+      <button mat-button [routerLink]="['/product']" routerLinkActive="router-link-active">Product</button>
+      <button mat-button [routerLink]="['/product/list']" routerLinkActive="router-link-active">ProductList</button>
+      <button mat-button [routerLink]="['/product/create']" routerLinkActive="router-link-active">CreateProduct</button>
+      <button mat-button [routerLink]="['/category']" routerLinkActive="router-link-active">Category</button>
+      <button mat-button [routerLink]="['/category/create']" routerLinkActive="router-link-active">CreateCategory</button>
+    </div>
+  </mat-toolbar>
+</div>
+
+<!-- 
+<div class="example-container">
+    <mat-toolbar color="primary" class="example-toolbar">
+      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <h1>Responsive App</h1>
+    </mat-toolbar>
+  
+    <mat-sidenav-container>
+      <mat-sidenav #snav [mode]="true ? 'over' : 'side'"
+                   [fixedInViewport]="true" fixedTopGap="56">        
+      </mat-sidenav>
+  
+      <mat-sidenav-content>
+        <p>first</p>
+        <p>second</p>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div> -->

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule, MatFormFieldModule, MatInputModule,
-  MatPaginatorModule, MatSortModule, MatToolbarModule } from '@angular/material';
+  MatPaginatorModule, MatSortModule, MatToolbarModule, MatButtonModule,
+  MatSidenavModule, MatDrawer, MatIconModule, MatNavList } from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -13,6 +14,10 @@ import { MatTableModule, MatFormFieldModule, MatInputModule,
     MatPaginatorModule,
     MatSortModule,
     MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    
   ],
   exports: [
     CommonModule,
@@ -22,6 +27,10 @@ import { MatTableModule, MatFormFieldModule, MatInputModule,
     MatPaginatorModule,
     MatSortModule,
     MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    
   ]
 })
 export class AppMaterialModule { }

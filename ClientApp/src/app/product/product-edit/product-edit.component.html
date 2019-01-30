@@ -1,24 +1,26 @@
-<form fxLayout="column" [formGroup]="formGroup"
-    (ngSubmit)="onSubmitBuy()">
-  <mat-form-field>
-    <input matInput placeholder="Product Name" formControlName="name">
-  </mat-form-field>
+<mat-card>
+  <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmitBuy()">
+    <mat-form-field>
+      <input matInput placeholder="Product Name" formControlName="name">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Specification" formControlName="specification">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Specification" formControlName="specification">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Price" formControlName="price">
-  </mat-form-field>
-  
-  <mat-form-field>
-    <mat-select placeholder="Category" formControlName="categoryId">
-      <mat-option *ngFor="let category of categories" [value]="category.categoryId">
-        {{category.categoryName}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Price" formControlName="price">
+    </mat-form-field>
 
-  <button type="submit" [disabled]="!formGroup.valid">Submit</button>
-</form>
+    <mat-form-field>
+      <mat-select placeholder="Category" formControlName="categoryId">
+        <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+          {{category.categoryName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+  </form>
+
+</mat-card>

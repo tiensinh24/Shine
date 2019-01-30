@@ -21,7 +21,7 @@ export class CategoryService {
     return this.http.get<Category>(this.baseUrl + 'api/category/' + 'id');
   }
 
-  addCategory(category: Category) {
-    this.http.post<Category>(this.baseUrl + 'api/category', category);
+  addCategory(category: Category): Observable<Category> {
+    return this.http.post<Category>(this.baseUrl + 'api/category', category);
   }
 }

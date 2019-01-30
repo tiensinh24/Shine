@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CategoryService } from '../_services/category.service';
 import { Category } from '../_interfaces/category';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-category-edit',
@@ -11,23 +11,31 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class CategoryEditComponent implements OnInit {
   category: Category;
+  formGroup: FormGroup;
 
   constructor(private categoryService: CategoryService,
-    private activatedRoute: ActivatedRoute) {
+    private fb: FormBuilder
+  ) {
 
-      this.ngOnInit();
-    }
-
-  ngOnInit() {
-    const id = this.activatedRoute.params['id'];
-
-    this.categoryService.getCategory(id).subscribe(result => {
-      this.category = result;
-    }, error => console.log(error));
+    this.ngOnInit();
   }
 
-  onSubmit(category: Category) {
-    this.categoryService.addCategory(category);
+  ngOnInit() {
+    this.createForm();
+  }
+
+  createForm() {
+    this.formGroup = this.fb.group({
+      categoryName: []
+    });
+
+  }
+
+  onSubmit() {
+    const tempCategory = <Category>{};
+    tempCategory.categoryName = this.formGroup.value.categoryName;
+
+    this.categoryService.addCategory(tempCategory).subscribe();
   }
 
 }

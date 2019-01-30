@@ -1,3 +1,12 @@
-<p>
-  category-edit works!
-</p>
+<form fxLayout="column" [formGroup]="formGroup"
+    (ngSubmit)="onSubmit()">
+
+  <mat-form-field>
+    <input matInput placeholder="Category Name" formControlName="categoryName">
+  </mat-form-field>
+
+  <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+</form>
+
+<a>Form Value: {{formGroup.value | json}}</a>
+<a>Form Valid: {{formGroup.valid | json}}</a>
