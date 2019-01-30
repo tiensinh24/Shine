@@ -1,5 +1,5 @@
 <mat-card>
-  <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmitBuy()">
+  <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="formGroup" (ngSubmit)="onSubmitBuy()">
     <mat-form-field>
       <input matInput placeholder="Product Name" formControlName="name">
     </mat-form-field>
@@ -17,10 +17,20 @@
         <mat-option *ngFor="let category of categories" [value]="category.categoryId">
           {{category.categoryName}}
         </mat-option>
+        <mat-option>
+
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">
+        Submit
+      </button>
+    </mat-card-actions>
+
   </form>
 
 </mat-card>
+
+<button mat-raised-button (click)="openDialog()">Pick one</button>

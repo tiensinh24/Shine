@@ -1,12 +1,17 @@
-<form fxLayout="column" [formGroup]="formGroup"
-    (ngSubmit)="onSubmit()">
+<h2 mat-dialog-title>Create Category</h2>
+
+<mat-dialog-content fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 
   <mat-form-field>
     <input matInput placeholder="Category Name" formControlName="categoryName">
   </mat-form-field>
 
-  <button type="submit" [disabled]="!formGroup.valid">Submit</button>
-</form>
+  <!-- <button type="submit" [disabled]="!formGroup.valid">Submit</button> -->
 
-<a>Form Value: {{formGroup.value | json}}</a>
-<a>Form Valid: {{formGroup.valid | json}}</a>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Close</button>
+  <button mat-raised-button (click)="save()">Save</button>
+
+</mat-dialog-actions>

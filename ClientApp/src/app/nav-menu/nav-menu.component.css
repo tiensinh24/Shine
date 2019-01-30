@@ -7,3 +7,7 @@ mat-toolbar [routerLinkActive] {
 mat-toolbar {
   margin-bottom: 16px;
 }
+
+.logo {
+  font-size: 18px
+}

@@ -4,7 +4,12 @@
     padding-top: 50px;
   }
 }
-
-div.container {
-  width: 100%;
+.fill {
+  flex: 1 1 auto;
+}
+mat-toolbar [routerLinkActive] {
+  cursor: pointer;
+}
+mat-toolbar {
+  margin-bottom: 16px;
 }

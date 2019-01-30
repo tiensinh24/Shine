@@ -8,9 +8,11 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { MatPaginatorModule, MatSortModule, MatFormFieldModule, MatTableModule,
-  MatInputModule, MatSelectModule, MatOptionModule, MatIconModule, MatCardModule } from '@angular/material';
+  MatInputModule, MatSelectModule, MatOptionModule, MatIconModule,
+  MatCardModule, MatButtonModule, MatDialogModule } from '@angular/material';
 import { ProductComponent } from './product.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CategoryEditComponent } from '../category/category-edit/category-edit.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProductEditComponent,
     ProductListComponent,
     ProductComponent,
+
+    CategoryEditComponent
 
   ],
   imports: [
@@ -33,9 +37,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatOptionModule,
     MatIconModule,
     MatCardModule,
+    MatButtonModule,
     ReactiveFormsModule,
 
+    MatDialogModule,
+
     ProductRoutingModule,
+  ],
+  entryComponents: [
+    CategoryEditComponent
   ]
 })
 export class ProductModule { }
