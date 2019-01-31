@@ -9,5 +9,13 @@ mat-toolbar {
 }
 
 .logo {
-  font-size: 18px
+  font-size: 18px;
+}
+
+mat-sidenav-container.container-main {
+  padding: 20px;
+}
+
+mat-sidenav-content {
+  padding-left: 20px;
 }
