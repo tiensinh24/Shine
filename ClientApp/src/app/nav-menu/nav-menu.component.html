@@ -15,20 +15,27 @@
     <button mat-button [routerLink]="['/home']" routerLinkActive="router-link-active">Home</button>
     <button mat-button [routerLink]="['/customer']" routerLinkActive="router-link-active">Customer</button>
     <button mat-button [routerLink]="['/customer/list']" routerLinkActive="router-link-active">CustomerList</button>
-    <button mat-button [routerLink]="['/product']" routerLinkActive="router-link-active">Product</button>
-    <button mat-button [routerLink]="['/product/list']" routerLinkActive="router-link-active">ProductList</button>
-    <button mat-button [routerLink]="['/product/create']" routerLinkActive="router-link-active">CreateProduct</button>
-    <button mat-button [routerLink]="['/category']" routerLinkActive="router-link-active">Category</button>
-    <button mat-button [routerLink]="['/category/create']" routerLinkActive="router-link-active">CreateCategory</button>
-
+    <button mat-button [routerLink]="['/product-buy']" routerLinkActive="router-link-active">Product</button>
+    <button mat-button [routerLink]="['/product-buy/list']" routerLinkActive="router-link-active">ProductList</button>
+    <button mat-button [routerLink]="['/product-buy/create']" routerLinkActive="router-link-active">CreateProduct</button>
+    
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container class="container-main">
-  <mat-sidenav #drawer mode="side" opened role="navigation">
+  <mat-sidenav #drawer mode="side" opened role="navigation" class="side-nav">
     <mat-nav-list>
-      <a mat-list-item routerLink='/category'>lkj jfkldj kfldj lkfjdl jfl</a>
-      <a mat-list-item routerLink='/product'>Product</a>
-      <a mat-list-item routerLink='/login'>Login</a>
+      <div routerLink='/home' fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon>home</mat-icon>
+        <a mat-list-item>Home</a>
+      </div>
+      <div routerLink='/product' fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon>store</mat-icon>
+        <a mat-list-item>Product</a>
+      </div>
+      <div routerLink='/login' fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon>account_box</mat-icon>
+        <a mat-list-item>Login</a>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

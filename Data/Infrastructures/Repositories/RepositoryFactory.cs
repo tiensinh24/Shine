@@ -13,9 +13,9 @@ namespace Shine.Data.Infrastructures.Repositories
             this._serviceProvider = serviceProvider;
         }
 
-        public ProductRepository GetProductRepository()
+        public ProductBuyRepository GetProductRepository()
         {
-            return _serviceProvider.GetService<ProductRepository>();
+            return _serviceProvider.GetService<ProductBuyRepository>();
         }
     }
 }

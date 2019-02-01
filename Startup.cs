@@ -51,7 +51,8 @@ namespace Shine
             }).AddEntityFrameworkStores<AppDbContext>();
             
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<ProductRepository>();
+            services.AddScoped<ProductBuyRepository>();
+            services.AddScoped<ProductSellRepository>();
             services.AddScoped<CategoryRepository>();
             
             // services.AddScoped<RepositoryFactory>();

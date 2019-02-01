@@ -16,6 +16,10 @@ mat-sidenav-container.container-main {
   padding: 20px;
 }
 
-mat-sidenav-content {
-  padding-left: 20px;
+mat-sidenav.side-nav {
+  padding-right: 20px;
+}
+
+mat-nav-list>div[routerLink] {
+  cursor: pointer;
 }
