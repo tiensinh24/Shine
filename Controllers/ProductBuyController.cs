@@ -34,11 +34,36 @@ namespace Shine.Controllers
         return _repository.GetByCondition(p => p.ProductId == id).FirstOrDefault();
     }
 
-    [HttpPost()]
-    public void AddProduct([FromBody]ProductBuy productBuy)
+    [HttpPost]
+    public ProductBuy AddProduct([FromBody]ProductBuy productBuy)
     {
         _repository.Add(productBuy);
         _repository.Commit();       
+        return productBuy;
+    }
+
+    [HttpPut]
+    public ProductBuy UpdateProduct([FromBody]ProductBuy productBuy)
+    {
+        _repository.Update(productBuy);
+        _repository.Commit();
+        return productBuy;
+    }
+
+    [HttpDelete("{id}")]
+    public bool DeleteProduct([FromRoute] int id)
+    {
+        try
+        {
+            _repository.Delete(p => p.ProductId == id);
+            _repository.Commit();
+            return true;
+        }
+        catch (System.Exception)
+        {
+            return false;
+            throw;
+        }
     }
 
 }

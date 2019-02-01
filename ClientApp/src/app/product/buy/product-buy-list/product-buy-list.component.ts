@@ -41,4 +41,12 @@ export class ProductBuyListComponent implements OnInit {
     }, error => console.error(error));
   }
 
+  onSubmit() {
+    
+  }
+
+  deleteProduct(id: number) {
+    this.productBuyService.deleteProduct(id).subscribe();
+  }
+
 }

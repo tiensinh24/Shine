@@ -31,10 +31,35 @@ namespace Shine.Controllers
         }
 
         [HttpPost]
-        public void AddProduct([FromBody] ProductSell productSell)
+        public ProductSell AddProduct([FromBody] ProductSell productSell)
         {
             _repository.Add(productSell);
             _repository.Commit();
+            return productSell;
+        }
+
+        [HttpPut]
+        public ProductSell UpdateProduct([FromBody] ProductSell productSell)
+        {
+            _repository.Update(productSell);
+            _repository.Commit();
+            return productSell;
+        }
+
+        [HttpDelete("{id}")]
+        public bool Deleteproduct([FromRoute] int id)
+        {
+            try
+            {
+                _repository.Delete(p => p.ProductId == id);
+                _repository.Commit();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+                throw;
+            }
         }
     
     }

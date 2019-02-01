@@ -26,4 +26,12 @@ export class ProductBuyService {
   addProduct(productBuy: ProductBuy): Observable<ProductBuy> {
     return this.http.post<ProductBuy>(this.baseUrl + 'api/product-buy/', productBuy);
   }
+
+  updateProduct(id: number, productBuy: ProductBuy): {
+    this.http.put<ProductBuy>(this.baseUrl + 'api/product-buy/' + 'id', productBuy);
+  }
+
+  deleteProduct(id: number): Observable<ProductBuy> {
+    return this.http.delete<ProductBuy>(this.baseUrl + 'api/product-buy/' + id);
+  }
 }
