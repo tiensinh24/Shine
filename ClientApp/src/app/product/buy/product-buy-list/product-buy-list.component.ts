@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { map, shareReplay, tap, share } from 'rxjs/operators';
 
@@ -22,17 +22,18 @@ export class ProductBuyListComponent implements OnInit {
 
   @ViewChild(MatPaginator) set appPa(paginator: MatPaginator) {
     this.paginator = paginator;
-    this.dataSource.paginator = this.paginator;
+    setTimeout(() => this.dataSource.paginator = this.paginator);
+    // this.dataSource.paginator = this.paginator;
   }
   @ViewChild(MatSort) set appSo(sort: MatSort) {
     this.sort = sort;
-    this.dataSource.sort = this.sort;
+    setTimeout(() => this.dataSource.sort = this.sort);
+    // this.dataSource.sort = this.sort;
   }
 
   constructor(private productBuyService: ProductBuyService,
     private router: Router,
     private route: ActivatedRoute) {
-
   }
 
   applyFilter(filterValue: string) {
@@ -49,16 +50,16 @@ export class ProductBuyListComponent implements OnInit {
 
   getProductList() {
     this.productBuyService.getProductList().subscribe(res => {
-      this.dataSource = new MatTableDataSource(res);
+      this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
     });
   }
 
   onEdit(productBuy: ProductBuy) {
-    this.router.navigate(['product-buy/edit', productBuy.productId])
+    this.router.navigate(['product-buy/edit', productBuy.productId]);
   }
 
-  deleteProduct(id: number) {
-    this.productBuyService.deleteProduct(id);
+  onDelete(productBuy: ProductBuy) {
+    this.productBuyService.deleteProduct(productBuy.productId);
     this.refreshData();
   }
 
