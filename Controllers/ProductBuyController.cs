@@ -30,9 +30,9 @@ namespace Shine.Controllers
         }
 
         [HttpGet("{id}")]
-        public ProductBuy GetProduct(int id)
+        public ProductBuyDto GetProduct(int id)
         {
-            return _repository.GetByCondition(p => p.ProductId == id).FirstOrDefault();
+            return _repository.GetProduct(id);
         }
 
         [HttpPost]

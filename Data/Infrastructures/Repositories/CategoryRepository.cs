@@ -14,17 +14,17 @@ namespace Shine.Data.Infrastructures.Repositories {
             this._context = context;
         }
 
-        public IEnumerable<CategoryListDto> GetCategories () {
+        public IEnumerable<CategoryDto> GetCategories () {
             var query = _context.Categories.Select (c => new
             {
                 c.CategoryId,
                 c.CategoryName
-            }).AsNoTracking ();
+            }).OrderBy(c => c.CategoryName).AsNoTracking ();
 
-            return query.Adapt<IEnumerable<CategoryListDto>> ();
+            return query.Adapt<IEnumerable<CategoryDto>> ();
         }
 
-        public CategoryListDto GetCategory(int id)
+        public CategoryDto GetCategory(int id)
         {
             var query = _context.Categories.Select(c => new
             {
@@ -32,7 +32,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                 c.CategoryName
             }).FirstOrDefault(c => c.CategoryId == id);
 
-            return query.Adapt<CategoryListDto>();
+            return query.Adapt<CategoryDto>();
         }
     }
 }

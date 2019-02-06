@@ -6,7 +6,7 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface ICategoryRepository
     {
-        IEnumerable<CategoryListDto> GetCategories();
-        CategoryListDto GetCategory(int id);
+        IEnumerable<CategoryDto> GetCategories();
+        CategoryDto GetCategory(int id);
     }
 }

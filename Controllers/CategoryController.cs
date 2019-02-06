@@ -22,24 +22,24 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CategoryListDto> GetCategories()
+        public IEnumerable<CategoryDto> GetCategories()
         {
             return _repository.GetCategories();
         }
 
         [HttpGet("{id}")]
-        public CategoryListDto GetCategory(int id)
+        public CategoryDto GetCategory(int id)
         {
             return _repository.GetCategory(id);
         }
 
 
         [HttpPost]
-        public CategoryListDto AddCategory([FromBody]Category category)
+        public CategoryDto AddCategory([FromBody]Category category)
         {
             _repository.Add(category);
             _repository.Commit();
-            return category.Adapt<CategoryListDto>();
+            return category.Adapt<CategoryDto>();
         }
 
         [HttpDelete("{id}")]

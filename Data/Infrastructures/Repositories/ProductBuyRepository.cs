@@ -28,8 +28,20 @@ namespace Shine.Data.Infrastructures.Repositories
                 p.CategoryId,
                 p.Category.CategoryName
             }).AsNoTracking();
-
             return query.Adapt<IEnumerable<ProductBuyListDto>>();
         }        
+
+        public ProductBuyDto GetProduct(int id)
+        {
+            var query = _context.Products.OfType<ProductBuy>().Select(p => new
+            {
+                p.ProductId,
+                p.Name,
+                p.Specification,
+                p.Price,
+                p.CategoryId
+            }).FirstOrDefault();
+            return query.Adapt<ProductBuyDto>();
+        }
     }
 }
