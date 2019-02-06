@@ -19,12 +19,13 @@ namespace Shine.Data.Infrastructures.Repositories
 
         public IEnumerable<ProductBuyListDto> GetProducts()
         {
-            var query = _context.Products.Include(p => p.Category).Select(p => new
+            var query = _context.Products.OfType<ProductBuy>().Include(p => p.Category).Select(p => new
             {
                 p.ProductId,
                 p.Name,
                 p.Specification,
                 p.Price,
+                p.CategoryId,
                 p.Category.CategoryName
             }).AsNoTracking();
 

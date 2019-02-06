@@ -1,3 +1,5 @@
+<h2>{{title}}</h2>
+
 <mat-card>
   <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <mat-form-field>
@@ -24,11 +26,13 @@
     </mat-form-field>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">
+      <button mat-raised-button color="primary" type="submit"
+          [disabled]="!formGroup.valid">
         Submit
       </button>
+      <button mat-raised-button color="primary" [routerLink]="['/product-buy/list']">
+        Cancel
+      </button>
     </mat-card-actions>
-
   </form>
-
 </mat-card>

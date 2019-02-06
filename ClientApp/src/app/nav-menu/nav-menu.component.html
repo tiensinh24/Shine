@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    
+
     <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
@@ -17,25 +17,27 @@
     <button mat-button [routerLink]="['/customer/list']" routerLinkActive="router-link-active">CustomerList</button>
     <button mat-button [routerLink]="['/product-buy']" routerLinkActive="router-link-active">Product</button>
     <button mat-button [routerLink]="['/product-buy/list']" routerLinkActive="router-link-active">ProductList</button>
-    <button mat-button [routerLink]="['/product-buy/create']" routerLinkActive="router-link-active">CreateProduct</button>
-    
+
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container class="container-main">
   <mat-sidenav #drawer mode="side" opened role="navigation" class="side-nav">
     <mat-nav-list>
-      <div routerLink='/home' fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon>home</mat-icon>
-        <a mat-list-item>Home</a>
-      </div>
-      <div routerLink='/product' fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon>store</mat-icon>
-        <a mat-list-item>Product</a>
-      </div>
-      <div routerLink='/login' fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon>account_box</mat-icon>
-        <a mat-list-item>Login</a>
-      </div>
+      <mat-accordion multi="true">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Products
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div routerLink='/product-buy/list' fxLayout="row" fxLayoutAlign="start center">
+            <a mat-list-item>Products List</a>
+          </div>
+          <div routerLink='/product-buy' fxLayout="row" fxLayoutAlign="start center">
+            <a mat-list-item>Product</a>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

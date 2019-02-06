@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { ProductsBuyDto } from '../_interfaces/productsBuyDto';
 import { Observable } from 'rxjs';
-import { ProductSell } from '../../sell/_interfaces/product-sell';
+
+
+import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { environment } from 'src/environments/environment';
+import { shareReplay } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +17,8 @@ export class ProductBuyService {
 
   constructor(private http: HttpClient) { }
 
-  getProductList(): Observable<ProductsBuyDto[]> {
-    return this.http.get<ProductsBuyDto[]>(this.baseUrl + 'api/product-buy/');
+  getProductList(): Observable<ProductBuyListDto[]> {
+    return this.http.get<ProductBuyListDto[]>(this.baseUrl + 'api/product-buy/');
   }
 
   getProduct(id: number): Observable<ProductBuy> {
@@ -27,11 +29,11 @@ export class ProductBuyService {
     return this.http.post<ProductBuy>(this.baseUrl + 'api/product-buy/', productBuy);
   }
 
-  updateProduct(id: number, productBuy: ProductBuy): {
-    this.http.put<ProductBuy>(this.baseUrl + 'api/product-buy/' + 'id', productBuy);
+  updateProduct(productBuy: ProductBuy): Observable<ProductBuy> {
+    return this.http.put<ProductBuy>(this.baseUrl + 'api/product-buy/' + productBuy.productId, productBuy);
   }
 
-  deleteProduct(id: number): Observable<ProductBuy> {
-    return this.http.delete<ProductBuy>(this.baseUrl + 'api/product-buy/' + id);
+  deleteProduct(id: number) {
+    this.http.delete<ProductBuy>(this.baseUrl + 'api/product-buy/' + id).subscribe();
   }
 }

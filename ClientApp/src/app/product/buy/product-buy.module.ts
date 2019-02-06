@@ -6,7 +6,7 @@ import { ProductBuyRoutingModule } from './product-buy-routing.module';
 
 import { MatPaginatorModule, MatSortModule, MatFormFieldModule, MatTableModule,
   MatInputModule, MatSelectModule, MatOptionModule, MatIconModule,
-  MatCardModule, MatButtonModule, MatDialogModule } from '@angular/material';
+  MatCardModule, MatButtonModule, MatDialogModule, MatTooltipModule } from '@angular/material';
 import { ProductBuyComponent } from './product-buy.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategoryEditComponent } from '../../category/category-edit/category-edit.component';
@@ -22,7 +22,6 @@ import { ProductBuyListComponent } from './product-buy-list/product-buy-list.com
     ProductBuyDetailComponent,
     ProductBuyEditComponent,
     ProductBuyListComponent,
-
     CategoryEditComponent
 
   ],
@@ -40,7 +39,7 @@ import { ProductBuyListComponent } from './product-buy-list/product-buy-list.com
     MatCardModule,
     MatButtonModule,
     ReactiveFormsModule,
-
+    MatTooltipModule,
     MatDialogModule,
 
     ProductBuyRoutingModule,

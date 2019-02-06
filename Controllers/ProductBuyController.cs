@@ -17,54 +17,55 @@ namespace Shine.Controllers
     public class ProductBuyController : Controller
     {
         private readonly ProductBuyRepository _repository;        
+
         public ProductBuyController(ProductBuyRepository repository)
-        {            
+        {
             this._repository = repository;
         }
 
-    [HttpGet]
-    public IEnumerable<ProductBuyListDto> GetProducts()
-    {
-        return _repository.GetProducts();
-    }
-
-    [HttpGet("{id}")]
-    public ProductBuy GetProduct(int id)
-    {
-        return _repository.GetByCondition(p => p.ProductId == id).FirstOrDefault();
-    }
-
-    [HttpPost]
-    public ProductBuy AddProduct([FromBody]ProductBuy productBuy)
-    {
-        _repository.Add(productBuy);
-        _repository.Commit();       
-        return productBuy;
-    }
-
-    [HttpPut]
-    public ProductBuy UpdateProduct([FromBody]ProductBuy productBuy)
-    {
-        _repository.Update(productBuy);
-        _repository.Commit();
-        return productBuy;
-    }
-
-    [HttpDelete("{id}")]
-    public bool DeleteProduct([FromRoute] int id)
-    {
-        try
+        [HttpGet]
+        public IEnumerable<ProductBuyListDto> GetProducts()
         {
-            _repository.Delete(p => p.ProductId == id);
+            return _repository.GetProducts();
+        }
+
+        [HttpGet("{id}")]
+        public ProductBuy GetProduct(int id)
+        {
+            return _repository.GetByCondition(p => p.ProductId == id).FirstOrDefault();
+        }
+
+        [HttpPost]
+        public ProductBuy AddProduct([FromBody]ProductBuy productBuy)
+        {
+            _repository.Add(productBuy);
             _repository.Commit();
-            return true;
+            return productBuy;
         }
-        catch (System.Exception)
-        {
-            return false;
-            throw;
-        }
-    }
 
-}
+        [HttpPut]
+        public ProductBuy UpdateProduct([FromBody]ProductBuy productBuy)
+        {
+            _repository.Update(productBuy);
+            _repository.Commit();
+            return productBuy;
+        }
+
+        [HttpDelete("{id}")]
+        public bool DeleteProduct(int id)
+        {
+            try
+            {
+                _repository.Delete(p => p.ProductId == id);
+                _repository.Commit();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
+    }
 }

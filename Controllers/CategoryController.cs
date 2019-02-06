@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data;
+using Shine.Data.Dto.Categories;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
@@ -19,24 +22,24 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Category> GetCategories()
+        public IEnumerable<CategoryListDto> GetCategories()
         {
-            return _repository.GetAll();
+            return _repository.GetCategories();
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Category> GetCategory(int id)
+        public CategoryListDto GetCategory(int id)
         {
-            return _repository.GetByCondition(c => c.CategoryId == id);
+            return _repository.GetCategory(id);
         }
 
 
         [HttpPost]
-        public Category AddCategory([FromBody]Category category)
+        public CategoryListDto AddCategory([FromBody]Category category)
         {
             _repository.Add(category);
             _repository.Commit();
-            return category;
+            return category.Adapt<CategoryListDto>();
         }
 
         [HttpDelete("{id}")]

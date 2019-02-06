@@ -14,10 +14,10 @@ const routes: Routes = [
       [
         { path: '', redirectTo: '/product-buy/home', pathMatch: 'full' },
         { path: 'home', component: ProductBuyHomeComponent },
-        { path: 'detail', component: ProductBuyDetailComponent },
         { path: 'create', component: ProductBuyEditComponent },
-        { path: 'edit/:id', component: ProductBuyEditComponent },
-        { path: 'list', component: ProductBuyListComponent }
+        { path: 'edit/:productId', component: ProductBuyEditComponent },
+        { path: 'list', component: ProductBuyListComponent },
+        { path: ':productId', component: ProductBuyDetailComponent },
       ]
   }
 ];
