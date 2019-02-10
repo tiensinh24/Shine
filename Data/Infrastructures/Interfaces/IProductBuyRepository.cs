@@ -8,7 +8,10 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface IProductBuyRepository
     {         
-         IEnumerable<ProductBuyListDto> GetProducts();
-         ProductBuyDto GetProduct(int id);
+         IEnumerable<ProductBuyListDto> GetProductListDto();
+         ProductBuyDto GetProductDto(int id);
+         void UpdateProduct(ProductBuy productBuy);
+         void DeleteProduct(int id);
+
     }
 }

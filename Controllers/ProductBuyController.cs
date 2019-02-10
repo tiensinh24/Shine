@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shine.Data;
@@ -14,10 +15,10 @@ namespace Shine.Controllers
 {
     [Produces("application/json")]
     [Route("api/product-buy")]
+    [Authorize]
     public class ProductBuyController : Controller
     {
-        private readonly ProductBuyRepository _repository;        
-
+        private readonly ProductBuyRepository _repository;
         public ProductBuyController(ProductBuyRepository repository)
         {
             this._repository = repository;
@@ -26,45 +27,34 @@ namespace Shine.Controllers
         [HttpGet]
         public IEnumerable<ProductBuyListDto> GetProducts()
         {
-            return _repository.GetProducts();
+            return _repository.GetProductListDto();
         }
 
         [HttpGet("{id}")]
         public ProductBuyDto GetProduct(int id)
         {
-            return _repository.GetProduct(id);
+            return _repository.GetProductDto(id);
         }
 
         [HttpPost]
-        public ProductBuy AddProduct([FromBody]ProductBuy productBuy)
+        public void AddProduct([FromBody] ProductBuy productBuy)
         {
             _repository.Add(productBuy);
             _repository.Commit();
-            return productBuy;
         }
 
         [HttpPut]
-        public ProductBuy UpdateProduct([FromBody]ProductBuy productBuy)
+        public void UpdateProduct([FromBody]ProductBuy productBuy)
         {
-            _repository.Update(productBuy);
+            _repository.UpdateProduct(productBuy);
             _repository.Commit();
-            return productBuy;
         }
 
         [HttpDelete("{id}")]
-        public bool DeleteProduct(int id)
+        public void DeleteProduct(int id)
         {
-            try
-            {
-                _repository.Delete(p => p.ProductId == id);
-                _repository.Commit();
-                return true;
-            }
-            catch (System.Exception)
-            {
-                return false;
-                throw;
-            }
+            _repository.DeleteProduct(id);
+            _repository.Commit();
         }
 
     }

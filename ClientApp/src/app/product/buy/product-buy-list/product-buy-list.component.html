@@ -25,12 +25,12 @@
 
     <!-- actions -->
     <ng-container matColumnDef="actions">
-      <mat-header-cell mat-header-cell *matHeaderCellDef>
+      <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
         <button mat-icon-button color="primary" [routerLink]="['/product-buy/create']">
           <mat-icon matTooltip="Create new product" aria-label="Create new product">add</mat-icon>
         </button>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row; let i=index;">
+      <mat-cell *matCellDef="let row">
         <button matTooltip="Edit product" mat-icon-button color="primary" (click)="onEdit(row)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
@@ -41,7 +41,7 @@
       </mat-cell>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let rows; columns: displayedColumns"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

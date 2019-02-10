@@ -5,22 +5,24 @@ using System.Threading.Tasks;
 
 namespace Shine.Data.Infrastructures.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository
     {
-        #region Sync
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition);
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(Expression<Func<T, bool>> condition);
+#region Sync
+        IEnumerable<T> GetAll<T>() where T : class;
+        T GetById<T>(Expression<Func<T, bool>> condition) where T : class;
+        void Add<T>(T entity) where T : class;
+        void Update<T>(T entity) where T : class;
+        void Delete<T>(T entity) where T : class;
         void Commit();
-        #endregion        
+#endregion
 
-        #region Async
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(Expression<Func<T, bool>> condition);
-        
+#region Async
+        Task<IEnumerable<T>> GetAllAsync<T>() where T : class;
+        Task<T> GetByIdAsync<T>(Expression<Func<T, bool>> condition) where T : class;
+        Task AddAsync<T>(T entity) where T : class;
+        Task UpdateAsync<T>(T entity) where T : class;
+        Task DeleteAsync<T>(T entity) where T : class;
         Task CommitAsync();
-        #endregion
+#endregion
     }
 }

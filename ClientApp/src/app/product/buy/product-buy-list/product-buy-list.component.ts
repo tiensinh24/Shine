@@ -60,7 +60,7 @@ export class ProductBuyListComponent implements OnInit {
 
   onDelete(productBuy: ProductBuy) {
     this.productBuyService.deleteProduct(productBuy.productId);
-    this.refreshData();
+    this.getProductList();
   }
 
   refreshData() {

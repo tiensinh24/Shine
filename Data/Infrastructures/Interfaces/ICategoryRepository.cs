@@ -8,5 +8,6 @@ namespace Shine.Data.Infrastructures.Interfaces
     {
         IEnumerable<CategoryDto> GetCategories();
         CategoryDto GetCategory(int id);
+       
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Repositories;
@@ -9,13 +10,13 @@ namespace Shine.Controllers
 {
     [Produces("application/json")]
     [Route("product-sell")]
-    public class ProductSellController : Controller
+    [Authorize]
+    public class ProductSellController
     {
         private readonly ProductSellRepository _repository;
         public ProductSellController(ProductSellRepository repository)
         {
             this._repository = repository;
-
         }
 
         [HttpGet]
@@ -27,7 +28,7 @@ namespace Shine.Controllers
         [HttpGet("{id}")]
         public ProductSell GetProduct(int id)
         {
-            return _repository.GetByCondition(p => p.ProductId == id).FirstOrDefault();
+            return _repository.GetById<ProductSell>(p => p.ProductId == id);
         }
 
         [HttpPost]
@@ -46,19 +47,18 @@ namespace Shine.Controllers
             return productSell;
         }
 
-        [HttpDelete("{id}")]
-        public bool Deleteproduct([FromRoute] int id)
+        [HttpDelete]
+        public bool Deleteproduct([FromBody] ProductSell productSell)
         {
             try
             {
-                _repository.Delete(p => p.ProductId == id);
+                _repository.Delete<ProductSell>(productSell);
                 _repository.Commit();
                 return true;
             }
             catch (System.Exception)
             {
                 return false;
-                throw;
             }
         }
     

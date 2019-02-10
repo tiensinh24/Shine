@@ -16,6 +16,11 @@ mat-sidenav-container.container-main {
   padding: 20px;
 }
 
+.active {
+  background-color: aliceblue;
+  border: none;
+}
+
 mat-sidenav.side-nav {
   padding-right: 20px;
 }

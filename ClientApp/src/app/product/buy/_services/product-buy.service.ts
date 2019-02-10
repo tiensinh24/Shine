@@ -30,7 +30,7 @@ export class ProductBuyService {
   }
 
   updateProduct(productBuy: ProductBuy): Observable<ProductBuy> {
-    return this.http.put<ProductBuy>(this.baseUrl + 'api/product-buy/' + productBuy.productId, productBuy);
+    return this.http.put<ProductBuy>(this.baseUrl + 'api/product-buy/', productBuy);
   }
 
   deleteProduct(id: number) {
