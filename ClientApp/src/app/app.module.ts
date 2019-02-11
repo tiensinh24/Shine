@@ -34,6 +34,9 @@ import { AuthResponseInterceptor } from './auth/_services/auth.response.intercep
     FlexLayoutModule,
     AppRoutingModule,
   ],
+  exports: [
+    AppMaterialModule
+  ],
   providers: [
     AuthService,
     {

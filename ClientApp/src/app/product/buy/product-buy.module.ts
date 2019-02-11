@@ -14,6 +14,7 @@ import { ProductBuyHomeComponent } from './product-buy-home/product-buy-home.com
 import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-detail.component';
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
+import { AppMaterialModule } from 'src/app/app-material.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ProductBuyListComponent } from './product-buy-list/product-buy-list.com
   imports: [
     CommonModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
@@ -38,7 +40,6 @@ import { ProductBuyListComponent } from './product-buy-list/product-buy-list.com
     MatIconModule,
     MatCardModule,
     MatButtonModule,
-    ReactiveFormsModule,
     MatTooltipModule,
     MatDialogModule,
 

@@ -1,6 +1,9 @@
-
 table {
-  width: 100%;
+  width: 98%;
+}
+
+table[mat-table] {
+  margin: 1em;
 }
 
 mat-form-field {
@@ -8,23 +11,6 @@ mat-form-field {
   width: 100%;
 }
 
-.mat-cell:nth-child(1),
-.mat-header-cell:nth-child(1)
-{
-width: 20%;
-}
-.mat-cell:nth-child(2),
-.mat-header-cell:nth-child(2)
-{
-width: 30%;
-}
-.mat-cell:nth-child(3),
-.mat-header-cell:nth-child(3)
-{
-width: 15%;
-}
-.mat-cell:nth-child(4),
-.mat-header-cell:nth-child(4)
-{
-width: 15%;
+tr.mat-footer-row {
+  font-weight: bold;
 }
