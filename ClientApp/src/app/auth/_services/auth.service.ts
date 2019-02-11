@@ -10,16 +10,16 @@ import { TokenResponse } from '../_interfaces/token-response';
   providedIn: 'root'
 })
 export class AuthService {
-  authKey: string = 'auth';
-  clientId: string = "Shine";
+  authKey = 'auth';
+  clientId = 'Shine';
 
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string,
     @Inject(PLATFORM_ID) private platformId: any) { }
 
   login(username: string, password: string): Observable<TokenResponse> {
-    var url = this.baseUrl + 'api/token/auth';
-    var data = {
+    const url = this.baseUrl + 'api/token/auth';
+    const data = {
       username: username,
       password: password,
       clientId: this.clientId,
@@ -29,6 +29,20 @@ export class AuthService {
       scope: 'offline_access profile email'
     };
 
+    return this.getServerAuth(url, data);
+  }
+
+  // Try to refresh token
+  refreshToken(): Observable<boolean> {
+    const url = this.baseUrl + 'api/token/auth';
+    const data = {
+      clientId: this.clientId,
+      // Required when signing up with username/password
+      grantType: 'refresh_token',
+      refreshToken: this.getLocalAuth() !== undefined ? this.getLocalAuth().refreshToken : null,
+      // Space-separated list of scopes for which the token is issued
+      scope: 'offline_access profile email'
+    };
     return this.getServerAuth(url, data);
   }
 

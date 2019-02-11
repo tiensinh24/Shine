@@ -35,7 +35,8 @@ namespace Shine.Controllers
             {
                 case "password":
                     return await _repository.GetTokenAsync(tokenRequestDto);
-
+                case "refresh_token":
+                    return await _repository.RefreshTokenAsync(tokenRequestDto);
                 default:
                     // Not supported - return a HTTP 401 (Unauthorized)
                     return new UnauthorizedResult();

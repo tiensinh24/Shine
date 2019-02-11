@@ -4,5 +4,6 @@ namespace Shine.Data.Dto.Token
     {
         public string Token { get; set; }
         public int Expiration { get; set; }
+        public string RefreshToken { get; set; }
     }
 }

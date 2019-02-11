@@ -14,6 +14,7 @@ import { LogInComponent } from './log-in/log-in.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './auth/_services/auth.service';
 import { AuthInterceptor } from './auth/_services/auth.interceptor';
+import { AuthResponseInterceptor } from './auth/_services/auth.response.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,6 @@ import { AuthInterceptor } from './auth/_services/auth.interceptor';
     HomeComponent,
     PageNotFoundComponent,
     LogInComponent,
-
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,8 +36,17 @@ import { AuthInterceptor } from './auth/_services/auth.interceptor';
   ],
   providers: [
     AuthService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthResponseInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
