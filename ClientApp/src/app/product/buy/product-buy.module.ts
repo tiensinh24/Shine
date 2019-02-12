@@ -42,7 +42,7 @@ import { AppMaterialModule } from 'src/app/app-material.module';
     MatButtonModule,
     MatTooltipModule,
     MatDialogModule,
-
+    
     ProductBuyRoutingModule,
   ],
   entryComponents: [

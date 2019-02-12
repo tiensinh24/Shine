@@ -1,14 +1,14 @@
-table {
-  width: 98%;
+div[fxLayout] {
+  width: 100%;
+}
+
+div.sticky {
+  height: 540px;
+  overflow: auto;
 }
 
 table[mat-table] {
-  margin: 1em;
-}
-
-mat-form-field {
-  font-size: 14px;
-  width: 100%;
+  margin: 1em;  
 }
 
 tr.mat-footer-row {

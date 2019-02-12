@@ -13,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './product-buy-list.component.html',
   styleUrls: ['./product-buy-list.component.css']
 })
-export class ProductBuyListComponent implements OnInit {
+export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['name', 'specification', 'price', 'categoryName', 'actions'];
   dataSource: MatTableDataSource<ProductBuyListDto> = new MatTableDataSource([]);
@@ -48,10 +48,19 @@ export class ProductBuyListComponent implements OnInit {
     this.getProductList();
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
   getProductList() {
     this.productBuyService.getProductList().subscribe(res => {
       this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
     });
+  }
+
+  onDetail(productBuy: ProductBuy) {
+    this.router.navigate(['product-buy', productBuy.productId]);
   }
 
   onEdit(productBuy: ProductBuy) {

@@ -1,50 +1,66 @@
-<h2>Tna Sutra</h2>
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="-10px">
+  <mat-card class="mat-display-1">
+    Tna Sutra
+  </mat-card>
+  <div class="sticky">
+    <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        <td mat-footer-cell *matFooterCellDef> Total </td>
+      </ng-container>
+      <ng-container matColumnDef="specification">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Specification</b> </th>
+        <td mat-cell *matCellDef="let row"> {{row.specification}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Price</b> </th>
+        <td mat-cell *matCellDef="let row"> {{row.price | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{100 | currency}} </td>
+      </ng-container>
+      <ng-container matColumnDef="categoryName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Category</b> </th>
+        <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
+      </ng-container>
 
-<mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-</mat-form-field>
+      <!-- actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
+          <button mat-icon-button color="primary" [routerLink]="['/product-buy/create']">
+            <mat-icon matTooltip="Create new product" aria-label="Create new product">add</mat-icon>
+          </button>
+        </mat-header-cell>
 
-<table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>
-    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-    <td mat-footer-cell *matFooterCellDef> Total </td>
-  </ng-container>
-  <ng-container matColumnDef="specification">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Specification</b> </th>
-    <td mat-cell *matCellDef="let row"> {{row.specification}} </td>
-    <td mat-footer-cell *matFooterCellDef></td>
-  </ng-container>
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Price</b> </th>
-    <td mat-cell *matCellDef="let row"> {{row.price | currency}} </td>
-    <td mat-footer-cell *matFooterCellDef> {{100 | currency}} </td>
-  </ng-container>
-  <ng-container matColumnDef="categoryName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Category</b> </th>
-    <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
-  </ng-container>
+        <mat-cell *matCellDef="let row">
 
-  <!-- actions -->
-  <ng-container matColumnDef="actions">
-    <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
-      <button mat-icon-button color="primary" [routerLink]="['/product-buy/create']">
-        <mat-icon matTooltip="Create new product" aria-label="Create new product">add</mat-icon>
-      </button>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <button matTooltip="Edit product" mat-icon-button color="primary" (click)="onEdit(row)">
-        <mat-icon aria-label="Edit">edit</mat-icon>
-      </button>
+          <button matTooltip="Product detail" mat-icon-button color="primary" (click)="onDetail(row)">
+            <mat-icon aria-label="Detail">dehaze</mat-icon>
+          </button>
 
-      <button matTooltip="Delete product" mat-icon-button color="warn" (click)="onDelete(row)">
-        <mat-icon aria-label="Delete">delete</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
+          <button matTooltip="Edit product" mat-icon-button color="accent" (click)="onEdit(row)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let rows; columns: displayedColumns"></tr>
-  <tr mat-footer-row *matFooterRowDef="['name', 'specification', 'price']"></tr>
-</table>
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+          <button matTooltip="Delete product" mat-icon-button color="warn" (click)="onDelete(row)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+
+        </mat-cell>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let rows; columns: displayedColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="['name', 'specification', 'price']"></tr>
+    </table>
+
+  </div>
+</div>
+
+<!-- Paginator & filter -->
+<div fxLayout="row-reverse">
+  <mat-paginator fxFlex="40" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <mat-form-field fxFlex>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>

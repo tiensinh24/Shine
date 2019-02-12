@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -11,7 +11,8 @@ export class AuthResponseInterceptor implements HttpInterceptor {
     auth: AuthService;
 
     constructor(private injector: Injector,
-        private router: Router) { }
+        private router: Router,
+        private route: ActivatedRoute) { }
 
     intercept(request: HttpRequest<any>,
         next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,11 +32,6 @@ export class AuthResponseInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
                         // Do nothing
                     }
-
-                    // TODO:use event: any => can use
-                    // if (event.status === 401) {
-                    //     this.router.navigate(['login']);
-                    // }
                 }, error => {
                     return this.handleError(error);
                 }));
@@ -55,9 +51,16 @@ export class AuthResponseInterceptor implements HttpInterceptor {
                 this.auth.refreshToken().subscribe(res => {
                     if (res) {
                         // Re-submit the failed request
-                        const http = this.injector.get(HttpClient);
+                        // const http = this.injector.get(HttpClient);
                         // TODO: request but page not refresh
-                        http.request(previousRequest).subscribe();
+                        // http.request(previousRequest).subscribe(response => {
+                        //     if (response) {
+                        //         const url = this.route['_routerState'].snapshot.url;
+                        //         this.router.navigate(['']);
+                        //         this.router.navigate([url]);
+                        //     }
+                        // });
+                        this.router.navigate(['']);
                     } else {
                         // Erase current token
                         this.auth.logout();

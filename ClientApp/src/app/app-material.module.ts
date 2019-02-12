@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MatTableModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
   MatPaginatorModule, MatSortModule, MatToolbarModule, MatButtonModule,
@@ -10,7 +9,6 @@ import {
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
@@ -28,7 +26,6 @@ import {
 
   ],
   exports: [
-    CommonModule,
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,

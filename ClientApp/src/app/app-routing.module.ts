@@ -5,10 +5,11 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LogInComponent } from './log-in/log-in.component';
 
-// Lazy-load child routes (good)
+// Lazy-load child routes
 const routes: Routes = [
     { path: 'login', component: LogInComponent },
     { path: 'login/:redirectUrl', component: LogInComponent },
+    { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
     { path: 'buy-order', loadChildren: './buy-order/buy-order.module#BuyOrderModule' },
     { path: 'customer', loadChildren: './customer/customer.module#CustomerModule' },
     { path: 'employee', loadChildren: './employee/employee.module#EmployeeModule' },

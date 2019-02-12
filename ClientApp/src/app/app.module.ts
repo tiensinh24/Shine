@@ -26,16 +26,15 @@ import { AuthResponseInterceptor } from './auth/_services/auth.response.intercep
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     AppMaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
   ],
   exports: [
-    AppMaterialModule
   ],
   providers: [
     AuthService,
