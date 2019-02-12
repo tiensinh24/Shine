@@ -1,14 +1,11 @@
-div[fxLayout] {
-  width: 100%;
-}
-
 div.sticky {
-  height: 540px;
+  height: 70vh;
   overflow: auto;
 }
 
 table[mat-table] {
   margin: 1em;  
+  width: 98%;
 }
 
 tr.mat-footer-row {

@@ -8,21 +8,9 @@ mat-toolbar {
   margin-bottom: 16px;
 }
 
-.logo {
-  font-size: 18px;
-}
-
-mat-sidenav-container.container-main {
-  padding: 20px;
-}
-
 .active {
   background-color: aliceblue;
   border: none;
-}
-
-mat-sidenav.side-nav {
-  padding-right: 20px;
 }
 
 mat-nav-list>div[routerLink] {
