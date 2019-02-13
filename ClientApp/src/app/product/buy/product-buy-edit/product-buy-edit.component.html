@@ -1,6 +1,8 @@
-<h2>{{title}}</h2>
+<mat-card class="card-title mat-elevation-z8">
+  <span class="mat-headline">{{title}}</span>
+</mat-card>
+<mat-card fxLayout="column" fxLayoutGap="32px" class="mat-elevation-z8">
 
-<mat-card>
   <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input matInput placeholder="Product Name" formControlName="name">
@@ -25,14 +27,15 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit"
-          [disabled]="!formGroup.valid">
+    <mat-card-actions fxLayout="row">
+      <div class="fill"></div>
+      <button fxFlex="15" mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">
         Submit
       </button>
-      <button mat-raised-button color="primary" [routerLink]="['/product-buy/list']">
+      <button fxFlex="15" mat-raised-button color="warn" [routerLink]="['/product-buy/list']">
         Cancel
       </button>
+      <div class="fill"></div>
     </mat-card-actions>
   </form>
 </mat-card>

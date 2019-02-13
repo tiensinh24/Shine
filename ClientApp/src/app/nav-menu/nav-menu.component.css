@@ -8,6 +8,10 @@ mat-toolbar {
   margin-bottom: 16px;
 }
 
+.side-nav {
+  height: 90vh;
+}
+
 .active {
   background-color: aliceblue;
   border: none;

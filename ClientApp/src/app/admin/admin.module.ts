@@ -6,6 +6,7 @@ import { AdminComponent } from './admin.component';
 import { ManagerUserComponent } from './manager-user/manager-user.component';
 import { ManagerRoleComponent } from './manager-role/manager-role.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatTabsModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ManagerRoleComponent,
     DashboardComponent,
   ],
-  imports: [CommonModule, AdminRoutingModule],
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    AdminRoutingModule
+  ],
 })
 export class AdminModule {}

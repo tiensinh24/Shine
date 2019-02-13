@@ -20,8 +20,8 @@
 
   </mat-toolbar-row>
 </mat-toolbar>
-<mat-sidenav-container class="container-main">
-  <mat-sidenav #drawer mode="side" opened role="navigation" class="side-nav">
+<mat-sidenav-container class="side-nav">
+  <mat-sidenav #drawer mode="side" opened role="navigation">
     <mat-nav-list>
       <mat-accordion multi="true">
         <mat-expansion-panel>
@@ -33,10 +33,42 @@
           <div routerLink='/product-buy/list' routerLinkActive="active">
             <a mat-list-item>Products List</a>
           </div>
-          <div routerLink='/login' routerLinkActive="active">
-            <a mat-list-item>Login</a>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Admin
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div routerLink='/admin/manager-user' routerLinkActive="active">
+            <a mat-list-item>Manager User</a>
+          </div>
+          <div routerLink='/admin/manager-role' routerLinkActive="active">
+            <a mat-list-item>Manager Role</a>
           </div>
         </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Logins
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div routerLink='/login' routerLinkActive="active">
+            <a mat-list-item>
+              <mat-icon>account_circle_outlined</mat-icon>
+              Login
+            </a>
+          </div>
+          <div routerLink='' routerLinkActive="active">
+            <a mat-list-item (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>
+              Logout
+            </a>
+          </div>
+        </mat-expansion-panel>
+
       </mat-accordion>
     </mat-nav-list>
   </mat-sidenav>

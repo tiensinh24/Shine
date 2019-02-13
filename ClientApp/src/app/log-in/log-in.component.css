@@ -5,3 +5,7 @@ mat-icon[matSuffix]:hover {
 mat-card {
   margin: 1em;
 }
+
+mat-icon[inline] {
+  font-size: 100px;
+}

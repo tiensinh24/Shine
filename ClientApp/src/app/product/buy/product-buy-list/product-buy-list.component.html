@@ -6,7 +6,7 @@
     <div class="sticky">
       <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>
+          <th color="primary" mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>
           <td mat-cell *matCellDef="let row"> {{row.name}} </td>
           <td mat-footer-cell *matFooterCellDef> Total </td>
         </ng-container>

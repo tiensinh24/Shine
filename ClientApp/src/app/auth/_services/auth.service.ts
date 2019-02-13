@@ -12,6 +12,7 @@ import { TokenResponse } from '../_interfaces/token-response';
 export class AuthService {
   authKey = 'auth';
   clientId = 'Shine';
+  redirectUrl: string;
 
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string,

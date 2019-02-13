@@ -1,24 +1,31 @@
-<mat-card class="mat-elevation-z8">
-  <form [formGroup]="formGroup" (ngSubmit)="login()"
-  fxLayout="column" fxLayoutAlign="center center">
+<form [formGroup]="formGroup" (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+  <mat-card fxLayout="column" fxLayoutAlign="start center" class="mat-elevation-z8">
+    <!-- Card header -->
     <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
+      <mat-card-title fxLayout="column" fxLayoutAlign="start center">
+        <button mat-button color="primary">
+        <span class="mat-headline">Sign in to Your Account</span>
+        </button>
+        <mat-icon inline>account_circle</mat-icon>
+      </mat-card-title>
     </mat-card-header>
-    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+    <!-- Card content -->
+    <mat-card-content fxLayout="column" fxLayoutAlign="start center">
       <mat-form-field>
         <input matInput placeholder="Enter your username" formControlName="username">
+        <mat-icon matSuffix>account_circle</mat-icon>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Enter your password" formControlName="password"
-          [type]="hide ? 'password' : 'text'">
+        <input matInput placeholder="Enter your password" formControlName="password" [type]="hide ? 'password' : 'text'">
         <mat-icon matSuffix (click)="hide = !hide">
           {{hide ? 'visibility_off' : 'visibility'}}
         </mat-icon>
       </mat-form-field>
       <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-content>
+    <!-- Card actions -->
     <mat-card-actions>
       <button mat-raised-button type="submit" color="primary">Login</button>
     </mat-card-actions>
-  </form>
-</mat-card>
+  </mat-card>
+</form>

@@ -1,0 +1,17 @@
+mat-card {
+    margin: 1em;
+}
+
+.mat-card-header {
+    background-color: cornflowerblue;
+}
+
+.card-title {
+    background-color: beige;
+    margin-bottom: -20px;    
+    text-align: center;
+}
+
+.fill {
+    flex: 1 1 auto;
+}
