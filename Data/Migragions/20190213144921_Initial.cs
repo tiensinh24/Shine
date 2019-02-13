@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Shine.Data.Migrations
+namespace Shine.Data.Migragions
 {
     public partial class Initial : Migration
     {

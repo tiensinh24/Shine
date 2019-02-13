@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shine.Data;
 using Shine.Data.Models;
 
-namespace Shine.Data.Migrations
+namespace Shine.Data.Migragions
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190211113143_Initial")]
+    [Migration("20190213144921_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

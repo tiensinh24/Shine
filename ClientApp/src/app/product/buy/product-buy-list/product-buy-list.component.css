@@ -4,8 +4,12 @@ div.sticky {
 }
 
 table[mat-table] {
-  margin: 1em;  
+  margin: 1em;
   width: 98%;
+}
+
+[mat-sort-header] {
+  color: royalblue;
 }
 
 tr.mat-footer-row {
