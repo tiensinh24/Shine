@@ -19,6 +19,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<ProductBuyListDto> = new MatTableDataSource([]);
   paginator: MatPaginator;
   sort: MatSort;
+  title = 'Tna Sutra';
 
   @ViewChild(MatPaginator) set appPa(paginator: MatPaginator) {
     this.paginator = paginator;

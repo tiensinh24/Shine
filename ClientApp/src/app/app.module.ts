@@ -48,6 +48,7 @@ import { AuthResponseInterceptor } from './auth/_services/auth.response.intercep
       useClass: AuthResponseInterceptor,
       multi: true,
     },
+    AppMaterialModule
   ],
   bootstrap: [AppComponent],
 })

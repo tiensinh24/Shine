@@ -1,12 +1,12 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
 
     <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
     <div [routerLink]="['/home']" routerLinkActive="router-link-active">
-      <span><img src="./assets/logo.png"></span>
+      <a><img src="./assets/logo.png"></a>
       <button mat-button>Shine App</button>
     </div>
 

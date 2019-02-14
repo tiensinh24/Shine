@@ -11,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./category-edit.component.css']
 })
 export class CategoryEditComponent implements OnInit {
-  
+  title = 'Create new category';
   category: Category;
   formGroup: FormGroup;
 

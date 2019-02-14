@@ -4,8 +4,10 @@
 <mat-card fxLayout="column" fxLayoutGap="32px" class="mat-elevation-z8">
 
   <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <input matInput placeholder="Product Name" formControlName="name">
+    <mat-form-field appearance="outline">
+      <mat-label>Product Name</mat-label>
+      <input matInput placeholder="Product Name" formControlName="name" required>
+      <mat-error *ngIf="formGroup.controls['name'].invalid">{{getErrorMessage(formGroup.controls['name'])}}</mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -22,7 +24,7 @@
           {{category.categoryName}}
         </mat-option>
         <mat-option>
-          <button mat-raised-button color="primary" (click)="openDialog()">Add New Category</button>
+          <button mat-flat-button color="primary" (click)="openDialog()">Add New Category</button>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -32,7 +34,7 @@
       <button fxFlex="15" mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">
         Submit
       </button>
-      <button fxFlex="15" mat-raised-button color="warn" [routerLink]="['/product-buy/list']">
+      <button fxFlex="15" mat-raised-button color="warn" (click)="onBack()">
         Cancel
       </button>
       <div class="fill"></div>

@@ -10,6 +10,8 @@ import { CategoryService } from 'src/app/category/_services/category.service';
 import { Category } from 'src/app/category/_interfaces/category';
 import { CategoryEditComponent } from 'src/app/category/category-edit/category-edit.component';
 import { ProductBuy } from '../_interfaces/product-buy';
+import { Observable } from 'rxjs';
+import { DialogService } from 'src/app/_services/dialog.service';
 
 @Component({
   selector: 'app-product-buy-edit',
@@ -22,11 +24,13 @@ export class ProductBuyEditComponent implements OnInit {
   categories: Category[];
   formGroup: FormGroup;
   editMode: boolean;
+  actButton:  boolean;
   title: string;
 
   constructor(private fb: FormBuilder,
     private productBuyService: ProductBuyService,
     private categoryService: CategoryService,
+    private dialogService: DialogService,
     private dialog: MatDialog,
     private http: HttpClient,
     private router: Router,
@@ -82,6 +86,8 @@ export class ProductBuyEditComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '400px';
+    dialogConfig.minHeight = '250px';
 
     // TODO: Pass data from main component to dialog
     // use to edit value (product)
@@ -102,6 +108,7 @@ export class ProductBuyEditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.actButton = true;
     const tempProductBuy = <ProductBuy>{};
 
     tempProductBuy.name = this.formGroup.value.name;
@@ -111,19 +118,28 @@ export class ProductBuyEditComponent implements OnInit {
 
     if (this.editMode) {
       tempProductBuy.productId = this.productBuy.productId;
-      this.productBuyService.updateProduct(tempProductBuy).subscribe(res => {
+      this.productBuyService.updateProduct(tempProductBuy).subscribe(() => {
         this.router.navigate(['product-buy/list']);
       });
     } else {
-      this.productBuyService.addProduct(tempProductBuy).subscribe(res => {
+      this.productBuyService.addProduct(tempProductBuy).subscribe(() => {
         this.router.navigate(['/product-buy/list']);
       });
     }
   }
 
   onBack() {
+    this.actButton = true;
     this.router.navigate(['/product-buy/list']);
   }
 
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.actButton) {
+      if (this.formGroup.dirty) {
+        return this.dialogService.confirm('Discard changes?');
+      }
+    }
+    return true;
+  }
 
 }

@@ -94,7 +94,7 @@ namespace Shine
             // Using AddDbContextPool for performences
             services.AddDbContextPool<AppDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_w"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_dk"));
             });
 
             // services.AddDbContextPool<AppDbContext>(options => 
@@ -170,7 +170,7 @@ namespace Shine
                 var userManager = serviceScope.ServiceProvider.GetService<UserManager<IdentityUser>>();
 
                 // Create the Db if it doesn't exist and applies any pending migration
-                dbContext.Database.Migrate();
+                // dbContext.Database.Migrate();
 
                 // Seed the Db
                 DbSeeder.Seed(dbContext, roleManager, userManager);

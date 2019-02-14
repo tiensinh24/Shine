@@ -6,24 +6,29 @@ import { ProductBuyHomeComponent } from './product-buy-home/product-buy-home.com
 import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-detail.component';
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
-
+import { CanDeactivateGuard } from 'src/app/_guards/can-deactivate.guard';
 
 const routes: Routes = [
   {
-    path: '', component: ProductBuyComponent, children:
-      [
-        { path: '', redirectTo: '/product-buy/home', pathMatch: 'full' },
-        { path: 'home', component: ProductBuyHomeComponent },
-        { path: 'create', component: ProductBuyEditComponent },
-        { path: 'edit/:productId', component: ProductBuyEditComponent },
-        { path: 'list', component: ProductBuyListComponent },
-        { path: ':productId', component: ProductBuyDetailComponent },
-      ]
-  }
+    path: '',
+    component: ProductBuyComponent,
+    children: [
+      { path: '', redirectTo: '/product-buy/home', pathMatch: 'full' },
+      { path: 'home', component: ProductBuyHomeComponent },
+      { path: 'create', component: ProductBuyEditComponent },
+      {
+        path: 'edit/:productId',
+        component: ProductBuyEditComponent,
+        canDeactivate: [CanDeactivateGuard],
+      },
+      { path: 'list', component: ProductBuyListComponent },
+      { path: ':productId', component: ProductBuyDetailComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ProductBuyRoutingModule { }
+export class ProductBuyRoutingModule {}

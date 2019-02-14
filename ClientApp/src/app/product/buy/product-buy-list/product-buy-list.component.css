@@ -1,11 +1,20 @@
-div.sticky {
-  height: 70vh;
-  overflow: auto;
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
 }
 
-table[mat-table] {
+.card-title {
+  background-color: royalblue;
+  margin-bottom: -15px;
+  text-align: center;
+  color: aliceblue;
+
+}
+
+div>table[mat-table] {  
   margin: 1em;
-  width: 98%;
+  width: 97.5%;
 }
 
 [mat-sort-header] {

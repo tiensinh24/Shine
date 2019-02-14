@@ -1,4 +1,13 @@
-<div fxLayout="row" fxLayoutGap="30px" style="margin:1em">
+<!-- <div fxLayout="row" fxLayoutGap="30px" style="margin:1em">
     <mat-card fxFlex="70">Card</mat-card>
     <mat-card fxFlex>Card</mat-card>
-</div>
+</div> -->
+
+<mat-grid-list cols="4" rowHeight="2:1" gutterSize=10px;>
+  <mat-grid-tile [colspan]="3">
+    <mat-card fxFlex="100">1</mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile [rowspan]="3">2</mat-grid-tile>
+  <mat-grid-tile>3</mat-grid-tile>
+  <mat-grid-tile>4</mat-grid-tile>
+</mat-grid-list>
