@@ -7,19 +7,24 @@
     <mat-form-field appearance="outline">
       <mat-label>Product Name</mat-label>
       <input matInput placeholder="Product Name" formControlName="name" required>
-      <mat-error *ngIf="formGroup.controls['name'].invalid">{{getErrorMessage(formGroup.controls['name'])}}</mat-error>
+      <mat-error *ngIf="get('name').invalid">{{getErrorMessage(get('name'))}}</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Specification" formControlName="specification">
+    <mat-form-field appearance="outline">
+      <mat-label>Specification</mat-label>
+      <input matInput placeholder="Specification" formControlName="specification" required>
+      <mat-error *ngIf="get('specification').invalid">{{getErrorMessage(get('specification'))}}</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Price" formControlName="price">
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input matInput placeholder="Price" formControlName="price" required>
+      <mat-error *ngIf="get('price').invalid">{{getErrorMessage(get('price'))}}</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-select placeholder="Category" formControlName="categoryId">
+    <mat-form-field appearance="outline">
+      <mat-label>Select category</mat-label>
+      <mat-select placeholder="Select category" formControlName="categoryId" required>
         <mat-option *ngFor="let category of categories" [value]="category.categoryId">
           {{category.categoryName}}
         </mat-option>
@@ -27,6 +32,7 @@
           <button mat-flat-button color="primary" (click)="openDialog()">Add New Category</button>
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="get('categoryId').invalid">{{getErrorMessage(get('categoryId'))}}</mat-error>
     </mat-form-field>
 
     <mat-card-actions fxLayout="row">

@@ -48,4 +48,9 @@ export class LogInComponent implements OnInit {
       }
     );
   }
+
+  getErrorMessage(formControl: FormControl) {
+    return formControl.hasError('required') ? 'You must enter a value' :
+      formControl.hasError('email') ? 'Not a valid email' : '';
+  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { CategoryService } from '../_services/category.service';
 import { Category } from '../_interfaces/category';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
@@ -39,7 +39,7 @@ export class CategoryEditComponent implements OnInit {
     this.formGroup = this.fb.group({
 
       // TODO: specification: [specification, []]
-      categoryName: []
+      categoryName: ['', Validators.required]
     });
 
   }

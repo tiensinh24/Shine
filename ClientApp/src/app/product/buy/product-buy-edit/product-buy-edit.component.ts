@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -24,7 +24,7 @@ export class ProductBuyEditComponent implements OnInit {
   categories: Category[];
   formGroup: FormGroup;
   editMode: boolean;
-  actButton:  boolean;
+  actButton: boolean;
   title: string;
 
   constructor(private fb: FormBuilder,
@@ -48,7 +48,7 @@ export class ProductBuyEditComponent implements OnInit {
         this.title = 'Edit ' + this.productBuy.name;
 
         this.updateForm();
-        });
+      });
     } else {
       this.editMode = false;
       this.title = 'Create a new product';
@@ -66,7 +66,12 @@ export class ProductBuyEditComponent implements OnInit {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
       specification: ['', Validators.required],
-      price: ['', Validators.required],
+      price: ['',
+        [
+          Validators.required,
+          Validators.pattern('[0-9.]*')
+        ]
+      ],
       categoryId: ['', Validators.required]
     });
   }
@@ -140,6 +145,16 @@ export class ProductBuyEditComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  get(name: string): AbstractControl {
+    return this.formGroup.get(name);
+  }
+
+  getErrorMessage(formControl: FormControl) {
+    return formControl.hasError('required') ? 'You must enter a value' :
+      formControl.hasError('email') ? 'Not a valid email' :
+        formControl.hasError('pattern') ? 'Please enter a number!' : '';
   }
 
 }
