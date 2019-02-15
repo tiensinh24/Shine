@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 import { AuthService } from '../auth/_services/auth.service';
 
@@ -13,6 +18,7 @@ export class LogInComponent implements OnInit {
   formGroup: FormGroup;
   showSpinner = true;
   hide = true;
+  username: string;
 
   constructor(
     private router: Router,
@@ -32,10 +38,10 @@ export class LogInComponent implements OnInit {
   ngOnInit() {}
 
   login() {
-    const username = this.formGroup.value.username;
+    this.username = this.formGroup.value.username;
     const password = this.formGroup.value.password;
 
-    this.authService.login(username, password).subscribe(
+    this.authService.login(this.username, password).subscribe(
       res => {
         if (res && res.token) {
           this.router.navigate(['home']);
@@ -43,14 +49,21 @@ export class LogInComponent implements OnInit {
       },
       () => {
         this.formGroup.setErrors({
-          Auth: 'Incorrect username or password',
+          auth: 'Invalid username or password'
         });
-      }
+      },
     );
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required') ? 'You must enter a value' :
-      formControl.hasError('email') ? 'Not a valid email' : '';
+  getControllError(formControl: FormControl) {
+    return formControl.hasError('required')
+      ? 'You must enter a value'
+      : formControl.hasError('email')
+      ? 'Not a valid email'
+      : '';
+  }
+
+  getFormError(formGroup: FormGroup) {
+    return formGroup.getError('auth');
   }
 }

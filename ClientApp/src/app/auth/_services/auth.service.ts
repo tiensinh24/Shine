@@ -11,6 +11,7 @@ import { TokenResponse } from '../_interfaces/token-response';
 })
 export class AuthService {
   authKey = 'auth';
+  authUser = 'user';
   clientId = 'Shine';
   redirectUrl: string;
 
@@ -77,8 +78,13 @@ export class AuthService {
           this.authKey,
           JSON.stringify(auth)
         );
+        localStorage.setItem(
+          this.authUser,
+          JSON.stringify(auth.userName)
+        );
       } else {
         localStorage.removeItem(this.authKey);
+        localStorage.removeItem(this.authUser);
       }
     }
     return true;

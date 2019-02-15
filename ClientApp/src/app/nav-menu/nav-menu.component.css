@@ -1,9 +1,11 @@
 .fill {
   flex: 1 1 auto;
 }
+
 mat-toolbar [routerLinkActive] {
   cursor: pointer;
 }
+
 mat-toolbar {
   margin-bottom: 16px;
 }
@@ -13,11 +15,15 @@ mat-toolbar {
 }
 
 .active {
-  background-color: aliceblue;
-  border: none;
+  color: royalblue;
 }
 
 mat-nav-list>div[routerLink] {
   cursor: pointer;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  font-size: larger;
+  background-color: whitesmoke;
 }
 

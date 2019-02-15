@@ -1,11 +1,14 @@
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data;
 using Shine.Data.Models;
 
 namespace Shine.Controllers
 {
+    [Produces("application/json")]
     [Route ("api/[controller]")]
+    [Authorize]
     public class ValueController : Controller
     {
         private readonly AppDbContext _context;

@@ -7,6 +7,7 @@ import { SupplierDetailComponent } from './supplier-detail/supplier-detail.compo
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { SupplierComponent } from './supplier.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [

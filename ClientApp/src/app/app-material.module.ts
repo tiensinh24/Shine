@@ -3,7 +3,7 @@ import {
   MatTableModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
   MatPaginatorModule, MatSortModule, MatToolbarModule, MatButtonModule,
   MatSidenavModule, MatIconModule, MatListModule, MatCardModule,
-  MatDialogModule, MatExpansionModule,
+  MatDialogModule, MatExpansionModule, MatTooltipModule, MatMenuModule,
 } from '@angular/material';
 
 @NgModule({
@@ -15,6 +15,7 @@ import {
     MatPaginatorModule,
     MatSortModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
@@ -22,6 +23,7 @@ import {
     MatCardModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatMenuModule,
     MatExpansionModule,
 
   ],
@@ -32,6 +34,7 @@ import {
     MatPaginatorModule,
     MatSortModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
@@ -39,6 +42,7 @@ import {
     MatCardModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatMenuModule,
     MatExpansionModule,
 
   ]

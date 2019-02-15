@@ -1,38 +1,55 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
 
-    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
-    <div [routerLink]="['/home']" routerLinkActive="router-link-active">
+    <div matTooltip="Home" [routerLink]="['/home']" routerLinkActive="router-link-active">
       <a><img src="./assets/logo.png"></a>
       <button mat-button>Shine App</button>
     </div>
 
-    <span class="fill"></span>
-
+    <span class="fill"></span>    
     <button mat-button [routerLink]="['/home']" routerLinkActive="router-link-active">Home</button>
     <button mat-button [routerLink]="['/customer']" routerLinkActive="router-link-active">Customer</button>
     <button mat-button [routerLink]="['/customer/list']" routerLinkActive="router-link-active">CustomerList</button>
     <button mat-button [routerLink]="['/product-buy']" routerLinkActive="router-link-active">Product</button>
     <button mat-button [routerLink]="['/product-buy/list']" routerLinkActive="router-link-active">ProductList</button>
 
+    <button mat-icon-button [matMenuTriggerFor]="account" matTooltip="Welcome {{user}}">
+      <mat-icon *ngIf="!isLoggedIn()">lock</mat-icon>
+      <mat-icon *ngIf="isLoggedIn()">account_circle</mat-icon>
+    </button>
+    <mat-menu #account="matMenu">
+      <button *ngIf="!isLoggedIn()" mat-menu-item (click)="login()">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+        Login
+      </button>
+      <button *ngIf="isLoggedIn()" mat-menu-item (click)="logout()">
+          <mat-icon aria-label="Login">exit_to_app</mat-icon>
+          Logout
+        </button>
+    </mat-menu>
+
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container class="side-nav">
   <mat-sidenav #drawer mode="side" opened role="navigation">
     <mat-nav-list>
-      <mat-accordion multi="true">
+      <mat-accordion multi="false">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
               Products
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div routerLink='/product-buy/list' routerLinkActive="active">
-            <a mat-list-item>Products List</a>
-          </div>
+          <mat-nav-list>
+            <mat-list-item routerLink='/product-buy/list' routerLinkActive="active">
+              Products List
+            </mat-list-item>
+          </mat-nav-list>
+
         </mat-expansion-panel>
 
         <mat-expansion-panel>
@@ -41,12 +58,14 @@
               Admin
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div routerLink='/admin/manager-user' routerLinkActive="active">
-            <a mat-list-item>Manager User</a>
-          </div>
-          <div routerLink='/admin/manager-role' routerLinkActive="active">
-            <a mat-list-item>Manager Role</a>
-          </div>
+          <mat-nav-list>
+            <mat-list-item routerLink='/admin/manager-user' routerLinkActive="active">
+              Manager User
+            </mat-list-item>
+            <mat-list-item routerLink='/admin/manager-role' routerLinkActive="active">
+              Manager Role
+            </mat-list-item>
+          </mat-nav-list>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
@@ -55,18 +74,16 @@
               Logins
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div routerLink='/login' routerLinkActive="active">
-            <a mat-list-item>
-              <mat-icon>account_circle_outlined</mat-icon>
-              Login
-            </a>
-          </div>
-          <div routerLink='' routerLinkActive="active">
-            <a mat-list-item (click)="logout()">
-              <mat-icon>power_settings_new</mat-icon>
-              Logout
-            </a>
-          </div>
+          <mat-nav-list>
+            <mat-list-item routerLink='/login' routerLinkActive="active">
+              <mat-icon>account_circle_outlined</mat-icon>Login
+            </mat-list-item>
+          </mat-nav-list>
+          <mat-nav-list>
+            <mat-list-item routerLinkActive="active" (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>Logout
+            </mat-list-item>
+          </mat-nav-list>
         </mat-expansion-panel>
 
       </mat-accordion>

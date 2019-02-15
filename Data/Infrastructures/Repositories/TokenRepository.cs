@@ -47,7 +47,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 _context.SaveChanges ();
 
                 // Create & return the access token
-                var response = CreateAccessToken (user.Id, rt.Value);
+                var response = CreateAccessToken (user, rt.Value);
 
                 return Json (response);
             }
@@ -94,7 +94,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 _context.SaveChanges ();
 
                 // Create a new access token...
-                var response = CreateAccessToken (rtNew.UserId, rtNew.Value);
+                var response = CreateAccessToken (rtNew.User, rtNew.Value);
 
                 // ... and send it to the client
                 return Json (response);
@@ -105,14 +105,14 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
-        private TokenResponseDto CreateAccessToken (string userId, string refreshToken)
+        private TokenResponseDto CreateAccessToken (IdentityUser user, string refreshToken)
         {
             DateTime now = DateTime.UtcNow;
 
             // Add the registered claims for JWT
             var claims = new []
             {
-                new Claim (JwtRegisteredClaimNames.Sub, userId),
+                new Claim (JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim (JwtRegisteredClaimNames.Jti, Guid.NewGuid ().ToString ()),
                 new Claim (JwtRegisteredClaimNames.Iat,
                 new DateTimeOffset (now).ToUnixTimeSeconds ().ToString ())
@@ -139,7 +139,8 @@ namespace Shine.Data.Infrastructures.Repositories
             {
                 Token = encodedToken,
                     Expiration = tokenExpirationMins,
-                    RefreshToken = refreshToken
+                    RefreshToken = refreshToken,
+                    UserName = user.UserName
             };
 
         }

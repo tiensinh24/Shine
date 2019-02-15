@@ -7,6 +7,7 @@ import { CustomerDetailComponent } from './customer-detail/customer-detail.compo
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerComponent } from './customer.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [

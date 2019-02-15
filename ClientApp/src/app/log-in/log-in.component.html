@@ -5,20 +5,24 @@
       <mat-card-title fxLayout="column" fxLayoutAlign="start center">
         <span class="mat-headline">Sign in to Your Account</span>
         <mat-icon color="primary" inline>account_circle</mat-icon>
+        <!-- Form error handling-->
+        <mat-error class="mat-subheading-2">{{getFormError(formGroup)}}</mat-error>
       </mat-card-title>
     </mat-card-header>
     <!-- Card content -->
     <mat-card-content fxLayout="column" fxLayoutAlign="start center">
+      
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
         <input matInput placeholder="Enter your username" formControlName="username" required>
-        <mat-error *ngIf="formGroup.controls['username'].invalid">{{getErrorMessage(formGroup.controls['username'])}}</mat-error>
+        <mat-error *ngIf="formGroup.get('username').invalid">{{getControllError(formGroup.get('username'))}}</mat-error>
         <mat-icon matSuffix>account_circle</mat-icon>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Enter your password" formControlName="password" [type]="hide ? 'password' : 'text'" required>
-        <mat-error *ngIf="formGroup.controls['password'].invalid">{{getErrorMessage(formGroup.controls['password'])}}</mat-error>
+        <input matInput placeholder="Enter your password" formControlName="password" [type]="hide ? 'password' : 'text'"
+          required>
+        <mat-error *ngIf="formGroup.get('password').invalid">{{getControllError(formGroup.get('password'))}}</mat-error>
         <mat-icon matSuffix (click)="hide = !hide">
           {{hide ? 'visibility_off' : 'visibility'}}
         </mat-icon>
@@ -27,7 +31,7 @@
     </mat-card-content>
     <!-- Card actions -->
     <mat-card-actions>
-      <button mat-raised-button type="submit" color="primary">Login</button>
+      <button mat-raised-button [disabled]="!formGroup.valid" type="submit" color="primary">Login</button>
     </mat-card-actions>
   </mat-card>
 </form>
