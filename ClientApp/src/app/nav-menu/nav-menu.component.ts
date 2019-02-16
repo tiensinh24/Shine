@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/_services/auth.service';
@@ -9,8 +9,7 @@ import { AuthService } from '../auth/_services/auth.service';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css'],
 })
-export class NavMenuComponent implements OnInit {
- 
+export class NavMenuComponent implements OnInit, AfterContentChecked {
   user: string;
   isExpanded = false;
 
@@ -24,13 +23,18 @@ export class NavMenuComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  // TODO: life circle hook
   ngOnInit(): void {
     this.user = localStorage.getItem('user');
-    console.log(this.user);
+  }
+
+  ngAfterContentChecked(): void {
+    if (this.user !== localStorage.getItem('user')) {
+      this.user = localStorage.getItem('user');
+    }
   }
 
   logout() {
+    this.user = null;
     this.auth.logout();
     this.router.navigate(['/login']);
   }

@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './auth/_services/auth.service';
 import { AuthInterceptor } from './auth/_services/auth.interceptor';
 import { AuthResponseInterceptor } from './auth/_services/auth.response.interceptor';
+import { DialogService } from './_services/dialog.service';
+import { ValidateService } from './_services/validate.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { AuthResponseInterceptor } from './auth/_services/auth.response.intercep
   ],
   providers: [
     AuthService,
+    DialogService,
+    ValidateService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

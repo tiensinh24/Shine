@@ -18,7 +18,6 @@ export class LogInComponent implements OnInit {
   formGroup: FormGroup;
   showSpinner = true;
   hide = true;
-  username: string;
 
   constructor(
     private router: Router,
@@ -38,10 +37,10 @@ export class LogInComponent implements OnInit {
   ngOnInit() {}
 
   login() {
-    this.username = this.formGroup.value.username;
+    const username = this.formGroup.value.username;
     const password = this.formGroup.value.password;
 
-    this.authService.login(this.username, password).subscribe(
+    this.authService.login(username, password).subscribe(
       res => {
         if (res && res.token) {
           this.router.navigate(['home']);

@@ -83,8 +83,7 @@ export class AuthService {
           JSON.stringify(auth.userName)
         );
       } else {
-        localStorage.removeItem(this.authKey);
-        localStorage.removeItem(this.authUser);
+        localStorage.clear();
       }
     }
     return true;
