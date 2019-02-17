@@ -6,36 +6,38 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
-{    
+{
     public abstract class Order : IAuditedEntityBase, ISoftDelete
     {
-        #region Properties
+#region Properties
         public int OrderId { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string OrderNumber { get; set; }
+
         [Required]
         public DateTime DateOfIssue { get; set; }
         public DateTime PaymentDateOne { get; set; }
         public decimal PaymentOne { get; set; }
         public DateTime PaymentDateTwo { get; set; }
-        public decimal PaymentTwo { get; set; }        
+        public decimal PaymentTwo { get; set; }
         public DateTime TimeForPayment { get; set; }
         public bool OrderType { get; set; }
-        #endregion
+#endregion
 
-        #region FK
-        public string PersonId { get; set; }
-        #endregion
+#region FK
+        public int PersonId { get; set; }
+#endregion
 
-        #region Navigation Properties
+#region Navigation Properties
         public Person Person { get; set; }
         public IEnumerable<ProductOrder> ProductOrders { get; set; }
         public IEnumerable<Cost> Costs { get; set; }
-        #endregion
+#endregion
     }
 
-    public class  BuyOrder : Order
+    public class BuyOrder : Order
     {
         [MaxLength(50)]
         public string LocalOrderNumber { get; set; }
@@ -45,9 +47,9 @@ namespace Shine.Data.Models
     public class SellOrder : Order
     {
         [MaxLength(10)]
-        public string Currency { get; set; }        
-        public decimal RateOne { get; set; }        
+        public string Currency { get; set; }
+        public decimal RateOne { get; set; }
         public decimal RateTwo { get; set; }
 
-    }    
+    }
 }

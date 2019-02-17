@@ -6,12 +6,16 @@ mat-toolbar [routerLinkActive] {
   cursor: pointer;
 }
 
+.home-logo {
+  font-size: larger;
+}
+
 mat-toolbar {
   margin-bottom: 16px;
 }
 
 .side-nav {
-  height: 90vh;
+  height: 85vh;
 }
 
 .active {

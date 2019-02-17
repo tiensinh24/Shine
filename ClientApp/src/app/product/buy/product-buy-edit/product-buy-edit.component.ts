@@ -56,10 +56,13 @@ export class ProductBuyEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCategories();
+  }
+
+  getCategories() {
     this.categoryService.getCategories().subscribe(result => {
       this.categories = result;
     });
-
   }
 
   createForm() {
@@ -109,6 +112,7 @@ export class ProductBuyEditComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
       this.http.post<Category>(this.baseUrl + 'api/category', data).subscribe();
+      this.getCategories();
     });
   }
 

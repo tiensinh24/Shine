@@ -3,7 +3,7 @@ import {
   MatTableModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
   MatPaginatorModule, MatSortModule, MatToolbarModule, MatButtonModule,
   MatSidenavModule, MatIconModule, MatListModule, MatCardModule,
-  MatDialogModule, MatExpansionModule, MatTooltipModule, MatMenuModule,
+  MatDialogModule, MatExpansionModule, MatTooltipModule, MatMenuModule, MatGridListModule,
 } from '@angular/material';
 
 @NgModule({
@@ -25,6 +25,7 @@ import {
     MatDialogModule,
     MatMenuModule,
     MatExpansionModule,
+    MatGridListModule,
 
   ],
   exports: [
@@ -44,6 +45,7 @@ import {
     MatDialogModule,
     MatMenuModule,
     MatExpansionModule,
+    MatGridListModule,
 
   ]
 })

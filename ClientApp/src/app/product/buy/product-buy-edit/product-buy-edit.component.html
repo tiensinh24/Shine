@@ -6,7 +6,7 @@
   <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>Product Name</mat-label>
-      <input matInput placeholder="Product Name" formControlName="name" required>
+      <input matInput placeholder="Product Name" formControlName="name" required autofocus>
       <mat-error *ngIf="get('name').invalid">{{getErrorMessage(get('name'))}}</mat-error>
     </mat-form-field>
 

@@ -24,12 +24,12 @@ export class NavMenuComponent implements OnInit, AfterContentChecked {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.user = localStorage.getItem('user');
+    this.user = JSON.parse(localStorage.getItem('auth')).userName;
   }
 
   ngAfterContentChecked(): void {
-    if (this.user !== localStorage.getItem('user')) {
-      this.user = localStorage.getItem('user');
+    if (this.user !== localStorage.getItem("user")) {
+      this.user = JSON.parse(localStorage.getItem('auth')).userName;
     }
   }
 

@@ -14,7 +14,7 @@
       
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
-        <input matInput placeholder="Enter your username" formControlName="username" required>
+        <input matInput placeholder="Enter your username" formControlName="username" required autofocus>
         <mat-error *ngIf="formGroup.get('username').invalid">{{getControllError(formGroup.get('username'))}}</mat-error>
         <mat-icon matSuffix>account_circle</mat-icon>
       </mat-form-field>

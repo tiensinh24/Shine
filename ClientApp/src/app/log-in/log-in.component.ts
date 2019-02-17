@@ -23,9 +23,7 @@ export class LogInComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-  ) {
-    this.createForm();
-  }
+  ) {}
 
   createForm() {
     this.formGroup = this.fb.group({
@@ -34,7 +32,9 @@ export class LogInComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.createForm();
+  }
 
   login() {
     const username = this.formGroup.value.username;
