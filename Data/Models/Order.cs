@@ -37,14 +37,14 @@ namespace Shine.Data.Models
 #endregion
     }
 
-    public class BuyOrder : Order
+    public class OrderBuy : Order
     {
         [MaxLength(50)]
         public string LocalOrderNumber { get; set; }
         public DateTime LocalDateOfIssue { get; set; }
     }
 
-    public class SellOrder : Order
+    public class OrderSell : Order
     {
         [MaxLength(10)]
         public string Currency { get; set; }

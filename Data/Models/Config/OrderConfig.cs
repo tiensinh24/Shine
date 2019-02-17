@@ -9,8 +9,8 @@ namespace Shine.Data.Models.Config
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasDiscriminator(i => i.OrderType)
-                .HasValue<BuyOrder>(true)
-                .HasValue<SellOrder>(false);
+                .HasValue<OrderBuy>(true)
+                .HasValue<OrderSell>(false);
 
             builder.Property(i => i.OrderType)
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;
@@ -29,18 +29,18 @@ namespace Shine.Data.Models.Config
         }
     }
 
-    public class BuyOrderConfig : IEntityTypeConfiguration<BuyOrder>
+    public class OrderBuyConfig : IEntityTypeConfiguration<OrderBuy>
     {
-        public void Configure(EntityTypeBuilder<BuyOrder> builder)
+        public void Configure(EntityTypeBuilder<OrderBuy> builder)
         {
             builder.Property(bi => bi.LocalDateOfIssue)
                 .HasColumnType("date");
         }
     }
 
-    public class SellOrderConfig : IEntityTypeConfiguration<SellOrder>
+    public class OrderSellConfig : IEntityTypeConfiguration<OrderSell>
     {
-        public void Configure(EntityTypeBuilder<SellOrder> builder)
+        public void Configure(EntityTypeBuilder<OrderSell> builder)
         {
             builder.Property(si => si.RateOne)
                 .HasColumnType("decimal(7,2)");

@@ -33,9 +33,10 @@ namespace Shine.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new CategoryConfig());
             modelBuilder.ApplyConfiguration(new OrderConfig());
-            modelBuilder.ApplyConfiguration(new BuyOrderConfig());
-            modelBuilder.ApplyConfiguration(new SellOrderConfig());
+            modelBuilder.ApplyConfiguration(new OrderBuyConfig());
+            modelBuilder.ApplyConfiguration(new OrderSellConfig());
             modelBuilder.ApplyConfiguration(new PersonConfig());
             modelBuilder.ApplyConfiguration(new PersonProductConfig());
             modelBuilder.ApplyConfiguration(new ProductConfig());
