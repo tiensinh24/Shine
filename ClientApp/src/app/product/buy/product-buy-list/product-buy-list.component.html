@@ -1,8 +1,14 @@
-<div fxLayout="column" fxLayoutAlign="start stretch">
-  <mat-card class="mat-elevation-z8 card-title">
+<div fxLayout="column">
+  <!-- Title -->
+  <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
+    <span class="fill"></span>
     <span class="mat-headline">{{title}}</span>
+    <span class="fill"></span>
+    <button mat-mini-fab [routerLink]="['/product-sell']">
+      Buy
+    </button>
   </mat-card>
-
+  <!-- Table -->
   <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>

@@ -13,8 +13,8 @@ const routes: Routes = [
     path: '',
     component: ProductBuyComponent,
     children: [
-      { path: '', redirectTo: '/product-buy/home', pathMatch: 'full' },
-      { path: 'home', component: ProductBuyHomeComponent },
+      { path: '', redirectTo: '/product-buy/home', pathMatch: 'full'},
+      { path: 'home', component: ProductBuyListComponent },
       { path: 'create', component: ProductBuyEditComponent },
       {
         path: 'edit/:productId',

@@ -8,20 +8,21 @@ import { ProductSellListComponent } from './product-sell-list/product-sell-list.
 
 const routes: Routes = [
   {
-    path: '', component: ProductSellComponent, children:
-      [
-        { path: '', redirectTo: '/product-sell/home', pathMatch: 'full' },
-        { path: 'home', component: ProductSellHomeComponent },
-        { path: 'detail', component: ProductSellDetailComponent },
-        { path: 'create', component: ProductSellEditComponent },
-        { path: 'edit/:id', component: ProductSellEditComponent },
-        { path: 'list', component: ProductSellListComponent }
-      ]
-  }
+    path: '',
+    component: ProductSellComponent,
+    children: [
+      { path: '', redirectTo: '/product-sell/home', pathMatch: 'full' },
+      { path: 'home', component: ProductSellHomeComponent },
+      { path: 'detail', component: ProductSellDetailComponent },
+      { path: 'create', component: ProductSellEditComponent },
+      { path: 'edit/:id', component: ProductSellEditComponent },
+      { path: 'list', component: ProductSellListComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ProductSellRoutingModule { }
+export class ProductSellRoutingModule {}

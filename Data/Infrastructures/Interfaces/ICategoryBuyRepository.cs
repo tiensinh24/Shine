@@ -4,7 +4,7 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryBuyRepository
     {
         IEnumerable<CategoryDto> GetCategories();
         CategoryDto GetCategory(int id);

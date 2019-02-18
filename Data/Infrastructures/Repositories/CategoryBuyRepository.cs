@@ -11,17 +11,17 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Repositories
 {
-    public class CategoryRepository : Repository, ICategoryRepository
+    public class CategoryBuyRepository : Repository, ICategoryBuyRepository
     {
 #region Constructor
 
-        public CategoryRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
+        public CategoryBuyRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
         public IEnumerable<CategoryDto> GetCategories()
         {
-            var query = _context.Categories.Select(c => new
+            var query = _context.Set<CategoryBuy>().Select(c => new
             {
                 c.CategoryId,
                     c.CategoryName
@@ -32,7 +32,7 @@ namespace Shine.Data.Infrastructures.Repositories
 
         public CategoryDto GetCategory(int id)
         {
-            var query = _context.Categories.Select(c => new
+            var query = _context.Set<CategoryBuy>().Select(c => new
             {
                 c.CategoryId,
                     c.CategoryName

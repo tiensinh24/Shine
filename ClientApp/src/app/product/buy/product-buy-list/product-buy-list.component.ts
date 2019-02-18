@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild, Inject, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { map, shareReplay, tap, share } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
-import { Router, ActivatedRoute } from '@angular/router';
-
 
 @Component({
   selector: 'app-product-buy-list',
@@ -19,7 +17,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<ProductBuyListDto> = new MatTableDataSource([]);
   paginator: MatPaginator;
   sort: MatSort;
-  title = 'Tna Sutra';
+  title = 'Products List';
 
   @ViewChild(MatPaginator) set appPa(paginator: MatPaginator) {
     this.paginator = paginator;
@@ -33,9 +31,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private productBuyService: ProductBuyService,
-    private router: Router,
-    private route: ActivatedRoute) {
-  }
+    private router: Router) { }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

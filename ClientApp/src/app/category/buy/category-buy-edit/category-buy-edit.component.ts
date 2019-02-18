@@ -1,34 +1,32 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { CategoryService } from '../_services/category.service';
-import { Category } from '../_interfaces/category';
+import { CategoryBuyService } from '../_services/category-buy.service';
+import { CategoryBuy } from '../_interfaces/categoryBuy';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 @Component({
-  selector: 'app-category-edit',
-  templateUrl: './category-edit.component.html',
-  styleUrls: ['./category-edit.component.css']
+  selector: 'app-category-buy-edit',
+  templateUrl: './category-buy-edit.component.html',
+  styleUrls: ['./category-buy-edit.component.css']
 })
-export class CategoryEditComponent implements OnInit {
+export class CategoryBuyEditComponent implements OnInit {
   title = 'Create new category';
-  category: Category;
+  category: CategoryBuy;
   formGroup: FormGroup;
 
-  constructor(private categoryService: CategoryService,
+  constructor(private categoryBuyService: CategoryBuyService,
     private fb: FormBuilder,
 
     // TODO: Get data from main component
     // just testing, must implement on product edit component
-    private dialogRef: MatDialogRef<CategoryEditComponent>,
+    private dialogRef: MatDialogRef<CategoryBuyEditComponent>,
     @Inject(MAT_DIALOG_DATA) data
 
   ) {
 
     // TODO: this. specification = data.specification
-    
 
-    this.ngOnInit();
   }
 
   ngOnInit() {
@@ -45,10 +43,10 @@ export class CategoryEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const tempCategory = <Category>{};
+    const tempCategory = <CategoryBuy>{};
     tempCategory.categoryName = this.formGroup.value.categoryName;
 
-    this.categoryService.addCategory(tempCategory).subscribe();
+    this.categoryBuyService.addCategoryBuy(tempCategory).subscribe();
   }
 
   // TODO: use to pass data from dialog to main component

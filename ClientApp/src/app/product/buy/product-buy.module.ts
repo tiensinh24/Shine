@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { ProductBuyRoutingModule } from './product-buy-routing.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule, MatSortModule, MatFormFieldModule, MatTableModule,
   MatInputModule, MatSelectModule, MatOptionModule, MatIconModule,
-  MatCardModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatGridListModule } from '@angular/material';
+  MatCardModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatGridListModule, MatSlideToggleModule } from '@angular/material';
+
+import { ProductBuyRoutingModule } from './product-buy-routing.module';
 import { ProductBuyComponent } from './product-buy.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CategoryEditComponent } from '../../category/category-edit/category-edit.component';
 import { ProductBuyHomeComponent } from './product-buy-home/product-buy-home.component';
 import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-detail.component';
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
-import { AppMaterialModule } from 'src/app/app-material.module';
+import { CategoryBuyEditComponent } from 'src/app/category/buy/category-buy-edit/category-buy-edit.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +21,7 @@ import { AppMaterialModule } from 'src/app/app-material.module';
     ProductBuyDetailComponent,
     ProductBuyEditComponent,
     ProductBuyListComponent,
-    CategoryEditComponent
+    CategoryBuyEditComponent
 
   ],
   imports: [
@@ -43,10 +41,11 @@ import { AppMaterialModule } from 'src/app/app-material.module';
     MatTooltipModule,
     MatDialogModule,
     MatGridListModule,
+    MatSlideToggleModule,
     ProductBuyRoutingModule,
   ],
   entryComponents: [
-    CategoryEditComponent
+    CategoryBuyEditComponent
   ]
 })
 export class ProductBuyModule { }

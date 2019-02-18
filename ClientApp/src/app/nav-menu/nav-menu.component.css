@@ -15,7 +15,15 @@ mat-toolbar {
 }
 
 .side-nav {
-  height: 85vh;
+  height: 90vh;  
+}
+
+.side-nav>mat-sidenav {
+  margin-inline-start: -20px;
+}
+
+.main-container {  
+  margin: 0 20px 0 20px;
 }
 
 .active {
@@ -26,8 +34,9 @@ mat-nav-list>div[routerLink] {
   cursor: pointer;
 }
 
-.mat-expansion-panel-header.mat-expanded {
+.mat-expansion-panel-header.mat-expanded {  
   font-size: larger;
-  background-color: whitesmoke;
+  background-color: powderblue;
 }
+
 

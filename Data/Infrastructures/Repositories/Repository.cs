@@ -83,19 +83,9 @@ namespace Shine.Data.Infrastructures.Repositories
             return await _context.Set<T>().Where(condition).FirstOrDefaultAsync();
         }
 
-        public Task AddAsync<T>(T entity) where T : class
+        public async Task AddAsync<T>(T entity) where T : class
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync<T>(T entity) where T : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync<T>(T entity) where T : class
-        {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(entity);
         }
 
         public async Task CommitAsync()

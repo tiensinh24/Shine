@@ -2,6 +2,7 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/_services/auth.service';
+import { IconService } from '../_services/icon.service';
 
 
 @Component({
@@ -21,14 +22,20 @@ export class NavMenuComponent implements OnInit, AfterContentChecked {
     this.isExpanded = !this.isExpanded;
   }
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService,
+    private router: Router,
+    private iconService: IconService) {
+
+      // Get svgIcon from IconService
+      this.iconService.logo();
+    }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('auth')).userName;
   }
 
   ngAfterContentChecked(): void {
-    if (this.user !== localStorage.getItem("user")) {
+    if (this.user !== localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('auth')).userName;
     }
   }

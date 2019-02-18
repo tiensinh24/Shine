@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: 'product-buy', canActivate: [AuthGuard], loadChildren: './product/buy/product-buy.module#ProductBuyModule' },
     { path: 'product-sell', canActivate: [AuthGuard], loadChildren: './product/sell/product-sell.module#ProductSellModule' },
     { path: 'supplier', canActivate: [AuthGuard], loadChildren: './supplier/supplier.module#SupplierModule' },
-    { path: 'category', canActivate: [AuthGuard], loadChildren: './category/category.module#CategoryModule' },
+    { path: 'category-buy', canActivate: [AuthGuard], loadChildren: './category/buy/category-buy.module#CategoryBuyModule' },
     // manager parent
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },

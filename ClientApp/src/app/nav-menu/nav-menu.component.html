@@ -6,8 +6,9 @@
       <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
-    <div [routerLink]="['/home']" routerLinkActive="router-link-active" matTooltip="Home">
-      <img src="./assets/logo.png">
+    <div fxLayout="row" fxLayoutAlign="start center"
+      [routerLink]="['/home']" routerLinkActive="router-link-active" matTooltip="Home">
+      <mat-icon svgIcon='logo'style="width:40px; height:40px"></mat-icon>
       <button class="home-logo" mat-button>Shine</button>
     </div>
 
@@ -23,14 +24,8 @@
         <button [routerLink]="['/product-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center"
           fxLayoutGap="8px" style="height: 100%;">
           <mat-icon style="font-size: 48px" color="primary">shopping_cart</mat-icon>
-          <span>Products Buy</span>
-        </button>
-
-        <button [routerLink]="['/product-sell']" mat-menu-item fxLayout="column" fxLayoutAlign="center center"
-          fxLayoutGap="8px" style="height: 100%;">
-          <mat-icon style="font-size: 48px" color="primary">pets</mat-icon>
-          <span>Products Sell</span>
-        </button>
+          <span>Products</span>
+        </button>        
 
         <button mat-menu-item [routerLink]="['/supplier']" fxLayout="column" fxLayoutAlign="center center"
           fxLayoutGap="8px" style="height: 100%;">
@@ -48,14 +43,8 @@
 
         <button [routerLink]="['/order-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center"
           fxLayoutGap="8px" style="height: 100%;">
-          <mat-icon style="font-size: 48px" color="primary">work</mat-icon>
-          <span>Orders Buy</span>
-        </button>
-
-        <button [routerLink]="['/order-sell']" mat-menu-item fxLayout="column" fxLayoutAlign="center center"
-          fxLayoutGap="8px" style="height: 100%;">
           <mat-icon style="font-size: 48px" color="primary">receipt</mat-icon>
-          <span>Orders Sell</span>
+          <span>Orders</span>
         </button>
       </div>
       <!-- Row 3 -->
@@ -93,7 +82,7 @@
 </mat-toolbar>
 
 <!-- Side Nav -->
-<mat-sidenav-container class="side-nav">
+<mat-sidenav-container class="side-nav" >
   <mat-sidenav #drawer mode="side" opened role="navigation">
     <mat-nav-list>
       <mat-accordion multi="false">
@@ -157,7 +146,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <!-- Content router-outlet -->
-  <mat-sidenav-content>
+  <mat-sidenav-content class="main-container">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

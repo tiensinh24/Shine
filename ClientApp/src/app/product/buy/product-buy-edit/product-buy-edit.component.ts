@@ -6,12 +6,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
 import { ProductBuyService } from '../_services/product-buy.service';
-import { CategoryService } from 'src/app/category/_services/category.service';
-import { Category } from 'src/app/category/_interfaces/category';
-import { CategoryEditComponent } from 'src/app/category/category-edit/category-edit.component';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { Observable } from 'rxjs';
 import { DialogService } from 'src/app/_services/dialog.service';
+import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
+import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
+import { CategoryBuyEditComponent } from 'src/app/category/buy/category-buy-edit/category-buy-edit.component';
 
 @Component({
   selector: 'app-product-buy-edit',
@@ -21,7 +21,7 @@ import { DialogService } from 'src/app/_services/dialog.service';
 export class ProductBuyEditComponent implements OnInit {
   baseUrl = environment.URL;
   productBuy: ProductBuy;
-  categories: Category[];
+  categories: CategoryBuy[];
   formGroup: FormGroup;
   editMode: boolean;
   actButton: boolean;
@@ -29,7 +29,7 @@ export class ProductBuyEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private productBuyService: ProductBuyService,
-    private categoryService: CategoryService,
+    private categoryBuyService: CategoryBuyService,
     private dialogService: DialogService,
     private dialog: MatDialog,
     private http: HttpClient,
@@ -51,7 +51,7 @@ export class ProductBuyEditComponent implements OnInit {
       });
     } else {
       this.editMode = false;
-      this.title = 'Create a new product';
+      this.title = 'Create new product';
     }
   }
 
@@ -60,7 +60,7 @@ export class ProductBuyEditComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getCategories().subscribe(result => {
+    this.categoryBuyService.getCategoryBuyList().subscribe(result => {
       this.categories = result;
     });
   }
@@ -105,13 +105,13 @@ export class ProductBuyEditComponent implements OnInit {
     //   ...
     // };
 
-    // this.dialog.open(CategoryEditComponent, dialogConfig);
+    // this.dialog.open(CategoryBuyEditComponent, dialogConfig);
 
     // TODO: pass data from dialog in to main component
-    const dialogRef = this.dialog.open(CategoryEditComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CategoryBuyEditComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(data => {
-      this.http.post<Category>(this.baseUrl + 'api/category', data).subscribe();
+    dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
+      this.categoryBuyService.addCategoryBuy(data).subscribe();
       this.getCategories();
     });
   }
