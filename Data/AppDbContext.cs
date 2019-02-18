@@ -33,6 +33,8 @@ namespace Shine.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new CategoryConfig());
             modelBuilder.ApplyConfiguration(new OrderConfig());
             modelBuilder.ApplyConfiguration(new OrderBuyConfig());
@@ -44,7 +46,7 @@ namespace Shine.Data
 
             modelBuilder.ShadowProperties();
             // SetGlobalQueryFilters(modelBuilder);
-            base.OnModelCreating(modelBuilder);
+             
         }
 
         // public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

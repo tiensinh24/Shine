@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatDialogModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatDialogModule, MatExpansionModule } from '@angular/material';
 
 import { CategoryRoutingModule } from './category-buy-routing.module';
 import { CategoryBuyComponent } from './category-buy.component';
@@ -20,6 +20,7 @@ import { CategoryBuyEditComponent } from './category-buy-edit/category-buy-edit.
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatExpansionModule,
     CategoryRoutingModule,
   ],
 })

@@ -1,3 +1,32 @@
-<p>
-  category-buy-home works!
-</p>
+<mat-accordion multi="false" >
+  <mat-expansion-panel *ngFor="let category of categories">
+    <mat-expansion-panel-header>
+
+      <mat-panel-title>
+        {{category.categoryName}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Click here to see products list
+      </mat-panel-description>
+
+    </mat-expansion-panel-header>
+    <!-- Lazy load -->
+    
+    <ng-template matExpansionPanelContent>
+      <table>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>2</td>
+          <td>1</td>
+        </tr>
+      </table>
+    </ng-template>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

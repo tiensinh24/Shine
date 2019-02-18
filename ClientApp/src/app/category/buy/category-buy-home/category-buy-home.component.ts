@@ -14,6 +14,7 @@ export class CategoryBuyHomeComponent implements OnInit {
   constructor(private categoryBuyService: CategoryBuyService) { }
 
   ngOnInit() {
+    this.getCategoryList();
   }
 
   getCategoryList() {
