@@ -18,22 +18,22 @@ export class ProductBuyService {
   constructor(private http: HttpClient) { }
 
   getProductList(): Observable<ProductBuyListDto[]> {
-    return this.http.get<ProductBuyListDto[]>(this.baseUrl + 'api/product-buy/');
+    return this.http.get<ProductBuyListDto[]>(this.baseUrl + 'api/productBuy/');
   }
 
   getProduct(id: number): Observable<ProductBuy> {
-    return this.http.get<ProductBuy>(this.baseUrl + 'api/product-buy/' + id);
+    return this.http.get<ProductBuy>(this.baseUrl + 'api/productBuy/' + id);
   }
 
   addProduct(productBuy: ProductBuy): Observable<ProductBuy> {
-    return this.http.post<ProductBuy>(this.baseUrl + 'api/product-buy/', productBuy);
+    return this.http.post<ProductBuy>(this.baseUrl + 'api/productBuy/', productBuy);
   }
 
   updateProduct(productBuy: ProductBuy): Observable<ProductBuy> {
-    return this.http.put<ProductBuy>(this.baseUrl + 'api/product-buy/', productBuy);
+    return this.http.put<ProductBuy>(this.baseUrl + 'api/productBuy/', productBuy);
   }
 
   deleteProduct(id: number) {
-    this.http.delete<ProductBuy>(this.baseUrl + 'api/product-buy/' + id).subscribe();
+    this.http.delete<ProductBuy>(this.baseUrl + 'api/productBuy/' + id).subscribe();
   }
 }

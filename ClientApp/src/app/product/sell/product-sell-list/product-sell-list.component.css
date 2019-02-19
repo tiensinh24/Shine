@@ -1,0 +1,39 @@
+.fill {
+    flex: 1 1 auto;
+  }
+  
+  .mat-paginator-sticky {
+    bottom: 0px;
+    position: sticky;
+    z-index: 10;
+  }
+  
+  button[mat-mini-fab] {
+    align-self: center;
+  }
+  
+  .card-title {
+    background-color: royalblue;  
+    margin-bottom: -15px;
+    text-align: center;
+    color: white;
+    height: 60px;
+  }
+  
+  div>table[mat-table] {
+    margin: 1em;
+    width: 97.5%;
+  }
+  
+  [mat-sort-header] {
+    color: royalblue;
+  }
+  
+  tr.mat-footer-row {
+    font-weight: bold;
+  }
+  
+  mat-card.row-reverse {
+    height: 30px;
+  }
+  

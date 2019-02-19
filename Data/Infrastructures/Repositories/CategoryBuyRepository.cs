@@ -19,7 +19,7 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategoryDto> GetCategories()
+        public IEnumerable<CategoryBuyDto> GetCategories()
         {
             var query = _context.Set<CategoryBuy>().Select(c => new
             {
@@ -27,10 +27,10 @@ namespace Shine.Data.Infrastructures.Repositories
                     c.CategoryName
             }).OrderBy(c => c.CategoryName).AsNoTracking();
 
-            return query.Adapt<IEnumerable<CategoryDto>>();
+            return query.Adapt<IEnumerable<CategoryBuyDto>>();
         }
 
-        public CategoryDto GetCategory(int id)
+        public CategoryBuyDto GetCategory(int id)
         {
             var query = _context.Set<CategoryBuy>().Select(c => new
             {
@@ -38,7 +38,7 @@ namespace Shine.Data.Infrastructures.Repositories
                     c.CategoryName
             }).FirstOrDefault(c => c.CategoryId == id);
 
-            return query.Adapt<CategoryDto>();
+            return query.Adapt<CategoryBuyDto>();
         }
 
     }

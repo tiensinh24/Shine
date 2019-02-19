@@ -18,7 +18,7 @@ namespace Shine.Data.Infrastructures.Repositories {
 #endregion
 
         public IEnumerable<ProductSellListDto> GetProducts () {
-            var query = _context.Products.Include (p => p.Category).Select (p => new {
+            var query = _context.Set<ProductSell>().Include (p => p.Category).Select (p => new {
                 p.ProductId,
                     p.Name,
                     p.Specification,
@@ -27,6 +27,27 @@ namespace Shine.Data.Infrastructures.Repositories {
             }).AsNoTracking ();
 
             return query.Adapt<IEnumerable<ProductSellListDto>> ();
+        }
+
+        public void UpdateProduct(ProductSell productSell)
+        {
+            var product = _context.Set<ProductSell>().FirstOrDefault(p => p.ProductId == productSell.ProductId);
+            if (product != null)
+            {
+                product.Name = productSell.Name;
+                product.Specification = productSell.Specification;
+                product.Price = productSell.Price;
+                product.CategoryId = productSell.CategoryId;
+            }
+        }
+
+        public void DeleteProduct(int id)
+        {
+            var product = _context.Set<ProductSell>().FirstOrDefault(p => p.ProductId == id);
+            if (product != null)
+            {
+                _context.Set<ProductSell>().Remove(product);
+            }
         }
     }
 }

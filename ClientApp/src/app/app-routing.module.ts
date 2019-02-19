@@ -14,11 +14,12 @@ const routes: Routes = [
     { path: 'order-buy', canActivate: [AuthGuard], loadChildren: './order/buy/order-buy.module#OrderBuyModule' },
     { path: 'order-sell', canActivate: [AuthGuard], loadChildren: './order/sell/order-sell.module#OrderSellModule' },
     { path: 'customer', canActivate: [AuthGuard], loadChildren: './customer/customer.module#CustomerModule' },
+    { path: 'supplier', canActivate: [AuthGuard], loadChildren: './supplier/supplier.module#SupplierModule' },
     { path: 'employee', canActivate: [AuthGuard], loadChildren: './employee/employee.module#EmployeeModule' },
     { path: 'product-buy', canActivate: [AuthGuard], loadChildren: './product/buy/product-buy.module#ProductBuyModule' },
     { path: 'product-sell', canActivate: [AuthGuard], loadChildren: './product/sell/product-sell.module#ProductSellModule' },
-    { path: 'supplier', canActivate: [AuthGuard], loadChildren: './supplier/supplier.module#SupplierModule' },
     { path: 'category-buy', canActivate: [AuthGuard], loadChildren: './category/buy/category-buy.module#CategoryBuyModule' },
+    { path: 'category-sell', canActivate: [AuthGuard], loadChildren: './category/sell/category-sell.module#CategorySellModule' },
     // manager parent
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },

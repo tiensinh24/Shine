@@ -88,6 +88,7 @@ namespace Shine
             services.AddScoped<ProductBuyRepository>();
             services.AddScoped<ProductSellRepository>();
             services.AddScoped<CategoryBuyRepository>();
+            services.AddScoped<CategorySellRepository>();
 
             // services.AddScoped<RepositoryFactory>();
 

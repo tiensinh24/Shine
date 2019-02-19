@@ -21,7 +21,7 @@ namespace Shine.Data.Infrastructures.Repositories
 
         public IEnumerable<ProductBuyListDto> GetProductListDto()
         {
-            var query = _context.Products.OfType<ProductBuy>().Include(p => p.Category).Select(p => new
+            var query = _context.Set<ProductBuy>().Include(p => p.Category).Select(p => new
             {
                 p.ProductId,
                     p.Name,

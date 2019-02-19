@@ -18,7 +18,7 @@ export class CategoryBuyHomeComponent implements OnInit {
   }
 
   getCategoryList() {
-    this.categoryBuyService.getCategoryBuyList().subscribe(res => {
+    this.categoryBuyService.getCategoryList().subscribe(res => {
       this.categories = res;
     });
   }

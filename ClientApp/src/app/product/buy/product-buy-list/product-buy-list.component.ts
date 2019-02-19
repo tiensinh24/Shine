@@ -1,37 +1,66 @@
-import { Component, OnInit, ViewChild, Inject, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
+import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
+import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 
 @Component({
   selector: 'app-product-buy-list',
   templateUrl: './product-buy-list.component.html',
-  styleUrls: ['./product-buy-list.component.css']
+  styleUrls: ['./product-buy-list.component.css'],
 })
 export class ProductBuyListComponent implements OnInit, AfterViewInit {
-
-  displayedColumns = ['name', 'specification', 'price', 'categoryName', 'actions'];
-  dataSource: MatTableDataSource<ProductBuyListDto> = new MatTableDataSource([]);
+  displayedColumns = [
+    'name',
+    'specification',
+    'price',
+    'categoryName',
+    'actions',
+  ];
+  dataSource: MatTableDataSource<ProductBuyListDto> = new MatTableDataSource(
+    [],
+  );
   paginator: MatPaginator;
   sort: MatSort;
   title = 'Products List';
+  categories: CategoryBuy[];
 
   @ViewChild(MatPaginator) set appPa(paginator: MatPaginator) {
     this.paginator = paginator;
-    setTimeout(() => this.dataSource.paginator = this.paginator);
+    setTimeout(() => (this.dataSource.paginator = this.paginator));
     // this.dataSource.paginator = this.paginator;
   }
   @ViewChild(MatSort) set appSo(sort: MatSort) {
     this.sort = sort;
-    setTimeout(() => this.dataSource.sort = this.sort);
+    setTimeout(() => (this.dataSource.sort = this.sort));
     // this.dataSource.sort = this.sort;
   }
 
-  constructor(private productBuyService: ProductBuyService,
-    private router: Router) { }
+  constructor(
+    private productBuyService: ProductBuyService,
+    private router: Router,
+    private categoryBuyService: CategoryBuyService
+  ) {}
+
+  // On input focus: setup filterPredicate to only filter by input column
+  setupFilter(column: string) {
+    this.dataSource.filterPredicate = (
+      data: ProductBuyListDto,
+      filter: string,
+    ) => {
+      const textToSearch = (data[column] && data[column].toLowerCase()) || '';
+      return textToSearch.indexOf(filter) !== -1;
+    };
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -43,11 +72,18 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getProductList();
+    this.getCategories();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  getCategories() {
+    this.categoryBuyService.getCategoryList().subscribe(res => {
+      this.categories = res;
+    });
   }
 
   getProductList() {
@@ -72,5 +108,4 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   refreshData() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
-
 }

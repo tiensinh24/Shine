@@ -9,7 +9,7 @@ using Shine.Data.Models;
 namespace Shine.Controllers
 {
     [Produces("application/json")]
-    [Route("product-sell")]
+    [Route("api/[controller]")]
     [Authorize]
     public class ProductSellController
     {
@@ -32,34 +32,24 @@ namespace Shine.Controllers
         }
 
         [HttpPost]
-        public ProductSell AddProduct([FromBody] ProductSell productSell)
+        public void AddProduct([FromBody] ProductSell productSell)
         {
             _repository.Add(productSell);
             _repository.Commit();
-            return productSell;
         }
 
         [HttpPut]
-        public ProductSell UpdateProduct([FromBody] ProductSell productSell)
+        public void UpdateProduct([FromBody]ProductSell productSell)
         {
-            _repository.Update(productSell);
+            _repository.UpdateProduct(productSell);
             _repository.Commit();
-            return productSell;
         }
 
-        [HttpDelete]
-        public bool Deleteproduct([FromBody] ProductSell productSell)
+        [HttpDelete("{id}")]
+        public void DeleteProduct(int id)
         {
-            try
-            {
-                _repository.Delete<ProductSell>(productSell);
-                _repository.Commit();
-                return true;
-            }
-            catch (System.Exception)
-            {
-                return false;
-            }
+            _repository.DeleteProduct(id);
+            _repository.Commit();
         }
     
     }

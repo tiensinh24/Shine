@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProductsSellDto } from '../_interfaces/productsSellDto';
+import { ProductSellListDto } from '../_interfaces/productSellListDto';
 import { ProductSell } from '../_interfaces/product-sell';
 
 @Injectable({
@@ -13,19 +13,24 @@ export class ProductSellService {
 
   constructor(private http: HttpClient) {}
 
-  getProductList(): Observable<ProductsSellDto[]> {
-    return this.http.get<ProductsSellDto[]>(this.baseUrl + 'api/product-sell/');
+  getProductList(): Observable<ProductSellListDto[]> {
+    return this.http.get<ProductSellListDto[]>(this.baseUrl + 'api/productSell/');
   }
 
   getProduct(id: number): Observable<ProductSell> {
-    return this.http.get<ProductSell>(this.baseUrl + 'api/product-sell/' + id);
+    return this.http.get<ProductSell>(this.baseUrl + 'api/productSell/' + id);
   }
 
-  onSubmit(productSell: ProductSell): Observable<ProductSell> {
-    return this.http.post<ProductSell>(
-      this.baseUrl + 'api/product-sell/',
-      productSell
-    );
+  addProduct(productSell: ProductSell): Observable<ProductSell> {
+    return this.http.post<ProductSell>(this.baseUrl + 'api/productSell/', productSell);
+  }
+
+  updateProduct(productSell: ProductSell): Observable<ProductSell> {
+    return this.http.put<ProductSell>(this.baseUrl + 'api/productSell/', productSell);
+  }
+
+  deleteProduct(id: number) {
+    this.http.delete<ProductSell>(this.baseUrl + 'api/productSell/' + id).subscribe();
   }
 
 }

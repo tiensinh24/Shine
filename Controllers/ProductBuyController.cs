@@ -14,7 +14,7 @@ using Shine.Data.Models;
 namespace Shine.Controllers
 {
     [Produces("application/json")]
-    [Route("api/product-buy")]
+    [Route("api/[controller]")]
     [Authorize]
     public class ProductBuyController : Controller
     {

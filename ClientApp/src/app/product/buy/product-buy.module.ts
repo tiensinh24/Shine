@@ -12,7 +12,7 @@ import { ProductBuyHomeComponent } from './product-buy-home/product-buy-home.com
 import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-detail.component';
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
-import { CategoryBuyEditComponent } from 'src/app/category/buy/category-buy-edit/category-buy-edit.component';
+import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/category-buy-dialog/category-buy-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { CategoryBuyEditComponent } from 'src/app/category/buy/category-buy-edit
     ProductBuyDetailComponent,
     ProductBuyEditComponent,
     ProductBuyListComponent,
-    CategoryBuyEditComponent
+    CategoryBuyDialogComponent
 
   ],
   imports: [
@@ -45,7 +45,7 @@ import { CategoryBuyEditComponent } from 'src/app/category/buy/category-buy-edit
     ProductBuyRoutingModule,
   ],
   entryComponents: [
-    CategoryBuyEditComponent
+    CategoryBuyDialogComponent
   ]
 })
 export class ProductBuyModule { }

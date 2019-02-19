@@ -25,6 +25,7 @@ import { ProductSellHomeComponent } from './product-sell-home/product-sell-home.
 import { ProductSellDetailComponent } from './product-sell-detail/product-sell-detail.component';
 import { ProductSellEditComponent } from './product-sell-edit/product-sell-edit.component';
 import { ProductSellListComponent } from './product-sell-list/product-sell-list.component';
+import { CategorySellDialogComponent } from 'src/app/category/sell/_services/_dialogs/category-sell-dialog/category-sell-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ProductSellListComponent } from './product-sell-list/product-sell-list.
     ProductSellDetailComponent,
     ProductSellEditComponent,
     ProductSellListComponent,
+    CategorySellDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -54,5 +56,8 @@ import { ProductSellListComponent } from './product-sell-list/product-sell-list.
     MatSlideToggleModule,
     ProductSellRoutingModule,
   ],
+  entryComponents: [
+    CategorySellDialogComponent
+  ]
 })
 export class ProductSellModule {}

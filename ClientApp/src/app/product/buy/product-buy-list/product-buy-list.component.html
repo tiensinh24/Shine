@@ -4,12 +4,12 @@
     <span class="fill"></span>
     <span class="mat-headline">{{title}}</span>
     <span class="fill"></span>
-    <button mat-mini-fab [routerLink]="['/product-sell']">
+    <button mat-mini-fab matTooltip="Go to Sell" [routerLink]="['/product-sell']">
       Buy
     </button>
   </mat-card>
   <!-- Table -->
-  <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+  <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>  
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>
       <td mat-cell *matCellDef="let row"> {{row.name}} </td>
@@ -28,7 +28,7 @@
     <ng-container matColumnDef="categoryName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Category</b> </th>
       <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
-    </ng-container>
+    </ng-container> -->
 
     <!-- actions -->
     <ng-container matColumnDef="actions">
@@ -66,5 +66,18 @@
     <mat-form-field fxFlex>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select category</mat-label>
+      <mat-select #cateFilter placeholder="Select category"
+      (selectionChange)="applyFilter(cateFilter.value)" (focus)="setupFilter('categoryName')">
+        <mat-option *ngFor="let category of categories" [value]="category.categoryName">
+          {{category.categoryName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
   </mat-card>
 </div>
+

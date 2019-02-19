@@ -1,0 +1,20 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+
+    <div class="mat-headline" mat-dialog-title>{{title}}</div>
+  
+    <mat-dialog-content fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <input matInput placeholder="Category Name" formControlName="categoryName" required>
+      </mat-form-field>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="center" fxLayout="row">
+      <button fxFlex="30" mat-raised-button (click)="close()">Close</button>
+      <button fxFlex="30" [disabled]="!formGroup.valid" mat-raised-button color="primary" (click)="save()">Save</button>
+    </mat-dialog-actions>
+  
+  </div>
+  

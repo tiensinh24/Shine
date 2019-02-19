@@ -12,15 +12,15 @@ export class CategoryBuyService {
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string) { }
 
-  getCategoryBuyList(): Observable<CategoryBuy[]> {
+  getCategoryList(): Observable<CategoryBuy[]> {
     return this.http.get<CategoryBuy[]>(this.baseUrl + 'api/categoryBuy');
   }
 
-  getCategoryBuy(id: number): Observable<CategoryBuy> {
+  getCategory(id: number): Observable<CategoryBuy> {
     return this.http.get<CategoryBuy>(this.baseUrl + 'api/categoryBuy/' + id);
   }
 
-  addCategoryBuy(category: CategoryBuy): Observable<CategoryBuy> {
+  addCategory(category: CategoryBuy): Observable<CategoryBuy> {
     return this.http.post<CategoryBuy>(this.baseUrl + 'api/categoryBuy', category);
   }
 }

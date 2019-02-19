@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { CategoryBuyEditComponent } from 'src/app/category/buy/category-buy-edit/category-buy-edit.component';
+import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/category-buy-dialog/category-buy-dialog.component';
 
 @Component({
   selector: 'app-product-buy-edit',
@@ -32,7 +32,6 @@ export class ProductBuyEditComponent implements OnInit {
     private categoryBuyService: CategoryBuyService,
     private dialogService: DialogService,
     private dialog: MatDialog,
-    private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute) {
 
@@ -60,7 +59,7 @@ export class ProductBuyEditComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryBuyService.getCategoryBuyList().subscribe(result => {
+    this.categoryBuyService.getCategoryList().subscribe(result => {
       this.categories = result;
     });
   }
@@ -108,10 +107,10 @@ export class ProductBuyEditComponent implements OnInit {
     // this.dialog.open(CategoryBuyEditComponent, dialogConfig);
 
     // TODO: pass data from dialog in to main component
-    const dialogRef = this.dialog.open(CategoryBuyEditComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
-      this.categoryBuyService.addCategoryBuy(data).subscribe();
+      this.categoryBuyService.addCategory(data).subscribe();
       this.getCategories();
     });
   }
