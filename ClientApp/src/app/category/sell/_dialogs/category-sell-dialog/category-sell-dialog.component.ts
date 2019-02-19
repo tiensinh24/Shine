@@ -2,8 +2,8 @@ import { OnInit, Inject, Component } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { CategorySellService } from '../../_services/category-sell.service';
 import { CategorySell } from '../../_interfaces/category-sell';
+import { CategorySellService } from '../../_services/category-sell.service';
 
 @Component({
   selector: 'app-category-sell-dialog',

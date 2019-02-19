@@ -12,7 +12,7 @@ const routes: Routes = [
         { path: '', redirectTo: '/category-sell/home', pathMatch: 'full' },
         { path: 'home', component: CategorySellHomeComponent },
         { path: 'create', component: CategorySellEditComponent },
-        { path: 'edit/:id', component: CategorySellEditComponent },
+        { path: ':categoryId', component: CategorySellEditComponent },
       ]
   }
 ];

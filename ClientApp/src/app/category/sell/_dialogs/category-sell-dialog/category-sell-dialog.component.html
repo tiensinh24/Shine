@@ -13,7 +13,7 @@
   
     <mat-dialog-actions align="center" fxLayout="row">
       <button fxFlex="30" mat-raised-button (click)="close()">Close</button>
-      <button fxFlex="30" [disable]="!formGroup.valid" mat-raised-button color="primary" (click)="save()">Save</button>
+      <button fxFlex="30" [disabled]="!formGroup.valid" mat-raised-button color="primary" (click)="save()">Save</button>
     </mat-dialog-actions>
   
   </div>

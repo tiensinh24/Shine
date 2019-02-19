@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
-import { Observable } from 'rxjs';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
@@ -110,8 +109,14 @@ export class ProductBuyEditComponent implements OnInit {
     const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
-      this.categoryBuyService.addCategory(data).subscribe();
-      this.getCategories();
+      this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
+        // Add new category into categories
+        this.categories.push(res);
+        // Update formControl with new added value
+        this.formGroup.patchValue({
+          categoryId: res.categoryId
+        });
+      });
     });
   }
 

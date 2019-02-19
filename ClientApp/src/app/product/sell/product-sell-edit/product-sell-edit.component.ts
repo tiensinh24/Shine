@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+
 import { ProductSell } from '../_interfaces/product-sell';
 import { CategorySell } from 'src/app/category/sell/_interfaces/category-sell';
 import { environment } from 'src/environments/environment';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { ProductSellService } from '../_services/product-sell.service';
 import { CategorySellService } from 'src/app/category/sell/_services/category-sell.service';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
 import { CategorySellDialogComponent } from 'src/app/category/sell/_dialogs/category-sell-dialog/category-sell-dialog.component';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-product-sell-edit',
@@ -108,8 +110,14 @@ export class ProductSellEditComponent implements OnInit {
     const dialogRef = this.dialog.open(CategorySellDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((data: CategorySell) => {
-      this.categorySellService.addCategory(data).subscribe();
-      this.getCategories();
+      this.categorySellService.addCategory(data).subscribe((res: CategorySell) => {
+        // Add new category in to categories
+        this.categories.push(res);
+        // Update formControl with new added value
+        this.formGroup.patchValue({
+          categoryId: res.categoryId
+        });
+      });
     });
   }
 
