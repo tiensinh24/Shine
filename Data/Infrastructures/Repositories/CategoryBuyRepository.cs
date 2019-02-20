@@ -19,7 +19,7 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategoryBuyDto> GetCategories()
+        public IEnumerable<CategoryBuyDto> GetCategoryListDto()
         {
             var query = _context.Set<CategoryBuy>().Select(c => new
             {
@@ -30,7 +30,7 @@ namespace Shine.Data.Infrastructures.Repositories
             return query.Adapt<IEnumerable<CategoryBuyDto>>();
         }
 
-        public CategoryBuyDto GetCategory(int id)
+        public CategoryBuyDto GetCategoryDto(int id)
         {
             var query = _context.Set<CategoryBuy>().Select(c => new
             {
@@ -39,6 +39,24 @@ namespace Shine.Data.Infrastructures.Repositories
             }).FirstOrDefault(c => c.CategoryId == id);
 
             return query.Adapt<CategoryBuyDto>();
+        }
+
+        public void UpdateCategory(CategoryBuy categoryBuy)
+        {
+            var category = _context.Set<CategoryBuy>().FirstOrDefault(c => c.CategoryId == categoryBuy.CategoryId);
+            if (category != null)
+            {
+                category.CategoryName = categoryBuy.CategoryName;
+            }
+        }
+
+        public void DeleteCategory(int id)
+        {
+            var category = _context.Set<CategoryBuy>().FirstOrDefault(c => c.CategoryId == id);
+            if (category != null)
+            {
+                _context.Set<CategoryBuy>().Remove(category);
+            }
         }
 
     }

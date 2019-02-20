@@ -26,36 +26,34 @@ namespace Shine.Controllers
         [HttpGet]
         public IEnumerable<CategoryBuyDto> GetCategories ()
         {
-            return _repository.GetCategories ();
+            return _repository.GetCategoryListDto ();
         }
 
         [HttpGet ("{id}")]
         public CategoryBuyDto GetCategory (int id)
         {
-            return _repository.GetCategory (id);
+            return _repository.GetCategoryDto (id);
         }
 
         [HttpPost]
-        public CategoryBuyDto AddCategory ([FromBody] CategoryBuy categoryBuy)
+        public void AddCategory ([FromBody] CategoryBuy categoryBuy)
         {
             _repository.Add (categoryBuy);
             _repository.Commit ();
-            return categoryBuy.Adapt<CategoryBuyDto> ();
         }
 
-        [HttpDelete]
-        public bool DeleteCategory (CategoryBuy categoryBuy)
+        [HttpPut]
+        public void UpdateCategory([FromBody]CategoryBuy categoryBuy)
         {
-            try
-            {
-                _repository.Delete<CategoryBuy> (categoryBuy);
+            _repository.UpdateCategory(categoryBuy);
+            _repository.Commit();
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteCategory (int id)
+        {            
+                _repository.DeleteCategory(id);
                 _repository.Commit ();
-                return true;
-            }
-            catch (System.Exception)
-            {
-                return false;
-            }
         }
 
     }

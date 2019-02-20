@@ -11,51 +11,49 @@ using Shine.Data.Models;
 
 namespace Shine.Controllers
 {
-    [Produces ("application/json")]
-    [Route ("api/[controller]")]
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     [Authorize]
     public class CategorySellController
     {
         private readonly CategorySellRepository _repository;
 
-        public CategorySellController (CategorySellRepository repository)
+        public CategorySellController(CategorySellRepository repository)
         {
             this._repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<CategorySellDto> GetCategories ()
+        public IEnumerable<CategorySellDto> GetCategories()
         {
-            return _repository.GetCategories();
+            return _repository.GetCategoryListDto();
         }
 
-        [HttpGet ("{id}")]
-        public CategorySellDto GetCategory (int id)
+        [HttpGet("{id}")]
+        public CategorySellDto GetCategory(int id)
         {
-            return _repository.GetCategory (id);
+            return _repository.GetCategoryDto(id);
         }
 
         [HttpPost]
-        public CategorySellDto AddCategory ([FromBody] CategorySell categorySell)
+        public void AddCategory([FromBody] CategorySell categorySell)
         {
-            _repository.Add (categorySell);
-            _repository.Commit ();
-            return categorySell.Adapt<CategorySellDto> ();
+            _repository.Add(categorySell);
+            _repository.Commit();
         }
 
-        [HttpDelete]
-        public bool DeleteCategory (CategorySell categorySell)
+        [HttpPut]
+        public void UpdateCategory([FromBody] CategorySell categorySell)
         {
-            try
-            {
-                _repository.Delete<CategorySell> (categorySell);
-                _repository.Commit ();
-                return true;
-            }
-            catch (System.Exception)
-            {
-                return false;
-            }
+            _repository.UpdateCategory(categorySell);
+            _repository.Commit();
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteCategory(int id)
+        {
+            _repository.DeleteCategory(id);
+            _repository.Commit();
         }
 
     }
