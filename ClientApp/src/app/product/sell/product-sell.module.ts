@@ -18,6 +18,8 @@ import {
   MatGridListModule,
   MatSlideToggleModule,
   MatCheckboxModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
 } from '@angular/material';
 
 import { ProductSellRoutingModule } from './product-sell-routing.module';
@@ -58,6 +60,8 @@ import { CategorySellDialogComponent } from 'src/app/category/sell/_dialogs/cate
     MatGridListModule,
     MatSlideToggleModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
     ProductSellRoutingModule,
   ],
   entryComponents: [

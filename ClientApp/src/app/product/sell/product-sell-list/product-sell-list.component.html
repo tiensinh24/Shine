@@ -1,4 +1,7 @@
-<div fxLayout="column">
+<!-- Progress bar -->
+<mat-progress-bar *ngIf="isLoading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+
+<div *ngIf="!isLoading" fxLayout="column">
   <!-- Title -->
   <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
     <span class="fill"></span>

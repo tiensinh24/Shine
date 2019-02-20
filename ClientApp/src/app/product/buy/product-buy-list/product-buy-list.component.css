@@ -2,6 +2,10 @@
   flex: 1 1 auto;
 }
 
+mat-progress-bar {
+  margin-bottom: 8px;
+}
+
 .mat-paginator-sticky {
   bottom: 0px;
   position: sticky;
@@ -13,7 +17,7 @@ button[mat-mini-fab] {
 }
 
 .card-title {
-  background-color: royalblue;  
+  background-color: royalblue;
   margin-bottom: -15px;
   text-align: center;
   color: white;

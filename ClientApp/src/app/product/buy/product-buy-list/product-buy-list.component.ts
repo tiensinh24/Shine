@@ -25,36 +25,25 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   ];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<ProductBuyListDto>(true, []);
-  paginator: MatPaginator;
-  sort: MatSort;
+  isLoading = true;
   title = 'Products List';
   categories: CategoryBuy[];
 
-  @ViewChild(MatPaginator) set appPa(paginator: MatPaginator) {
-    this.paginator = paginator;
-    setTimeout(() => (this.dataSource.paginator = this.paginator));
-    // this.dataSource.paginator = this.paginator;
-  }
-  @ViewChild(MatSort) set appSo(sort: MatSort) {
-    this.sort = sort;
-    setTimeout(() => (this.dataSource.sort = this.sort));
-    // this.dataSource.sort = this.sort;
-  }
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private productBuyService: ProductBuyService,
     private router: Router,
     private categoryBuyService: CategoryBuyService,
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.getProductList();
     this.getCategories();
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.getProductList();
   }
 
   getCategories() {
@@ -65,8 +54,13 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   getProductList() {
     this.productBuyService.getProductList().subscribe(res => {
+      // Check to loading progress bar
+      this.isLoading = false;
+
       this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
-    });
+      setTimeout(() => this.dataSource.sort = this.sort);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+    }, () => this.isLoading = false);
   }
 
   onDetail(productBuy: ProductBuy) {

@@ -6,7 +6,7 @@ import {
   MatPaginatorModule, MatSortModule, MatFormFieldModule, MatTableModule,
   MatInputModule, MatSelectModule, MatOptionModule, MatIconModule,
   MatCardModule, MatButtonModule,
-  MatDialogModule, MatTooltipModule, MatGridListModule, MatSlideToggleModule, MatCheckboxModule
+  MatDialogModule, MatTooltipModule, MatGridListModule, MatSlideToggleModule, MatCheckboxModule, MatProgressBarModule, MatProgressSpinnerModule
 } from '@angular/material';
 
 import { ProductBuyRoutingModule } from './product-buy-routing.module';
@@ -46,6 +46,8 @@ import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/catego
     MatGridListModule,
     MatSlideToggleModule,
     MatCheckboxModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     ProductBuyRoutingModule,
   ],
   entryComponents: [
