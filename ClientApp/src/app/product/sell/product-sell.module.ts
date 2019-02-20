@@ -17,6 +17,7 @@ import {
   MatDialogModule,
   MatGridListModule,
   MatSlideToggleModule,
+  MatCheckboxModule,
 } from '@angular/material';
 
 import { ProductSellRoutingModule } from './product-sell-routing.module';
@@ -56,6 +57,7 @@ import { CategorySellDialogComponent } from 'src/app/category/sell/_dialogs/cate
     MatDialogModule,
     MatGridListModule,
     MatSlideToggleModule,
+    MatCheckboxModule,
     ProductSellRoutingModule,
   ],
   entryComponents: [

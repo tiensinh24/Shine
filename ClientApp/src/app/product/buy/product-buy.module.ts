@@ -4,7 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule, MatSortModule, MatFormFieldModule, MatTableModule,
   MatInputModule, MatSelectModule, MatOptionModule, MatIconModule,
-  MatCardModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatGridListModule, MatSlideToggleModule } from '@angular/material';
+  MatCardModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatGridListModule, MatSlideToggleModule, MatCheckboxModule } from '@angular/material';
 
 import { ProductBuyRoutingModule } from './product-buy-routing.module';
 import { ProductBuyComponent } from './product-buy.component';
@@ -42,6 +42,7 @@ import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/catego
     MatDialogModule,
     MatGridListModule,
     MatSlideToggleModule,
+    MatCheckboxModule,
     ProductBuyRoutingModule,
   ],
   entryComponents: [

@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -12,6 +7,7 @@ import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-product-buy-list',
@@ -20,15 +16,15 @@ import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.
 })
 export class ProductBuyListComponent implements OnInit, AfterViewInit {
   displayedColumns = [
+    'select',
     'name',
     'specification',
     'price',
     'categoryName',
     'actions',
   ];
-  dataSource: MatTableDataSource<ProductBuyListDto> = new MatTableDataSource(
-    [],
-  );
+  dataSource = new MatTableDataSource([]);
+  selection = new SelectionModel<ProductBuyListDto>(true, []);
   paginator: MatPaginator;
   sort: MatSort;
   title = 'Products List';
@@ -48,27 +44,8 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   constructor(
     private productBuyService: ProductBuyService,
     private router: Router,
-    private categoryBuyService: CategoryBuyService
+    private categoryBuyService: CategoryBuyService,
   ) {}
-
-  // On input focus: setup filterPredicate to only filter by input column
-  setupFilter(column: string) {
-    this.dataSource.filterPredicate = (
-      data: ProductBuyListDto,
-      filter: string,
-    ) => {
-      const textToSearch = (data[column] && data[column].toLowerCase()) || '';
-      return textToSearch.indexOf(filter) !== -1;
-    };
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
   ngOnInit() {
     this.getProductList();
@@ -107,5 +84,42 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   refreshData() {
     this.paginator._changePageSize(this.paginator.pageSize);
+  }
+
+  // On input focus: setup filterPredicate to only filter by input column
+  setupFilter(column: string) {
+    this.dataSource.filterPredicate = (
+      data: ProductBuyListDto,
+      filter: string,
+    ) => {
+      const textToSearch = (data[column] && data[column].toLowerCase()) || '';
+      return textToSearch.indexOf(filter) !== -1;
+    };
+  }
+
+  applyFilter(filterValue: string) {
+    if (filterValue === undefined) {
+      this.dataSource.filter = '';
+    } else {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  // Whether the number of selected elements matches the total number of rows
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  //  Selects all rows if they are not all selected; otherwise clear selection
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 }

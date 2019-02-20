@@ -7,25 +7,24 @@ import { ProductSellService } from '../_services/product-sell.service';
 import { ProductSell } from '../_interfaces/product-sell';
 import { CategorySell } from 'src/app/category/sell/_interfaces/category-sell';
 import { CategorySellService } from 'src/app/category/sell/_services/category-sell.service';
-
-
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-product-sell-list',
   templateUrl: './product-sell-list.component.html',
-  styleUrls: ['./product-sell-list.component.css']
+  styleUrls: ['./product-sell-list.component.css'],
 })
 export class ProductSellListComponent implements OnInit, AfterViewInit {
   displayedColumns = [
+    'select',
     'name',
     'specification',
     'price',
     'categoryName',
     'actions',
   ];
-  dataSource: MatTableDataSource<ProductSellListDto> = new MatTableDataSource(
-    [],
-  );
+  dataSource = new MatTableDataSource<ProductSellListDto>([]);
+  selection = new SelectionModel<ProductSellListDto>(true, []);
   paginator: MatPaginator;
   sort: MatSort;
   title = 'Products List';
@@ -45,27 +44,8 @@ export class ProductSellListComponent implements OnInit, AfterViewInit {
   constructor(
     private productSellService: ProductSellService,
     private router: Router,
-    private categorySellService: CategorySellService
+    private categorySellService: CategorySellService,
   ) {}
-
-  // On input focus: setup filterPredicate to only filter by input column
-  setupFilter(column: string) {
-    this.dataSource.filterPredicate = (
-      data: ProductSellListDto,
-      filter: string,
-    ) => {
-      const textToSearch = (data[column] && data[column].toLowerCase()) || '';
-      return textToSearch.indexOf(filter) !== -1;
-    };
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
   ngOnInit() {
     this.getProductList();
@@ -106,4 +86,40 @@ export class ProductSellListComponent implements OnInit, AfterViewInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
+  // On input focus: setup filterPredicate to only filter by input column
+  setupFilter(column: string) {
+    this.dataSource.filterPredicate = (
+      data: ProductSellListDto,
+      filter: string,
+    ) => {
+      const textToSearch = (data[column] && data[column].toLowerCase()) || '';
+      return textToSearch.indexOf(filter) !== -1;
+    };
+  }
+
+  applyFilter(filterValue: string) {
+    if (filterValue === undefined) {
+      this.dataSource.filter = '';
+    } else {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  // Whether the number of selected elements matches the total number of rows
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  //  Selects all rows if they are not all selected; otherwise clear selection
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 }
