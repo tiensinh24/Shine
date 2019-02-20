@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TokenResponse } from '../_interfaces/token-response';
+import { MatSnackBar } from '@angular/material';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string,
-    @Inject(PLATFORM_ID) private platformId: any) { }
+    @Inject(PLATFORM_ID) private platformId: any,
+    private snackBar: MatSnackBar) { }
 
   login(username: string, password: string): Observable<TokenResponse> {
     const url = this.baseUrl + 'api/token/auth';
@@ -67,6 +69,7 @@ export class AuthService {
 
   logout(): boolean {
     this.setLocalAuth(null);
+    this.snackBar.open('Logging out, see you later!', 'Close');
     return true;
   }
 

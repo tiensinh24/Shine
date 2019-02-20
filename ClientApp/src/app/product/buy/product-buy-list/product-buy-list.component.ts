@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
 
 import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-product-buy-list',
@@ -87,14 +87,26 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   }
 
   // On input focus: setup filterPredicate to only filter by input column
-  setupFilter(column: string) {
-    this.dataSource.filterPredicate = (
-      data: ProductBuyListDto,
-      filter: string,
-    ) => {
-      const textToSearch = (data[column] && data[column].toLowerCase()) || '';
-      return textToSearch.indexOf(filter) !== -1;
-    };
+  setupFilter(column?: string) {
+    // Only filter specify column
+    if (column.length > 0) {
+      this.dataSource.filterPredicate = (
+        data: ProductBuyListDto,
+        filter: string,
+      ) => {
+        const textToSearch = (data[column] && data[column].toLowerCase()) || '';
+        return textToSearch.indexOf(filter) !== -1;
+      };
+    } else {
+      // If column = '', filter on all column
+      this.dataSource.filterPredicate = (
+        data: ProductBuyListDto,
+        filter: string,
+      ) => {
+        const textToSearch = (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
+        return textToSearch.indexOf(filter) !== -1;
+      };
+    }
   }
 
   applyFilter(filterValue: string) {

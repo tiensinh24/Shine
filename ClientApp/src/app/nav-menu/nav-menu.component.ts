@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, AfterContentChecked, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/_services/auth.service';
@@ -13,6 +13,7 @@ import { IconService } from '../_services/icon.service';
 export class NavMenuComponent implements OnInit, AfterContentChecked {
   user: string;
   isExpanded = false;
+  @Input() loading: boolean;
 
   collapse() {
     this.isExpanded = false;
@@ -31,12 +32,16 @@ export class NavMenuComponent implements OnInit, AfterContentChecked {
     }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('auth')).userName;
+    if (localStorage.length > 0) {
+      this.user = JSON.parse(localStorage.getItem('auth')).userName;
+    }
   }
 
   ngAfterContentChecked(): void {
-    if (this.user !== localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('auth')).userName;
+    if (localStorage.length > 0) {
+      if (this.user !== localStorage.getItem('user')) {
+        this.user = JSON.parse(localStorage.getItem('auth')).userName;
+      }
     }
   }
 

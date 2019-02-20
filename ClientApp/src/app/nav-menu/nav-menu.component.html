@@ -81,6 +81,9 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<!-- Progress Bar -->
+<mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
+
 <!-- Side Nav -->
 <mat-sidenav-container class="side-nav" >
   <mat-sidenav #drawer mode="side" opened role="navigation">

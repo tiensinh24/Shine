@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -36,8 +37,7 @@ import { ValidateService } from './_services/validate.service';
     FlexLayoutModule,
     AppRoutingModule,
   ],
-  exports: [
-  ],
+  exports: [],
   providers: [
     AuthService,
     DialogService,
@@ -45,12 +45,19 @@ import { ValidateService } from './_services/validate.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthResponseInterceptor,
       multi: true,
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        horizontalPosition: 'end',
+        duration: 2500,
+      },
     },
   ],
   bootstrap: [AppComponent],

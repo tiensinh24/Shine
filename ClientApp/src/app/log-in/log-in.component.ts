@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   FormBuilder,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '../auth/_services/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-log-in',
@@ -23,6 +24,7 @@ export class LogInComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
+    private snackBar: MatSnackBar,
   ) {}
 
   createForm() {
@@ -44,12 +46,14 @@ export class LogInComponent implements OnInit {
       res => {
         if (res && res.token) {
           this.router.navigate(['home']);
+          this.snackBar.open(`Welcome ${username}`, 'OK');
         }
       },
       () => {
         this.formGroup.setErrors({
           auth: 'Invalid username or password'
         });
+        this.snackBar.open('Unauthorized', 'Close');
       },
     );
   }
