@@ -27,6 +27,10 @@ import { CategoryBuyHomeComponent } from './category-buy-home/category-buy-home.
 import { CategoryBuyEditComponent } from './category-buy-edit/category-buy-edit.component';
 import { CategoryBuyListComponent } from './category-buy-list/category-buy-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CategoryBuyDetailComponent } from './category-buy-detail/category-buy-detail.component';
+import { CategoryBuyDialogComponent } from './_dialogs/category-buy-dialog/category-buy-dialog.component';
+import { DialogModule } from 'src/app/_modules/dialog.module';
+import { AppMaterialModule } from 'src/app/app-material.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CategoryBuyHomeComponent,
     CategoryBuyEditComponent,
     CategoryBuyListComponent,
+    CategoryBuyDetailComponent,
+    CategoryBuyDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -56,7 +62,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatCheckboxModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     CategoryRoutingModule,
   ],
+  entryComponents: [
+    CategoryBuyDialogComponent,
+  ]
 })
 export class CategoryBuyModule { }

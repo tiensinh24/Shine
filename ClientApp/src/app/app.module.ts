@@ -37,7 +37,8 @@ import { ValidateService } from './_services/validate.service';
     FlexLayoutModule,
     AppRoutingModule,
   ],
-  exports: [],
+  exports: [
+    ],
   providers: [
     AuthService,
     DialogService,

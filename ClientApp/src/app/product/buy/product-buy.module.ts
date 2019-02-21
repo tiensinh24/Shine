@@ -16,6 +16,7 @@ import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-deta
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
 import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/category-buy-dialog/category-buy-dialog.component';
+import { DialogModule } from 'src/app/_modules/dialog.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/catego
     ProductBuyDetailComponent,
     ProductBuyEditComponent,
     ProductBuyListComponent,
-    CategoryBuyDialogComponent
+    CategoryBuyDialogComponent,
 
   ],
   imports: [

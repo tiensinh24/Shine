@@ -16,7 +16,7 @@ namespace Shine.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [Authorize]
-    public class ProductBuyController : Controller
+    public class ProductBuyController
     {
         private readonly ProductBuyRepository _repository;
         public ProductBuyController(ProductBuyRepository repository)

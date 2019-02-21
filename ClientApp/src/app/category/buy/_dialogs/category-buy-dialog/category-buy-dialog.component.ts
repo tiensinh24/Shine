@@ -8,55 +8,74 @@ import { CategoryBuyService } from '../../_services/category-buy.service';
 @Component({
   selector: 'app-category-buy-dialog',
   templateUrl: './category-buy-dialog.component.html',
-  styleUrls: ['./category-buy-dialog.component.css']
+  styleUrls: ['./category-buy-dialog.component.css'],
 })
 export class CategoryBuyDialogComponent implements OnInit {
-  title = 'Create new category';
-  category: CategoryBuy;
+  title: string;
+  editMode: boolean;
+  categoryBuy: CategoryBuy;
   formGroup: FormGroup;
 
-  constructor(private categoryBuyService: CategoryBuyService,
+  constructor(
+    private categoryBuyService: CategoryBuyService,
     private fb: FormBuilder,
-
-    // TODO: Get data from main component
-    // just testing, must implement on product edit component
     private dialogRef: MatDialogRef<CategoryBuyDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data
-
-  ) {
-
-    // TODO: this. specification = data.specification
-
-  }
+    // Inject data from main component
+    @Inject(MAT_DIALOG_DATA) public data: CategoryBuy,
+  ) {}
 
   ngOnInit() {
     this.createForm();
+
+    // Check if data isn't null (edit mode)
+    if (this.data) {
+      this.editMode = true;
+      this.title = 'Edit ' + this.data.categoryName;
+      this.updateForm();
+      // Create mode
+    } else {
+      this.editMode = false;
+      this.title = 'Create new category';
+    }
   }
 
   createForm() {
     this.formGroup = this.fb.group({
-
-      // TODO: specification: [specification, []]
-      categoryName: ['', Validators.required]
+      categoryName: ['', Validators.required],
     });
+  }
 
+  updateForm() {
+    this.formGroup.setValue({
+      categoryName: this.data.categoryName,
+    });
   }
 
   onSubmit() {
+    // const tempCategory = <CategoryBuy>{};
+    //   tempCategory.categoryName = this.formGroup.value.categoryName;
+
+    // if (!this.editMode) {
+    //   tempCategory.categoryId = this.data.categoryId;
+    //   this.categoryBuyService.addCategory(tempCategory).subscribe();
+    // } else {
+    //   this.categoryBuyService.updateCategory(tempCategory).subscribe();
+    // }
+  }
+
+  // Pass data from dialog to main component
+  save() {
     const tempCategory = <CategoryBuy>{};
     tempCategory.categoryName = this.formGroup.value.categoryName;
 
-    this.categoryBuyService.addCategory(tempCategory).subscribe();
-  }
+    if (this.editMode) {
+      tempCategory.categoryId = this.data.categoryId;
+    }
 
-  // TODO: use to pass data from dialog to main component
-  save() {
-    this.dialogRef.close(this.formGroup.value);
+    this.dialogRef.close(tempCategory);
   }
 
   close() {
     this.dialogRef.close();
   }
-
-
 }

@@ -1,26 +1,35 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
+import {
+  MatTableDataSource,
+  MatSort,
+  MatPaginator,
+  MatTable,
+  MatDialog,
+  MatDialogConfig,
+} from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 
 import { CategoryBuy } from '../_interfaces/categoryBuy';
 import { CategoryBuyService } from '../_services/category-buy.service';
+import { CategoryBuyDialogComponent } from '../_dialogs/category-buy-dialog/category-buy-dialog.component';
 
 @Component({
   selector: 'app-category-buy-list',
   templateUrl: './category-buy-list.component.html',
-  styleUrls: ['./category-buy-list.component.css']
+  styleUrls: ['./category-buy-list.component.css'],
 })
 export class CategoryBuyListComponent implements AfterViewInit {
-  displayedColumns = [
-    'select',
-    'categoryId',
-    'categoryName',
-    'actions',
-  ];
-  dataSource = new MatTableDataSource([]);
+  displayedColumns = ['select', 'categoryId', 'categoryName', 'actions'];
+  dataSource = new MatTableDataSource<CategoryBuy>([]);
   selection = new SelectionModel<CategoryBuy>(true, []);
   isLoading = true;
+  isEdit: boolean;
   title = 'Category List';
 
   @ViewChild(MatSort) sort: MatSort;
@@ -29,21 +38,68 @@ export class CategoryBuyListComponent implements AfterViewInit {
   constructor(
     private categoryBuyService: CategoryBuyService,
     private router: Router,
-  ) { }
+    private dialog: MatDialog,
+  ) {}
 
   ngAfterViewInit(): void {
     this.getCategoryList();
   }
 
   getCategoryList() {
-    this.categoryBuyService.getCategoryList().subscribe(res => {
-      // Check to loading progress bar
-      this.isLoading = false;
+    this.categoryBuyService.getCategoryList().subscribe(
+      res => {
+        // Check to loading progress bar
+        this.isLoading = false;
 
-      this.dataSource = new MatTableDataSource<CategoryBuy>(res);
-      setTimeout(() => this.dataSource.sort = this.sort);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-    }, () => this.isLoading = false);
+        this.dataSource = new MatTableDataSource<CategoryBuy>(res);
+        setTimeout(() => (this.dataSource.sort = this.sort));
+        setTimeout(() => (this.dataSource.paginator = this.paginator));
+      },
+      () => (this.isLoading = false),
+    );
+  }
+
+  openDialog(categoryId?: number) {
+    // Find category in dataSource
+    const catEdit = this.dataSource.data.find(c => c.categoryId === categoryId);
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '400px';
+    dialogConfig.minHeight = '250px';
+
+    // Pass data from main component to dialog
+    if (catEdit) {
+      dialogConfig.data = {
+        categoryId: catEdit.categoryId,
+        categoryName: catEdit.categoryName
+      };
+    }
+
+    // Open dialog with config & passed data
+    const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
+
+    // Pass data from dialog in to main component
+    dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
+      // Create mode
+      if (!catEdit) {
+        this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
+          // Add new category into data source
+          this.dataSource.data.push(res);
+          // Update data source
+          this.dataSource._updateChangeSubscription();
+        });
+      // Edit mode
+      } else {
+        this.categoryBuyService.updateCategory(data).subscribe((res: CategoryBuy) => {
+          const index = this.dataSource.data.findIndex(c => c.categoryId === res.categoryId);
+          this.dataSource.data.splice(index, 1, res);
+          this.dataSource._updateChangeSubscription();
+        });
+      }
+    });
   }
 
   onDetail(categoryBuy: CategoryBuy) {
@@ -55,8 +111,18 @@ export class CategoryBuyListComponent implements AfterViewInit {
   }
 
   onDelete(categoryBuy: CategoryBuy) {
-    this.categoryBuyService.deleteCategory(categoryBuy.categoryId);
-    this.getCategoryList();
+    this.categoryBuyService
+      .deleteCategory(categoryBuy.categoryId)
+      .subscribe(() => {
+        // Get index of deleted row
+        const index = this.dataSource.data.indexOf(categoryBuy, 0);
+        // Remove row, update dataSource & remove all selection
+        if (index > -1) {
+          this.dataSource.data.splice(index, 1);
+          this.dataSource._updateChangeSubscription();
+          this.selection.clear();
+        }
+      });
   }
 
   refreshData() {
@@ -67,20 +133,15 @@ export class CategoryBuyListComponent implements AfterViewInit {
   setupFilter(column?: string) {
     // Only filter specify column
     if (column.length > 0) {
-      this.dataSource.filterPredicate = (
-        data: CategoryBuy,
-        filter: string,
-      ) => {
+      this.dataSource.filterPredicate = (data: CategoryBuy, filter: string) => {
         const textToSearch = (data[column] && data[column].toLowerCase()) || '';
         return textToSearch.indexOf(filter) !== -1;
       };
     } else {
       // If column = '', filter on all column
-      this.dataSource.filterPredicate = (
-        data: CategoryBuy,
-        filter: string,
-      ) => {
-        const textToSearch = (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
+      this.dataSource.filterPredicate = (data: CategoryBuy, filter: string) => {
+        const textToSearch =
+          (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
         return textToSearch.indexOf(filter) !== -1;
       };
     }

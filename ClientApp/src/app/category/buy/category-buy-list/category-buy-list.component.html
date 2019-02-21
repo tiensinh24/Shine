@@ -1,7 +1,7 @@
 <!-- Loading progress bar -->
 <mat-progress-bar *ngIf="isLoading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
 
-<div *ngIf="!isLoading" fxLayout="column">
+<div #table table *ngIf="!isLoading" fxLayout="column">
   <!-- Title -->
   <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
     <span class="fill"></span>
@@ -40,7 +40,7 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
-        <button mat-icon-button color="primary" [routerLink]="['/category-buy/create']">
+        <button mat-icon-button color="primary" (click)="openDialog()">
           <mat-icon matTooltip="Create new category" aria-label="Create new category">add_circle</mat-icon>
         </button>
       </mat-header-cell>
@@ -51,7 +51,7 @@
           <mat-icon aria-label="Detail">dehaze</mat-icon>
         </button>
 
-        <button matTooltip="Edit category" mat-icon-button color="accent" (click)="onEdit(row)">
+        <button matTooltip="Edit category" mat-icon-button color="accent" (click)="openDialog(row.categoryId)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 

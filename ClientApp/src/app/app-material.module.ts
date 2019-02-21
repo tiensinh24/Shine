@@ -5,10 +5,13 @@ import {
   MatSidenavModule, MatIconModule, MatListModule, MatCardModule,
   MatDialogModule, MatExpansionModule, MatTooltipModule, MatMenuModule, MatGridListModule, MatSnackBarModule, MatProgressBarModule,
 } from '@angular/material';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [],
   imports: [
+    CommonModule,
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
@@ -31,6 +34,8 @@ import {
 
   ],
   exports: [
+    CommonModule,
+    FormsModule,
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
