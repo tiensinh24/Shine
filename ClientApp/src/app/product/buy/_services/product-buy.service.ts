@@ -33,7 +33,7 @@ export class ProductBuyService {
     return this.http.put<ProductBuy>(this.baseUrl + 'api/productBuy/', productBuy);
   }
 
-  deleteProduct(id: number) {
-    this.http.delete<ProductBuy>(this.baseUrl + 'api/productBuy/' + id).subscribe();
+  deleteProduct(id: number): Observable<number> {
+    return this.http.delete<number>(this.baseUrl + 'api/productBuy/' + id);
   }
 }

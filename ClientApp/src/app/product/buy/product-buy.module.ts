@@ -15,8 +15,10 @@ import { ProductBuyHomeComponent } from './product-buy-home/product-buy-home.com
 import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-detail.component';
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
-import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/category-buy-dialog/category-buy-dialog.component';
+
 import { DialogModule } from 'src/app/_modules/dialog.module';
+import { SharedModule } from 'src/app/_shared/shared.module';
+import { CoreModule } from 'src/app/_core/core.module';
 
 @NgModule({
   declarations: [
@@ -25,10 +27,12 @@ import { DialogModule } from 'src/app/_modules/dialog.module';
     ProductBuyDetailComponent,
     ProductBuyEditComponent,
     ProductBuyListComponent,
-    CategoryBuyDialogComponent,
 
   ],
   imports: [
+    SharedModule,
+    CoreModule,
+
     CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
@@ -49,10 +53,8 @@ import { DialogModule } from 'src/app/_modules/dialog.module';
     MatCheckboxModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+
     ProductBuyRoutingModule,
   ],
-  entryComponents: [
-    CategoryBuyDialogComponent
-  ]
 })
 export class ProductBuyModule { }

@@ -63,21 +63,31 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     }, () => this.isLoading = false);
   }
 
+  onCreate() {
+    // Send categories to edit component
+    this.router.navigateByUrl('/product-buy/create', { state: { categories: this.categories } });
+  }
+
   onDetail(productBuy: ProductBuy) {
     this.router.navigate(['product-buy', productBuy.productId]);
   }
-
+  
   onEdit(productBuy: ProductBuy) {
-    this.router.navigate(['product-buy/edit', productBuy.productId]);
+    // Send current product, categories to edit component
+    this.router.navigateByUrl(`/product-buy/edit/${productBuy.productId}`, { state: { product: productBuy, categories: this.categories } });
   }
 
   onDelete(productBuy: ProductBuy) {
-    this.productBuyService.deleteProduct(productBuy.productId);
-    this.getProductList();
-  }
-
-  refreshData() {
-    this.paginator._changePageSize(this.paginator.pageSize);
+    this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
+      // Get index of deleted row
+      const index = this.dataSource.data.indexOf(productBuy, 0);
+      // Remove row, update dataSource & remove all selection
+      if (index > -1) {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
+        this.selection.clear();
+      }
+    });
   }
 
   // On input focus: setup filterPredicate to only filter by input column

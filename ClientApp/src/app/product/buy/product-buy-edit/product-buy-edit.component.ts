@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ProductBuyService } from '../_services/product-buy.service';
@@ -10,14 +10,16 @@ import { ProductBuy } from '../_interfaces/product-buy';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { CategoryBuyDialogComponent } from 'src/app/category/buy/_dialogs/category-buy-dialog/category-buy-dialog.component';
+import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-product-buy-edit',
   templateUrl: './product-buy-edit.component.html',
   styleUrls: ['./product-buy-edit.component.css']
 })
-export class ProductBuyEditComponent implements OnInit {
+export class ProductBuyEditComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
   productBuy: ProductBuy;
   categories: CategoryBuy[];
@@ -25,6 +27,7 @@ export class ProductBuyEditComponent implements OnInit {
   editMode: boolean;
   actButton: boolean;
   title: string;
+  routeSub: Subscription;
 
   constructor(private fb: FormBuilder,
     private productBuyService: ProductBuyService,
@@ -32,8 +35,9 @@ export class ProductBuyEditComponent implements OnInit {
     private dialogService: DialogService,
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute) { }
 
+  ngOnInit() {
     this.createForm();
 
     const id = +this.route.snapshot.params.productId;
@@ -41,26 +45,29 @@ export class ProductBuyEditComponent implements OnInit {
     if (id) {
       this.editMode = true;
 
-      this.productBuyService.getProduct(id).subscribe(result => {
-        this.productBuy = result;
-        this.title = 'Edit ' + this.productBuy.name;
-
-        this.updateForm();
+      // *Get product, categories from list component without calling API
+      this.routeSub = this.route.paramMap.pipe(map(() => window.history.state))
+      .subscribe(res => {
+        this.productBuy = res.product;
+        this.categories = res.categories;
       });
+      this.title = `Edit ${this.productBuy.name}`;
+      this.updateForm();
     } else {
       this.editMode = false;
+
+      // *Get categories from list component without calling API
+      this.routeSub = this.route.paramMap.pipe(map(() => window.history.state))
+      .subscribe(res => {
+        this.categories = res.categories;
+      });
       this.title = 'Create new product';
     }
   }
 
-  ngOnInit() {
-    this.getCategories();
-  }
-
-  getCategories() {
-    this.categoryBuyService.getCategoryList().subscribe(result => {
-      this.categories = result;
-    });
+  // Destroy all subscription
+  ngOnDestroy(): void {
+    this.routeSub.unsubscribe();
   }
 
   createForm() {
@@ -95,28 +102,21 @@ export class ProductBuyEditComponent implements OnInit {
     dialogConfig.minWidth = '400px';
     dialogConfig.minHeight = '250px';
 
-    // TODO: Pass data from main component to dialog
-    // use to edit value (product)
-    // dialogConfig.data = {
-    //   name: 'exp',
-    //   specification: 'exp'
-    //   ...
-    // };
-
-    // this.dialog.open(CategoryBuyEditComponent, dialogConfig);
-
-    // TODO: pass data from dialog in to main component
     const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
 
+    // *Get data returned from dialog
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
-      this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
-        // Add new category into categories
-        this.categories.push(res);
-        // Update formControl with new added value
-        this.formGroup.patchValue({
-          categoryId: res.categoryId
+      // Check if data exists
+      if (data) {
+        this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
+          // Add new category into categories
+          this.categories.push(res);
+          // Update formControl with new added value
+          this.formGroup.patchValue({
+            categoryId: res.categoryId
+          });
         });
-      });
+      }
     });
   }
 

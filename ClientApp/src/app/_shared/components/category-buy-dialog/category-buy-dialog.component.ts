@@ -1,9 +1,10 @@
 import { OnInit, Inject, Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
+import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 
-import { CategoryBuy } from '../../_interfaces/categoryBuy';
-import { CategoryBuyService } from '../../_services/category-buy.service';
+
 
 @Component({
   selector: 'app-category-buy-dialog',
@@ -49,18 +50,6 @@ export class CategoryBuyDialogComponent implements OnInit {
     this.formGroup.setValue({
       categoryName: this.data.categoryName,
     });
-  }
-
-  onSubmit() {
-    // const tempCategory = <CategoryBuy>{};
-    //   tempCategory.categoryName = this.formGroup.value.categoryName;
-
-    // if (!this.editMode) {
-    //   tempCategory.categoryId = this.data.categoryId;
-    //   this.categoryBuyService.addCategory(tempCategory).subscribe();
-    // } else {
-    //   this.categoryBuyService.updateCategory(tempCategory).subscribe();
-    // }
   }
 
   // Pass data from dialog to main component

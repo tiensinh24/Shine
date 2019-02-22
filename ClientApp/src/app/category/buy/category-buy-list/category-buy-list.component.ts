@@ -17,7 +17,8 @@ import { Router } from '@angular/router';
 
 import { CategoryBuy } from '../_interfaces/categoryBuy';
 import { CategoryBuyService } from '../_services/category-buy.service';
-import { CategoryBuyDialogComponent } from '../_dialogs/category-buy-dialog/category-buy-dialog.component';
+import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
+
 
 @Component({
   selector: 'app-category-buy-list',
@@ -39,7 +40,7 @@ export class CategoryBuyListComponent implements AfterViewInit {
     private categoryBuyService: CategoryBuyService,
     private router: Router,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     this.getCategoryList();
@@ -83,21 +84,24 @@ export class CategoryBuyListComponent implements AfterViewInit {
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
-      // Create mode
-      if (!catEdit) {
-        this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
-          // Add new category into data source
-          this.dataSource.data.push(res);
-          // Update data source
-          this.dataSource._updateChangeSubscription();
-        });
-      // Edit mode
-      } else {
-        this.categoryBuyService.updateCategory(data).subscribe((res: CategoryBuy) => {
-          const index = this.dataSource.data.findIndex(c => c.categoryId === res.categoryId);
-          this.dataSource.data.splice(index, 1, res);
-          this.dataSource._updateChangeSubscription();
-        });
+      // Check if data exists
+      if (data) {
+        // Create mode
+        if (!catEdit) {
+          this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
+            // Add new category into data source
+            this.dataSource.data.push(res);
+            // Update data source
+            this.dataSource._updateChangeSubscription();
+          });
+          // Edit mode
+        } else {
+          this.categoryBuyService.updateCategory(data).subscribe((res: CategoryBuy) => {
+            const index = this.dataSource.data.findIndex(c => c.categoryId === res.categoryId);
+            this.dataSource.data.splice(index, 1, res);
+            this.dataSource._updateChangeSubscription();
+          });
+        }
       }
     });
   }
@@ -123,10 +127,6 @@ export class CategoryBuyListComponent implements AfterViewInit {
           this.selection.clear();
         }
       });
-  }
-
-  refreshData() {
-    this.paginator._changePageSize(this.paginator.pageSize);
   }
 
   // On input focus: setup filterPredicate to only filter by input column

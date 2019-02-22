@@ -37,24 +37,27 @@ namespace Shine.Controllers
         }
 
         [HttpPost]
-        public void AddProduct([FromBody] ProductBuy productBuy)
+        public ProductBuy AddProduct([FromBody] ProductBuy productBuy)
         {
             _repository.Add(productBuy);
             _repository.Commit();
+            return productBuy;
         }
 
         [HttpPut]
-        public void UpdateProduct([FromBody]ProductBuy productBuy)
+        public ProductBuy UpdateProduct([FromBody]ProductBuy productBuy)
         {
             _repository.UpdateProduct(productBuy);
             _repository.Commit();
+            return productBuy;
         }
 
         [HttpDelete("{id}")]
-        public void DeleteProduct(int id)
+        public int DeleteProduct(int id)
         {
             _repository.DeleteProduct(id);
             _repository.Commit();
+            return id;
         }
 
     }
