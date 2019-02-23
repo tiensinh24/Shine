@@ -25,7 +25,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   categories: CategoryBuy[];
   formGroup: FormGroup;
   editMode: boolean;
-  actButton: boolean;
+  canDeactive: boolean;
   title: string;
   routeSub: Subscription;
 
@@ -94,13 +94,14 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
 
   }
 
+  // Open add category dialog
   openDialog() {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '400px';
-    dialogConfig.minHeight = '250px';
+    // dialogConfig.minWidth = '400px';
+    // dialogConfig.minHeight = '250px';
 
     const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
 
@@ -121,7 +122,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.actButton = true;
+    this.canDeactive = true;
     const tempProductBuy = <ProductBuy>{};
 
     tempProductBuy.name = this.formGroup.value.name;
@@ -129,25 +130,30 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     tempProductBuy.price = this.formGroup.value.price;
     tempProductBuy.categoryId = this.formGroup.value.categoryId;
 
+    // Edit mode
     if (this.editMode) {
       tempProductBuy.productId = this.productBuy.productId;
       this.productBuyService.updateProduct(tempProductBuy).subscribe(() => {
-        this.router.navigate(['product-buy/list']);
+        // Navigate back & return data to list
+        this.router.navigateByUrl('/product-buy/list', { state: {data: tempProductBuy} });
       });
+    // Create mode
     } else {
-      this.productBuyService.addProduct(tempProductBuy).subscribe(() => {
-        this.router.navigate(['/product-buy/list']);
+      this.productBuyService.addProduct(tempProductBuy).subscribe(res => {
+        // Navigate back & return data to list
+        this.router.navigateByUrl('/product-buy/list', {state: {data: res}});
       });
     }
   }
 
+  // Return data = 0 to product list
   onBack() {
-    this.actButton = true;
-    this.router.navigate(['/product-buy/list']);
+    this.canDeactive = true;
+    this.router.navigateByUrl('/product-buy/list', { state: { data: 0 } });
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.actButton) {
+    if (!this.canDeactive) {
       if (this.formGroup.dirty) {
         return this.dialogService.confirm('Discard changes?');
       }

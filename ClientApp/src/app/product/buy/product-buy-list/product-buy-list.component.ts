@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
@@ -8,6 +8,9 @@ import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { equal } from 'assert';
 
 @Component({
   selector: 'app-product-buy-list',
@@ -24,26 +27,59 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     'actions',
   ];
   dataSource = new MatTableDataSource([]);
+  localSource = new MatTableDataSource([]);
   selection = new SelectionModel<ProductBuyListDto>(true, []);
   isLoading = true;
   title = 'Products List';
   categories: CategoryBuy[];
+  routeEditSub: Subscription;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private productBuyService: ProductBuyService,
-    private router: Router,
     private categoryBuyService: CategoryBuyService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.getCategories();
+    // TODO: Check route data return from edit before call API
+    // this.getCategories();
+
+    
   }
 
   ngAfterViewInit(): void {
-    this.getProductList();
+    // TODO: Check route data return from edit before call API
+    // this.getProductList();
+
+    // *Check data return from edit component & update dataSource base on data return
+    this.routeEditSub = this.route.paramMap.pipe(map(() => window.history.state))
+      .subscribe(res => {
+        // Cancel do nothing
+        if (res.data === 0) {
+          console.log(this.dataSource);
+        } else if (res.data && res.data !== 0) {
+          const index = this.dataSource.data.findIndex(p => p.productId === res.productId);
+
+          // Product return from edit component exists on dataSource, so we update dataSource
+          //  without calling API
+          if (index > -1) {
+            this.dataSource.data.splice(index, 1, res);
+            this.dataSource._updateChangeSubscription();
+          }
+        // Edit component doesn't return any data, in this case we calling API to get dataSource
+        } else {
+          this.getProductList();
+          this.getCategories();
+        }
+      });
+  }
+
+  refreshData() {
+
   }
 
   getCategories() {
@@ -71,7 +107,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   onDetail(productBuy: ProductBuy) {
     this.router.navigate(['product-buy', productBuy.productId]);
   }
-  
+
   onEdit(productBuy: ProductBuy) {
     // Send current product, categories to edit component
     this.router.navigateByUrl(`/product-buy/edit/${productBuy.productId}`, { state: { product: productBuy, categories: this.categories } });

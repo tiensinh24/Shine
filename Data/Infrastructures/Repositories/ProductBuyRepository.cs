@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+
 using Mapster;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using Newtonsoft.Json;
+
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -20,30 +24,16 @@ namespace Shine.Data.Infrastructures.Repositories
 #endregion
 
         public IEnumerable<ProductBuyListDto> GetProductListDto()
-        {
-            var query = _context.Set<ProductBuy>().Include(p => p.Category).Select(p => new
-            {
-                p.ProductId,
-                    p.Name,
-                    p.Specification,
-                    p.Price,
-                    p.CategoryId,
-                    p.Category.CategoryName
-            }).AsNoTracking();
-            return query.Adapt<IEnumerable<ProductBuyListDto>>();
+        {            
+            return _context.Set<ProductBuy>().Include(p => p.Category)
+                .ProjectToType<ProductBuyListDto>().AsNoTracking();
+
         }
 
         public ProductBuyDto GetProductDto(int id)
         {
-            var query = _context.Set<ProductBuy>().Select(p => new
-            {
-                p.ProductId,
-                    p.Name,
-                    p.Specification,
-                    p.Price,
-                    p.CategoryId
-            }).FirstOrDefault(p => p.ProductId == id);
-            return query.Adapt<ProductBuyDto>();
+            return _context.Set<ProductBuy>().ProjectToType<ProductBuyDto>()
+                .FirstOrDefault(p => p.ProductId == id);
         }
 
         public void UpdateProduct(ProductBuy productBuy)
