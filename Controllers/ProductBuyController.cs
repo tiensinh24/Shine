@@ -16,7 +16,7 @@ namespace Shine.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [Authorize]
-    public class ProductBuyController
+    public class ProductBuyController : Controller
     {
         private readonly ProductBuyRepository _repository;
         public ProductBuyController(ProductBuyRepository repository)
@@ -37,19 +37,19 @@ namespace Shine.Controllers
         }
 
         [HttpPost]
-        public ProductBuy AddProduct([FromBody] ProductBuy productBuy)
+        public ProductBuyDto AddProduct([FromBody] ProductBuy productBuy)
         {
             _repository.Add(productBuy);
             _repository.Commit();
-            return productBuy;
+            return productBuy.Adapt<ProductBuyDto>();
         }
 
         [HttpPut]
-        public ProductBuy UpdateProduct([FromBody]ProductBuy productBuy)
+        public ProductBuyDto UpdateProduct([FromBody]ProductBuy productBuy)
         {
             _repository.UpdateProduct(productBuy);
             _repository.Commit();
-            return productBuy;
+            return productBuy.Adapt<ProductBuyDto>();
         }
 
         [HttpDelete("{id}")]

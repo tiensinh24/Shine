@@ -1,27 +1,28 @@
-<mat-card class="card-title mat-elevation-z8">
-  <span  class="mat-headline">{{title}}</span>
-</mat-card>
-<mat-card fxLayout="column" fxLayoutGap="32px" class="mat-elevation-z8">
+<!-- Dialog title -->
+<mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{title}}</mat-card>
 
-  <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<mat-card mat-dialog-content class="mat-elevation-z1">
+  <!-- Formgroup -->
+  <form fxLayout="column" [formGroup]="formGroup">
+    <!-- Product Name -->
     <mat-form-field appearance="outline">
       <mat-label>Product Name</mat-label>
       <input matInput placeholder="Product Name" formControlName="name" required autofocus>
       <mat-error *ngIf="get('name').invalid">{{getErrorMessage(get('name'))}}</mat-error>
     </mat-form-field>
-
+    <!-- Specification -->
     <mat-form-field appearance="outline">
       <mat-label>Specification</mat-label>
       <input matInput placeholder="Specification" formControlName="specification" required>
       <mat-error *ngIf="get('specification').invalid">{{getErrorMessage(get('specification'))}}</mat-error>
     </mat-form-field>
-
+    <!-- Price -->
     <mat-form-field appearance="outline">
       <mat-label>Price</mat-label>
       <input matInput placeholder="Price" formControlName="price" required>
       <mat-error *ngIf="get('price').invalid">{{getErrorMessage(get('price'))}}</mat-error>
     </mat-form-field>
-
+    <!-- CategoryId -->
     <mat-form-field appearance="outline">
       <mat-label>Select category</mat-label>
       <mat-select placeholder="Select category" formControlName="categoryId" required>
@@ -34,13 +35,13 @@
       </mat-select>
       <mat-error *ngIf="get('categoryId').invalid">{{getErrorMessage(get('categoryId'))}}</mat-error>
     </mat-form-field>
-
+    <!-- Action Buttons -->
     <mat-card-actions fxLayout="row">
       <div class="fill"></div>
-      <button fxFlex="15" mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">
+      <button fxFlex="20" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
         Submit
       </button>
-      <button fxFlex="15" mat-raised-button color="warn" (click)="onBack()">
+      <button fxFlex="20" mat-raised-button color="warn" (click)="onCancel()">
         Cancel
       </button>
       <div class="fill"></div>

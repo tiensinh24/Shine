@@ -9,7 +9,7 @@ import {
   AbstractControl,
   FormControl,
 } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { DialogService } from 'src/app/_services/dialog.service';
@@ -20,8 +20,8 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
+import { ProductBuyListDto } from 'src/app/product/buy/_interfaces/productBuyListDto';
 
 @Component({
   selector: 'app-product-buy-edit-dialog',
@@ -30,13 +30,10 @@ import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-
 })
 export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
-  productBuy = <ProductBuy>{};
-  categories: CategoryBuy[];
+  categories = <CategoryBuy[]>{};
   formGroup: FormGroup;
   editMode: boolean;
-  canDeactive: boolean;
   title: string;
-  routeSub: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -44,8 +41,6 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     private categoryBuyService: CategoryBuyService,
     private dialogService: DialogService,
     private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
     private dialogRef: MatDialogRef<ProductBuyEditDialogComponent>,
     // Inject data from product-buy-list component
     @Inject(MAT_DIALOG_DATA) public dataFromList,
@@ -55,34 +50,22 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     this.createForm();
 
     // Edit product
-    if (this.dataFromList) {
+    if (this.dataFromList.name) {
       this.editMode = true;
 
-      this.title = `Edit ${this.productBuy.name}`;
+      this.title = `Edit ${this.dataFromList.name}`;
       this.updateForm();
       // Create product
     } else {
       this.editMode = false;
-
       this.title = 'Create new product';
     }
-
     // Get categories from list component without calling API
     this.categories = this.dataFromList.categories;
   }
 
   // Destroy all subscription
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
-  }
-
-  getProduct() {
-    this.productBuy.productId = this.dataFromList.productId;
-    this.productBuy.name = this.dataFromList.name;
-    this.productBuy.specification = this.dataFromList.specification;
-    this.productBuy.price = this.dataFromList.price;
-    this.productBuy.categoryId = this.dataFromList.categoryId;
-  }
+  ngOnDestroy(): void {}
 
   createForm() {
     this.formGroup = this.fb.group({
@@ -95,10 +78,10 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
 
   updateForm() {
     this.formGroup.setValue({
-      name: this.productBuy.name,
-      specification: this.productBuy.specification,
-      price: this.productBuy.price,
-      categoryId: this.productBuy.categoryId,
+      name: this.dataFromList.name,
+      specification: this.dataFromList.specification,
+      price: this.dataFromList.price,
+      categoryId: this.dataFromList.categoryId,
     });
   }
 
@@ -119,7 +102,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
       dialogConfig,
     );
 
-    // *Get data returned from dialog
+    // Get data returned from dialog
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
       // Check if data exists
       if (data) {
@@ -138,7 +121,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.canDeactive = true;
+    // this.canDeactive = true;
     const tempProductBuy = <ProductBuy>{};
 
     tempProductBuy.name = this.formGroup.value.name;
@@ -148,37 +131,28 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
 
     // Edit mode
     if (this.editMode) {
-      tempProductBuy.productId = this.productBuy.productId;
-      this.productBuyService.updateProduct(tempProductBuy).subscribe(() => {
-        // Navigate back & return data to list
-        this.router.navigateByUrl('/product-buy/list', {
-          state: { data: tempProductBuy },
-        });
+      tempProductBuy.productId = this.dataFromList.productId;
+      this.productBuyService.updateProduct(tempProductBuy).subscribe(res => {
+        // Get new product from API & return it to list component
+        const category = this.categories.find(c => c.categoryId === res.categoryId);
+        const response = <ProductBuyListDto>(res);
+        response.categoryName = category.categoryName;
+        this.dialogRef.close(response);
       });
       // Create mode
     } else {
       this.productBuyService.addProduct(tempProductBuy).subscribe(res => {
-        // Navigate back & return data to list
-        this.router.navigateByUrl('/product-buy/list', {
-          state: { data: res },
-        });
+        // Get new product from API & return it to list component
+        const category = this.categories.find(c => c.categoryId === res.categoryId);
+        const response = <ProductBuyListDto>(res);
+        response.categoryName = category.categoryName;
+        this.dialogRef.close(response);
       });
     }
   }
 
-  // Return data = 0 to product list
-  onBack() {
-    this.canDeactive = true;
-    this.router.navigateByUrl('/product-buy/list', { state: { data: 0 } });
-  }
-
-  canDeactivate(): Observable<boolean> | boolean {
-    if (!this.canDeactive) {
-      if (this.formGroup.dirty) {
-        return this.dialogService.confirm('Discard changes?');
-      }
-    }
-    return true;
+  onCancel() {
+    this.dialogRef.close();
   }
 
   get(name: string): AbstractControl {

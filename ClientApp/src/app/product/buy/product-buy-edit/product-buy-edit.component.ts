@@ -21,7 +21,7 @@ import { map } from 'rxjs/operators';
 })
 export class ProductBuyEditComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
-  productBuy: ProductBuy;
+  productBuy = <ProductBuy>{};
   categories: CategoryBuy[];
   formGroup: FormGroup;
   editMode: boolean;

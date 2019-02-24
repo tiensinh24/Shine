@@ -36,19 +36,19 @@ namespace Shine.Controllers
         }
 
         [HttpPost]
-        public CategoryBuy AddCategory ([FromBody] CategoryBuy categoryBuy)
+        public CategoryBuyDto AddCategory ([FromBody] CategoryBuy categoryBuy)
         {
             _repository.Add (categoryBuy);
             _repository.Commit ();
-            return categoryBuy;
+            return categoryBuy.Adapt<CategoryBuyDto>();
         }
 
         [HttpPut]
-        public CategoryBuy UpdateCategory([FromBody]CategoryBuy categoryBuy)
+        public CategoryBuyDto UpdateCategory([FromBody]CategoryBuy categoryBuy)
         {
             _repository.UpdateCategory(categoryBuy);
             _repository.Commit();
-            return categoryBuy;
+            return categoryBuy.Adapt<CategoryBuyDto>();
         }
 
         [HttpDelete("{id}")]

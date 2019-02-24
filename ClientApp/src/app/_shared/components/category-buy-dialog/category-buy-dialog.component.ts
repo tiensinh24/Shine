@@ -52,7 +52,7 @@ export class CategoryBuyDialogComponent implements OnInit {
     });
   }
 
-  // Pass data from dialog to main component
+  // Return data to main component
   save() {
     const tempCategory = <CategoryBuy>{};
     tempCategory.categoryName = this.formGroup.value.categoryName;

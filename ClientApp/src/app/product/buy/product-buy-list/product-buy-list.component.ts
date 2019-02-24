@@ -1,16 +1,21 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog } from '@angular/material';
+import {
+  MatPaginator,
+  MatTableDataSource,
+  MatSort,
+  MatDialogConfig,
+  MatDialog,
+} from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { equal } from 'assert';
 import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
 
 @Component({
@@ -27,7 +32,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     'categoryName',
     'actions',
   ];
-  dataSource = new MatTableDataSource([]);
+  dataSource = new MatTableDataSource<ProductBuyListDto>([]);
   selection = new SelectionModel<ProductBuyListDto>(true, []);
   isLoading = true;
   title = 'Products List';
@@ -43,40 +48,14 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-  ) { }
+  ) {}
 
   ngOnInit() {
-    // TODO: Check route data return from edit before call API
-    // this.getCategories();
-
-    
+    this.getCategories();
   }
 
   ngAfterViewInit(): void {
-    // TODO: Check route data return from edit before call API
-    // this.getProductList();
-
-    // *Check data return from edit component & update dataSource base on data return
-    this.routeEditSub = this.route.paramMap.pipe(map(() => window.history.state))
-      .subscribe(res => {
-        // Cancel do nothing
-        if (res.data === 0) {
-          console.log(this.dataSource);
-        } else if (res.data && res.data !== 0) {
-          const index = this.dataSource.data.findIndex(p => p.productId === res.productId);
-
-          // Product return from edit component exists on dataSource, so we update dataSource
-          //  without calling API
-          if (index > -1) {
-            this.dataSource.data.splice(index, 1, res);
-            this.dataSource._updateChangeSubscription();
-          }
-        // Edit component doesn't return any data, in this case we calling API to get dataSource
-        } else {
-          this.getProductList();
-          this.getCategories();
-        }
-      });
+    this.getProductList();
   }
 
   // Open product-buy-edit dialog
@@ -87,13 +66,14 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+
     // Width & height
     dialogConfig.maxWidth = '100vw';
     dialogConfig.maxHeight = '100vh';
     dialogConfig.minWidth = '100%';
     dialogConfig.minHeight = '100%';
 
-    // Send data to product edit component
+    // Send data to product edit dialog component
     if (prodEdit) {
       dialogConfig.data = {
         productId: prodEdit.productId,
@@ -103,29 +83,40 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
         categoryId: prodEdit.categoryId,
         categories: this.categories,
       };
+    } else {
+      dialogConfig.data = {
+        categories: this.categories
+      };
     }
 
-    const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      ProductBuyEditDialogComponent,
+      dialogConfig,
+    );
 
-    // *Get data returned from dialog
-    dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
-      // Check if data exists
-      if (data) {
-        this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
-          // Add new category into categories
-          this.categories.push(res);
-          // Update formControl with new added value
-          // this.formGroup.patchValue({
-          //   categoryId: res.categoryId
-          // });
-        });
+    // Get data returned from product-edit dialog
+    dialogRef.afterClosed().subscribe((res: ProductBuyListDto) => {
+      // Check if res exists
+      if (res) {
+        const index = this.dataSource.data.findIndex(
+          p => p.productId === res.productId,
+        );
+
+        // Check if data returned is an updated product or a new one
+        if (index > -1) {
+          // Update dataSource
+          this.dataSource.data.splice(index, 1, res);
+          this.dataSource._updateChangeSubscription();
+        } else {
+          // Add new product to dataSource
+          this.dataSource.data.push(res);
+          this.dataSource._updateChangeSubscription();
+        }
       }
     });
   }
 
-  refreshData() {
-
-  }
+  refreshData() {}
 
   getCategories() {
     this.categoryBuyService.getCategoryList().subscribe(res => {
@@ -134,19 +125,25 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   }
 
   getProductList() {
-    this.productBuyService.getProductList().subscribe(res => {
-      // Check to loading progress bar
-      this.isLoading = false;
+    this.productBuyService.getProductList().subscribe(
+      res => {
+        // Check to loading progress bar
+        this.isLoading = false;
 
-      this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
-      setTimeout(() => this.dataSource.sort = this.sort);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-    }, () => this.isLoading = false);
+        this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
+        setTimeout(() => (this.dataSource.sort = this.sort));
+        setTimeout(() => (this.dataSource.paginator = this.paginator));
+      },
+      () => (this.isLoading = false),
+    );
   }
 
   onCreate() {
     // Send categories to edit component
-    this.router.navigateByUrl('/product-buy/create', { state: { categories: this.categories } });
+    // this.router.navigateByUrl('/product-buy/create', {
+    //   state: { categories: this.categories },
+    // });
+    this.openDialog(0);
   }
 
   onDetail(productBuy: ProductBuy) {
@@ -160,16 +157,16 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(productBuy: ProductBuy) {
-    this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
-      // Get index of deleted row
-      const index = this.dataSource.data.indexOf(productBuy, 0);
-      // Remove row, update dataSource & remove all selection
-      if (index > -1) {
-        this.dataSource.data.splice(index, 1);
-        this.dataSource._updateChangeSubscription();
-        this.selection.clear();
-      }
-    });
+    // this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
+    //   // Get index of deleted row
+    //   const index = this.dataSource.data.indexOf(productBuy, 0);
+    //   // Remove row, update dataSource & remove all selection
+    //   if (index > -1) {
+    //     this.dataSource.data.splice(index, 1);
+    //     this.dataSource._updateChangeSubscription();
+    //     this.selection.clear();
+    //   }
+    // });
   }
 
   // On input focus: setup filterPredicate to only filter by input column
@@ -189,7 +186,8 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
         data: ProductBuyListDto,
         filter: string,
       ) => {
-        const textToSearch = (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
+        const textToSearch =
+          (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
         return textToSearch.indexOf(filter) !== -1;
       };
     }
