@@ -1,0 +1,49 @@
+<mat-card class="card-title mat-elevation-z8">
+  <span  class="mat-headline">{{title}}</span>
+</mat-card>
+<mat-card fxLayout="column" fxLayoutGap="32px" class="mat-elevation-z8">
+
+  <form fxLayout="column" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Product Name</mat-label>
+      <input matInput placeholder="Product Name" formControlName="name" required autofocus>
+      <mat-error *ngIf="get('name').invalid">{{getErrorMessage(get('name'))}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Specification</mat-label>
+      <input matInput placeholder="Specification" formControlName="specification" required>
+      <mat-error *ngIf="get('specification').invalid">{{getErrorMessage(get('specification'))}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input matInput placeholder="Price" formControlName="price" required>
+      <mat-error *ngIf="get('price').invalid">{{getErrorMessage(get('price'))}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Select category</mat-label>
+      <mat-select placeholder="Select category" formControlName="categoryId" required>
+        <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+          {{category.categoryName}}
+        </mat-option>
+        <mat-option>
+          <button mat-flat-button color="primary" (click)="openDialog()">Add New Category</button>
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="get('categoryId').invalid">{{getErrorMessage(get('categoryId'))}}</mat-error>
+    </mat-form-field>
+
+    <mat-card-actions fxLayout="row">
+      <div class="fill"></div>
+      <button fxFlex="15" mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">
+        Submit
+      </button>
+      <button fxFlex="15" mat-raised-button color="warn" (click)="onBack()">
+        Cancel
+      </button>
+      <div class="fill"></div>
+    </mat-card-actions>
+  </form>
+</mat-card>

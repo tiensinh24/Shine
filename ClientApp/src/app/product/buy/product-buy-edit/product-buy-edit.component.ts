@@ -100,8 +100,11 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.minWidth = '400px';
-    // dialogConfig.minHeight = '250px';
+    // Width & height
+    dialogConfig.maxWidth = '100vw';
+    dialogConfig.maxHeight = '100vh';
+    dialogConfig.minWidth = '80%';
+    dialogConfig.height = '80%';
 
     const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
 

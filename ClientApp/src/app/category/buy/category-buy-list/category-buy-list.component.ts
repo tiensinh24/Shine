@@ -69,13 +69,12 @@ export class CategoryBuyListComponent implements AfterViewInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     // Width & height
-    dialogConfig.maxWidth = '80vw';
-    dialogConfig.maxHeight = '80vh';
-    dialogConfig.width = '100%';
-    dialogConfig.height = '100%';
-    dialogConfig.direction = 'rtl';
+    dialogConfig.maxWidth = '100vw';
+    dialogConfig.maxHeight = '100vh';
+    dialogConfig.width = '80%';
+    dialogConfig.height = '80%';
 
-    // Pass data from main component to dialog
+    // Send data to category edit component
     if (catEdit) {
       dialogConfig.data = {
         categoryId: catEdit.categoryId,

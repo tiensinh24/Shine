@@ -13,6 +13,7 @@ import { LogInComponent } from './log-in/log-in.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './_shared/shared.module';
 import { CoreModule } from './_core/core.module';
+import { MaterialSharedModule } from './_shared/material-shared.module';
 
 @NgModule({
   declarations: [
@@ -26,11 +27,13 @@ import { CoreModule } from './_core/core.module';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule,
 
     // rwa modules
-    SharedModule.forRoot(),
+    SharedModule,
     CoreModule.forRoot(),
+
+    // Material
+    MaterialSharedModule,
 
     AppRoutingModule,
   ],

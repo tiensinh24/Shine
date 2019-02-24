@@ -1,25 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import {
-  MatFormFieldModule,
-  MatInputModule,
-  MatDialogModule,
-  MatPaginatorModule,
-  MatSortModule,
-  MatTableModule,
-  MatSelectModule,
-  MatOptionModule,
-  MatIconModule, MatCardModule,
-  MatButtonModule,
-  MatTooltipModule,
-  MatGridListModule,
-  MatSlideToggleModule,
-  MatCheckboxModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule
-} from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { CategoryRoutingModule } from './category-buy-routing.module';
 import { CategoryBuyComponent } from './category-buy.component';
@@ -29,7 +8,8 @@ import { CategoryBuyListComponent } from './category-buy-list/category-buy-list.
 
 import { CategoryBuyDetailComponent } from './category-buy-detail/category-buy-detail.component';
 import { SharedModule } from 'src/app/_shared/shared.module';
-import { CoreModule } from 'src/app/_core/core.module';
+import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
+import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog-shared.module';
 
 @NgModule({
   declarations: [
@@ -41,32 +21,14 @@ import { CoreModule } from 'src/app/_core/core.module';
 
   ],
   imports: [
+    // Shared
     SharedModule,
-    CoreModule,
-
-    CommonModule,
-    FlexLayoutModule,
-    ReactiveFormsModule,
 
     // Material
-    MatPaginatorModule,
-    MatSortModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatGridListModule,
-    MatSlideToggleModule,
-    MatCheckboxModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
+    MaterialSharedModule,
+
+    // Dialog
+    CategoryBuyDialogSharedModule,
 
     // Routing
     CategoryRoutingModule,

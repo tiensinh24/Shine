@@ -19,15 +19,14 @@ button[mat-mini-fab] {
 .card-title {
   background-color: royalblue;
   margin-bottom: -15px;
-  text-align: center;
   color: white;
   height: 60px;
 }
 
 div>table[mat-table] {
   margin: 1em;
-  width: 97.5%;
 }
+
 
 [mat-sort-header] {
   color: royalblue;
@@ -35,8 +34,4 @@ div>table[mat-table] {
 
 tr.mat-footer-row {
   font-weight: bold;
-}
-
-mat-card.row-reverse {
-  height: 30px;
 }

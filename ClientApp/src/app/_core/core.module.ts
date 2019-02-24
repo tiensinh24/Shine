@@ -8,40 +8,46 @@ import { AuthInterceptor } from '../auth/_services/auth.interceptor';
 import { AuthResponseInterceptor } from '../auth/_services/auth.response.interceptor';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { SharedModule } from '../_shared/shared.module';
+import { AuthGuard } from '../auth/_guards/auth.guard';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    SharedModule,
+  ],
+  exports: [
   ],
   providers: [
-    AuthService,
-    DialogService,
-    ValidateService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthResponseInterceptor,
-      multi: true,
-    },
-    {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: {
-        horizontalPosition: 'end',
-        duration: 2500,
-      },
-    },
+
   ]
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: CoreModule
+      ngModule: CoreModule,
+      providers: [
+        AuthService,
+        AuthGuard,
+        DialogService,
+        ValidateService,
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: AuthInterceptor,
+          multi: true,
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: AuthResponseInterceptor,
+          multi: true,
+        },
+        {
+          provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+          useValue: {
+            horizontalPosition: 'end',
+            duration: 2500,
+          },
+        },
+      ]
     };
   }
 }

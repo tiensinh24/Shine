@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -11,6 +11,7 @@ import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { equal } from 'assert';
+import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
 
 @Component({
   selector: 'app-product-buy-list',
@@ -27,7 +28,6 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     'actions',
   ];
   dataSource = new MatTableDataSource([]);
-  localSource = new MatTableDataSource([]);
   selection = new SelectionModel<ProductBuyListDto>(true, []);
   isLoading = true;
   title = 'Products List';
@@ -42,6 +42,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     private categoryBuyService: CategoryBuyService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -78,6 +79,50 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
       });
   }
 
+  // Open product-buy-edit dialog
+  openDialog(productId?: number) {
+    const prodEdit = this.dataSource.data.find(p => p.productId === productId);
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    // Width & height
+    dialogConfig.maxWidth = '100vw';
+    dialogConfig.maxHeight = '100vh';
+    dialogConfig.minWidth = '100%';
+    dialogConfig.minHeight = '100%';
+
+    // Send data to product edit component
+    if (prodEdit) {
+      dialogConfig.data = {
+        productId: prodEdit.productId,
+        name: prodEdit.name,
+        specification: prodEdit.specification,
+        price: prodEdit.price,
+        categoryId: prodEdit.categoryId,
+        categories: this.categories,
+      };
+    }
+
+    const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
+
+    // *Get data returned from dialog
+    dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
+      // Check if data exists
+      if (data) {
+        this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
+          // Add new category into categories
+          this.categories.push(res);
+          // Update formControl with new added value
+          // this.formGroup.patchValue({
+          //   categoryId: res.categoryId
+          // });
+        });
+      }
+    });
+  }
+
   refreshData() {
 
   }
@@ -110,7 +155,8 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   onEdit(productBuy: ProductBuy) {
     // Send current product, categories to edit component
-    this.router.navigateByUrl(`/product-buy/edit/${productBuy.productId}`, { state: { product: productBuy, categories: this.categories } });
+    // this.router.navigateByUrl(`/product-buy/edit/${productBuy.productId}`, { state: { product: productBuy, categories: this.categories } });
+    this.openDialog(productBuy.productId);
   }
 
   onDelete(productBuy: ProductBuy) {
