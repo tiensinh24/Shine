@@ -39,7 +39,6 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private productBuyService: ProductBuyService,
     private categoryBuyService: CategoryBuyService,
-    private dialogService: DialogService,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<ProductBuyEditDialogComponent>,
     // Inject data from product-buy-list component

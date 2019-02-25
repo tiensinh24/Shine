@@ -71,7 +71,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     dialogConfig.maxWidth = '100vw';
     dialogConfig.maxHeight = '100vh';
     dialogConfig.minWidth = '100%';
-    dialogConfig.minHeight = '100%';
+    dialogConfig.height = '100%';
 
     // Send data to product edit dialog component
     if (prodEdit) {

@@ -9,6 +9,10 @@ import { AuthResponseInterceptor } from '../auth/_services/auth.response.interce
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { SharedModule } from '../_shared/shared.module';
 import { AuthGuard } from '../auth/_guards/auth.guard';
+import { CategoryBuyService } from '../category/buy/_services/category-buy.service';
+import { CategorySellService } from '../category/sell/_services/category-sell.service';
+import { ProductBuyService } from '../product/buy/_services/product-buy.service';
+import { ProductSellService } from '../product/sell/_services/product-sell.service';
 
 @NgModule({
   declarations: [],
@@ -30,6 +34,10 @@ export class CoreModule {
         AuthGuard,
         DialogService,
         ValidateService,
+        CategoryBuyService,
+        CategorySellService,
+        ProductBuyService,
+        ProductSellService,
         // {
         //   provide: HTTP_INTERCEPTORS,
         //   useClass: AuthInterceptor,

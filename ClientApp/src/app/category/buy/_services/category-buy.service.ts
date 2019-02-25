@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from '../_interfaces/categoryBuy';
+import { share, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

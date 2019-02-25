@@ -2,6 +2,8 @@ import {
   Component,
   AfterViewInit,
   ViewChild,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import {
   MatTableDataSource,
@@ -17,6 +19,7 @@ import { Router } from '@angular/router';
 import { CategoryBuy } from '../_interfaces/categoryBuy';
 import { CategoryBuyService } from '../_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -24,13 +27,14 @@ import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-
   templateUrl: './category-buy-list.component.html',
   styleUrls: ['./category-buy-list.component.css'],
 })
-export class CategoryBuyListComponent implements AfterViewInit {
+export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   displayedColumns = ['select', 'categoryId', 'categoryName', 'actions'];
   dataSource = new MatTableDataSource<CategoryBuy>([]);
   selection = new SelectionModel<CategoryBuy>(true, []);
   isLoading = true;
   isEdit: boolean;
   title = 'Category List';
+  catSub: Subscription;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -45,8 +49,12 @@ export class CategoryBuyListComponent implements AfterViewInit {
     this.getCategoryList();
   }
 
+  ngOnDestroy(): void {
+    this.catSub.unsubscribe();
+  }
+
   getCategoryList() {
-    this.categoryBuyService.getCategoryList().subscribe(
+    this.catSub = this.categoryBuyService.getCategoryList().subscribe(
       res => {
         // Check to loading progress bar
         this.isLoading = false;
