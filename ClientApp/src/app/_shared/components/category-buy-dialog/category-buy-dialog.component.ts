@@ -1,5 +1,5 @@
 import { OnInit, Inject, Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
@@ -53,7 +53,7 @@ export class CategoryBuyDialogComponent implements OnInit {
   }
 
   // Return data to main component
-  save() {
+  onSave() {
     const tempCategory = <CategoryBuy>{};
     tempCategory.categoryName = this.formGroup.value.categoryName;
 
@@ -64,7 +64,15 @@ export class CategoryBuyDialogComponent implements OnInit {
     this.dialogRef.close(tempCategory);
   }
 
-  close() {
+  onCancel() {
     this.dialogRef.close();
+  }
+
+  getControllError(formControl: FormControl) {
+    return formControl.hasError('required')
+      ? 'You must enter a value'
+      : formControl.hasError('email')
+      ? 'Not a valid email'
+      : '';
   }
 }
