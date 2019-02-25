@@ -2,7 +2,6 @@ import {
   Component,
   AfterViewInit,
   ViewChild,
-  ChangeDetectorRef,
 } from '@angular/core';
 import {
   MatTableDataSource,
@@ -106,6 +105,7 @@ export class CategoryBuyListComponent implements AfterViewInit {
           });
         }
       }
+      this.selection.clear();
     });
   }
 

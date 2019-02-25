@@ -24,6 +24,9 @@ export class AuthResponseInterceptor implements HttpInterceptor {
             (this.auth.getLocalAuth() !== undefined ? this.auth.getLocalAuth().token : null) : null;
 
         if (token) {
+            request = request.clone({
+                setHeaders: { Authorization: `Bearer ${token}` }
+            });
             // Save current request
             this.currentRequest = request;
 
@@ -49,17 +52,13 @@ export class AuthResponseInterceptor implements HttpInterceptor {
                 const previousRequest = this.currentRequest;
 
                 this.auth.refreshToken().subscribe(res => {
+
                     if (res) {
                         // Re-submit the failed request
-                        // const http = this.injector.get(HttpClient);
+                        const http = this.injector.get(HttpClient);
                         // TODO: request but page not refresh
-                        // http.request(previousRequest).subscribe(response => {
-                        //     if (response) {
-                        //         const url = this.route['_routerState'].snapshot.url;
-                        //         this.router.navigate(['']);
-                        //         this.router.navigate([url]);
-                        //     }
-                        // });
+                        // const url = this.route['_routerState'].snapshot.url;
+                        // this.router.navigate([url]);
                         this.router.navigate(['']);
                     } else {
                         // Erase current token

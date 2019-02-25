@@ -113,6 +113,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
           this.dataSource._updateChangeSubscription();
         }
       }
+      this.selection.clear();
     });
   }
 

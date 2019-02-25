@@ -30,11 +30,11 @@ export class CoreModule {
         AuthGuard,
         DialogService,
         ValidateService,
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true,
-        },
+        // {
+        //   provide: HTTP_INTERCEPTORS,
+        //   useClass: AuthInterceptor,
+        //   multi: true,
+        // },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AuthResponseInterceptor,

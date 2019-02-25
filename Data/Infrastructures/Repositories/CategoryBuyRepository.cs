@@ -21,13 +21,8 @@ namespace Shine.Data.Infrastructures.Repositories
 #endregion
         public IEnumerable<CategoryBuyDto> GetCategoryListDto()
         {
-            var query = _context.Set<CategoryBuy>().Select(c => new
-            {
-                c.CategoryId,
-                    c.CategoryName
-            }).OrderBy(c => c.CategoryName).AsNoTracking();
-
-            return query.Adapt<IEnumerable<CategoryBuyDto>>();
+            return _context.Set<CategoryBuy>()
+                .ProjectToType<CategoryBuyDto>().AsNoTracking();
         }
 
         public CategoryBuyDto GetCategoryDto(int id)
