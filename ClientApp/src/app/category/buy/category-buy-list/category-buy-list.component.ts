@@ -34,7 +34,7 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   isLoading = true;
   isEdit: boolean;
   title = 'Category List';
-  catSub: Subscription;
+  catsSub: Subscription;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -50,11 +50,11 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.catSub.unsubscribe();
+    this.catsSub.unsubscribe();
   }
 
   getCategoryList() {
-    this.catSub = this.categoryBuyService.getCategoryList().subscribe(
+    this.catsSub = this.categoryBuyService.getCategoryList().subscribe(
       res => {
         // Check to loading progress bar
         this.isLoading = false;
@@ -65,6 +65,29 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
       },
       () => (this.isLoading = false),
     );
+  }
+
+  onDetail(categoryBuy: CategoryBuy) {
+    this.router.navigate(['category-buy', categoryBuy.categoryId]);
+  }
+
+  onEdit(categoryBuy: CategoryBuy) {
+    this.openDialog(categoryBuy.categoryId);
+  }
+
+  onDelete(categoryBuy: CategoryBuy) {
+    this.categoryBuyService
+      .deleteCategory(categoryBuy.categoryId)
+      .subscribe(() => {
+        // Get index of deleted row
+        const index = this.dataSource.data.indexOf(categoryBuy, 0);
+        // Remove row, update dataSource & remove all selection
+        if (index > -1) {
+          this.dataSource.data.splice(index, 1);
+          this.dataSource._updateChangeSubscription();
+          this.selection.clear();
+        }
+      });
   }
 
   openDialog(categoryId?: number) {
@@ -115,29 +138,6 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
       }
       this.selection.clear();
     });
-  }
-
-  onDetail(categoryBuy: CategoryBuy) {
-    this.router.navigate(['category-buy', categoryBuy.categoryId]);
-  }
-
-  onEdit(categoryBuy: CategoryBuy) {
-    this.router.navigate(['category-buy/edit', categoryBuy.categoryId]);
-  }
-
-  onDelete(categoryBuy: CategoryBuy) {
-    this.categoryBuyService
-      .deleteCategory(categoryBuy.categoryId)
-      .subscribe(() => {
-        // Get index of deleted row
-        const index = this.dataSource.data.indexOf(categoryBuy, 0);
-        // Remove row, update dataSource & remove all selection
-        if (index > -1) {
-          this.dataSource.data.splice(index, 1);
-          this.dataSource._updateChangeSubscription();
-          this.selection.clear();
-        }
-      });
   }
 
   // On input focus: setup filterPredicate to only filter by input column

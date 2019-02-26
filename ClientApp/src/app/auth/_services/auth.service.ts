@@ -2,9 +2,10 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, share } from 'rxjs/operators';
 import { TokenResponse } from '../_interfaces/token-response';
 import { MatSnackBar } from '@angular/material';
+import { TokenRequest } from '../_interfaces/token-request';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class AuthService {
   authUser = 'user';
   clientId = 'Shine';
   redirectUrl: string;
+  tokenObs: Observable<any>;
 
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string,
@@ -23,14 +25,12 @@ export class AuthService {
 
   login(username: string, password: string): Observable<TokenResponse> {
     const url = this.baseUrl + 'api/token/auth';
-    const data = {
+    const data = <TokenRequest>{
       username: username,
       password: password,
       clientId: this.clientId,
       // Required when signing up with username/password
       grantType: 'password',
-      // Space-separated list of scopes for which the token is issued
-      scope: 'offline_access profile email'
     };
 
     return this.getServerAuth(url, data);
@@ -39,18 +39,16 @@ export class AuthService {
   // Try to refresh token
   refreshToken(): Observable<boolean> {
     const url = this.baseUrl + 'api/token/auth';
-    const data = {
+    const data = <TokenRequest>{
       clientId: this.clientId,
       // Required when signing up with username/password
       grantType: 'refresh_token',
       refreshToken: this.getLocalAuth() !== undefined ? this.getLocalAuth().refreshToken : null,
-      // Space-separated list of scopes for which the token is issued
-      scope: 'offline_access profile email'
     };
     return this.getServerAuth(url, data);
   }
 
-  getServerAuth(url: string, data: any): any {
+  getServerAuth(url: string, data: TokenRequest): any {
     return this.http.post<TokenResponse>(url, data).pipe(
       tap((res: TokenResponse) => {
         const token = res && res.token;
@@ -80,10 +78,6 @@ export class AuthService {
         localStorage.setItem(
           this.authKey,
           JSON.stringify(auth)
-        );
-        localStorage.setItem(
-          this.authUser,
-          JSON.stringify(auth.userName)
         );
       } else {
         localStorage.clear();

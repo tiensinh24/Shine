@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data;
 using Shine.Data.Dto.Categories;
@@ -13,8 +14,9 @@ namespace Shine.Controllers
 {
     [Produces ("application/json")]
     [Route ("api/[controller]")]
+    [ApiController]
     [Authorize]
-    public class CategoryBuyController
+    public class CategoryBuyController : ControllerBase
     {
         private readonly CategoryBuyRepository _repository;
 
@@ -24,19 +26,26 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CategoryBuyDto> GetCategories ()
+        public ActionResult<IEnumerable<CategoryBuyDto>> GetCategories ()
         {
-            return _repository.GetCategoryListDto();
+            return _repository.GetCategoryListDto().ToList();
         }
 
         [HttpGet ("{id}")]
-        public CategoryBuyDto GetCategory (int id)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<CategoryBuyDto> GetCategory (int id)
         {
-            return _repository.GetCategoryDto (id);
+            var category = _repository.GetCategoryDto (id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return category;
         }
 
         [HttpPost]
-        public CategoryBuyDto AddCategory ([FromBody] CategoryBuy categoryBuy)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<CategoryBuyDto> AddCategory ([FromBody] CategoryBuy categoryBuy)
         {
             _repository.Add (categoryBuy);
             _repository.Commit ();
@@ -44,7 +53,8 @@ namespace Shine.Controllers
         }
 
         [HttpPut]
-        public CategoryBuyDto UpdateCategory([FromBody]CategoryBuy categoryBuy)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<CategoryBuyDto> UpdateCategory([FromBody]CategoryBuy categoryBuy)
         {
             _repository.UpdateCategory(categoryBuy);
             _repository.Commit();
@@ -52,7 +62,7 @@ namespace Shine.Controllers
         }
 
         [HttpDelete("{id}")]
-        public int DeleteCategory (int id)
+        public ActionResult<int> DeleteCategory (int id)
         {            
                 _repository.DeleteCategory(id);
                 _repository.Commit ();

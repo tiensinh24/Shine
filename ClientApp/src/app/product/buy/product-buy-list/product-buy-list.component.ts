@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import {
   MatPaginator,
   MatTableDataSource,
@@ -9,7 +9,6 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
 import { ProductBuyService } from '../_services/product-buy.service';
@@ -23,7 +22,7 @@ import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/produc
   templateUrl: './product-buy-list.component.html',
   styleUrls: ['./product-buy-list.component.css'],
 })
-export class ProductBuyListComponent implements OnInit, AfterViewInit {
+export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   displayedColumns = [
     'select',
     'name',
@@ -37,7 +36,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   isLoading = true;
   title = 'Products List';
   categories: CategoryBuy[];
-  routeEditSub: Subscription;
+  sub: Subscription;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -46,16 +45,61 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     private productBuyService: ProductBuyService,
     private categoryBuyService: CategoryBuyService,
     private router: Router,
-    private route: ActivatedRoute,
     private dialog: MatDialog,
   ) {}
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
+    this.getProductList();
     this.getCategories();
   }
 
-  ngAfterViewInit(): void {
-    this.getProductList();
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  getCategories() {
+    this.sub = this.categoryBuyService.getCategoryList().subscribe(res => {
+      this.categories = res;
+    });
+  }
+
+  getProductList() {
+    this.sub = this.productBuyService.getProductList().subscribe(
+      res => {
+        // Check to loading progress bar
+        this.isLoading = false;
+
+        this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
+        setTimeout(() => (this.dataSource.sort = this.sort));
+        setTimeout(() => (this.dataSource.paginator = this.paginator));
+      },
+      () => (this.isLoading = false),
+    );
+  }
+
+  onCreate() {
+    this.openDialog(0);
+  }
+
+  onDetail(productBuy: ProductBuy) {
+    this.router.navigate(['product-buy', productBuy.productId]);
+  }
+
+  onEdit(productBuy: ProductBuy) {
+    this.openDialog(productBuy.productId);
+  }
+
+  onDelete(productBuy: ProductBuy) {
+    this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
+      // Get index of deleted row
+      const index = this.dataSource.data.indexOf(<ProductBuyListDto>productBuy, 0);
+      // Remove row, update dataSource & remove all selection
+      if (index > -1) {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
+        this.selection.clear();
+      }
+    });
   }
 
   // Open product-buy-edit dialog
@@ -117,58 +161,6 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  refreshData() {}
-
-  getCategories() {
-    this.categoryBuyService.getCategoryList().subscribe(res => {
-      this.categories = res;
-    });
-  }
-
-  getProductList() {
-    this.productBuyService.getProductList().subscribe(
-      res => {
-        // Check to loading progress bar
-        this.isLoading = false;
-
-        this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
-        setTimeout(() => (this.dataSource.sort = this.sort));
-        setTimeout(() => (this.dataSource.paginator = this.paginator));
-      },
-      () => (this.isLoading = false),
-    );
-  }
-
-  onCreate() {
-    // Send categories to edit component
-    // this.router.navigateByUrl('/product-buy/create', {
-    //   state: { categories: this.categories },
-    // });
-    this.openDialog(0);
-  }
-
-  onDetail(productBuy: ProductBuy) {
-    this.router.navigate(['product-buy', productBuy.productId]);
-  }
-
-  onEdit(productBuy: ProductBuy) {
-    // Send current product, categories to edit component
-    // this.router.navigateByUrl(`/product-buy/edit/${productBuy.productId}`, { state: { product: productBuy, categories: this.categories } });
-    this.openDialog(productBuy.productId);
-  }
-
-  onDelete(productBuy: ProductBuy) {
-    // this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
-    //   // Get index of deleted row
-    //   const index = this.dataSource.data.indexOf(productBuy, 0);
-    //   // Remove row, update dataSource & remove all selection
-    //   if (index > -1) {
-    //     this.dataSource.data.splice(index, 1);
-    //     this.dataSource._updateChangeSubscription();
-    //     this.selection.clear();
-    //   }
-    // });
-  }
 
   // On input focus: setup filterPredicate to only filter by input column
   setupFilter(column?: string) {

@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mapster;
+
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using Shine.Data;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
@@ -15,8 +19,9 @@ namespace Shine.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [ApiController]
     [Authorize]
-    public class ProductBuyController : Controller
+    public class ProductBuyController : ControllerBase
     {
         private readonly ProductBuyRepository _repository;
         public ProductBuyController(ProductBuyRepository repository)
@@ -25,19 +30,26 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductBuyListDto> GetProducts()
+        public ActionResult<IEnumerable<ProductBuyListDto>> GetProducts()
         {
-            return _repository.GetProductListDto();
+            return _repository.GetProductListDto().ToList();
         }
 
         [HttpGet("{id}")]
-        public ProductBuyDto GetProduct(int id)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<ProductBuyDto> GetProduct(int id)
         {
-            return _repository.GetProductDto(id);
+            var product = _repository.GetProductDto(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return product;
         }
 
         [HttpPost]
-        public ProductBuyDto AddProduct([FromBody] ProductBuy productBuy)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<ProductBuyDto> AddProduct([FromBody] ProductBuy productBuy)
         {
             _repository.Add(productBuy);
             _repository.Commit();
@@ -45,7 +57,8 @@ namespace Shine.Controllers
         }
 
         [HttpPut]
-        public ProductBuyDto UpdateProduct([FromBody]ProductBuy productBuy)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<ProductBuyDto> UpdateProduct([FromBody] ProductBuy productBuy)
         {
             _repository.UpdateProduct(productBuy);
             _repository.Commit();
@@ -53,7 +66,7 @@ namespace Shine.Controllers
         }
 
         [HttpDelete("{id}")]
-        public int DeleteProduct(int id)
+        public ActionResult<int> DeleteProduct(int id)
         {
             _repository.DeleteProduct(id);
             _repository.Commit();
