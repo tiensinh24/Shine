@@ -8,7 +8,6 @@ import { DialogService } from '../_services/dialog.service';
 import { ValidateService } from '../_services/validate.service';
 import { AuthResponseInterceptor } from '../auth/_services/auth.response.interceptor';
 import { AuthGuard } from '../auth/_guards/auth.guard';
-import { CategoryBuyService } from '../category/buy/_services/category-buy.service';
 
 @NgModule({
   declarations: [],

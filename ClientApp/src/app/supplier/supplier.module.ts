@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
@@ -7,7 +6,9 @@ import { SupplierDetailComponent } from './supplier-detail/supplier-detail.compo
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { SupplierComponent } from './supplier.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from '../_shared/shared.module';
+import { MaterialSharedModule } from '../_shared/material-shared.module';
+import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     SupplierComponent
   ],
   imports: [
-    CommonModule,
+    // Shared module
+    SharedModule,
+
+    // Material
+    MaterialSharedModule,
+
+    // Dialog
+    SupplierEditDialogSharedModule,
+
+    // Routing
     SupplierRoutingModule
   ]
 })

@@ -1,15 +1,15 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { MatSnackBar } from '@angular/material';
 import { Observable, throwError } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
+
 import { TokenResponse } from '../_interfaces/token-response';
-import { MatSnackBar } from '@angular/material';
 import { TokenRequest } from '../_interfaces/token-request';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   authKey = 'auth';
@@ -18,10 +18,12 @@ export class AuthService {
   redirectUrl: string;
   tokenObs: Observable<any>;
 
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string,
     @Inject(PLATFORM_ID) private platformId: any,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+  ) {}
 
   login(username: string, password: string): Observable<TokenResponse> {
     const url = this.baseUrl + 'api/token/auth';
@@ -43,7 +45,10 @@ export class AuthService {
       clientId: this.clientId,
       // Required when signing up with username/password
       grantType: 'refresh_token',
-      refreshToken: this.getLocalAuth() !== undefined ? this.getLocalAuth().refreshToken : null,
+      refreshToken:
+        this.getLocalAuth() !== undefined
+          ? this.getLocalAuth().refreshToken
+          : null,
     };
     return this.getServerAuth(url, data);
   }
@@ -61,7 +66,7 @@ export class AuthService {
         }
         // Failed login
         return throwError('Unauthorized');
-      })
+      }),
     );
   }
 
@@ -75,10 +80,7 @@ export class AuthService {
   setLocalAuth(auth: TokenResponse | null): boolean {
     if (isPlatformBrowser(this.platformId)) {
       if (auth) {
-        localStorage.setItem(
-          this.authKey,
-          JSON.stringify(auth)
-        );
+        localStorage.setItem(this.authKey, JSON.stringify(auth));
       } else {
         localStorage.clear();
       }

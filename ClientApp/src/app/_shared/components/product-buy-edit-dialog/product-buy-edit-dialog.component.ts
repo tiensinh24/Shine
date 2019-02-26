@@ -1,7 +1,4 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
-import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
-import { environment } from 'src/environments/environment';
 import {
   FormGroup,
   FormBuilder,
@@ -9,17 +6,18 @@ import {
   AbstractControl,
   FormControl,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
-import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { DialogService } from 'src/app/_services/dialog.service';
 import {
   MatDialog,
   MatDialogConfig,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+
+import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
+import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
+import { environment } from 'src/environments/environment';
+import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
+import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
 import { ProductBuyListDto } from 'src/app/product/buy/_interfaces/productBuyListDto';
 
@@ -133,8 +131,10 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
       tempProductBuy.productId = this.dataFromList.productId;
       this.productBuyService.updateProduct(tempProductBuy).subscribe(res => {
         // Get new product from API & return it to list component
-        const category = this.categories.find(c => c.categoryId === res.categoryId);
-        const response = <ProductBuyListDto>(res);
+        const category = this.categories.find(
+          c => c.categoryId === res.categoryId,
+        );
+        const response = <ProductBuyListDto>res;
         response.categoryName = category.categoryName;
         this.dialogRef.close(response);
       });
@@ -142,8 +142,10 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     } else {
       this.productBuyService.addProduct(tempProductBuy).subscribe(res => {
         // Get new product from API & return it to list component
-        const category = this.categories.find(c => c.categoryId === res.categoryId);
-        const response = <ProductBuyListDto>(res);
+        const category = this.categories.find(
+          c => c.categoryId === res.categoryId,
+        );
+        const response = <ProductBuyListDto>res;
         response.categoryName = category.categoryName;
         this.dialogRef.close(response);
       });

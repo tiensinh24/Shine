@@ -1,0 +1,74 @@
+<!-- Dialog title -->
+<mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{title}}</mat-card>
+
+<mat-card mat-dialog-content class="mat-elevation-z1">
+  <!-- Formgroup -->
+  <form fxLayout="column" [formGroup]="formGroup">
+    <!-- FirstName -->
+    <mat-form-field appearance="outline">
+      <mat-label>FirstName</mat-label>
+      <input matInput placeholder="FirstName" formControlName="firstName" required autofocus>
+      <mat-error *ngIf="get('firstName').invalid">{{getErrorMessage(get('firstName'))}}</mat-error>
+    </mat-form-field>
+    <!-- Specification -->
+    <mat-form-field appearance="outline">
+      <mat-label>LastName</mat-label>
+      <input matInput placeholder="LastName" formControlName="lastName" required>
+      <mat-error *ngIf="get('lastName').invalid">{{getErrorMessage(get('lastName'))}}</mat-error>
+    </mat-form-field>
+    <!-- Gender -->
+    <mat-form-field appearance="outline">
+      <mat-label>Gender</mat-label>
+      <input matInput placeholder="Gender" formControlName="gender" required>
+      <mat-error *ngIf="get('gender').invalid">{{getErrorMessage(get('gender'))}}</mat-error>
+    </mat-form-field>
+    <!-- DateOfBirth -->
+    <mat-form-field appearance="outline">
+      <mat-label>DateOfBirth</mat-label>
+      <input matInput placeholder="DateOfBirth" formControlName="dateOfBirth" required>
+      <mat-error *ngIf="get('dateOfBirth').invalid">{{getErrorMessage(get('dateOfBirth'))}}</mat-error>
+    </mat-form-field>
+    <!-- PersonNumber -->
+    <mat-form-field appearance="outline">
+      <mat-label>PersonNumber</mat-label>
+      <input matInput placeholder="PersonNumber" formControlName="personNumber" required>
+      <mat-error *ngIf="get('personNumber').invalid">{{getErrorMessage(get('personNumber'))}}</mat-error>
+    </mat-form-field>
+    <!-- Telephone -->
+    <mat-form-field appearance="outline">
+      <mat-label>Telephone</mat-label>
+      <input matInput placeholder="Telephone" formControlName="telephone" required>
+      <mat-error *ngIf="get('telephone').invalid">{{getErrorMessage(get('telephone'))}}</mat-error>
+    </mat-form-field>
+    <!-- Fax -->
+    <mat-form-field appearance="outline">
+      <mat-label>Fax</mat-label>
+      <input matInput placeholder="Fax" formControlName="fax" required>
+      <mat-error *ngIf="get('fax').invalid">{{getErrorMessage(get('fax'))}}</mat-error>
+    </mat-form-field>
+    <!-- CountryId -->
+    <mat-form-field appearance="outline">
+      <mat-label>Select country</mat-label>
+      <mat-select placeholder="Select country" formControlName="countryId" required>
+        <mat-option *ngFor="let country of countries" [value]="country.countryId">
+          {{country.countryName}}
+        </mat-option>
+        <mat-option>
+          <!-- <button mat-flat-button color="primary" (click)="openDialog()">Add New Category</button> -->
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="get('countryId').invalid">{{getErrorMessage(get('countryId'))}}</mat-error>
+    </mat-form-field>
+    <!-- Action Buttons -->
+    <mat-card-actions fxLayout="row">
+      <div class="fill"></div>
+      <button fxFlex="20" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+        Submit
+      </button>
+      <button fxFlex="20" mat-raised-button color="warn" (click)="onCancel()">
+        Cancel
+      </button>
+      <div class="fill"></div>
+    </mat-card-actions>
+  </form>
+</mat-card>

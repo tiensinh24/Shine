@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Mapster;
 
 using Microsoft.AspNetCore.Authorization;
@@ -11,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Shine.Data;
+using Shine.Data.Dto.Countries;
 using Shine.Data.Dto.Products;
-using Shine.Data.Dto.Suppliers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
@@ -23,54 +22,54 @@ namespace Shine.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class SupplierController : ControllerBase
+    public class CountryController : ControllerBase
     {
-        private readonly SupplierRepository _repository;
-        public SupplierController(SupplierRepository repository)
+        private readonly CountryRepository _repository;
+        public CountryController(CountryRepository repository)
         {
             this._repository = repository;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<SupplierListDto>> GetProducts()
+        public ActionResult<IEnumerable<CountryDto>> GetCountries()
         {
-            return _repository.GetSupplierListDto().ToList();
+            return _repository.GetCountryListDto().ToList();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<SupplierListDto> GetSupplier(int id)
+        public ActionResult<CountryDto> GetCountry(int id)
         {
-            var supplier = _repository.GetSupplierDto(id);
-            if (supplier == null)
+            var country = _repository.GetCountryDto(id);
+            if (country == null)
             {
                 return NotFound();
             }
-            return supplier;
+            return country;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Supplier> AddSupplier([FromBody] Supplier supplier)
+        public ActionResult<CountryDto> AddCountry([FromBody] Country country)
         {
-            _repository.Add(supplier);
+            _repository.Add(country);
             _repository.Commit();
-            return supplier;
+            return country.Adapt<CountryDto>();
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Supplier> UpdateSupplier([FromBody] Supplier supplier)
+        public ActionResult<CountryDto> UpdateCountry([FromBody] Country country)
         {
-            _repository.UpdateSupplier(supplier);
+            _repository.UpdateCountry(country);
             _repository.Commit();
-            return supplier;
+            return country.Adapt<CountryDto>();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<int> DeleteSupplier(int id)
+        public ActionResult<int> DeleteCountry(int id)
         {
-            _repository.DeleteSupplier(id);
+            _repository.DeleteCountry(id);
             _repository.Commit();
             return id;
         }

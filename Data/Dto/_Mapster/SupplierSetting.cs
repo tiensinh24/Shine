@@ -10,7 +10,7 @@ namespace Shine.Data.Dto._Mapster
         public static void Setting()
         {
             // Map CountryName
-            TypeAdapterConfig<Supplier, SupplierDto>.NewConfig()
+            TypeAdapterConfig<Supplier, SupplierListDto>.NewConfig()
                 .Map(
                     dest => dest.CountryName, src => src.Country.CountryName
                 ).Map(

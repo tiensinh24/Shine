@@ -35,3 +35,11 @@ div>table[mat-table] {
 tr.mat-footer-row {
   font-weight: bold;
 }
+
+.mat-row {
+  height: auto;
+}
+
+.mat-cell {
+  padding: 0 4px;
+}

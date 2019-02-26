@@ -8,25 +8,22 @@ import { CategorySellService } from '../../_services/category-sell.service';
 @Component({
   selector: 'app-category-sell-dialog',
   templateUrl: './category-sell-dialog.component.html',
-  styleUrls: ['./category-sell-dialog.component.css']
+  styleUrls: ['./category-sell-dialog.component.css'],
 })
 export class CategorySellDialogComponent implements OnInit {
   title = 'Create new category';
   category: CategorySell;
   formGroup: FormGroup;
 
-  constructor(private categorySellService: CategorySellService,
+  constructor(
+    private categorySellService: CategorySellService,
     private fb: FormBuilder,
-
     // TODO: Get data from main component
     // just testing, must implement on product edit component
     private dialogRef: MatDialogRef<CategorySellDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data
-
+    @Inject(MAT_DIALOG_DATA) data,
   ) {
-
     // TODO: this. specification = data.specification
-
   }
 
   ngOnInit() {
@@ -35,11 +32,9 @@ export class CategorySellDialogComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.fb.group({
-
       // TODO: specification: [specification, []]
-      categoryName: ['', Validators.required]
+      categoryName: ['', Validators.required],
     });
-
   }
 
   onSubmit() {
@@ -57,5 +52,4 @@ export class CategorySellDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-
 }

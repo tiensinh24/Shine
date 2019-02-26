@@ -5,7 +5,6 @@ import { CategoryBuyComponent } from './category-buy.component';
 import { CategoryBuyHomeComponent } from './category-buy-home/category-buy-home.component';
 import { CategoryBuyEditComponent } from './category-buy-edit/category-buy-edit.component';
 import { CategoryBuyListComponent } from './category-buy-list/category-buy-list.component';
-
 import { CategoryBuyDetailComponent } from './category-buy-detail/category-buy-detail.component';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
@@ -18,7 +17,6 @@ import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/catego
     CategoryBuyEditComponent,
     CategoryBuyListComponent,
     CategoryBuyDetailComponent,
-
   ],
   imports: [
     // Shared
@@ -34,4 +32,4 @@ import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/catego
     CategoryRoutingModule,
   ],
 })
-export class CategoryBuyModule { }
+export class CategoryBuyModule {}

@@ -7,8 +7,8 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface ISupplierRepository
     {
-        IEnumerable<SupplierDto> GetSupplierListDto();
-        SupplierDto GetSupplierDto(int id);
+        IEnumerable<SupplierListDto> GetSupplierListDto();
+        SupplierListDto GetSupplierDto(int id);
         void UpdateSupplier(Supplier supplier);
         void DeleteSupplier(int id);
     }

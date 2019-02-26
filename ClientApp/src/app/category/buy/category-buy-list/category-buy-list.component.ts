@@ -1,26 +1,18 @@
-import {
-  Component,
-  AfterViewInit,
-  ViewChild,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import {
   MatTableDataSource,
   MatSort,
   MatPaginator,
-  MatTable,
   MatDialog,
   MatDialogConfig,
 } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { CategoryBuy } from '../_interfaces/categoryBuy';
 import { CategoryBuyService } from '../_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
-import { Subscription } from 'rxjs';
-
 
 @Component({
   selector: 'app-category-buy-list',
@@ -43,7 +35,7 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
     private categoryBuyService: CategoryBuyService,
     private router: Router,
     private dialog: MatDialog,
-  ) { }
+  ) {}
 
   ngAfterViewInit(): void {
     this.getCategoryList();
@@ -108,12 +100,15 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
     if (catEdit) {
       dialogConfig.data = {
         categoryId: catEdit.categoryId,
-        categoryName: catEdit.categoryName
+        categoryName: catEdit.categoryName,
       };
     }
 
     // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      CategoryBuyDialogComponent,
+      dialogConfig,
+    );
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
@@ -121,19 +116,25 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
       if (data) {
         // Create mode
         if (!catEdit) {
-          this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
-            // Add new category into data source
-            this.dataSource.data.push(res);
-            // Update data source
-            this.dataSource._updateChangeSubscription();
-          });
+          this.categoryBuyService
+            .addCategory(data)
+            .subscribe((res: CategoryBuy) => {
+              // Add new category into data source
+              this.dataSource.data.push(res);
+              // Update data source
+              this.dataSource._updateChangeSubscription();
+            });
           // Edit mode
         } else {
-          this.categoryBuyService.updateCategory(data).subscribe((res: CategoryBuy) => {
-            const index = this.dataSource.data.findIndex(c => c.categoryId === res.categoryId);
-            this.dataSource.data.splice(index, 1, res);
-            this.dataSource._updateChangeSubscription();
-          });
+          this.categoryBuyService
+            .updateCategory(data)
+            .subscribe((res: CategoryBuy) => {
+              const index = this.dataSource.data.findIndex(
+                c => c.categoryId === res.categoryId,
+              );
+              this.dataSource.data.splice(index, 1, res);
+              this.dataSource._updateChangeSubscription();
+            });
         }
       }
       this.selection.clear();

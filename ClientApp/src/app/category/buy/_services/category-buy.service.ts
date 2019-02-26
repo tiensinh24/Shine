@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, merge } from 'rxjs';
+import { Observable } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from '../_interfaces/categoryBuy';
-import { share } from 'rxjs/operators';
-import { ProductBuyListDto } from 'src/app/product/buy/_interfaces/productBuyListDto';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +20,9 @@ export class CategoryBuyService {
     if (this.catsObs) {
       return this.catsObs;
     } else {
-      this.catsObs = this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`).pipe(share());
+      this.catsObs = this.http
+        .get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`)
+        .pipe(share());
       return this.catsObs;
     }
   }
@@ -45,7 +46,6 @@ export class CategoryBuyService {
   }
 
   deleteCategory(id: number): Observable<number> {
-    return this.http
-      .delete<number>(this.baseUrl + 'api/categoryBuy/' + id);
+    return this.http.delete<number>(this.baseUrl + 'api/categoryBuy/' + id);
   }
 }
