@@ -137,10 +137,11 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
         telephone: supplierEdit.telephone,
         fax: supplierEdit.fax,
         countryId: supplierEdit.countryId,
+        countries: this.countries,
       };
     } else {
       dialogConfig.data = {
-        // categories: this.countries,
+        countries: this.countries
       };
     }
 

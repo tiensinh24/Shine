@@ -1,51 +1,66 @@
 <!-- Dialog title -->
 <mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{title}}</mat-card>
 
-<mat-card mat-dialog-content class="mat-elevation-z1">
+<mat-card mat-dialog-content class="mat-elevation-z4">
   <!-- Formgroup -->
   <form fxLayout="column" [formGroup]="formGroup">
-    <!-- FirstName -->
-    <mat-form-field appearance="outline">
-      <mat-label>FirstName</mat-label>
-      <input matInput placeholder="FirstName" formControlName="firstName" required autofocus>
-      <mat-error *ngIf="get('firstName').invalid">{{getErrorMessage(get('firstName'))}}</mat-error>
-    </mat-form-field>
-    <!-- Specification -->
-    <mat-form-field appearance="outline">
-      <mat-label>LastName</mat-label>
-      <input matInput placeholder="LastName" formControlName="lastName" required>
-      <mat-error *ngIf="get('lastName').invalid">{{getErrorMessage(get('lastName'))}}</mat-error>
-    </mat-form-field>
-    <!-- Gender -->
-    <mat-form-field appearance="outline">
-      <mat-label>Gender</mat-label>
-      <input matInput placeholder="Gender" formControlName="gender" required>
-      <mat-error *ngIf="get('gender').invalid">{{getErrorMessage(get('gender'))}}</mat-error>
-    </mat-form-field>
-    <!-- DateOfBirth -->
-    <mat-form-field appearance="outline">
-      <mat-label>DateOfBirth</mat-label>
-      <input matInput placeholder="DateOfBirth" formControlName="dateOfBirth" required>
-      <mat-error *ngIf="get('dateOfBirth').invalid">{{getErrorMessage(get('dateOfBirth'))}}</mat-error>
-    </mat-form-field>
-    <!-- PersonNumber -->
-    <mat-form-field appearance="outline">
-      <mat-label>PersonNumber</mat-label>
-      <input matInput placeholder="PersonNumber" formControlName="personNumber" required>
-      <mat-error *ngIf="get('personNumber').invalid">{{getErrorMessage(get('personNumber'))}}</mat-error>
-    </mat-form-field>
-    <!-- Telephone -->
-    <mat-form-field appearance="outline">
-      <mat-label>Telephone</mat-label>
-      <input matInput placeholder="Telephone" formControlName="telephone" required>
-      <mat-error *ngIf="get('telephone').invalid">{{getErrorMessage(get('telephone'))}}</mat-error>
-    </mat-form-field>
-    <!-- Fax -->
-    <mat-form-field appearance="outline">
-      <mat-label>Fax</mat-label>
-      <input matInput placeholder="Fax" formControlName="fax" required>
-      <mat-error *ngIf="get('fax').invalid">{{getErrorMessage(get('fax'))}}</mat-error>
-    </mat-form-field>
+    <!-- Row 1 -->
+    <div fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column">
+      <!-- FirstName -->
+      <mat-form-field appearance="outline" fxFlex="50">
+        <mat-label>FirstName</mat-label>
+        <input matInput placeholder="FirstName" formControlName="firstName" required autofocus>
+        <mat-error *ngIf="get('firstName').invalid">{{getErrorMessage(get('firstName'))}}</mat-error>
+      </mat-form-field>
+      <!-- LastName -->
+      <mat-form-field appearance="outline" fxFlex="50">
+        <mat-label>LastName</mat-label>
+        <input matInput placeholder="LastName" formControlName="lastName" required>
+        <mat-error *ngIf="get('lastName').invalid">{{getErrorMessage(get('lastName'))}}</mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Row 2 -->
+    <div fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column">
+      <!-- Gender -->
+      <mat-form-field appearance="outline" fxFlex="50">
+        <mat-label>Gender</mat-label>
+        <mat-select matInput placeholder="Gender" formControlName="gender" required>
+          <mat-option [value]="true">Male</mat-option>
+          <mat-option [value]="false">Female</mat-option>
+        </mat-select>
+        <mat-error *ngIf="get('gender').invalid">{{getErrorMessage(get('gender'))}}</mat-error>
+      </mat-form-field>
+      <!-- DateOfBirth -->
+      <mat-form-field appearance="outline" fxFlex="50">
+        <mat-label>DateOfBirth</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="dateOfBirth" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker locale="en-GB" #picker></mat-datepicker>
+        <mat-error *ngIf="get('dateOfBirth').invalid">{{getErrorMessage(get('dateOfBirth'))}}</mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Row 3 -->
+    <div fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column">
+      <!-- PersonNumber -->
+      <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>PersonNumber</mat-label>
+        <input matInput placeholder="PersonNumber" formControlName="personNumber" required>
+        <mat-error *ngIf="get('personNumber').invalid">{{getErrorMessage(get('personNumber'))}}</mat-error>
+      </mat-form-field>
+      <!-- Telephone -->
+      <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>Telephone</mat-label>
+        <input matInput placeholder="Telephone" formControlName="telephone" required>
+        <mat-error *ngIf="get('telephone').invalid">{{getErrorMessage(get('telephone'))}}</mat-error>
+      </mat-form-field>
+      <!-- Fax -->
+      <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>Fax</mat-label>
+        <input matInput placeholder="Fax" formControlName="fax" required>
+        <mat-error *ngIf="get('fax').invalid">{{getErrorMessage(get('fax'))}}</mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Row 4 -->
     <!-- CountryId -->
     <mat-form-field appearance="outline">
       <mat-label>Select country</mat-label>
@@ -59,16 +74,19 @@
       </mat-select>
       <mat-error *ngIf="get('countryId').invalid">{{getErrorMessage(get('countryId'))}}</mat-error>
     </mat-form-field>
-    <!-- Action Buttons -->
-    <mat-card-actions fxLayout="row">
-      <div class="fill"></div>
-      <button fxFlex="20" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
-        Submit
-      </button>
-      <button fxFlex="20" mat-raised-button color="warn" (click)="onCancel()">
-        Cancel
-      </button>
-      <div class="fill"></div>
-    </mat-card-actions>
   </form>
 </mat-card>
+<!-- Action Buttons -->
+<div fxLayout="row" fxLayoutGap="16px">
+  <div class="fill"></div>
+  <button fxFlex="20" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+    Submit
+  </button>
+  <button fxFlex="20" mat-raised-button color="warn" (click)="onCancel()">
+    Cancel
+  </button>
+  <div class="fill"></div>
+</div>
+
+{{formGroup.value.dateOfBirth}}
+{{test}}

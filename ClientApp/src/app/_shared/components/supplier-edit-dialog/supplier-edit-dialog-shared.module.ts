@@ -11,6 +11,7 @@ import { MaterialSharedModule } from '../../material-shared.module';
   imports: [
     SharedModule,
     MaterialSharedModule,
+
   ]
 })
 export class SupplierEditDialogSharedModule { }

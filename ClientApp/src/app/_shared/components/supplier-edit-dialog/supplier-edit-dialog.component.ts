@@ -1,30 +1,16 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl, } from '@angular/forms';
 import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-  FormControl,
-} from '@angular/forms';
-import {
-  MatDialog,
-  MatDialogConfig,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material';
+// import { moment } from 'moment';
+import * as moment from 'moment';
 
-import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
-import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
 import { environment } from 'src/environments/environment';
-import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
-import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
-import { ProductBuyListDto } from 'src/app/product/buy/_interfaces/productBuyListDto';
 import { Country } from 'src/app/country/_interfaces/country';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { CountryService } from 'src/app/country/_services/country.service';
 import { Supplier } from 'src/app/supplier/_interfaces/supplier';
-import { SupplierDto } from 'src/app/supplier/_interfaces/supplierDto';
 
 @Component({
   selector: 'app-supplier-edit-dialog',
@@ -38,26 +24,24 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
   editMode: boolean;
   title: string;
 
+  test: any;
+
   constructor(
     private fb: FormBuilder,
     private supplierService: SupplierService,
-    private countryService: CountryService,
-    private dialog: MatDialog,
     private dialogRef: MatDialogRef<SupplierEditDialogComponent>,
     // Inject data from supplier-list component
     @Inject(MAT_DIALOG_DATA) public dataFromList,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.createForm();
 
-    // Edit supplier
     if (this.dataFromList.firstName) {
       this.editMode = true;
 
       this.title = `Edit ${this.dataFromList.firstName} ${this.dataFromList.lastName}`;
       this.updateForm();
-      // Create supplier
     } else {
       this.editMode = false;
       this.title = 'Create new supplier';
@@ -66,8 +50,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     this.countries = this.dataFromList.countries;
   }
 
-  // Destroy all subscription
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   createForm() {
     this.formGroup = this.fb.group({
@@ -132,7 +115,6 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
   // }
 
   onSubmit() {
-    // this.canDeactive = true;
     const tempSupplier = <Supplier>{};
 
     tempSupplier.firstName = this.formGroup.value.firstName;
@@ -144,28 +126,14 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     tempSupplier.fax = this.formGroup.value.fax;
     tempSupplier.countryId = this.formGroup.value.countryId;
 
-    // Edit mode
     if (this.editMode) {
       tempSupplier.personId = this.dataFromList.personId;
       this.supplierService.updateSupplier(tempSupplier).subscribe(res => {
-        // Get new supplier from API & return it to list component
-        const country = this.countries.find(
-          c => c.countryId === res.countryId,
-        );
-        const response = <SupplierDto>res;
-        response.countryName = country.countryName;
-        this.dialogRef.close(response);
+        this.dialogRef.close(res);
       });
-      // Create mode
     } else {
       this.supplierService.addSupplier(tempSupplier).subscribe(res => {
-        // Get new supplier from API & return it to list component
-        const country = this.countries.find(
-          c => c.countryId === res.countryId,
-        );
-        const response = <SupplierDto>res;
-        response.countryName = country.countryName;
-        this.dialogRef.close(response);
+        this.dialogRef.close(res);
       });
     }
   }
@@ -182,9 +150,11 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     return formControl.hasError('required')
       ? 'You must enter a value'
       : formControl.hasError('email')
-      ? 'Not a valid email'
-      : formControl.hasError('pattern')
-      ? 'Please enter a number!'
-      : '';
+        ? 'Not a valid email'
+        : formControl.hasError('pattern')
+          ? 'Please enter a number!'
+          : '';
   }
+
+  
 }

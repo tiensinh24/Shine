@@ -4,7 +4,10 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
   MatSidenavModule, MatIconModule, MatSelectModule, MatCheckboxModule,
   MatListModule, MatCardModule, MatProgressSpinnerModule, MatDialogModule,
   MatMenuModule, MatExpansionModule, MatGridListModule, MatSnackBarModule,
-  MatProgressBarModule } from '@angular/material';
+  MatProgressBarModule,
+  MatDatepickerModule,
+  MatNativeDateModule} from '@angular/material';
+
 
 @NgModule({
   declarations: [],
@@ -30,6 +33,8 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
     MatGridListModule,
     MatSnackBarModule,
     MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
 
   ],
   exports: [
@@ -54,6 +59,9 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
     MatGridListModule,
     MatSnackBarModule,
     MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+
   ]
 })
 export class MaterialSharedModule { }

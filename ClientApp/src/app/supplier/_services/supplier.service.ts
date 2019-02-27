@@ -21,12 +21,12 @@ export class SupplierService {
     return this.http.get<SupplierDto>(`${this.baseUrl}api/supplier/${id}`);
   }
 
-  addSupplier(supplier: Supplier): Observable<Supplier> {
-    return this.http.post<Supplier>(`${this.baseUrl}api/supplier/`, supplier);
+  addSupplier(supplier: Supplier): Observable<SupplierDto> {
+    return this.http.post<SupplierDto>(`${this.baseUrl}api/supplier/`, supplier);
   }
 
-  updateSupplier(supplier: Supplier): Observable<Supplier> {
-    return this.http.put<Supplier>(`${this.baseUrl}api/supplier/`, supplier);
+  updateSupplier(supplier: Supplier): Observable<SupplierDto> {
+    return this.http.put<SupplierDto>(`${this.baseUrl}api/supplier/`, supplier);
   }
 
   deleteSupplier(id: number): Observable<number> {

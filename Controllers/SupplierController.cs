@@ -51,20 +51,22 @@ namespace Shine.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Supplier> AddSupplier([FromBody] Supplier supplier)
+        public ActionResult<SupplierListDto> AddSupplier([FromBody] Supplier supplier)
         {
             _repository.Add(supplier);
             _repository.Commit();
-            return supplier;
+            var supReturn = _repository.GetSupplierDto(supplier.PersonId);
+            return supReturn;
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Supplier> UpdateSupplier([FromBody] Supplier supplier)
+        public ActionResult<SupplierListDto> UpdateSupplier([FromBody] Supplier supplier)
         {
             _repository.UpdateSupplier(supplier);
             _repository.Commit();
-            return supplier;
+            var supReturn = _repository.GetSupplierDto(supplier.PersonId);
+            return supReturn;
         }
 
         [HttpDelete("{id}")]
