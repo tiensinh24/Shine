@@ -4,8 +4,8 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material';
-// import { moment } from 'moment';
 import * as moment from 'moment';
+
 
 import { environment } from 'src/environments/environment';
 import { Country } from 'src/app/country/_interfaces/country';
@@ -23,8 +23,6 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   editMode: boolean;
   title: string;
-
-  test: any;
 
   constructor(
     private fb: FormBuilder,
@@ -57,7 +55,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', [Validators.required]],
-      dateOfBirth: ['', Validators.required],
+      dateOfBirth: [moment(), Validators.required],
       personNumber: [],
       telephone: [],
       fax: [],

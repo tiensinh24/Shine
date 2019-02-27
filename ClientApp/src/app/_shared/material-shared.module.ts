@@ -7,6 +7,8 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
   MatProgressBarModule,
   MatDatepickerModule,
   MatNativeDateModule} from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
     MatSnackBarModule,
     MatProgressBarModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    // MatNativeDateModule,
+    MatMomentDateModule
 
   ],
   exports: [
@@ -60,7 +63,8 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
     MatSnackBarModule,
     MatProgressBarModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    // MatNativeDateModule,
+    MatMomentDateModule,
 
   ]
 })

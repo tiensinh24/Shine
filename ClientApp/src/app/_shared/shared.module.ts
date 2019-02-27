@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { GenderPipe } from '../_pipes/gender.pipe';
 
 @NgModule({
@@ -29,6 +28,6 @@ import { GenderPipe } from '../_pipes/gender.pipe';
 
     // Flex
     FlexLayoutModule,
-  ]
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}
