@@ -33,7 +33,7 @@ namespace Shine.Controllers
         // }
 
         [HttpGet]
-        public IActionResult GetGroupBy()
+        public IActionResult GetProductsGroupBySupplier()
         {
             var query = _context.PersonProducts
                 .Include(p => p.Person).Include(p => p.Product)
