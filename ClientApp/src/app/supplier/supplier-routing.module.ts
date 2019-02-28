@@ -6,6 +6,7 @@ import { SupplierDetailComponent } from './supplier-detail/supplier-detail.compo
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { SupplierComponent } from './supplier.component';
+import { ProductsProvidedComponent } from './products-provided/products-provided.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
         { path: 'home', component: SupplierHomeComponent },
         { path: 'detail', component: SupplierDetailComponent },
         { path: 'edit', component: SupplierEditComponent },
-        { path: 'list', component: SupplierListComponent }
+        { path: 'list', component: SupplierListComponent },
+        { path: 'products-provided', component: ProductsProvidedComponent }
       ]
   }
 ];

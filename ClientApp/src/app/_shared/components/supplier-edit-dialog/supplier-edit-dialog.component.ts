@@ -55,7 +55,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', [Validators.required]],
-      dateOfBirth: [moment(), Validators.required],
+      dateOfBirth: ['', Validators.required],
       personNumber: [],
       telephone: [],
       fax: [],

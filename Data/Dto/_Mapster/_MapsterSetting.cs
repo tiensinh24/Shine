@@ -8,6 +8,7 @@ namespace Shine.Data.Dto._Mapster
 
             ProductBuySetting.Setting();
             SupplierSetting.Setting();
+            SupplierProductSetting.Setting();
         }
     }
 }

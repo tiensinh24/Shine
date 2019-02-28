@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SupplierDto } from '../_interfaces/supplierDto';
 import { Supplier } from '../_interfaces/supplier';
+import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
+import { SupplierProduct } from '../_interfaces/supplierProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +33,14 @@ export class SupplierService {
 
   deleteSupplier(id: number): Observable<number> {
     return this.http.delete<number>(`${this.baseUrl}api/supplier/${id}`);
+  }
+
+  getSupplierProducts(): Observable<SupplierProductsDto[]> {
+    return this.http.get<SupplierProductsDto[]>(`${this.baseUrl}api/supplierProduct/`);
+  }
+
+  deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {
+    return this.http.delete<SupplierProduct>
+      (`${this.baseUrl}api/supplierProduct/${supprod.personId}/${supprod.productId}`);
   }
 }

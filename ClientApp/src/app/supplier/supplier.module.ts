@@ -9,6 +9,7 @@ import { SupplierComponent } from './supplier.component';
 import { SharedModule } from '../_shared/shared.module';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
+import { ProductsProvidedComponent } from './products-provided/products-provided.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-e
     SupplierDetailComponent,
     SupplierEditComponent,
     SupplierListComponent,
-    SupplierComponent
+    SupplierComponent,
+    ProductsProvidedComponent
   ],
   imports: [
     // Shared module
