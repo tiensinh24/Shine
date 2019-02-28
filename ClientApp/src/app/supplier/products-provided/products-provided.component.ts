@@ -17,14 +17,15 @@ import { ProductsProvidedDialogComponent } from 'src/app/_shared/components/prod
 export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
   displayedColumns = [
     'select',
-    'personId',
+    'fullName',
     'productName',
     'specification',
+    'actions'
   ];
   dataSource = new MatTableDataSource<SupplierProductsDto>([]);
   selection = new SelectionModel<SupplierProductsDto>(true, []);
   isLoading = true;
-  title = `Products List` ;
+  title = `Products List`;
   suppliers: Supplier[];
   sub: Subscription;
 

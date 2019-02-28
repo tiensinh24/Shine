@@ -12,18 +12,6 @@
     </button>
   </mat-card>
 
-  <!-- Supplier select -->
-  <mat-form-field>
-    <mat-label>Select supplier</mat-label>
-    <mat-select #supplierFilter placeholder="Select supplier" (selectionChange)="applyFilter(supplierFilter.value)"
-      (focus)="setupFilter('personId')">
-      <mat-option>--All--</mat-option>
-      <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
-        {{supplier.firstName}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
   <!-- Table -->
   <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
     <!-- Checkbox Column -->
@@ -38,10 +26,10 @@
         </mat-checkbox>
       </td>
     </ng-container>
-    <!-- PersonId Column -->
-    <ng-container matColumnDef="personId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Supplier ID</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.personId}} </td>
+    <!-- FullName Column -->
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>FullName</b> </th>
+      <td mat-cell *matCellDef="let row"> {{row.fullName}} </td>
     </ng-container>
     <!-- Product Name Column -->
     <ng-container matColumnDef="productName">
@@ -52,7 +40,6 @@
     <ng-container matColumnDef="specification">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Specification</b> </th>
       <td mat-cell *matCellDef="let row"> {{row.specification}} </td>
-      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Actions Column -->
@@ -76,6 +63,17 @@
 
   <!-- Paginator & filter -->
   <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
+    <!-- Supplier select -->
+    <mat-form-field>
+      <mat-label>Select supplier</mat-label>
+      <mat-select #supplierFilter placeholder="Select supplier" (selectionChange)="applyFilter(supplierFilter.value)"
+        (focus)="setupFilter('fullName')">
+        <mat-option>--All--</mat-option>
+        <mat-option *ngFor="let supplier of suppliers" [value]="supplier.firstName">
+          {{supplier.firstName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-paginator fxFlex="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <mat-form-field fxFlex>
       <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('')" placeholder="Filter">
