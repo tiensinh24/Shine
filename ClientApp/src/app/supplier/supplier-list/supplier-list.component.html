@@ -74,21 +74,21 @@
   <ng-container matColumnDef="actions">
     <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
       <button mat-icon-button color="primary" (click)="onCreate()">
-        <mat-icon matTooltip="Create new product" aria-label="Create new product">add_circle</mat-icon>
+        <mat-icon matTooltip="Create new supplier" aria-label="Create new supplier">add_circle</mat-icon>
       </button>
     </mat-header-cell>
 
     <mat-cell *matCellDef="let row">
 
-      <button matTooltip="Product detail" mat-icon-button color="primary" (click)="onDetail(row)">
+      <button matTooltip="Supplier detail" mat-icon-button color="primary" (click)="onDetail(row)">
         <mat-icon aria-label="Detail">dehaze</mat-icon>
       </button>
 
-      <button matTooltip="Edit product" mat-icon-button color="accent" (click)="onEdit(row)">
+      <button matTooltip="Edit supplier" mat-icon-button color="accent" (click)="onEdit(row)">
         <mat-icon aria-label="Edit">edit</mat-icon>
       </button>
 
-      <button matTooltip="Delete product" mat-icon-button color="warn" (click)="onDelete(row)">
+      <button matTooltip="Delete supplier" mat-icon-button color="warn" (click)="onDelete(row)">
         <mat-icon aria-label="Delete">delete</mat-icon>
       </button>
 

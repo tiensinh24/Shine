@@ -1,0 +1,13 @@
+.mat-elevation-z8 {
+    margin: 1em;
+}
+
+.product-list {
+    width: 100%;
+    height: calc(100vh - 155px);
+}
+
+.mat-header-cell {
+    background-color: aliceblue;
+    color: royalblue;
+}

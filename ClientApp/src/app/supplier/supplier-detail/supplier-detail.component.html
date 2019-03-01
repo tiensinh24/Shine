@@ -1,3 +1,38 @@
-<p>
-  supplier-detail works!
-</p>
+<mat-card fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px" class="mat-elevation-z8">
+  <div fxFlex="30">
+    <p>SupplierId: {{supplierGroup?.supplier.personId}}</p>
+    <p>Full Name: {{supplierGroup?.supplier.fullName}}</p>
+  </div>
+
+  <div fxLayout="column" class="mat-elevation-z2 product-list" fxLayoutAlign="start stretch">
+    <!-- ProductName column -->
+    <table mat-table #table [dataSource]="supplierGroup?.products">
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef> Product Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+      </ng-container>
+      <!-- Specification Column -->
+      <ng-container matColumnDef="specification">
+        <th mat-header-cell *matHeaderCellDef> Specification </th>
+        <td mat-cell *matCellDef="let row"> {{row.specification}} </td>
+      </ng-container>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
+          <button mat-icon-button color="primary">
+            <mat-icon matTooltip="Add products" aria-label="Add products">add_circle</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button matTooltip="Delete product" mat-icon-button color="warn">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <!-- Header & footer -->
+      <tr mat-header-row *matHeaderRowDef="displayedcolumn; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedcolumn"></tr>
+    </table>
+    <mat-paginator fxFlex="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</mat-card>

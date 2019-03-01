@@ -17,7 +17,8 @@ const routes: Routes = [
         { path: 'detail', component: SupplierDetailComponent },
         { path: 'edit', component: SupplierEditComponent },
         { path: 'list', component: SupplierListComponent },
-        { path: 'products-provided', component: ProductsProvidedComponent }
+        { path: 'products-provided', component: ProductsProvidedComponent },
+        { path: ':supplierId', component: SupplierDetailComponent }
       ]
   }
 ];

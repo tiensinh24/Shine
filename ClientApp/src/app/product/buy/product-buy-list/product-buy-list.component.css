@@ -19,14 +19,14 @@ button[mat-mini-fab] {
 .card-title {
   background-color: royalblue;
   margin-bottom: -15px;
-  color: white;
+  color: aliceblue;
   height: 60px;
 }
 
 table[mat-table] {
   margin: 1em;
+  width: 97.5%;
 }
-
 
 [mat-sort-header] {
   color: royalblue;

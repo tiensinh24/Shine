@@ -9,14 +9,15 @@ mat-progress-bar {
 .mat-header-row {
   position: sticky;
   top: 0;
-  background-color: honeydew
+  background-color: honeydew;
+  height: 40px;
 }
 
 .mat-paginator-sticky {
   bottom: 0px;
   position: sticky;
   z-index: 10;
-  background-color: floralwhite;
+  background-color: whitesmoke;
   height: 60px;
 }
 
@@ -24,10 +25,9 @@ mat-progress-bar {
   background-color: transparent;
 }
 
-table[mat-table] {
-  margin: 1em;
+table[mat-table] {  
+  width: 100%;
 }
-
 
 [mat-sort-header] {
   color: royalblue;

@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 import { SupplierDto } from '../_interfaces/supplierDto';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
 import { SupplierProduct } from '../_interfaces/supplierProduct';
+import { ProductsBySupplier } from '../_interfaces/products-buy-supplier';
+
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +40,10 @@ export class SupplierService {
 
   getSupplierProducts(): Observable<SupplierProductsDto[]> {
     return this.http.get<SupplierProductsDto[]>(`${this.baseUrl}api/supplierProduct/`);
+  }
+
+  getProductsBySupplier(supplierId: number): Observable<ProductsBySupplier> {
+    return this.http.get<ProductsBySupplier>(`${this.baseUrl}api/supplierProduct/${supplierId}`);
   }
 
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {

@@ -35,24 +35,10 @@ namespace Shine.Controllers
             return _repository.GetSupplierProductsDto().ToList();
         }
 
-        [HttpGet("group")]
-        public IActionResult GetProductsGroupBySupplier()
+        [HttpGet("{id}")]
+        public IActionResult GetProductsGroupBySupplier(int id)
         {
-            var query = _context.PersonProducts
-                .Include(p => p.Person).Include(p => p.Product)
-                .Where(p => p.Product.ProductType == true
-                    && p.Person.PersonType == PersonType.Supplier)
-                .ProjectToType<SupplierProductDto>().AsNoTracking();
-
-            var result = from b in query
-            group new { b.ProductName, b.Specification } by new { b.PersonId, b.FullName } into g
-            select new
-            {
-            Supplier = g.Key,
-            Products = g
-            };
-
-            return Ok(result);
+            return _repository.GetProductsGroupBySupplier(id);
 
         }
 
