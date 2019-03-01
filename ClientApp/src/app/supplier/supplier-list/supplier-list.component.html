@@ -1,120 +1,119 @@
 <!-- Loading progress bar -->
 <mat-progress-bar *ngIf="isLoading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
 
-<div *ngIf="!isLoading" fxLayout="column">
-  <!-- Title -->
-  <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
-    <span class="fill"></span>
-    <div class="mat-headline">{{title}}</div>
-    <span class="fill"></span>
-    <button mat-mini-fab matTooltip="Go to Sell" [routerLink]="['/product-sell']">
-      Buy
-    </button>
-  </mat-card>
-  <!-- Table -->
-  <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
-    <!-- firstName Column -->
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>FirstName</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
-    </ng-container>
-    <!-- lastName Column -->
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>LastName</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
-    </ng-container>
-    <!-- Gender Column -->
-    <ng-container matColumnDef="gender">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Gender</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.gender | gender}} </td>
-    </ng-container>
-    <!-- dateOfBirth Column -->
-    <ng-container matColumnDef="dateOfBirth">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>DateOfBirth</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.dateOfBirth | date: 'dd/MM/yyyy'}} </td>
-    </ng-container>
-    <!-- personNumber Column -->
-    <ng-container matColumnDef="personNumber">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>PersonNumber</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.personNumber}} </td>
-    </ng-container>
-    <!-- telephone Column -->
-    <ng-container matColumnDef="telephone">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Telephone</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.telephone}} </td>
-    </ng-container>
-    <!-- fax Column -->
-    <ng-container matColumnDef="fax">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Fax</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.fax}} </td>
-    </ng-container>
-    <!-- countryName Column -->
-    <ng-container matColumnDef="countryName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Country</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.countryName}} </td>
-    </ng-container>
-    <!-- continentName Column -->
-    <ng-container matColumnDef="continentName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Continent</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.continentName}} </td>
-    </ng-container>
+<!-- Title -->
+<mat-card class="mat-elevation-z8 card-title" fxLayout="row">
+  <span class="fill"></span>
+  <div class="mat-headline">{{title}}</div>
+  <span class="fill"></span>
+  <button mat-mini-fab matTooltip="Go to Sell">
+    Buy
+  </button>
+</mat-card>
+<!-- Table -->
+<table *ngIf="!isLoading" mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+  <!-- firstName Column -->
+  <ng-container matColumnDef="firstName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>FirstName</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
+  </ng-container>
+  <!-- lastName Column -->
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>LastName</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
+  </ng-container>
+  <!-- Gender Column -->
+  <ng-container matColumnDef="gender">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Gender</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.gender | gender}} </td>
+  </ng-container>
+  <!-- dateOfBirth Column -->
+  <ng-container matColumnDef="dateOfBirth">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>DateOfBirth</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.dateOfBirth | date: 'dd/MM/yyyy'}} </td>
+  </ng-container>
+  <!-- personNumber Column -->
+  <ng-container matColumnDef="personNumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>PersonNumber</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.personNumber}} </td>
+  </ng-container>
+  <!-- telephone Column -->
+  <ng-container matColumnDef="telephone">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Telephone</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.telephone}} </td>
+  </ng-container>
+  <!-- fax Column -->
+  <ng-container matColumnDef="fax">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Fax</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.fax}} </td>
+  </ng-container>
+  <!-- countryName Column -->
+  <ng-container matColumnDef="countryName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Country</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.countryName}} </td>
+  </ng-container>
+  <!-- continentName Column -->
+  <ng-container matColumnDef="continentName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Continent</b> </th>
+    <td mat-cell *matCellDef="let row"> {{row.continentName}} </td>
+  </ng-container>
 
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-      <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
-        <button mat-icon-button color="primary" (click)="onCreate()">
-          <mat-icon matTooltip="Create new product" aria-label="Create new product">add_circle</mat-icon>
-        </button>
-      </mat-header-cell>
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
+      <button mat-icon-button color="primary" (click)="onCreate()">
+        <mat-icon matTooltip="Create new product" aria-label="Create new product">add_circle</mat-icon>
+      </button>
+    </mat-header-cell>
 
-      <mat-cell *matCellDef="let row">
+    <mat-cell *matCellDef="let row">
 
-        <button matTooltip="Product detail" mat-icon-button color="primary" (click)="onDetail(row)">
-          <mat-icon aria-label="Detail">dehaze</mat-icon>
-        </button>
+      <button matTooltip="Product detail" mat-icon-button color="primary" (click)="onDetail(row)">
+        <mat-icon aria-label="Detail">dehaze</mat-icon>
+      </button>
 
-        <button matTooltip="Edit product" mat-icon-button color="accent" (click)="onEdit(row)">
-          <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
+      <button matTooltip="Edit product" mat-icon-button color="accent" (click)="onEdit(row)">
+        <mat-icon aria-label="Edit">edit</mat-icon>
+      </button>
 
-        <button matTooltip="Delete product" mat-icon-button color="warn" (click)="onDelete(row)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
+      <button matTooltip="Delete product" mat-icon-button color="warn" (click)="onDelete(row)">
+        <mat-icon aria-label="Delete">delete</mat-icon>
+      </button>
 
-      </mat-cell>
-    </ng-container>
+    </mat-cell>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
-  </table>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+</table>
 
-  <!-- Paginator & filter -->
-  <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
-    <mat-paginator fxFlex="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-    <mat-form-field fxFlex>
-      <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('')" placeholder="Filter">
-    </mat-form-field>
+<!-- Paginator & filter -->
+<mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
+  <mat-paginator fxFlex="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <mat-form-field fxFlex>
+    <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('')" placeholder="Filter">
+  </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Select country</mat-label>
-      <mat-select #countryFilter placeholder="Select country" (selectionChange)="applyFilter(countryFilter.value)" (focus)="setupFilter('countryName')">
-        <mat-option>--All--</mat-option>
-        <mat-option *ngFor="let country of countries" [value]="country.countryName">
-          {{country.countryName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-card>
-</div>
+  <mat-form-field>
+    <mat-label>Select country</mat-label>
+    <mat-select #countryFilter placeholder="Select country" (selectionChange)="applyFilter(countryFilter.value)"
+      (focus)="setupFilter('countryName')">
+      <mat-option>--All--</mat-option>
+      <mat-option *ngFor="let country of countries" [value]="country.countryName">
+        {{country.countryName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-card>

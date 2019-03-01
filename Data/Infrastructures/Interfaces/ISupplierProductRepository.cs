@@ -11,6 +11,6 @@ namespace Shine.Data.Infrastructures.Interfaces
         IEnumerable<SupplierProductDto> GetProductsForSupplier(int supplierId);
         IEnumerable<SupplierProductDto> GetSuppliersForProduct(int productId);
         void UpdateSupplierProduct(PersonProduct supplierProduct);
-        void DeleteSupplierProduct(PersonProduct supplierProduct);
+        void DeleteSupplierProduct(int personId, int productId);
     }
 }

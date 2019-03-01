@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+
 using Mapster;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using Shine.Data;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Infrastructures.Repositories;
@@ -26,19 +29,19 @@ namespace Shine.Controllers
             this._repository = repository;
         }
 
-        // [HttpGet]
-        // public ActionResult<IEnumerable<SupplierProductDto>> GetSupplierProductsDto()
-        // {
-        //     return _repository.GetSupplierProductsDto().ToList();
-        // }
-
         [HttpGet]
+        public ActionResult<IEnumerable<SupplierProductDto>> GetSupplierProductsDto()
+        {
+            return _repository.GetSupplierProductsDto().ToList();
+        }
+
+        [HttpGet("group")]
         public IActionResult GetProductsGroupBySupplier()
         {
             var query = _context.PersonProducts
                 .Include(p => p.Person).Include(p => p.Product)
-                .Where(p => p.Product.ProductType == true &&
-                    p.Person.PersonType == PersonType.Supplier)
+                .Where(p => p.Product.ProductType == true
+                    && p.Person.PersonType == PersonType.Supplier)
                 .ProjectToType<SupplierProductDto>().AsNoTracking();
 
             var result = from b in query
@@ -51,6 +54,12 @@ namespace Shine.Controllers
 
             return Ok(result);
 
+        }
+
+        [HttpDelete("{personId}/{productId}")]
+        public void DeleteSupplierProduct(int personId, int productId)
+        {
+            _repository.DeleteSupplierProduct(personId, productId);
         }
     }
 }

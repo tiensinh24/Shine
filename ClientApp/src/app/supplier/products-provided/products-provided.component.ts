@@ -9,6 +9,11 @@ import { Supplier } from '../_interfaces/supplier';
 import { SupplierProduct } from '../_interfaces/supplierProduct';
 import { ProductsProvidedDialogComponent } from 'src/app/_shared/components/products-provided-dialog/products-provided-dialog.component';
 
+export interface TableCol {
+  header: string;
+  value: string;
+}
+
 @Component({
   selector: 'app-products-provided',
   templateUrl: './products-provided.component.html',
@@ -18,10 +23,18 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
   displayedColumns = [
     'select',
     'fullName',
+    'age',
     'productName',
     'specification',
     'actions'
   ];
+  columnsToDisplay: TableCol[] = [
+    { header: 'Full Name', value: 'fullName' },
+    { header: 'Age', value: 'age' },
+    { header: 'Product Name', value: 'productName' },
+    { header: 'Specification', value: 'specification' },
+  ];
+
   dataSource = new MatTableDataSource<SupplierProductsDto>([]);
   selection = new SelectionModel<SupplierProductsDto>(true, []);
   isLoading = true;

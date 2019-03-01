@@ -17,9 +17,12 @@ namespace Shine.Data.Infrastructures.Repositories
     {
         public SupplierProductRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration) : base(context, roleManager, userManager, configuration) { }
 
-        public void DeleteSupplierProduct(PersonProduct supplierProduct)
+        public void DeleteSupplierProduct(int personId, int productId)
         {
-            throw new System.NotImplementedException();
+            var entity = _context.PersonProducts.Where(
+                p => p.PersonId == personId && p.ProductId == productId
+            ).FirstOrDefault();
+            _context.PersonProducts.Remove(entity);
         }
 
         public IEnumerable<SupplierProductDto> GetProductsForSupplier(int supplierId)

@@ -23,7 +23,7 @@ button[mat-mini-fab] {
   height: 60px;
 }
 
-div>table[mat-table] {
+table[mat-table] {
   margin: 1em;
 }
 
@@ -41,5 +41,5 @@ tr.mat-footer-row {
 }
 
 .mat-cell {
-  padding: 0 4px;
+  padding: 0 8px;
 }
