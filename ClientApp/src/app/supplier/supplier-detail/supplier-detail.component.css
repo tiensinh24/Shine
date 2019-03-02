@@ -1,13 +1,24 @@
 .mat-elevation-z8 {
-    margin: 1em;
+  margin: 1em;
 }
 
-.product-list {
-    width: 100%;
-    height: calc(100vh - 155px);
+.product-table {
+  height: calc(100vh - 155px);
+  overflow-y: auto;
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
 }
 
 .mat-header-cell {
-    background-color: aliceblue;
-    color: royalblue;
+  background-color: aliceblue;
+  color: royalblue;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
 }

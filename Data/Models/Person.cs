@@ -35,7 +35,8 @@ namespace Shine.Data.Models
         #region Navigation Properties
         public Country Country { get; set; }
         public IEnumerable<Order> Invoices { get; set; }
-        public IEnumerable<PersonProduct> UserProduct { get; set; }
+        public IEnumerable<PersonProduct> PersonProducts { get; set; }
+        public IEnumerable<Photo> Photos { get; set; }
         #endregion
     }    
 

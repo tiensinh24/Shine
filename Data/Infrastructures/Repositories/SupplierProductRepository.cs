@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.SupplierProducts;
+using Shine.Data.Dto.Suppliers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
@@ -16,7 +18,19 @@ namespace Shine.Data.Infrastructures.Repositories
 {
     public class SupplierProductRepository : Repository, ISupplierProductRepository
     {
-        public SupplierProductRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration) : base(context, roleManager, userManager, configuration) { }
+        private readonly SupplierRepository _supRepo;
+        private readonly ProductBuyRepository _prodRepo;
+
+        public SupplierProductRepository(AppDbContext context,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<IdentityUser> userManager,
+            IConfiguration configuration,
+            SupplierRepository supRepo,
+            ProductBuyRepository prodRepo) : base(context, roleManager, userManager, configuration)
+        {
+            _supRepo = supRepo;
+            _prodRepo = prodRepo;
+        }
 
         public void DeleteSupplierProduct(int personId, int productId)
         {
@@ -53,25 +67,27 @@ namespace Shine.Data.Infrastructures.Repositories
             throw new System.NotImplementedException();
         }
 
-        public JsonResult GetProductsGroupBySupplier(int supplierId)
+        public IEnumerable<ProductBuyListDto> GetProductsBySupplier(int supplierId)
         {
-            var query = _context.PersonProducts
-                .Include(p => p.Person).Include(p => p.Product)
-                .Where(p => p.Product.ProductType == true
-                    && p.Person.PersonType == PersonType.Supplier)
-                .ProjectToType<SupplierProductDto>().AsNoTracking();
+            var query = _context.Set<ProductBuy>().Include(p => p.Category)
+                .Include(p => p.PersonProducts)
+                .ThenInclude(p => p.Person)
+                
+                .AsNoTracking();
+            return query;
+        }
 
-            var result = from b in query
-            group new { b.ProductName, b.Specification } by new { b.PersonId, b.FullName } into g
-            select new
+        public ProductsGroupBySupplierDto GetProductsGroupBySupplier(int supplierId)
+        {
+            var supplier = _supRepo.GetSupplierDto(supplierId);
+            var products = this.GetProductsBySupplier(supplierId);
+
+            var query = new ProductsGroupBySupplierDto()
             {
-            Supplier = g.Key,
-            Products = g
+                Supplier = supplier,
+                Products = products
             };
-            // return Json(result);
-            var res = result.FirstOrDefault(p => p.Supplier.PersonId == supplierId);
-
-            return Json(res);
+            return query;
         }
     }
 }

@@ -7,7 +7,7 @@ import { SupplierDto } from '../_interfaces/supplierDto';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
 import { SupplierProduct } from '../_interfaces/supplierProduct';
-import { ProductsBySupplier } from '../_interfaces/products-buy-supplier';
+import { ProductsBySupplier } from '../_interfaces/products-by-supplier';
 
 
 @Injectable({

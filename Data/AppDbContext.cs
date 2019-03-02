@@ -3,8 +3,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 using Shine.Data.Models;
 using Shine.Data.Models.Config;
 using Shine.Data.Models.Config.Extentions;
@@ -26,6 +28,7 @@ namespace Shine.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<PersonProduct> PersonProducts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductOrder> ProductOrders { get; set; }
@@ -46,7 +49,7 @@ namespace Shine.Data
 
             modelBuilder.ShadowProperties();
             // SetGlobalQueryFilters(modelBuilder);
-             
+
         }
 
         // public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -60,7 +63,7 @@ namespace Shine.Data
         //     foreach (var tp in modelBuilder.Model.GetEntityTypes())
         //     {
         //         var t = tp.ClrType;
- 
+
         //         // set global filters
         //         if (typeof(ISoftDelete).IsAssignableFrom(t))
         //         {
@@ -80,10 +83,10 @@ namespace Shine.Data
         //         }
         //     }
         // }
- 
+
         // private static readonly MethodInfo SetGlobalQueryForSoftDeleteMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
         //     .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDelete");
- 
+
         // private static readonly MethodInfo SetGlobalQueryForSoftDeleteAndTenantMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
         //     .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDeleteAndTenant");        
 
@@ -91,7 +94,7 @@ namespace Shine.Data
         // {
         //     builder.Entity<T>().HasQueryFilter(item => !EF.Property<bool>(item, "IsDeleted"));
         // }
- 
+
         // // public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenant
         // // {
         // //     builder.Entity<T>().HasQueryFilter(
@@ -99,7 +102,7 @@ namespace Shine.Data
         // //                 (_userSession.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _userSession.TenantId));
         // // }
 
-        #region Shadow Alt
+#region Shadow Alt
         //     public override int SaveChanges(bool acceptAllChangesOnSuccess)
         //     {
         //         OnBeforeSaving();
@@ -154,10 +157,7 @@ namespace Shine.Data
         //         throw new NotImplementedException();
         //     }
         // }
-        #endregion
+#endregion
     }
 
-
-
-    
 }

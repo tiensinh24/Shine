@@ -11,8 +11,8 @@ using Shine.Data.Models;
 namespace Shine.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190227061023_setDateType")]
-    partial class setDateType
+    [Migration("20190302032559_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -458,6 +458,43 @@ namespace Shine.Data.Migrations
                     b.ToTable("PersonProducts");
                 });
 
+            modelBuilder.Entity("Shine.Data.Models.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetUtcDate()");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
+
+                    b.Property<int>("ModifiedById")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetUtcDate()");
+
+                    b.Property<int>("PersonId");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("PhotoId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("Shine.Data.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -747,13 +784,21 @@ namespace Shine.Data.Migrations
             modelBuilder.Entity("Shine.Data.Models.PersonProduct", b =>
                 {
                     b.HasOne("Shine.Data.Models.Person", "Person")
-                        .WithMany("UserProduct")
+                        .WithMany("UserProducts")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Shine.Data.Models.Product", "Product")
                         .WithMany("UserProducts")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Shine.Data.Models.Photo", b =>
+                {
+                    b.HasOne("Shine.Data.Models.Person", "Person")
+                        .WithMany("Photos")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

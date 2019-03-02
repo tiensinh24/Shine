@@ -16,6 +16,11 @@ namespace Shine.Data.Dto._Mapster
                     dest => dest.ContinentName, src => src.Country.ContinentName
                 );
 
+            TypeAdapterConfig<Supplier, ProductBuyListDto>.NewConfig().Map(
+                dest => dest.CategoryName,
+                src => src.PersonProducts.
+            );
+
         }
     }
 }
