@@ -1,0 +1,23 @@
+<!-- <mat-selection-list *ngFor="let category of productsNotAdded?.category" #products>
+  <h3 matSubheader>{{category}}</h3>
+  <mat-list-option *ngFor="let product of productsNotAdded?.products">
+    <p matLine>{{product.products.productId}}</p>
+  </mat-list-option>
+</mat-selection-list>
+<p>Products selected: {{products.selectedOptions.selected.length}}</p>
+ -->
+
+<mat-card style="margin: 1em" class="mat-elevation-z8">
+    <mat-selection-list *ngFor="let cat of productsNotAdded">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 matSubheader>{{cat.category}}</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list-option *ngFor="let prod of productsNotAdded">
+            {{prod.products}}
+          </mat-list-option>
+        </mat-expansion-panel>
+      </mat-selection-list>
+</mat-card>

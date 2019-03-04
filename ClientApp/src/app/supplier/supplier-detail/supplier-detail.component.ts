@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort, MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 
 import { SupplierService } from '../_services/supplier.service';
@@ -24,6 +24,7 @@ export class SupplierDetailComponent implements AfterViewInit {
 
   constructor(private supplierService: SupplierService,
     private route: ActivatedRoute,
+    private router: Router,
     private dialog: MatDialog) { }
 
   ngAfterViewInit(): void {
@@ -54,6 +55,10 @@ export class SupplierDetailComponent implements AfterViewInit {
       this.products.data.splice(index, 1);
       this.products._updateChangeSubscription();
     }
+  }
+
+  addProducts() {
+    this.router.navigate([`/supplier/${this.supplier.personId}/add-products`]);
   }
 
   // Open supplier-edit dialog

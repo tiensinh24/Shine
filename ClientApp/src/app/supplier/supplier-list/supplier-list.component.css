@@ -40,6 +40,13 @@ tr.mat-footer-row {
   height: auto;
 }
 
+.mat-row:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
 .mat-cell {
   padding: 0 8px;
 }
+
+

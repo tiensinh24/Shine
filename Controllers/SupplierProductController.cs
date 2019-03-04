@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Shine.Data;
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
@@ -55,6 +56,13 @@ namespace Shine.Controllers
         public ActionResult<ProductsGroupBySupplierDto> GetProductsGroupBySupplier(int supplierId)
         {
             return _repository.GetProductsGroupBySupplier(supplierId);
+        }
+
+        [HttpGet("not/{supplierId}")]
+        public IActionResult GetProductsNotBySupplier(int supplierId)
+        {
+            var query = _repository.GetProductsNotBySupplier(supplierId);
+            return query;
         }
     }
 }

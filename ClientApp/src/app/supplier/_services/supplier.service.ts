@@ -8,6 +8,7 @@ import { Supplier } from '../_interfaces/supplier';
 import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
 import { SupplierProduct } from '../_interfaces/supplierProduct';
 import { ProductsGroupBySupplier } from '../_interfaces/products-by-supplier';
+import { ProductBuyListDto } from 'src/app/product/buy/_interfaces/productBuyListDto';
 
 
 @Injectable({
@@ -46,9 +47,11 @@ export class SupplierService {
     return this.http.get<ProductsGroupBySupplier>(`${this.baseUrl}api/supplierProduct/${supplierId}`);
   }
 
+  getProductsNotAdded(supplierId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}api/supplierProduct/not/${supplierId}`);
+  }
+
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {
-    // return this.http.delete
-    //   (`${this.baseUrl}api/supplierProduct/`, body);
     return this.http.request<SupplierProduct>
       ('delete', `${this.baseUrl}api/supplierProduct/`, { body: supprod });
   }

@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using Mapster;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -75,20 +72,30 @@ namespace Shine.Data.Infrastructures.Repositories
             return query;
         }
 
-        public IEnumerable<ProductsBySupplierDto> GetProductsNotBySupplier(int supplierId)
+        public JsonResult GetProductsNotBySupplier(int supplierId)
         {
             var productsExisted = _context.Set<PersonProduct>()
                 .Include(p => p.Product)
                 .ThenInclude(p => p.Category)
                 .Where(p => p.PersonId == supplierId)
-                .Select(p => new {p.ProductId}).ToList();
+                .Select(p => p.ProductId);
 
-            var productsNotExists = _context.Set<PersonProduct>()
-                .Include(p => p.Product)
-                .ThenInclude(p => p.Category)
-                .Where(p => p.PersonId  in (productsExisted))
+            var productsNotExists = _context.Set<ProductBuy>()
+                .Include(p => p.Category)
+                .Where(p => p.Category.CategoryType == true)
+                .Where(p => !productsExisted.Contains(p.ProductId))
+                .OrderBy(p => p.Category.CategoryName)
+                .ProjectToType<ProductBuyListDto>();
 
-            return query;
+            var result = from b in productsNotExists
+            group new { b.ProductId, b.Name, b.Specification } by b.CategoryName into g
+            select new
+            {
+            Category = g.Key,
+            Products = g.OrderBy(p => p.Name)
+            };
+
+            return Json(result);
         }
 
         public ProductsGroupBySupplierDto GetProductsGroupBySupplier(int supplierId)
