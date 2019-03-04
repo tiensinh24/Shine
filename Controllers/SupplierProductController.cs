@@ -35,24 +35,26 @@ namespace Shine.Controllers
             return _repository.GetSupplierProductsDto().ToList();
         }
 
+        // [HttpGet("{supplierId}")]
+        // public ActionResult<ProductsGroupBySupplierDto> GetProductsGroupBySupplier(int supplierId)
+        // {
+        //     var result = _repository.GetProductsGroupBySupplier(supplierId);
+        //     return result;
+
+        // }
+
+        [HttpDelete]
+        public ActionResult<PersonProduct> DeleteSupplierProduct(PersonProduct supplierProduct)
+        {
+            _repository.DeleteSupplierProduct(supplierProduct);
+            _repository.Commit();
+            return supplierProduct;
+        }
+
         [HttpGet("{supplierId}")]
         public ActionResult<ProductsGroupBySupplierDto> GetProductsGroupBySupplier(int supplierId)
         {
-            var result = _repository.GetProductsGroupBySupplier(supplierId);
-            return result;
-
-        }
-
-        [HttpDelete("{personId}/{productId}")]
-        public void DeleteSupplierProduct(int personId, int productId)
-        {
-            _repository.DeleteSupplierProduct(personId, productId);
-        }
-
-        [HttpGet("g/{id}")]
-        public IActionResult Get(int id)
-        {
-            return Ok(_repository.GetProductsBySupplier(id).ToList());
+            return _repository.GetProductsGroupBySupplier(supplierId);
         }
     }
 }

@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { Country } from 'src/app/country/_interfaces/country';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { Supplier } from 'src/app/supplier/_interfaces/supplier';
+import { CountryService } from 'src/app/country/_services/country.service';
 
 @Component({
   selector: 'app-supplier-edit-dialog',
@@ -27,6 +28,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private supplierService: SupplierService,
+    private countryService: CountryService,
     private dialogRef: MatDialogRef<SupplierEditDialogComponent>,
     // Inject data from supplier-list component
     @Inject(MAT_DIALOG_DATA) public dataFromList,
@@ -46,6 +48,13 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     }
     // Get countries from list component without calling API
     this.countries = this.dataFromList.countries;
+    // If countries not found, call API
+    if (!this.countries) {
+      this.countryService.getCountryList().subscribe((res: Country[]) => {
+        this.countries = res;
+      });
+    }
+
   }
 
   ngOnDestroy(): void { }
@@ -154,5 +163,5 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
           : '';
   }
 
-  
+
 }

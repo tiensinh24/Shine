@@ -32,12 +32,9 @@ namespace Shine.Data.Infrastructures.Repositories
             _prodRepo = prodRepo;
         }
 
-        public void DeleteSupplierProduct(int personId, int productId)
+        public void DeleteSupplierProduct(PersonProduct supplierProduct)
         {
-            var entity = _context.PersonProducts.Where(
-                p => p.PersonId == personId && p.ProductId == productId
-            ).FirstOrDefault();
-            _context.PersonProducts.Remove(entity);
+            _context.PersonProducts.Remove(supplierProduct);
         }
 
         public IEnumerable<SupplierProductDto> GetProductsForSupplier(int supplierId)
@@ -67,13 +64,30 @@ namespace Shine.Data.Infrastructures.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<ProductBuyListDto> GetProductsBySupplier(int supplierId)
+        public IEnumerable<ProductsBySupplierDto> GetProductsBySupplier(int supplierId)
         {
-            var query = _context.Set<ProductBuy>().Include(p => p.Category)
-                .Include(p => p.PersonProducts)
-                .ThenInclude(p => p.Person)
-                
-                .AsNoTracking();
+            var query = _context.Set<PersonProduct>()
+                .Include(p => p.Product)
+                .ThenInclude(p => p.Category)
+                .Where(p => p.PersonId == supplierId)
+                .ProjectToType<ProductsBySupplierDto>().AsNoTracking();
+
+            return query;
+        }
+
+        public IEnumerable<ProductsBySupplierDto> GetProductsNotBySupplier(int supplierId)
+        {
+            var productsExisted = _context.Set<PersonProduct>()
+                .Include(p => p.Product)
+                .ThenInclude(p => p.Category)
+                .Where(p => p.PersonId == supplierId)
+                .Select(p => new {p.ProductId}).ToList();
+
+            var productsNotExists = _context.Set<PersonProduct>()
+                .Include(p => p.Product)
+                .ThenInclude(p => p.Category)
+                .Where(p => p.PersonId  in (productsExisted))
+
             return query;
         }
 

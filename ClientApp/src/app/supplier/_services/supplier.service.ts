@@ -7,7 +7,7 @@ import { SupplierDto } from '../_interfaces/supplierDto';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
 import { SupplierProduct } from '../_interfaces/supplierProduct';
-import { ProductsBySupplier } from '../_interfaces/products-by-supplier';
+import { ProductsGroupBySupplier } from '../_interfaces/products-by-supplier';
 
 
 @Injectable({
@@ -42,12 +42,14 @@ export class SupplierService {
     return this.http.get<SupplierProductsDto[]>(`${this.baseUrl}api/supplierProduct/`);
   }
 
-  getProductsBySupplier(supplierId: number): Observable<ProductsBySupplier> {
-    return this.http.get<ProductsBySupplier>(`${this.baseUrl}api/supplierProduct/${supplierId}`);
+  getProductsGroupBySupplier(supplierId: number): Observable<ProductsGroupBySupplier> {
+    return this.http.get<ProductsGroupBySupplier>(`${this.baseUrl}api/supplierProduct/${supplierId}`);
   }
 
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {
-    return this.http.delete<SupplierProduct>
-      (`${this.baseUrl}api/supplierProduct/${supprod.personId}/${supprod.productId}`);
+    // return this.http.delete
+    //   (`${this.baseUrl}api/supplierProduct/`, body);
+    return this.http.request<SupplierProduct>
+      ('delete', `${this.baseUrl}api/supplierProduct/`, { body: supprod });
   }
 }

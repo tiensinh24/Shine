@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Mapster;
 
 using Microsoft.AspNetCore.Authorization;
@@ -33,7 +34,7 @@ namespace Shine.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CountryDto>> GetCountries()
         {
-            return _repository.GetCountryListDto().ToList();
+            return _repository.GetCountryListDto().OrderBy(c => c.CountryName).ToList();
         }
 
         [HttpGet("{id}")]

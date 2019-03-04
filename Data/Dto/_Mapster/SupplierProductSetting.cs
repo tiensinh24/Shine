@@ -21,6 +21,21 @@ namespace Shine.Data.Dto._Mapster
                 ).Map(
                     dest => dest.Specification, src => src.Product.Specification
                 );
+
+            TypeAdapterConfig<PersonProduct, ProductsBySupplierDto>.NewConfig().Map(
+                dest => dest.CategoryName,
+                src => src.Product.Category.CategoryName
+            ).Map(
+                dest => dest.SupplierId, src => src.PersonId
+            ).Map(
+                dest => dest.Name, src => src.Product.Name
+            ).Map(
+                dest => dest.Specification, src => src.Product.Specification
+            ).Map(
+                dest => dest.Price, src => src.Product.Price
+            ).Map(
+                dest => dest.CategoryId, src => src.Product.CategoryId
+            );
         }
 
         static string GetFullName(string firstName, string lastName)

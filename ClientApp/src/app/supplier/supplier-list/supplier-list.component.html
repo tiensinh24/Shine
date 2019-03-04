@@ -101,7 +101,7 @@
 
 <!-- Paginator & filter -->
 <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
-  <mat-paginator fxFlex="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator fxFlex="50" [pageSizeOptions]="[8, 16, 25, 100]" showFirstLastButtons></mat-paginator>
   <mat-form-field fxFlex>
     <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('')" placeholder="Filter">
   </mat-form-field>

@@ -18,6 +18,25 @@
   color: royalblue;
 }
 
+.mat-row {
+  height: auto;
+}
+
+.mat-cell {
+  padding: 0 8px;
+}
+
+.col-1 {
+  font-weight: 500;
+  line-height: 20px;
+  color: royalblue;
+  padding-right: 1em;
+}
+
+.col-2 {
+  padding-left: 1em;
+}
+
 .example-header-image {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
