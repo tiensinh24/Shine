@@ -3,6 +3,7 @@
 }
 
 .product-table {
+  width: 100%;
   height: calc(100vh - 155px);
   overflow-y: auto;
 }

@@ -5,7 +5,6 @@ import { MatSort, MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog }
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierListDto, ProductsBySupplierDto } from '../_interfaces/products-by-supplier';
 import { SupplierProduct } from '../_interfaces/supplierProduct';
-import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 import { SupplierDto } from '../_interfaces/supplierDto';
 
@@ -18,6 +17,7 @@ export class SupplierDetailComponent implements AfterViewInit {
   displayedcolumn = ['name', 'specification', 'price', 'categoryName', 'actions'];
   supplier: SupplierListDto;
   products = new MatTableDataSource<ProductsBySupplierDto>([]);
+  isAddProducts = false;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -101,5 +101,9 @@ export class SupplierDetailComponent implements AfterViewInit {
       });
     }
 
+  }
+
+  toggleAddProduct() {
+    this.isAddProducts = !this.isAddProducts;
   }
 }

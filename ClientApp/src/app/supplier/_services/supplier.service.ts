@@ -39,6 +39,9 @@ export class SupplierService {
     return this.http.delete<number>(`${this.baseUrl}api/supplier/${id}`);
   }
 
+
+
+
   getSupplierProducts(): Observable<SupplierProductsDto[]> {
     return this.http.get<SupplierProductsDto[]>(`${this.baseUrl}api/supplierProduct/`);
   }
@@ -49,6 +52,10 @@ export class SupplierService {
 
   getProductsNotAdded(supplierId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}api/supplierProduct/not/${supplierId}`);
+  }
+
+  addSupplierProduct(suppro: SupplierProduct): Observable<SupplierProduct> {
+    return this.http.post<SupplierProduct>(`${this.baseUrl}api/supplierProduct/`, suppro);
   }
 
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {

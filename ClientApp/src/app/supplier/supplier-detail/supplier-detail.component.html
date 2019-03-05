@@ -1,5 +1,5 @@
 <mat-card fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="start start" fxLayoutGap="16px" class="mat-elevation-z8">
-  <mat-card fxFlex="30">
+  <mat-card fxFlex="25">
     <mat-card-header>
       <div mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="example-header-image"></div>
       <mat-card-title>{{supplier?.firstName}} {{supplier?.lastName}}</mat-card-title>
@@ -10,7 +10,7 @@
       <table>
         <tr>
           <td class="col-1">Full Name</td>
-          <td class="col-2">: {{supplier?.firstName}} {{supplier?.lastName}}</td>
+          <td class="col-2">{{supplier?.firstName}} {{supplier?.lastName}}</td>
         </tr>
         <tr>
           <td class="col-1">Age</td>
@@ -40,7 +40,11 @@
     </mat-card-actions>
   </mat-card>
 
-  <div fxFlex fxLayout="column" class="mat-elevation-z2 product-table">
+  <button fxFlexAlign="center" mat-fab color="primary" (click)="toggleAddProduct()">
+    <mat-icon matTooltip="Add products" aria-label="Add products">add_circle_outline</mat-icon>
+  </button>
+
+  <div *ngIf="!isAddProducts" fxFlex fxLayout="column" class="mat-elevation-z2 product-table">
     <!-- ProductName column -->
     <table mat-table #table [dataSource]="products">
       <ng-container matColumnDef="name">
@@ -81,5 +85,8 @@
     </table>
     <mat-paginator class="mat-paginator-sticky" [pageSize]="25" fxFlex="50" [pageSizeOptions]="[8, 16, 25, 100]"
       showFirstLastButtons></mat-paginator>
+  </div>
+  <div *ngIf="isAddProducts" class="product-table">
+    <app-add-products-for-supplier></app-add-products-for-supplier>
   </div>
 </mat-card>

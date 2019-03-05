@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+
 using Mapster;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -88,7 +91,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 .ProjectToType<ProductBuyListDto>();
 
             var result = from b in productsNotExists
-            group new { b.ProductId, b.Name, b.Specification } by b.CategoryName into g
+            group new { b.ProductId, b.Name, b.Specification, b.Price } by b.CategoryName into g
             select new
             {
             Category = g.Key,

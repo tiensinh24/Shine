@@ -1,23 +1,41 @@
-<!-- <mat-selection-list *ngFor="let category of productsNotAdded?.category" #products>
-  <h3 matSubheader>{{category}}</h3>
-  <mat-list-option *ngFor="let product of productsNotAdded?.products">
-    <p matLine>{{product.products.productId}}</p>
-  </mat-list-option>
-</mat-selection-list>
-<p>Products selected: {{products.selectedOptions.selected.length}}</p>
- -->
-
-<mat-card style="margin: 1em" class="mat-elevation-z8">
-    <mat-selection-list *ngFor="let cat of productsNotAdded">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <h3 matSubheader>{{cat.category}}</h3>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-list-option *ngFor="let prod of productsNotAdded">
-            {{prod.products}}
-          </mat-list-option>
-        </mat-expansion-panel>
-      </mat-selection-list>
-</mat-card>
+<div class="card-content">
+  <mat-card class="card-title mat-elevation-z4" fxLayout="row" fxLayoutAlign="center center">
+    <div class="fill"></div>
+    <div>
+      <mat-card-title>{{title}}</mat-card-title>
+    </div>
+    <div class="fill"></div>
+  </mat-card>
+  <mat-accordion class="expand-header">
+    <mat-expansion-panel #ex [class.mat-elevation-z8]="ex.expanded" hideToggle *ngFor="let cat of productsNotAdded">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{cat.category}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Open products list
+          <mat-icon color="primary">category</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!-- Lazy load -->
+      <ng-template matExpansionPanelContent>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Specification</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+          <tr class="row-content" *ngFor="let prod of cat.products">
+            <td>{{prod.name}}</td>
+            <td>{{prod.specification}}</td>
+            <td>{{prod.price | currency}}</td>
+            <td>
+              <mat-icon matTooltip="Add product to supplier" color="primary" (click)="onAdd(prod.productId)">add</mat-icon>
+            </td>
+          </tr>
+        </table>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

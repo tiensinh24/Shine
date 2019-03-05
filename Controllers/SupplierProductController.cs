@@ -44,14 +44,6 @@ namespace Shine.Controllers
 
         // }
 
-        [HttpDelete]
-        public ActionResult<PersonProduct> DeleteSupplierProduct(PersonProduct supplierProduct)
-        {
-            _repository.DeleteSupplierProduct(supplierProduct);
-            _repository.Commit();
-            return supplierProduct;
-        }
-
         [HttpGet("{supplierId}")]
         public ActionResult<ProductsGroupBySupplierDto> GetProductsGroupBySupplier(int supplierId)
         {
@@ -64,5 +56,22 @@ namespace Shine.Controllers
             var query = _repository.GetProductsNotBySupplier(supplierId);
             return query;
         }
+
+        [HttpPost]
+        public ActionResult<PersonProduct> AddSupplierProduct(PersonProduct supplierProduct)
+        {
+            _repository.Add(supplierProduct);
+            _repository.Commit();
+            return supplierProduct;
+        }
+
+        [HttpDelete]
+        public ActionResult<PersonProduct> DeleteSupplierProduct(PersonProduct supplierProduct)
+        {
+            _repository.DeleteSupplierProduct(supplierProduct);
+            _repository.Commit();
+            return supplierProduct;
+        }
+
     }
 }

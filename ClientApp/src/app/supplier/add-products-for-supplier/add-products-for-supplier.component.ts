@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { SupplierService } from '../_services/supplier.service';
+import { SupplierProduct } from '../_interfaces/supplierProduct';
+import { SupplierDto } from '../_interfaces/supplierDto';
 
-export interface Category {
-  categoryName: string;
-}
-export interface Products {
+interface Products {
   productId: number;
   name: string;
   specification: string;
+  price: number;
 }
-export interface ProductsAdded {
-  category: Category;
-  products: Products[];
+interface ProductsNotAdded {
+  category: string;
+  products?: Products[];
 }
 
 @Component({
@@ -22,18 +22,43 @@ export interface ProductsAdded {
   styleUrls: ['./add-products-for-supplier.component.css']
 })
 export class AddProductsForSupplierComponent implements OnInit {
-  productsNotAdded: ProductsAdded[];
+  productsNotAdded: ProductsNotAdded;
+  supplier: SupplierDto;
+  title: string;
 
   constructor(private supplierService: SupplierService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.params.supplierId;
-    if (id > 0) {
-      this.supplierService.getProductsNotAdded(id).subscribe(res => {
+    this.getProductsNotAdded(id);
+    this.getSupplier(id);
+  }
+
+  getProductsNotAdded(supplierId: number) {
+    if (supplierId > 0) {
+      this.supplierService.getProductsNotAdded(supplierId).subscribe((res: ProductsNotAdded) => {
         this.productsNotAdded = res;
-      })
+      });
     }
+  }
+
+  getSupplier(supplierId: number) {
+    if (supplierId > 0) {
+      this.supplierService.getSupplier(supplierId).subscribe((res: SupplierDto) => {
+        this.supplier = res;
+        this.title = `Add new products for ${res.firstName} ${res.lastName}`;
+      });
+    }
+  }
+
+  onAdd(productId: number) {
+    const supplierId = +this.route.snapshot.params.supplierId;
+    const entity =  <SupplierProduct>{
+      personId: supplierId,
+      productId: productId
+    };
+    this.supplierService.addSupplierProduct(entity).subscribe();
   }
 
 }

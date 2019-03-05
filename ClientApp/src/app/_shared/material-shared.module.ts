@@ -6,7 +6,8 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
   MatMenuModule, MatExpansionModule, MatGridListModule, MatSnackBarModule,
   MatProgressBarModule,
   MatDatepickerModule,
-  MatNativeDateModule} from '@angular/material';
+  MatNativeDateModule,
+  MatDividerModule} from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 
@@ -37,7 +38,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatProgressBarModule,
     MatDatepickerModule,
     // MatNativeDateModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatDividerModule,
 
   ],
   exports: [
@@ -65,6 +67,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatDatepickerModule,
     // MatNativeDateModule,
     MatMomentDateModule,
+    MatDividerModule,
 
   ]
 })

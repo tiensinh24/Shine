@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+
 using Newtonsoft.Json;
+
 using Shine.Data;
 using Shine.Data.Dto._Mapster;
 using Shine.Data.Infrastructures.Interfaces;
@@ -69,10 +72,10 @@ namespace Shine
                 cfg.TokenValidationParameters = new TokenValidationParameters()
                 {
                     // Standard configuration
-                    ValidIssuer = Configuration ["Auth:Jwt:Issuer"],
-                    ValidAudience = Configuration ["Auth:Jwt:Audience"],
+                    ValidIssuer = Configuration["Auth:Jwt:Issuer"],
+                    ValidAudience = Configuration["Auth:Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(Configuration ["Auth:Jwt:Key"])
+                    Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"])
                     ),
                     ClockSkew = TimeSpan.Zero,
 
@@ -99,7 +102,7 @@ namespace Shine
             // Using AddDbContextPool for performences
             services.AddDbContextPool<AppDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_w"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_dk"));
             });
 
             // services.AddDbContextPool<AppDbContext>(options => 
