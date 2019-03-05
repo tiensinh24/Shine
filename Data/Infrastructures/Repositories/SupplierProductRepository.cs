@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using Mapster;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -19,17 +16,14 @@ namespace Shine.Data.Infrastructures.Repositories
     public class SupplierProductRepository : Repository, ISupplierProductRepository
     {
         private readonly SupplierRepository _supRepo;
-        private readonly ProductBuyRepository _prodRepo;
 
         public SupplierProductRepository(AppDbContext context,
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager,
             IConfiguration configuration,
-            SupplierRepository supRepo,
-            ProductBuyRepository prodRepo) : base(context, roleManager, userManager, configuration)
+            SupplierRepository supRepo) : base(context, roleManager, userManager, configuration)
         {
             _supRepo = supRepo;
-            _prodRepo = prodRepo;
         }
 
         public void DeleteSupplierProduct(PersonProduct supplierProduct)
@@ -46,15 +40,15 @@ namespace Shine.Data.Infrastructures.Repositories
         {
             var result = _context.PersonProducts
                 .Include(p => p.Person).Include(p => p.Product)
-                .Where(p => p.Product.ProductType == true
-                    && p.Person.PersonType == PersonType.Supplier)
+                .Where(p => p.Product.ProductType == true &&
+                    p.Person.PersonType == PersonType.Supplier)
                 .ProjectToType<SupplierProductDto>().AsNoTracking();
 
             return result;
 
         }
 
-        public IEnumerable<SupplierProductDto> GetSuppliersForProduct(int productId)
+        public IEnumerable<SupplierProductDto> GetSuppliersByProduct(int productId)
         {
             throw new System.NotImplementedException();
         }
@@ -77,20 +71,20 @@ namespace Shine.Data.Infrastructures.Repositories
 
         public JsonResult GetProductsNotBySupplier(int supplierId)
         {
-            var productsExisted = _context.Set<PersonProduct>()
+            var productsAdded = _context.Set<PersonProduct>()
                 .Include(p => p.Product)
                 .ThenInclude(p => p.Category)
                 .Where(p => p.PersonId == supplierId)
                 .Select(p => p.ProductId);
 
-            var productsNotExists = _context.Set<ProductBuy>()
+            var productsNotAdded = _context.Set<ProductBuy>()
                 .Include(p => p.Category)
                 .Where(p => p.Category.CategoryType == true)
-                .Where(p => !productsExisted.Contains(p.ProductId))
+                .Where(p => !productsAdded.Contains(p.ProductId))
                 .OrderBy(p => p.Category.CategoryName)
                 .ProjectToType<ProductBuyDto>();
 
-            var result = from b in productsNotExists
+            var result = from b in productsNotAdded
             group new { b.ProductId, b.Name, b.Specification, b.Price } by b.CategoryName into g
             select new
             {
@@ -103,7 +97,7 @@ namespace Shine.Data.Infrastructures.Repositories
 
         public ProductsGroupBySupplierDto GetProductsGroupBySupplier(int supplierId)
         {
-            var supplier = _supRepo.GetSupplierDto(supplierId);
+            var supplier = _supRepo.GetSupplier(supplierId);
             var products = this.GetProductsBySupplier(supplierId);
 
             var query = new ProductsGroupBySupplierDto()

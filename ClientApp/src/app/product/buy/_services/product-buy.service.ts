@@ -17,7 +17,7 @@ export class ProductBuyService {
 
   constructor(private http: HttpClient) { }
 
-  getProductList(): Observable<ProductBuyDto[]> {
+  getProducts(): Observable<ProductBuyDto[]> {
     return this.http.get<ProductBuyDto[]>(this.baseUrl + 'api/productBuy/');
   }
 

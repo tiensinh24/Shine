@@ -11,7 +11,7 @@ namespace Shine.Data.Infrastructures.Interfaces
         IEnumerable<SupplierProductDto> GetProductsForSupplier(int supplierId);
         IEnumerable<ProductsBySupplierDto> GetProductsBySupplier(int supplierId);
         // IEnumerable<ProductBuyListDto> GetProductsNotBySupplier(int supplierId);
-        IEnumerable<SupplierProductDto> GetSuppliersForProduct(int productId);
+        IEnumerable<SupplierProductDto> GetSuppliersByProduct(int productId);
         void UpdateSupplierProduct(PersonProduct supplierProduct);
         void DeleteSupplierProduct(PersonProduct supplierProduct);
     }

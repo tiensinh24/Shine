@@ -32,14 +32,14 @@ namespace Shine.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ProductBuyDto>> GetProducts()
         {
-            return _repository.GetProductListDto().ToList();
+            return _repository.GetProducts().ToList();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ProductBuy> GetProduct(int id)
+        public ActionResult<ProductBuyDto> GetProduct(int id)
         {
-            var product = _repository.GetProductDto(id);
+            var product = _repository.GetProduct(id);
             if (product == null)
             {
                 return NotFound();
@@ -62,7 +62,8 @@ namespace Shine.Controllers
         {
             _repository.UpdateProduct(productBuy);
             _repository.Commit();
-            return productBuy.Adapt<ProductBuyDto>();
+            var query = _repository.GetProduct(productBuy.ProductId);
+            return query;
         }
 
         [HttpDelete("{id}")]

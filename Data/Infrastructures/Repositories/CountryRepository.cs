@@ -17,13 +17,13 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public IEnumerable<Country> GetCountryListDto()
+        public IEnumerable<Country> GetCountries()
         {
-            return _context.Countries.ProjectToType<Country>().AsNoTracking();
+            return _context.Countries.AsNoTracking();
 
         }
 
-        public Country GetCountryDto(int id)
+        public Country GetCountry(int id)
         {
             return _context.Countries.ProjectToType<Country>()
                 .FirstOrDefault(c => c.CountryId == id);

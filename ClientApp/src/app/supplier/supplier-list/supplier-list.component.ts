@@ -70,7 +70,7 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
   }
 
   getSupplierList() {
-    this.sub = this.supplierService.getSupplierList().subscribe(
+    this.sub = this.supplierService.getSuppliers().subscribe(
       res => {
         // Check to loading progress bar
         this.isLoading = false;

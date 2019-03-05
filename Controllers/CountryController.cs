@@ -33,14 +33,14 @@ namespace Shine.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Country>> GetCountries()
         {
-            return _repository.GetCountryListDto().OrderBy(c => c.CountryName).ToList();
+            return _repository.GetCountries().OrderBy(c => c.CountryName).ToList();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Country> GetCountry(int id)
         {
-            var country = _repository.GetCountryDto(id);
+            var country = _repository.GetCountry(id);
             if (country == null)
             {
                 return NotFound();

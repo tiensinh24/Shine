@@ -1,16 +1,4 @@
-export interface SupplierListDto {
-  personId: number;
-  personNumber: string;
-  gender: boolean;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: Date;
-  telephone: string;
-  fax: string;
-  countryId: number;
-  countryName: string;
-  continentName: string;
-}
+import { SupplierDto } from './supplier-dto';
 
 export interface ProductsBySupplierDto {
   personId: number;
@@ -23,6 +11,6 @@ export interface ProductsBySupplierDto {
 }
 
 export interface ProductsGroupBySupplier {
-  supplier: SupplierListDto;
+  supplier: SupplierDto;
   products: ProductsBySupplierDto[];
 }

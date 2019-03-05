@@ -64,7 +64,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   getProductList() {
-    this.sub = this.productBuyService.getProductList().subscribe(
+    this.sub = this.productBuyService.getProducts().subscribe(
       res => {
         // Check to loading progress bar
         this.isLoading = false;

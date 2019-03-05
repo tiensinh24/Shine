@@ -27,14 +27,14 @@ namespace Shine.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CategoryBuy>> GetCategories ()
         {
-            return _repository.GetCategoryListDto().ToList();
+            return _repository.GetCategories().ToList();
         }
 
         [HttpGet ("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CategoryBuy> GetCategory (int id)
         {
-            var category = _repository.GetCategoryDto (id);
+            var category = _repository.GetCategory (id);
             if (category == null)
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace Shine.Controllers
         {
             _repository.UpdateCategory(categoryBuy);
             _repository.Commit();
-            return categoryBuy.Adapt<CategoryBuy>();
+            return categoryBuy;
         }
 
         [HttpDelete("{id}")]

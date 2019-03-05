@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort, MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 
 import { SupplierService } from '../_services/supplier.service';
-import { SupplierListDto, ProductsBySupplierDto } from '../_interfaces/products-by-supplier';
 import { SupplierProduct } from '../_interfaces/supplier-product';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 import { SupplierDto } from '../_interfaces/supplier-dto';
+import { ProductsBySupplierDto } from '../_interfaces/products-by-supplier';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -15,7 +15,7 @@ import { SupplierDto } from '../_interfaces/supplier-dto';
 })
 export class SupplierDetailComponent implements AfterViewInit {
   displayedcolumn = ['name', 'specification', 'price', 'categoryName', 'actions'];
-  supplier: SupplierListDto;
+  supplier: SupplierDto;
   products = new MatTableDataSource<ProductsBySupplierDto>([]);
   isAddProducts = false;
 

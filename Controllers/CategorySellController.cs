@@ -25,13 +25,13 @@ namespace Shine.Controllers
         [HttpGet]
         public IEnumerable<CategorySell> GetCategories()
         {
-            return _repository.GetCategoryListDto();
+            return _repository.GetCategories();
         }
 
         [HttpGet("{id}")]
         public CategorySell GetCategory(int id)
         {
-            return _repository.GetCategoryDto(id);
+            return _repository.GetCategory(id);
         }
 
         [HttpPost]

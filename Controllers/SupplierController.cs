@@ -34,14 +34,14 @@ namespace Shine.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SupplierDto>> GetProducts()
         {
-            return _repository.GetSupplierListDto().ToList();
+            return _repository.GetSuppliers().ToList();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<SupplierDto> GetSupplier(int id)
         {
-            var supplier = _repository.GetSupplierDto(id);
+            var supplier = _repository.GetSupplier(id);
             if (supplier == null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace Shine.Controllers
         {
             _repository.Add(supplier);
             _repository.Commit();
-            var supReturn = _repository.GetSupplierDto(supplier.PersonId);
+            var supReturn = _repository.GetSupplier(supplier.PersonId);
             return supReturn;
         }
 
@@ -65,7 +65,7 @@ namespace Shine.Controllers
         {
             _repository.UpdateSupplier(supplier);
             _repository.Commit();
-            var supReturn = _repository.GetSupplierDto(supplier.PersonId);
+            var supReturn = _repository.GetSupplier(supplier.PersonId);
             return supReturn;
         }
 

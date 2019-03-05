@@ -19,7 +19,7 @@ export class SupplierService {
 
   constructor(private http: HttpClient) { }
 
-  getSupplierList(): Observable<SupplierDto[]> {
+  getSuppliers(): Observable<SupplierDto[]> {
     return this.http.get<SupplierDto[]>(`${this.baseUrl}api/supplier/`);
   }
 

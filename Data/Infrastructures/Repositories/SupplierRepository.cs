@@ -24,14 +24,14 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public IEnumerable<SupplierDto> GetSupplierListDto()
+        public IEnumerable<SupplierDto> GetSuppliers()
         {            
             return _context.Set<Supplier>().Include(s => s.Country)
                 .ProjectToType<SupplierDto>().AsNoTracking();
 
         }
 
-        public SupplierDto GetSupplierDto(int id)
+        public SupplierDto GetSupplier(int id)
         {
             return _context.Set<Supplier>().ProjectToType<SupplierDto>()
                 .FirstOrDefault(s => s.PersonId == id);
@@ -61,5 +61,6 @@ namespace Shine.Data.Infrastructures.Repositories
                 _context.Set<Supplier>().Remove(supplier);
             }
         }
+
     }
 }

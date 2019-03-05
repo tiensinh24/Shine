@@ -18,12 +18,12 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategoryBuy> GetCategoryListDto()
+        public IEnumerable<CategoryBuy> GetCategories()
         {
-            return _context.Set<CategoryBuy>().ProjectToType<CategoryBuy>().AsNoTracking();
+            return _context.Set<CategoryBuy>().AsNoTracking();
         }
 
-        public CategoryBuy GetCategoryDto(int id)
+        public CategoryBuy GetCategory(int id)
         {
             var query = _context.Set<CategoryBuy>().Select(c => new
             {

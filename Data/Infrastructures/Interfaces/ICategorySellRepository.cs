@@ -5,8 +5,8 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface ICategorySellRepository
     {
-        IEnumerable<CategorySell> GetCategoryListDto ();
-        CategorySell GetCategoryDto (int id);
+        IEnumerable<CategorySell> GetCategories ();
+        CategorySell GetCategory (int id);
         void UpdateCategory(CategorySell categorySell);
         void DeleteCategory(int id);
     }

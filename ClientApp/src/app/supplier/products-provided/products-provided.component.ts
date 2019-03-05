@@ -60,7 +60,7 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
   }
 
   getSuppliers() {
-    this.sub = this.supplierService.getSupplierList().subscribe(res => {
+    this.sub = this.supplierService.getSuppliers().subscribe(res => {
       this.suppliers = res;
     });
   }

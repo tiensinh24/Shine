@@ -16,7 +16,7 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategorySell> GetCategoryListDto()
+        public IEnumerable<CategorySell> GetCategories()
         {
             var query = _context.Set<CategorySell>().Select(c => new
             {
@@ -27,7 +27,7 @@ namespace Shine.Data.Infrastructures.Repositories
             return query.Adapt<IEnumerable<CategorySell>>();
         }
 
-        public CategorySell GetCategoryDto(int id)
+        public CategorySell GetCategory(int id)
         {
             var query = _context.Set<CategorySell>().Select(c => new
             {
