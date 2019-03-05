@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Shine.Data;
-using Shine.Data.Dto.Countries;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
@@ -32,14 +31,14 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CountryDto>> GetCountries()
+        public ActionResult<IEnumerable<Country>> GetCountries()
         {
             return _repository.GetCountryListDto().OrderBy(c => c.CountryName).ToList();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CountryDto> GetCountry(int id)
+        public ActionResult<Country> GetCountry(int id)
         {
             var country = _repository.GetCountryDto(id);
             if (country == null)
@@ -51,20 +50,20 @@ namespace Shine.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<CountryDto> AddCountry([FromBody] Country country)
+        public ActionResult<Country> AddCountry([FromBody] Country country)
         {
             _repository.Add(country);
             _repository.Commit();
-            return country.Adapt<CountryDto>();
+            return country.Adapt<Country>();
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<CountryDto> UpdateCountry([FromBody] Country country)
+        public ActionResult<Country> UpdateCountry([FromBody] Country country)
         {
             _repository.UpdateCountry(country);
             _repository.Commit();
-            return country.Adapt<CountryDto>();
+            return country.Adapt<Country>();
         }
 
         [HttpDelete("{id}")]

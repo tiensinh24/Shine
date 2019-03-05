@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { ProductSellListDto } from '../_interfaces/productSellListDto';
+import { ProductSellDto } from '../_interfaces/product-sell-dto';
 import { ProductSellService } from '../_services/product-sell.service';
 import { ProductSell } from '../_interfaces/product-sell';
 import { CategorySell } from 'src/app/category/sell/_interfaces/category-sell';
@@ -23,9 +23,9 @@ export class ProductSellListComponent implements OnInit, AfterViewInit {
     'categoryName',
     'actions',
   ];
-  dataSource = new MatTableDataSource<ProductSellListDto>([]);
+  dataSource = new MatTableDataSource<ProductSellDto>([]);
   isLoading = true;
-  selection = new SelectionModel<ProductSellListDto>(true, []);
+  selection = new SelectionModel<ProductSellDto>(true, []);
   title = 'Products List';
   categories: CategorySell[];
 
@@ -57,7 +57,7 @@ export class ProductSellListComponent implements OnInit, AfterViewInit {
       // Check to loading progress bar
       this.isLoading = false;
 
-      this.dataSource = new MatTableDataSource<ProductSellListDto>(res);
+      this.dataSource = new MatTableDataSource<ProductSellDto>(res);
       setTimeout(() => this.dataSource.sort = this.sort);
       setTimeout(() => this.dataSource.paginator = this.paginator);
     }, () => this.isLoading = false);
@@ -83,7 +83,7 @@ export class ProductSellListComponent implements OnInit, AfterViewInit {
   // On input focus: setup filterPredicate to only filter by input column
   setupFilter(column: string) {
     this.dataSource.filterPredicate = (
-      data: ProductSellListDto,
+      data: ProductSellDto,
       filter: string,
     ) => {
       const textToSearch = (data[column] && data[column].toLowerCase()) || '';

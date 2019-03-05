@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
-import { CategoryBuy } from '../_interfaces/categoryBuy';
+import { CategoryBuy } from '../_interfaces/category-buy';
 
 @Injectable({
   providedIn: 'root',

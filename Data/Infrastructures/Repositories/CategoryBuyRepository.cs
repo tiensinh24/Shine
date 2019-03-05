@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Shine.Data.Dto.Categories;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
@@ -19,12 +18,12 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategoryBuyDto> GetCategoryListDto()
+        public IEnumerable<CategoryBuy> GetCategoryListDto()
         {
-            return _context.Set<CategoryBuy>().ProjectToType<CategoryBuyDto>().AsNoTracking();
+            return _context.Set<CategoryBuy>().ProjectToType<CategoryBuy>().AsNoTracking();
         }
 
-        public CategoryBuyDto GetCategoryDto(int id)
+        public CategoryBuy GetCategoryDto(int id)
         {
             var query = _context.Set<CategoryBuy>().Select(c => new
             {
@@ -32,7 +31,7 @@ namespace Shine.Data.Infrastructures.Repositories
                     c.CategoryName
             }).FirstOrDefault(c => c.CategoryId == id);
 
-            return query.Adapt<CategoryBuyDto>();
+            return query.Adapt<CategoryBuy>();
         }
 
         public void UpdateCategory(CategoryBuy categoryBuy)

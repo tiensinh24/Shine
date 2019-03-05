@@ -1,8 +1,7 @@
-export interface ProductBuyListDto {
+export interface ProductSellDto {
     productId: number;
     name: string;
     specification: string;
     price: number;
-    categoryId: number;
     categoryName: string;
 }

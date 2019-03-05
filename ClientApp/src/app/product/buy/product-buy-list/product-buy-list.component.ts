@@ -10,10 +10,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 
-import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
+import { ProductBuyDto } from '../_interfaces/product-buy-dto';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
-import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
+import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
 
@@ -31,8 +31,8 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     'categoryName',
     'actions',
   ];
-  dataSource = new MatTableDataSource<ProductBuyListDto>([]);
-  selection = new SelectionModel<ProductBuyListDto>(true, []);
+  dataSource = new MatTableDataSource<ProductBuyDto>([]);
+  selection = new SelectionModel<ProductBuyDto>(true, []);
   isLoading = true;
   title = 'Products List';
   categories: CategoryBuy[];
@@ -69,7 +69,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
         // Check to loading progress bar
         this.isLoading = false;
 
-        this.dataSource = new MatTableDataSource<ProductBuyListDto>(res);
+        this.dataSource = new MatTableDataSource<ProductBuyDto>(res);
         setTimeout(() => (this.dataSource.sort = this.sort));
         setTimeout(() => (this.dataSource.paginator = this.paginator));
       },
@@ -92,7 +92,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   onDelete(productBuy: ProductBuy) {
     this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
       // Get index of deleted row
-      const index = this.dataSource.data.indexOf(<ProductBuyListDto>productBuy, 0);
+      const index = this.dataSource.data.indexOf(<ProductBuyDto>productBuy, 0);
       // Remove row, update dataSource & remove all selection
       if (index > -1) {
         this.dataSource.data.splice(index, 1);
@@ -139,7 +139,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     );
 
     // Get data returned from product-edit dialog
-    dialogRef.afterClosed().subscribe((res: ProductBuyListDto) => {
+    dialogRef.afterClosed().subscribe((res: ProductBuyDto) => {
       // Check if res exists
       if (res) {
         const index = this.dataSource.data.findIndex(
@@ -167,7 +167,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     // Only filter specify column
     if (column.length > 0) {
       this.dataSource.filterPredicate = (
-        data: ProductBuyListDto,
+        data: ProductBuyDto,
         filter: string,
       ) => {
         const textToSearch = (data[column] && data[column].toLowerCase()) || '';
@@ -176,7 +176,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     } else {
       // If column = '', filter on all column
       this.dataSource.filterPredicate = (
-        data: ProductBuyListDto,
+        data: ProductBuyDto,
         filter: string,
       ) => {
         const textToSearch =

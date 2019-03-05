@@ -1,6 +1,6 @@
 namespace Shine.Data.Dto.Token
 {
-    public class TokenRequestDto
+    public class TokenRequest
     {
         public string GrantType { get; set; }
         public string ClientId { get; set; }

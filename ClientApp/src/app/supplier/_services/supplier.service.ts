@@ -3,12 +3,12 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { SupplierDto } from '../_interfaces/supplierDto';
+import { SupplierDto } from '../_interfaces/supplier-dto';
 import { Supplier } from '../_interfaces/supplier';
-import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
-import { SupplierProduct } from '../_interfaces/supplierProduct';
+import { SupplierProductsDto } from '../_interfaces/supplier-products-dto';
+import { SupplierProduct } from '../_interfaces/supplier-product';
 import { ProductsGroupBySupplier } from '../_interfaces/products-by-supplier';
-import { ProductBuyListDto } from 'src/app/product/buy/_interfaces/productBuyListDto';
+import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
 
 
 @Injectable({

@@ -4,7 +4,6 @@ using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Shine.Data.Dto.Countries;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
@@ -18,15 +17,15 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public IEnumerable<CountryDto> GetCountryListDto()
+        public IEnumerable<Country> GetCountryListDto()
         {
-            return _context.Countries.ProjectToType<CountryDto>().AsNoTracking();
+            return _context.Countries.ProjectToType<Country>().AsNoTracking();
 
         }
 
-        public CountryDto GetCountryDto(int id)
+        public Country GetCountryDto(int id)
         {
-            return _context.Countries.ProjectToType<CountryDto>()
+            return _context.Countries.ProjectToType<Country>()
                 .FirstOrDefault(c => c.CountryId == id);
         }
 

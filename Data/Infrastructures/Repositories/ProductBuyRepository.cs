@@ -23,16 +23,16 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public IEnumerable<ProductBuyListDto> GetProductListDto()
+        public IEnumerable<ProductBuyDto> GetProductListDto()
         {            
             return _context.Set<ProductBuy>().Include(p => p.Category)
-                .ProjectToType<ProductBuyListDto>().AsNoTracking();
+                .ProjectToType<ProductBuyDto>().AsNoTracking();
 
         }
 
-        public ProductBuyDto GetProductDto(int id)
+        public ProductBuy GetProductDto(int id)
         {
-            return _context.Set<ProductBuy>().ProjectToType<ProductBuyDto>()
+            return _context.Set<ProductBuy>().ProjectToType<ProductBuy>()
                 .FirstOrDefault(p => p.ProductId == id);
         }
 

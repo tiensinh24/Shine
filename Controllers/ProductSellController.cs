@@ -20,7 +20,7 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductSellListDto> GetProducts()
+        public IEnumerable<ProductSell> GetProducts()
         {
             return this._repository.GetProducts();
         }

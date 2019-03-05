@@ -4,6 +4,7 @@ namespace Shine.Data.Dto.Suppliers
 {
     public class SupplierDto
     {
+#region Properties
         public int PersonId { get; set; }
         public string PersonNumber { get; set; }
         public bool Gender { get; set; }
@@ -13,5 +14,12 @@ namespace Shine.Data.Dto.Suppliers
         public string Telephone { get; set; }
         public string Fax { get; set; }
         public int CountryId { get; set; }
+#endregion
+
+#region Countries Navigation
+        public string CountryName { get; set; }
+        public string ContinentName { get; set; }
+#endregion
+
     }
 }

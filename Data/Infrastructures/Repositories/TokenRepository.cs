@@ -23,7 +23,7 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager,
             IConfiguration configuration) : base (context, roleManager, userManager, configuration) { }
 #endregion
-        public async Task<IActionResult> GetTokenAsync (TokenRequestDto tokenRequestDto)
+        public async Task<IActionResult> GetTokenAsync (TokenRequest tokenRequestDto)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
-        public async Task<IActionResult> RefreshTokenAsync (TokenRequestDto tokenRequestDto)
+        public async Task<IActionResult> RefreshTokenAsync (TokenRequest tokenRequestDto)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
-        private TokenResponseDto CreateAccessToken (IdentityUser user, string refreshToken)
+        private TokenResponse CreateAccessToken (IdentityUser user, string refreshToken)
         {
             DateTime now = DateTime.UtcNow;
 
@@ -135,7 +135,7 @@ namespace Shine.Data.Infrastructures.Repositories
             );
             var encodedToken = new JwtSecurityTokenHandler ().WriteToken (token);
 
-            return new TokenResponseDto ()
+            return new TokenResponse ()
             {
                 Token = encodedToken,
                     Expiration = tokenExpirationMins,

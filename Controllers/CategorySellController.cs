@@ -5,7 +5,6 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data;
-using Shine.Data.Dto.Categories;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
@@ -24,13 +23,13 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CategorySellDto> GetCategories()
+        public IEnumerable<CategorySell> GetCategories()
         {
             return _repository.GetCategoryListDto();
         }
 
         [HttpGet("{id}")]
-        public CategorySellDto GetCategory(int id)
+        public CategorySell GetCategory(int id)
         {
             return _repository.GetCategoryDto(id);
         }

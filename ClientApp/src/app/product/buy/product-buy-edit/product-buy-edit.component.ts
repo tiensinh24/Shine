@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
+import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
 import { map } from 'rxjs/operators';

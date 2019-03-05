@@ -88,7 +88,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 .Where(p => p.Category.CategoryType == true)
                 .Where(p => !productsExisted.Contains(p.ProductId))
                 .OrderBy(p => p.Category.CategoryName)
-                .ProjectToType<ProductBuyListDto>();
+                .ProjectToType<ProductBuyDto>();
 
             var result = from b in productsNotExists
             group new { b.ProductId, b.Name, b.Specification, b.Price } by b.CategoryName into g

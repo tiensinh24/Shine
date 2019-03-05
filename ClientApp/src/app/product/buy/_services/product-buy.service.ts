@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-import { ProductBuyListDto } from '../_interfaces/productBuyListDto';
+import { ProductBuyDto } from '../_interfaces/product-buy-dto';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { environment } from 'src/environments/environment';
 
@@ -17,8 +17,8 @@ export class ProductBuyService {
 
   constructor(private http: HttpClient) { }
 
-  getProductList(): Observable<ProductBuyListDto[]> {
-    return this.http.get<ProductBuyListDto[]>(this.baseUrl + 'api/productBuy/');
+  getProductList(): Observable<ProductBuyDto[]> {
+    return this.http.get<ProductBuyDto[]>(this.baseUrl + 'api/productBuy/');
   }
 
   getProduct(id: number): Observable<ProductBuy> {

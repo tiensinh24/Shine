@@ -6,7 +6,7 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface ITokenRepository
     {
-        Task<IActionResult> GetTokenAsync(TokenRequestDto tokenRequestDto);
-        Task<IActionResult> RefreshTokenAsync(TokenRequestDto tokenRequestDto);
+        Task<IActionResult> GetTokenAsync(TokenRequest tokenRequestDto);
+        Task<IActionResult> RefreshTokenAsync(TokenRequest tokenRequestDto);
     }   
 }

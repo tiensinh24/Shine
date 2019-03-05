@@ -1,6 +1,6 @@
 namespace Shine.Data.Dto.Products
 {
-    public class ProductSellListDto
+    public class ProductSellDto
     {
         public int ProductId { get; set; }
         public string Name { get; set; }

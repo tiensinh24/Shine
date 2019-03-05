@@ -4,7 +4,6 @@ using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Shine.Data.Dto.Categories;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
@@ -17,7 +16,7 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategorySellDto> GetCategoryListDto()
+        public IEnumerable<CategorySell> GetCategoryListDto()
         {
             var query = _context.Set<CategorySell>().Select(c => new
             {
@@ -25,10 +24,10 @@ namespace Shine.Data.Infrastructures.Repositories
                     c.CategoryName
             }).OrderBy(c => c.CategoryName).AsNoTracking();
 
-            return query.Adapt<IEnumerable<CategorySellDto>>();
+            return query.Adapt<IEnumerable<CategorySell>>();
         }
 
-        public CategorySellDto GetCategoryDto(int id)
+        public CategorySell GetCategoryDto(int id)
         {
             var query = _context.Set<CategorySell>().Select(c => new
             {
@@ -36,7 +35,7 @@ namespace Shine.Data.Infrastructures.Repositories
                     c.CategoryName
             }).FirstOrDefault(c => c.CategoryId == id);
 
-            return query.Adapt<CategorySellDto>();
+            return query.Adapt<CategorySell>();
         }
 
         public void UpdateCategory(CategorySell categorySell)

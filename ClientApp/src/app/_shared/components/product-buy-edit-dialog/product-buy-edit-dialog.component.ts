@@ -14,12 +14,12 @@ import {
 } from '@angular/material';
 
 import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
-import { CategoryBuy } from 'src/app/category/buy/_interfaces/categoryBuy';
+import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { environment } from 'src/environments/environment';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
-import { ProductBuyListDto } from 'src/app/product/buy/_interfaces/productBuyListDto';
+import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
 
 @Component({
   selector: 'app-product-buy-edit-dialog',
@@ -134,7 +134,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
         const category = this.categories.find(
           c => c.categoryId === res.categoryId,
         );
-        const response = <ProductBuyListDto>res;
+        const response = <ProductBuyDto>res;
         response.categoryName = category.categoryName;
         this.dialogRef.close(response);
       });
@@ -145,7 +145,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
         const category = this.categories.find(
           c => c.categoryId === res.categoryId,
         );
-        const response = <ProductBuyListDto>res;
+        const response = <ProductBuyDto>res;
         response.categoryName = category.categoryName;
         this.dialogRef.close(response);
       });

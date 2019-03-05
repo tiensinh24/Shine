@@ -17,7 +17,7 @@ namespace Shine.Data.Infrastructures.Repositories {
         ) : base (context, roleManager, userManager, configuration) { }
 #endregion
 
-        public IEnumerable<ProductSellListDto> GetProducts () {
+        public IEnumerable<ProductSell> GetProducts () {
             var query = _context.Set<ProductSell>().Include (p => p.Category).Select (p => new {
                 p.ProductId,
                     p.Name,
@@ -26,7 +26,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                     p.Category.CategoryName
             }).AsNoTracking ();
 
-            return query.Adapt<IEnumerable<ProductSellListDto>> ();
+            return query.Adapt<IEnumerable<ProductSell>> ();
         }
 
         public void UpdateProduct(ProductSell productSell)

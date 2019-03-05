@@ -6,7 +6,7 @@ namespace Shine.Data.Dto.SupplierProducts
 {
     public class ProductsGroupBySupplierDto
     {
-        public SupplierListDto Supplier { get; set; }
+        public SupplierDto Supplier { get; set; }
         public IEnumerable<ProductsBySupplierDto> Products { get; set; }
     }
 }

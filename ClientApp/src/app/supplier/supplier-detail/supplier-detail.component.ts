@@ -4,9 +4,9 @@ import { MatSort, MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog }
 
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierListDto, ProductsBySupplierDto } from '../_interfaces/products-by-supplier';
-import { SupplierProduct } from '../_interfaces/supplierProduct';
+import { SupplierProduct } from '../_interfaces/supplier-product';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
-import { SupplierDto } from '../_interfaces/supplierDto';
+import { SupplierDto } from '../_interfaces/supplier-dto';
 
 @Component({
   selector: 'app-supplier-detail',

@@ -4,9 +4,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 
 import { SupplierService } from '../_services/supplier.service';
-import { SupplierProductsDto } from '../_interfaces/supplierProductsDto';
+import { SupplierProductsDto } from '../_interfaces/supplier-products-dto';
 import { Supplier } from '../_interfaces/supplier';
-import { SupplierProduct } from '../_interfaces/supplierProduct';
+import { SupplierProduct } from '../_interfaces/supplier-product';
 import { ProductsProvidedDialogComponent } from 'src/app/_shared/components/products-provided-dialog/products-provided-dialog.component';
 
 export interface TableCol {

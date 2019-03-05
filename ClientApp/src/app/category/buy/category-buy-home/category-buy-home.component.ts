@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryBuy } from '../_interfaces/categoryBuy';
+import { CategoryBuy } from '../_interfaces/category-buy';
 import { CategoryBuyService } from '../_services/category-buy.service';
 
 @Component({

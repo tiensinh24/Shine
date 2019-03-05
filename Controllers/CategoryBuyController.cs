@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data;
-using Shine.Data.Dto.Categories;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
@@ -26,14 +25,14 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CategoryBuyDto>> GetCategories ()
+        public ActionResult<IEnumerable<CategoryBuy>> GetCategories ()
         {
             return _repository.GetCategoryListDto().ToList();
         }
 
         [HttpGet ("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CategoryBuyDto> GetCategory (int id)
+        public ActionResult<CategoryBuy> GetCategory (int id)
         {
             var category = _repository.GetCategoryDto (id);
             if (category == null)
@@ -45,20 +44,20 @@ namespace Shine.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<CategoryBuyDto> AddCategory ([FromBody] CategoryBuy categoryBuy)
+        public ActionResult<CategoryBuy> AddCategory ([FromBody] CategoryBuy categoryBuy)
         {
             _repository.Add (categoryBuy);
             _repository.Commit ();
-            return categoryBuy.Adapt<CategoryBuyDto>();
+            return categoryBuy.Adapt<CategoryBuy>();
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<CategoryBuyDto> UpdateCategory([FromBody]CategoryBuy categoryBuy)
+        public ActionResult<CategoryBuy> UpdateCategory([FromBody]CategoryBuy categoryBuy)
         {
             _repository.UpdateCategory(categoryBuy);
             _repository.Commit();
-            return categoryBuy.Adapt<CategoryBuyDto>();
+            return categoryBuy.Adapt<CategoryBuy>();
         }
 
         [HttpDelete("{id}")]

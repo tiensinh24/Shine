@@ -10,7 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { CategoryBuy } from '../_interfaces/categoryBuy';
+import { CategoryBuy } from '../_interfaces/category-buy';
 import { CategoryBuyService } from '../_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
 

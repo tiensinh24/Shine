@@ -32,14 +32,14 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<SupplierListDto>> GetProducts()
+        public ActionResult<IEnumerable<SupplierDto>> GetProducts()
         {
             return _repository.GetSupplierListDto().ToList();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<SupplierListDto> GetSupplier(int id)
+        public ActionResult<SupplierDto> GetSupplier(int id)
         {
             var supplier = _repository.GetSupplierDto(id);
             if (supplier == null)
@@ -51,7 +51,7 @@ namespace Shine.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<SupplierListDto> AddSupplier([FromBody] Supplier supplier)
+        public ActionResult<SupplierDto> AddSupplier([FromBody] Supplier supplier)
         {
             _repository.Add(supplier);
             _repository.Commit();
@@ -61,7 +61,7 @@ namespace Shine.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<SupplierListDto> UpdateSupplier([FromBody] Supplier supplier)
+        public ActionResult<SupplierDto> UpdateSupplier([FromBody] Supplier supplier)
         {
             _repository.UpdateSupplier(supplier);
             _repository.Commit();

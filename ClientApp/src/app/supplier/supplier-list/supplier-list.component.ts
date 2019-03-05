@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 
-import { SupplierDto } from '../_interfaces/supplierDto';
+import { SupplierDto } from '../_interfaces/supplier-dto';
 import { SupplierService } from '../_services/supplier.service';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';

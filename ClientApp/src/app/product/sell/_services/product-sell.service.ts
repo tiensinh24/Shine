@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProductSellListDto } from '../_interfaces/productSellListDto';
+import { ProductSellDto } from '../_interfaces/product-sell-dto';
 import { ProductSell } from '../_interfaces/product-sell';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class ProductSellService {
 
   constructor(private http: HttpClient) {}
 
-  getProductList(): Observable<ProductSellListDto[]> {
-    return this.http.get<ProductSellListDto[]>(this.baseUrl + 'api/productSell/');
+  getProductList(): Observable<ProductSellDto[]> {
+    return this.http.get<ProductSellDto[]>(this.baseUrl + 'api/productSell/');
   }
 
   getProduct(id: number): Observable<ProductSell> {

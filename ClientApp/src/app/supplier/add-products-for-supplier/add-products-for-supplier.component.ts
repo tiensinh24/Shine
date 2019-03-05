@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { SupplierService } from '../_services/supplier.service';
-import { SupplierProduct } from '../_interfaces/supplierProduct';
-import { SupplierDto } from '../_interfaces/supplierDto';
+import { SupplierProduct } from '../_interfaces/supplier-product';
+import { SupplierDto } from '../_interfaces/supplier-dto';
 
 interface Products {
   productId: number;

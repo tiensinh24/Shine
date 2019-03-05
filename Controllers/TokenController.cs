@@ -26,7 +26,7 @@ namespace Shine.Controllers
 
 #region WebAPI
         [HttpPost("Auth")]
-        public async Task<IActionResult> Jwt([FromBody] TokenRequestDto tokenRequestDto)
+        public async Task<IActionResult> Jwt([FromBody] TokenRequest tokenRequestDto)
         {
             if (tokenRequestDto == null)
                 return new StatusCodeResult(500);
