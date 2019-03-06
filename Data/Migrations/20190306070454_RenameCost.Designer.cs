@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shine.Data;
 using Shine.Data.Models;
@@ -10,9 +11,10 @@ using Shine.Data.Models;
 namespace Shine.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190306070454_RenameCost")]
+    partial class RenameCost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,6 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount");
-
                     b.Property<int>("CreatedById")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
@@ -235,12 +235,6 @@ namespace Shine.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
-
-                    b.Property<bool>("Currency");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100);
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -254,7 +248,13 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
                     b.Property<int>("OrderId");
+
+                    b.Property<decimal>("Value");
 
                     b.HasKey("CostId");
 
@@ -341,6 +341,16 @@ namespace Shine.Data.Migrations
 
                     b.Property<bool>("OrderType");
 
+                    b.Property<DateTime>("PaymentDateOne")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("PaymentDateTwo")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("PaymentOne");
+
+                    b.Property<decimal>("PaymentTwo");
+
                     b.Property<int>("PersonId");
 
                     b.Property<DateTime>("TimeForPayment")
@@ -356,49 +366,6 @@ namespace Shine.Data.Migrations
                     b.ToTable("Orders");
 
                     b.HasDiscriminator<bool>("OrderType");
-                });
-
-            modelBuilder.Entity("Shine.Data.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount");
-
-                    b.Property<int>("CreatedById")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GetUtcDate()");
-
-                    b.Property<bool>("Currency");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
-
-                    b.Property<int>("ModifiedById")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GetUtcDate()");
-
-                    b.Property<int>("OrderId");
-
-                    b.Property<DateTime>("PaymentDate");
-
-                    b.Property<decimal>("Rate");
-
-                    b.HasKey("PaymentId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Shine.Data.Models.Person", b =>
@@ -663,12 +630,27 @@ namespace Shine.Data.Migrations
                 {
                     b.HasBaseType("Shine.Data.Models.Order");
 
+                    b.Property<DateTime>("LocalDateOfIssue")
+                        .HasColumnType("date");
+
+                    b.Property<string>("LocalOrderNumber")
+                        .HasMaxLength(50);
+
                     b.HasDiscriminator().HasValue(true);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.OrderSell", b =>
                 {
                     b.HasBaseType("Shine.Data.Models.Order");
+
+                    b.Property<string>("Currency")
+                        .HasMaxLength(10);
+
+                    b.Property<decimal>("RateOne")
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<decimal>("RateTwo")
+                        .HasColumnType("decimal(7,2)");
 
                     b.HasDiscriminator().HasValue(false);
                 });
@@ -777,7 +759,7 @@ namespace Shine.Data.Migrations
 
             modelBuilder.Entity("Shine.Data.Models.Cost", b =>
                 {
-                    b.HasOne("Shine.Data.Models.Order", "Order")
+                    b.HasOne("Shine.Data.Models.Order", "Invoice")
                         .WithMany("Costs")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -788,14 +770,6 @@ namespace Shine.Data.Migrations
                     b.HasOne("Shine.Data.Models.Person", "Person")
                         .WithMany("Invoices")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Shine.Data.Models.Payment", b =>
-                {
-                    b.HasOne("Shine.Data.Models.Order", "Order")
-                        .WithMany("Payments")
-                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

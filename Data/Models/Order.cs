@@ -11,17 +11,11 @@ namespace Shine.Data.Models
     {
 #region Properties
         public int OrderId { get; set; }
-
         [Required]
         [MaxLength(50)]
         public string OrderNumber { get; set; }
-
         [Required]
         public DateTime DateOfIssue { get; set; }
-        public DateTime PaymentDateOne { get; set; }
-        public decimal PaymentOne { get; set; }
-        public DateTime PaymentDateTwo { get; set; }
-        public decimal PaymentTwo { get; set; }
         public DateTime TimeForPayment { get; set; }
         public bool OrderType { get; set; }
 #endregion
@@ -33,23 +27,16 @@ namespace Shine.Data.Models
 #region Navigation Properties
         public Person Person { get; set; }
         public IEnumerable<ProductOrder> ProductOrders { get; set; }
+        public IEnumerable<Payment> Payments { get; set; }
         public IEnumerable<Cost> Costs { get; set; }
 #endregion
     }
 
     public class OrderBuy : Order
     {
-        [MaxLength(50)]
-        public string LocalOrderNumber { get; set; }
-        public DateTime LocalDateOfIssue { get; set; }
     }
 
     public class OrderSell : Order
     {
-        [MaxLength(10)]
-        public string Currency { get; set; }
-        public decimal RateOne { get; set; }
-        public decimal RateTwo { get; set; }
-
     }
 }

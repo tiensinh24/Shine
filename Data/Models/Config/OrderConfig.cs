@@ -16,13 +16,9 @@ namespace Shine.Data.Models.Config
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;
 
             builder.Property(i => i.DateOfIssue)
-                .HasColumnType("date");
-            builder.Property(i => i.PaymentDateOne)
-                .HasColumnType("date");
-            builder.Property(i => i.PaymentDateTwo)
-                .HasColumnType("date");
+                .HasColumnType("date");            
             builder.Property(i => i.TimeForPayment)
-                .HasColumnType("date");
+                .HasColumnType("date");            
 
             builder.HasIndex(i => i.OrderNumber).IsUnique();
             
@@ -33,8 +29,7 @@ namespace Shine.Data.Models.Config
     {
         public void Configure(EntityTypeBuilder<OrderBuy> builder)
         {
-            builder.Property(bi => bi.LocalDateOfIssue)
-                .HasColumnType("date");
+            
         }
     }
 
@@ -42,10 +37,7 @@ namespace Shine.Data.Models.Config
     {
         public void Configure(EntityTypeBuilder<OrderSell> builder)
         {
-            builder.Property(si => si.RateOne)
-                .HasColumnType("decimal(7,2)");
-            builder.Property(si => si.RateTwo)
-                .HasColumnType("decimal(7,2)");
+           
         }
     }
 }

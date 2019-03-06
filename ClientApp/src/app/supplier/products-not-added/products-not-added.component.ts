@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierProduct } from '../_interfaces/supplier-product';
-import { SupplierDto } from '../_interfaces/supplier-dto';
 
 interface Products {
   productId: number;
@@ -17,25 +16,24 @@ interface ProductsNotAdded {
 }
 
 @Component({
-  selector: 'app-add-products-for-supplier',
-  templateUrl: './add-products-for-supplier.component.html',
-  styleUrls: ['./add-products-for-supplier.component.css']
+  selector: 'app-products-not-added',
+  templateUrl: './products-not-added.component.html',
+  styleUrls: ['./products-not-added.component.css']
 })
-export class AddProductsForSupplierComponent implements OnInit {
-  productsNotAdded: ProductsNotAdded;
-  supplier: SupplierDto;
-  title: string;
+export class ProductsNotAddedComponent implements OnInit {
+  productsNotAdded?: ProductsNotAdded;
+
+  @Input() title: string;
 
   constructor(private supplierService: SupplierService,
     private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = +this.route.snapshot.params.supplierId;
     this.getProductsNotAdded(id);
-    this.getSupplier(id);
   }
 
-  getProductsNotAdded(supplierId: number) {
+  private getProductsNotAdded(supplierId: number) {
     if (supplierId > 0) {
       this.supplierService.getProductsNotAdded(supplierId).subscribe((res: ProductsNotAdded) => {
         this.productsNotAdded = res;
@@ -43,22 +41,14 @@ export class AddProductsForSupplierComponent implements OnInit {
     }
   }
 
-  getSupplier(supplierId: number) {
-    if (supplierId > 0) {
-      this.supplierService.getSupplier(supplierId).subscribe((res: SupplierDto) => {
-        this.supplier = res;
-        this.title = `Add new products for ${res.firstName} ${res.lastName}`;
-      });
-    }
-  }
-
   onAdd(productId: number) {
     const supplierId = +this.route.snapshot.params.supplierId;
-    const entity =  <SupplierProduct>{
+    const entity = <SupplierProduct>{
       personId: supplierId,
       productId: productId
     };
     this.supplierService.addSupplierProduct(entity).subscribe();
+
   }
 
 }

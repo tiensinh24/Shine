@@ -10,7 +10,9 @@ import { SharedModule } from '../_shared/shared.module';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
 import { ProductsProvidedComponent } from './products-provided/products-provided.component';
-import { AddProductsForSupplierComponent } from './add-products-for-supplier/add-products-for-supplier.component';
+import { ProductsNotAddedComponent } from './products-not-added/products-not-added.component';
+import { ProductsAddedComponent } from './products-added/products-added.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { AddProductsForSupplierComponent } from './add-products-for-supplier/add
     SupplierListComponent,
     SupplierComponent,
     ProductsProvidedComponent,
-    AddProductsForSupplierComponent
+    ProductsNotAddedComponent,
+    ProductsAddedComponent
   ],
   imports: [
     // Shared module

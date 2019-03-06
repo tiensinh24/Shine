@@ -9,17 +9,18 @@ namespace Shine.Data.Models
         public int CostId { get; set; }
         [Required]
         [MaxLength(100)]
-        public string Name { get; set; }
+        public string Description { get; set; }
         [Required]
-        public decimal Value { get; set; }
+        public decimal Amount { get; set; }
+        public bool Currency { get; set; }
         #endregion
 
         #region FK
-        public int InvoiceId { get; set; }
+        public int OrderId { get; set; }
         #endregion
 
         #region Navigation Properties
-        public Order Invoice { get; set; }
+        public Order Order { get; set; }
         #endregion
     }
 }

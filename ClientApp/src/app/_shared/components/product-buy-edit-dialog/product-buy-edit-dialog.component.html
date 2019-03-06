@@ -15,13 +15,7 @@
       <mat-label>Specification</mat-label>
       <input matInput placeholder="Specification" formControlName="specification" required>
       <mat-error *ngIf="get('specification').invalid">{{getErrorMessage(get('specification'))}}</mat-error>
-    </mat-form-field>
-    <!-- Price -->
-    <mat-form-field appearance="outline">
-      <mat-label>Price</mat-label>
-      <input matInput placeholder="Price" formControlName="price" required>
-      <mat-error *ngIf="get('price').invalid">{{getErrorMessage(get('price'))}}</mat-error>
-    </mat-form-field>
+    </mat-form-field>    
     <!-- CategoryId -->
     <mat-form-field appearance="outline">
       <mat-label>Select category</mat-label>

@@ -3,7 +3,7 @@
 }
 
 .card-content {
-  margin: 1em;
+  margin: 1px;
 }
 
 .card-title {
@@ -19,8 +19,8 @@
 }
 
 .mat-expansion-panel-header.mat-expanded {
-  font-size: larger;
-  background-color: orange;
+  font-size: large;
+  background-color: sandybrown;
 }
 
 .expand-header .mat-expansion-panel-header-title,
@@ -46,7 +46,7 @@ th {
 
 th,
 td {
-  border-bottom: 1px solid darkorange;
+  border-bottom: 1px solid orange;
   padding: 8px;
 }
 

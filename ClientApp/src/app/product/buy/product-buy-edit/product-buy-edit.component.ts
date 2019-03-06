@@ -74,12 +74,6 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
       specification: ['', Validators.required],
-      price: ['',
-        [
-          Validators.required,
-          Validators.pattern('[0-9.]*')
-        ]
-      ],
       categoryId: ['', Validators.required]
     });
   }
@@ -88,7 +82,6 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     this.formGroup.setValue({
       name: this.productBuy.name,
       specification: this.productBuy.specification,
-      price: this.productBuy.price,
       categoryId: this.productBuy.categoryId
     });
 
@@ -130,7 +123,6 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
 
     tempProductBuy.name = this.formGroup.value.name;
     tempProductBuy.specification = this.formGroup.value.specification;
-    tempProductBuy.price = this.formGroup.value.price;
     tempProductBuy.categoryId = this.formGroup.value.categoryId;
 
     // Edit mode

@@ -68,12 +68,6 @@ export class ProductSellEditComponent implements OnInit {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
       specification: ['', Validators.required],
-      price: ['',
-        [
-          Validators.required,
-          Validators.pattern('[0-9.]*')
-        ]
-      ],
       categoryId: ['', Validators.required]
     });
   }
@@ -82,7 +76,6 @@ export class ProductSellEditComponent implements OnInit {
     this.formGroup.setValue({
       name: this.productSell.name,
       specification: this.productSell.specification,
-      price: this.productSell.price,
       categoryId: this.productSell.categoryId
     });
 
@@ -127,7 +120,6 @@ export class ProductSellEditComponent implements OnInit {
 
     tempProductSell.name = this.formGroup.value.name;
     tempProductSell.specification = this.formGroup.value.specification;
-    tempProductSell.price = this.formGroup.value.price;
     tempProductSell.categoryId = this.formGroup.value.categoryId;
 
     if (this.editMode) {

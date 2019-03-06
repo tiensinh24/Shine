@@ -22,7 +22,6 @@ namespace Shine.Data.Infrastructures.Repositories {
                 p.ProductId,
                     p.Name,
                     p.Specification,
-                    p.Price,
                     p.Category.CategoryName
             }).AsNoTracking ();
 
@@ -36,7 +35,6 @@ namespace Shine.Data.Infrastructures.Repositories {
             {
                 product.Name = productSell.Name;
                 product.Specification = productSell.Specification;
-                product.Price = productSell.Price;
                 product.CategoryId = productSell.CategoryId;
             }
         }

@@ -27,7 +27,6 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     'select',
     'name',
     'specification',
-    'price',
     'categoryName',
     'actions',
   ];
@@ -123,7 +122,6 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
         productId: prodEdit.productId,
         name: prodEdit.name,
         specification: prodEdit.specification,
-        price: prodEdit.price,
         categoryId: prodEdit.categoryId,
         categories: this.categories,
       };

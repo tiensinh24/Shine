@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shine.Data;
 using Shine.Data.Models;
@@ -10,9 +11,10 @@ using Shine.Data.Models;
 namespace Shine.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190306072940_Rename")]
+    partial class Rename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,6 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount");
-
                     b.Property<int>("CreatedById")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
@@ -235,12 +235,6 @@ namespace Shine.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
-
-                    b.Property<bool>("Currency");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100);
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -254,7 +248,13 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
                     b.Property<int>("OrderId");
+
+                    b.Property<decimal>("Value");
 
                     b.HasKey("CostId");
 

@@ -57,14 +57,14 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
-        public async Task<IActionResult> RefreshTokenAsync (TokenRequest tokenRequestDto)
+        public async Task<IActionResult> RefreshTokenAsync (TokenRequest tokenRequest)
         {
             try
             {
                 // Check if the received refreshToken exists for the given clientId
                 var rt = _context.Tokens.FirstOrDefault (t =>
-                    t.ClientId == tokenRequestDto.ClientId
-                    && t.Value == tokenRequestDto.RefreshToken);
+                    t.ClientId == tokenRequest.ClientId
+                    && t.Value == tokenRequest.RefreshToken);
 
                 if (rt == null)
                 {

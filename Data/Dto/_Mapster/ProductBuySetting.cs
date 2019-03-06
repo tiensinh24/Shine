@@ -4,7 +4,7 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster
 {
-    public class ProductBuySetting
+    public static class ProductBuySetting
     {
         public static void Setting()
         {

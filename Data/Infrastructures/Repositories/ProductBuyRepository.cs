@@ -27,7 +27,6 @@ namespace Shine.Data.Infrastructures.Repositories
         {            
             return _context.Set<ProductBuy>().Include(p => p.Category)
                 .ProjectToType<ProductBuyDto>().AsNoTracking();
-
         }
 
         public ProductBuyDto GetProduct(int id)
@@ -43,7 +42,6 @@ namespace Shine.Data.Infrastructures.Repositories
             {
                 product.Name = productBuy.Name;
                 product.Specification = productBuy.Specification;
-                product.Price = productBuy.Price;
                 product.CategoryId = productBuy.CategoryId;
             }
         }

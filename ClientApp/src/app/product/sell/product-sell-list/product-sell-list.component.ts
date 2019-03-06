@@ -19,7 +19,6 @@ export class ProductSellListComponent implements OnInit, AfterViewInit {
     'select',
     'name',
     'specification',
-    'price',
     'categoryName',
     'actions',
   ];
