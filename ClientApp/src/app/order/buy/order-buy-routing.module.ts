@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { OrderBuyComponent } from './order-buy.component';
 import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
 import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';

@@ -7,6 +7,7 @@ import { OrderBuyDetailComponent } from './order-buy-detail/order-buy-detail.com
 import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
 import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
+import { AddProductsOrderComponent } from './add-products-order/add-products-order.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component
     OrderBuyDetailComponent,
     OrderBuyEditComponent,
     OrderBuyHomeComponent,
-    OrderBuyListComponent
+    OrderBuyListComponent,
+    AddProductsOrderComponent
   ],
   imports: [
     CommonModule,

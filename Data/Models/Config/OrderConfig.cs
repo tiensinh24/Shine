@@ -16,9 +16,9 @@ namespace Shine.Data.Models.Config
                 .Metadata.AfterSaveBehavior = PropertySaveBehavior.Save;
 
             builder.Property(i => i.DateOfIssue)
-                .HasColumnType("date");            
+                .HasColumnType("date");
             builder.Property(i => i.TimeForPayment)
-                .HasColumnType("date");            
+                .HasColumnType("date");
 
             builder.HasIndex(i => i.OrderNumber).IsUnique();
             

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Mapster;
 
 using Microsoft.AspNetCore.Authorization;
@@ -53,7 +54,8 @@ namespace Shine.Controllers
         {
             _repository.Add(productBuy);
             _repository.Commit();
-            return productBuy.Adapt<ProductBuyDto>();
+            var product = _repository.GetProduct(productBuy.ProductId);
+            return product;
         }
 
         [HttpPut]
