@@ -48,7 +48,7 @@ namespace Shine.Controllers
         {
             _repository.Add (categoryBuy);
             _repository.Commit ();
-            return categoryBuy.Adapt<CategoryBuy>();
+            return categoryBuy;
         }
 
         [HttpPut]

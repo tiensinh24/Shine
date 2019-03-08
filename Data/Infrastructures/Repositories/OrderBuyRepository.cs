@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-using Shine.Data.Dto.OrderBuies;
+using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 

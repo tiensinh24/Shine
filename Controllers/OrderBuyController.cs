@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using Shine.Data.Dto.OrderBuies;
+using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 

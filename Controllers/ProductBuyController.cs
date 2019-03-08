@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Shine.Data;
-using Shine.Data.Dto.Products;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;

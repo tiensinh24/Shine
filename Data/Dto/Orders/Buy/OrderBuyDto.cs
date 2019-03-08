@@ -1,6 +1,6 @@
 using System;
 
-namespace Shine.Data.Dto.OrderBuies
+namespace Shine.Data.Dto.Orders.Buy
 {
     public class OrderBuyDto
     {

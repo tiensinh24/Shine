@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-using Shine.Data.Dto.OrderBuies;
+using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces

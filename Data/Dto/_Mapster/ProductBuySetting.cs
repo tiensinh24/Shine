@@ -1,5 +1,5 @@
 using Mapster;
-using Shine.Data.Dto.Products;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster

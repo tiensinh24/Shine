@@ -7,7 +7,9 @@ import { OrderBuyDetailComponent } from './order-buy-detail/order-buy-detail.com
 import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
 import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
-import { AddProductsOrderComponent } from './add-products-order/add-products-order.component';
+import { SharedModule } from 'src/app/_shared/shared.module';
+import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
+import { OrderBuyAddProductsComponent } from './order-buy-add-products/order-buy-add-products.component';
 
 
 @NgModule({
@@ -17,10 +19,17 @@ import { AddProductsOrderComponent } from './add-products-order/add-products-ord
     OrderBuyEditComponent,
     OrderBuyHomeComponent,
     OrderBuyListComponent,
-    AddProductsOrderComponent
+    OrderBuyAddProductsComponent,
+
   ],
   imports: [
-    CommonModule,
+    // Shared
+    SharedModule,
+
+    // Material
+    MaterialSharedModule,
+
+    // Routing
     OrderBuyRoutingModule
   ]
 })

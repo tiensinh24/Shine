@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 using Newtonsoft.Json;
 
-using Shine.Data.Dto.Products;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 

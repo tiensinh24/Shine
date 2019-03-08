@@ -32,6 +32,10 @@ export class ProductsAddedComponent implements AfterViewInit {
       setTimeout(() => (this.products.sort = this.sort));
       setTimeout(() => (this.products.paginator = this.paginator));
     });
+
+    this.supplierService.getSupplier(id).subscribe(res => {
+      this.supplier = res;
+    });
   }
 
   DeleteProductFromSupplier(productId: number) {

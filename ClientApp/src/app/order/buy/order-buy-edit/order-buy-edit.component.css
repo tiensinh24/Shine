@@ -1,0 +1,15 @@
+[mat-dialog-content] {
+  margin: 1em;
+  padding-top: 20px;
+}
+
+.card-title {
+  background-color: royalblue;
+  text-align: center;
+  color: white;
+  margin: 1em;
+}
+
+.fill {
+  flex: 1 1 auto;
+}

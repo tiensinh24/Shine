@@ -1,6 +1,6 @@
 using Mapster;
 
-using Shine.Data.Dto.OrderBuies;
+using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster

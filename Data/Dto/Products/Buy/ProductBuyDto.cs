@@ -1,4 +1,4 @@
-namespace Shine.Data.Dto.Products
+namespace Shine.Data.Dto.Products.Buy
 {
     public class ProductBuyDto
     {

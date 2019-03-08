@@ -17,7 +17,7 @@ const routes: Routes = [
       { path: 'home', component: OrderBuyHomeComponent },
       { path: 'create', component: OrderBuyEditComponent },
       {
-        path: 'edit/:orderId',
+        path: ':orderId/edit',
         component: OrderBuyEditComponent,
         canDeactivate: [CanDeactivateGuard],
       },

@@ -1,7 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
@@ -34,7 +35,7 @@ export class OrderBuyService {
 
   // *ProductOrder
   addProductOrder(productOrder: ProductOrder): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProduct`, productOrder);
+    return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
   }
 
   addProductsOrder(productsOrder: ProductOrder[]): Observable<void> {

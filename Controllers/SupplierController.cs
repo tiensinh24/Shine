@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Shine.Data;
 using Shine.Data.Dto.Products;
+using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
@@ -25,12 +26,18 @@ namespace Shine.Controllers
     [Authorize]
     public class SupplierController : ControllerBase
     {
+#region Private Fields
         private readonly SupplierRepository _repository;
+#endregion
+
+#region Constructor
         public SupplierController(SupplierRepository repository)
         {
             this._repository = repository;
         }
+#endregion
 
+#region Supplier
         [HttpGet]
         public ActionResult<IEnumerable<SupplierDto>> GetProducts()
         {
@@ -76,6 +83,53 @@ namespace Shine.Controllers
             _repository.Commit();
             return id;
         }
+#endregion
+
+#region SupplierProduct
+        [HttpGet]
+        [Route("products")]
+        public ActionResult<IEnumerable<SupplierProductDto>> GetSupplierProductsDto()
+        {
+            return _repository.GetSupplierProductsDto().ToList();
+        }
+
+        [HttpGet("{supplierId}/products-group")]
+        public ActionResult<ProductsGroupBySupplierDto> GetProductsGroupBySupplier(int supplierId)
+        {
+            var products = _repository.GetProductsGroupBySupplier(supplierId);
+            return products;
+        }
+
+        [HttpGet("{supplierId}/products")]
+        public ActionResult<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplier(int supplierId)
+        {
+            var products = _repository.GetProductsBySupplier(supplierId).ToList();
+            return products;
+        }
+
+        [HttpGet("{supplierId}/products-not-added")]
+        public IActionResult GetProductsNotBySupplier(int supplierId)
+        {
+            var products = _repository.GetProductsNotBySupplier(supplierId);
+            return products;
+        }
+
+        [HttpPost("product")]
+        public ActionResult<PersonProduct> AddSupplierProduct(PersonProduct supplierProduct)
+        {
+            _repository.Add(supplierProduct);
+            _repository.Commit();
+            return supplierProduct;
+        }
+
+        [HttpDelete("product")]
+        public ActionResult<PersonProduct> DeleteSupplierProduct(PersonProduct supplierProduct)
+        {
+            _repository.DeleteSupplierProduct(supplierProduct);
+            _repository.Commit();
+            return supplierProduct;
+        }
+#endregion
 
     }
 }
