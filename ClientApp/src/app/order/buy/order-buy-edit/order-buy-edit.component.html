@@ -5,7 +5,7 @@
   <!-- Step 1 -->
   <mat-step label="Order" #order>
     <!-- <ng-container *ngIf="stepper.selected == null || stepper.selected == order"> -->
-    <ng-container *ngIf="stepper.selected == order">
+    <ng-container>
       <mat-card mat-dialog-content class="mat-elevation-z4">
         <!-- Formgroup -->
         <form fxLayout="column" [formGroup]="formGroup">
