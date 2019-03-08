@@ -22,7 +22,6 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   order: OrderBuyDto;
   suppliers: SupplierDto[];
-  selected = 0;
 
   constructor(private orderService: OrderBuyService,
     private supplierService: SupplierService,
