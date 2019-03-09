@@ -166,4 +166,8 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
       ? 'Please enter a number!'
       : '';
   }
+
+  getFormError(formGroup: FormGroup) {
+    return formGroup.getError('auth');
+  }
 }

@@ -6,4 +6,6 @@ export interface ProductOrder {
     tax: number;
     rate: number;
     unit: string;
+
+    productName: string;
 }

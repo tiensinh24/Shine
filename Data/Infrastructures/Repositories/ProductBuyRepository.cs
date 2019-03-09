@@ -23,8 +23,9 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
+#region CRUD
         public IEnumerable<ProductBuyDto> GetProducts()
-        {            
+        {
             return _context.Set<ProductBuy>().Include(p => p.Category)
                 .ProjectToType<ProductBuyDto>().AsNoTracking();
         }
@@ -54,5 +55,6 @@ namespace Shine.Data.Infrastructures.Repositories
                 _context.Set<ProductBuy>().Remove(product);
             }
         }
+#endregion
     }
 }

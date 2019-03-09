@@ -104,7 +104,8 @@ namespace Shine.Data.Infrastructures.Repositories
                 .Include(p => p.Product)
                 .ThenInclude(p => p.Category)
                 .Where(p => p.PersonId == supplierId)
-                .ProjectToType<ProductsBySupplierDto>().AsNoTracking();
+                .ProjectToType<ProductsBySupplierDto>()
+                .OrderBy(p => p.Name).AsNoTracking();
 
             return query;
         }
@@ -131,7 +132,7 @@ namespace Shine.Data.Infrastructures.Repositories
             Category = g.Key,
             Products = g.OrderBy(p => p.Name)
             };
-            
+
             return Json(result);
         }
 

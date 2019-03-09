@@ -1,6 +1,5 @@
-[mat-dialog-content] {
+.mat-elevation-z8 {
   margin: 1em;
-  padding-top: 20px;
 }
 
 .card-title {
@@ -11,5 +10,14 @@
 }
 
 .fill {
+  flex: 1 1 auto;
+}
+
+.step-button>button {
+  float: right;
+
+}
+
+.prod-detail {
   flex: 1 1 auto;
 }

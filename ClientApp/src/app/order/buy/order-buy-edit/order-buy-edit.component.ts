@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -7,6 +7,8 @@ import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { SupplierDto } from 'src/app/supplier/_interfaces/supplier-dto';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { Subscription } from 'rxjs';
+import { OrderBuy } from '../_interfaces/order-buy';
+import { ProductOrder } from '../_interfaces/product-order';
 
 @Component({
   selector: 'app-order-buy-edit',
@@ -22,6 +24,11 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   order: OrderBuyDto;
   suppliers: SupplierDto[];
+  // Input
+  selectedOrder: number;
+
+  // Output
+  productsToAdd: ProductOrder[] = [];
 
   constructor(private orderService: OrderBuyService,
     private supplierService: SupplierService,
@@ -76,6 +83,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   getOrder(orderId: number) {
     this.orderSub = this.orderService.getOrder(orderId).subscribe(res => {
       this.order = res;
+      this.selectedOrder = res.orderId;
     });
   }
 
@@ -83,6 +91,10 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     this.suppliersSub = this.supplierService.getSuppliers().subscribe(res => {
       this.suppliers = res;
     });
+  }
+
+  getProductsToAddFromChild($event) {
+    this.productsToAdd = $event;
   }
 
   // TODO: write this method
@@ -110,8 +122,18 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     // }
   }
 
+  onAddOrderWithDetails() {
+    this.orderService.addProductsOrder(this.productsToAdd).subscribe();
+  }
+
   onCancel() {
     this.router.navigate(['order-buy']);
+  }
+
+  addOrder(orderBuy: OrderBuy) {
+    this.orderService.addOrder(orderBuy).subscribe(res => {
+      this.selectedOrder = res.orderId;
+    });
   }
 
   get(name: string): AbstractControl {

@@ -1,12 +1,12 @@
 <!-- Dialog title -->
-<mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{title}}</mat-card>
+<mat-card class="card-title mat-headline mat-elevation-z8">{{title}}</mat-card>
 
-<mat-horizontal-stepper #stepper>
+<mat-horizontal-stepper class="mat-elevation-z8" [linear]="true" #stepper>
   <!-- Step 1 -->
-  <mat-step label="Order" #order>
+  <mat-step [stepControl]="formGroup" label="Order" #order>
     <!-- <ng-container *ngIf="stepper.selected == null || stepper.selected == order"> -->
     <ng-container>
-      <mat-card mat-dialog-content class="mat-elevation-z4">
+      <mat-card class="mat-elevation-z4">
         <!-- Formgroup -->
         <form fxLayout="column" [formGroup]="formGroup">
           <!-- OrderNumber -->
@@ -36,27 +36,40 @@
           <!-- PersonId -->
           <mat-form-field appearance="outline">
             <mat-label>Supplier</mat-label>
-            <mat-select #selectedSupplier placeholder="Select a supplier" formControlName="personId" required>
+            <mat-select placeholder="Select a supplier" formControlName="personId" required>
               <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
                 {{supplier.firstName}} {{supplier.lastName}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="get('personId').invalid">{{getErrorMessage(get('personId'))}}</mat-error>
           </mat-form-field>
+          <div class="step-button">
+            <button mat-button matStepperNext>Next</button>
+          </div>
         </form>
       </mat-card>
     </ng-container>
   </mat-step>
   <!-- Step 2 -->
-  <mat-step label="Details" #details>
+  <mat-step [completed]="true" label="Details" #details>
     <ng-container *ngIf="stepper.selected == details">
-      <app-order-buy-add-products [supplierId]="selectedSupplier.selected.value"></app-order-buy-add-products>
+      <app-order-buy-add-products [orderId]="selectedOrder" [supplierId]="this.formGroup.value.personId"
+        (productOrders)="getProductsToAddFromChild($event)"></app-order-buy-add-products>
+      <div class="step-button">
+        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onAddOrderWithDetails()">Submit</button>
+      </div>
     </ng-container>
   </mat-step>
   <!-- Step 3 -->
   <mat-step label="Reviews" #reviews>
     <ng-container *ngIf="stepper.selected == reviews">
       Reviews
+      <div class="step-button">
+        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button matStepperPrevious>Back</button>
+      </div>
     </ng-container>
   </mat-step>
 </mat-horizontal-stepper>
