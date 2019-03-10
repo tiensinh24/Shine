@@ -2,7 +2,8 @@ import { Component, OnInit, AfterContentChecked, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/_services/auth.service';
-import { IconService } from '../_services/icon.service';
+import { IconService } from '../_shared/_services/icon.service';
+
 
 
 @Component({

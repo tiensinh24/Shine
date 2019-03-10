@@ -6,7 +6,7 @@
   <mat-step [stepControl]="formGroup" label="Order" #order>
     <!-- <ng-container *ngIf="stepper.selected == null || stepper.selected == order"> -->
     <ng-container>
-      <mat-card class="mat-elevation-z4">
+
         <!-- Formgroup -->
         <form fxLayout="column" [formGroup]="formGroup">
           <!-- OrderNumber -->
@@ -47,7 +47,7 @@
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
-      </mat-card>
+
     </ng-container>
   </mat-step>
   <!-- Step 2 -->
@@ -73,3 +73,8 @@
     </ng-container>
   </mat-step>
 </mat-horizontal-stepper>
+
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px">
+  <button fxFlex="20" color="primary" mat-raised-button (click)="onSubmit()">Submit</button>
+  <button fxFlex="20" mat-raised-button (click)="onCancel()">Cancel</button>
+</div>

@@ -42,7 +42,7 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
   isLoading = true;
   title = 'Supplier List';
   countries: Country[];
-  sub: Subscription;
+  sub = new Subscription();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

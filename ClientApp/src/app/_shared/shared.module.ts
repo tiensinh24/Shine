@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { GenderPipe } from '../_pipes/gender.pipe';
-import { AgePipe } from '../_pipes/age.pipe';
+import { GenderPipe } from './_pipes/gender.pipe';
+import { AgePipe } from './_pipes/age.pipe';
+
+
 
 @NgModule({
   declarations: [GenderPipe, AgePipe],

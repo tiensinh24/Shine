@@ -9,6 +9,7 @@ import { CategoryBuyDetailComponent } from './category-buy-detail/category-buy-d
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog-shared.module';
+import { ConfirmDialogSharedModule } from 'src/app/_shared/components/confirm-dialog/confirm-dialog-shared.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/catego
     MaterialSharedModule,
 
     // Dialog
+    ConfirmDialogSharedModule,
     CategoryBuyDialogSharedModule,
 
     // Routing

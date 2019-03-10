@@ -4,9 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { OrderBuyComponent } from './order-buy.component';
 import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
 import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
-import { CanDeactivateGuard } from 'src/app/_guards/can-deactivate.guard';
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
 import { OrderBuyDetailComponent } from './order-buy-detail/order-buy-detail.component';
+import { CanDeactivateGuard } from 'src/app/_shared/_guards/can-deactivate.guard';
 
 const routes: Routes = [
   {

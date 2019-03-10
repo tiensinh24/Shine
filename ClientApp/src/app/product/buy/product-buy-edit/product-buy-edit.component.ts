@@ -3,16 +3,15 @@ import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
-import { DialogService } from 'src/app/_services/dialog.service';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
-import { map } from 'rxjs/operators';
-
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-product-buy-edit',
@@ -27,12 +26,12 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   editMode: boolean;
   canDeactive: boolean;
   title: string;
-  routeSub: Subscription;
+  routeSub = new Subscription();
 
   constructor(private fb: FormBuilder,
     private productBuyService: ProductBuyService,
     private categoryBuyService: CategoryBuyService,
-    private dialogService: DialogService,
+    private dialogService: ConfirmDialogService,
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute) { }

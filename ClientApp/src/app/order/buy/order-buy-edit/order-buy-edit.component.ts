@@ -8,7 +8,7 @@ import { SupplierDto } from 'src/app/supplier/_interfaces/supplier-dto';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { Subscription } from 'rxjs';
 import { OrderBuy } from '../_interfaces/order-buy';
-import { ProductOrder } from '../_interfaces/product-order';
+import { ProductOrderDto } from '../_interfaces/product-order-dto';
 
 @Component({
   selector: 'app-order-buy-edit',
@@ -16,8 +16,8 @@ import { ProductOrder } from '../_interfaces/product-order';
   styleUrls: ['./order-buy-edit.component.css']
 })
 export class OrderBuyEditComponent implements OnInit, OnDestroy {
-  orderSub: Subscription;
-  suppliersSub: Subscription;
+  orderSub = new Subscription();
+  suppliersSub = new Subscription();
 
   title: string;
   editMode = false;
@@ -28,7 +28,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   selectedOrder: number;
 
   // Output
-  productsToAdd: ProductOrder[] = [];
+  productsToAdd: ProductOrderDto[] = [];
 
   constructor(private orderService: OrderBuyService,
     private supplierService: SupplierService,
@@ -97,37 +97,16 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     this.productsToAdd = $event;
   }
 
-  // TODO: write this method
-  onSubmit() {
-    // const tempOrder = <OrderBuy>{};
-
-    // tempOrder.firstName = this.formGroup.value.firstName;
-    // tempOrder.lastName = this.formGroup.value.lastName;
-    // tempOrder.gender = this.formGroup.value.gender;
-    // tempOrder.dateOfBirth = this.formGroup.value.dateOfBirth;
-    // tempOrder.personNumber = this.formGroup.value.personNumber;
-    // tempOrder.telephone = this.formGroup.value.telephone;
-    // tempOrder.fax = this.formGroup.value.fax;
-    // tempOrder.countryId = this.formGroup.value.countryId;
-
-    // if (this.editMode) {
-    //   tempOrder.personId = this.dataFromList.personId;
-    //   this.supplierService.updateSupplier(tempOrder).subscribe(res => {
-    //     this.dialogRef.close(res);
-    //   });
-    // } else {
-    //   this.supplierService.addSupplier(tempOrder).subscribe(res => {
-    //     this.dialogRef.close(res);
-    //   });
-    // }
-  }
-
   onAddOrderWithDetails() {
     this.orderService.addProductsOrder(this.productsToAdd).subscribe();
   }
 
+  onSubmit() {
+    // this.orderService.addOrderWithDetails()
+  }
+
   onCancel() {
-    this.router.navigate(['order-buy']);
+    this.router.navigate(['order-buy'])
   }
 
   addOrder(orderBuy: OrderBuy) {

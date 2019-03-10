@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { OrderBuy } from '../_interfaces/order-buy';
-import { ProductOrder } from '../_interfaces/product-order';
+import { ProductOrderDto } from '../_interfaces/product-order-dto';
+import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +32,22 @@ export class OrderBuyService {
     return this.http.put<OrderBuyDto>(`${this.baseUrl}api/orderBuy/`, orderbuy);
   }
 
+  deleteOrder(orderId: number): Observable<number> {
+    return this.http.delete<number>(this.baseUrl + 'api/orderBuy/' + orderId);
+  }
+
 
 
   // *ProductOrder
-  addProductOrder(productOrder: ProductOrder): Observable<void> {
+  addOrderWithDetails(orderWithDetails: OrderBuyWithDetailsToAddDto) {
+    return this.http.post(`${this.baseUrl}/api/orderBuy/addWithDetails/`, orderWithDetails);
+  }
+
+  addProductOrder(productOrder: ProductOrderDto): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
   }
 
-  addProductsOrder(productsOrder: ProductOrder[]): Observable<void> {
+  addProductsOrder(productsOrder: ProductOrderDto[]): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProducts/`, productsOrder);
   }
 }

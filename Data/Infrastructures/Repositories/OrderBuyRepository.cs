@@ -38,7 +38,6 @@ namespace Shine.Data.Infrastructures.Repositories
             {
                 _repository.Remove(order);
             }
-
         }
 
         public OrderBuyDto GetOrder(int id)

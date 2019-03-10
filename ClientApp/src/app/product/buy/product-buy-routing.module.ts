@@ -5,7 +5,8 @@ import { ProductBuyComponent } from './product-buy.component';
 import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-detail.component';
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
-import { CanDeactivateGuard } from 'src/app/_guards/can-deactivate.guard';
+import { CanDeactivateGuard } from 'src/app/_shared/_guards/can-deactivate.guard';
+
 
 const routes: Routes = [
   {

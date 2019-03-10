@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ProductsBySupplierDto } from 'src/app/supplier/_interfaces/products-by-supplier';
-import { ProductOrder } from '../_interfaces/product-order';
+import { ProductOrderDto } from '../_interfaces/product-order-dto';
 
 @Component({
   selector: 'app-order-buy-add-products',
@@ -15,14 +15,14 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   tableTitle = 'Order Details';
   products: ProductsBySupplierDto[];
   formGroupDetail: FormGroup;
-  productsToAdd: ProductOrder[] = [];
+  productsToAdd: ProductOrderDto[] = [];
 
-  @Output() productOrders = new EventEmitter<ProductOrder[]>();
+  @Output() productOrders = new EventEmitter<ProductOrderDto[]>();
 
   @Input() orderId: number;
   @Input() supplierId: number;
 
-  productsSub: Subscription;
+  productsSub = new Subscription();
 
   constructor(private supplierService: SupplierService,
     private fb: FormBuilder) { }
@@ -79,7 +79,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeProduct(productOrder: ProductOrder) {
+  removeProduct(productOrder: ProductOrderDto) {
     const index = +this.productsToAdd.findIndex(p => p.productId === productOrder.productId);
 
     if (index > -1) {

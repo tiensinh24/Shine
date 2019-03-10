@@ -1,0 +1,7 @@
+<div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="64px">
+  <div fxFlexAlign="center">{{data.message}}</div>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <button mat-flat-button color="accent" [mat-dialog-close]="false" fxFlex="50">No</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="true" fxFlex="50">Yes</button>
+  </div>
+</div>

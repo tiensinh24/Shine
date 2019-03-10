@@ -5,6 +5,7 @@ import {
   MatPaginator,
   MatDialog,
   MatDialogConfig,
+  MatSnackBar,
 } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
@@ -13,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { CategoryBuy } from '../_interfaces/category-buy';
 import { CategoryBuyService } from '../_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-category-buy-list',
@@ -26,7 +28,7 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   isLoading = true;
   isEdit: boolean;
   title = 'Category List';
-  catsSub: Subscription;
+  catsSub = new Subscription();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -35,6 +37,8 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
     private categoryBuyService: CategoryBuyService,
     private router: Router,
     private dialog: MatDialog,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngAfterViewInit(): void {
@@ -68,18 +72,26 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(categoryBuy: CategoryBuy) {
-    this.categoryBuyService
-      .deleteCategory(categoryBuy.categoryId)
-      .subscribe(() => {
-        // Get index of deleted row
-        const index = this.dataSource.data.indexOf(categoryBuy, 0);
-        // Remove row, update dataSource & remove all selection
-        if (index > -1) {
-          this.dataSource.data.splice(index, 1);
-          this.dataSource._updateChangeSubscription();
-          this.selection.clear();
-        }
-      });
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${categoryBuy.categoryName}?`)
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.categoryBuyService
+          .deleteCategory(categoryBuy.categoryId)
+          .subscribe(() => {
+            // Get index of deleted row
+            const index = this.dataSource.data.indexOf(categoryBuy, 0);
+            // Remove row, update dataSource & remove all selection
+            if (index > -1) {
+              this.dataSource.data.splice(index, 1);
+              this.dataSource._updateChangeSubscription();
+              this.selection.clear();
+            }
+          });
+        this.snackBar.open(`${categoryBuy.categoryName} deleted`, 'Success');
+      }
+    });
+
   }
 
   openDialog(categoryId?: number) {

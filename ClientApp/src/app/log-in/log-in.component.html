@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
-  <mat-card fxLayout="column" fxLayoutAlign="start center" class="mat-elevation-z8">
+  <mat-card fxLayout="column" fxLayoutAlign="start stretch" class="mat-elevation-z8">
     <!-- Card header -->
     <mat-card-header>
       <mat-card-title fxLayout="column" fxLayoutAlign="start center">
@@ -11,7 +11,7 @@
     </mat-card-header>
     <!-- Card content -->
     <mat-card-content fxLayout="column" fxLayoutAlign="start center">
-      
+
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
         <input matInput placeholder="Enter your username" formControlName="username" required autofocus>
@@ -30,8 +30,8 @@
       <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-content>
     <!-- Card actions -->
-    <mat-card-actions>
-      <button mat-raised-button [disabled]="!formGroup.valid" type="submit" color="primary">Login</button>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+      <button mat-raised-button fxFlex="50" [disabled]="!formGroup.valid" type="submit" color="primary">Login</button>
     </mat-card-actions>
   </mat-card>
 </form>

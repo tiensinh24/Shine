@@ -5,7 +5,8 @@ import { ProductSellComponent } from './product-sell.component';
 import { ProductSellDetailComponent } from './product-sell-detail/product-sell-detail.component';
 import { ProductSellEditComponent } from './product-sell-edit/product-sell-edit.component';
 import { ProductSellListComponent } from './product-sell-list/product-sell-list.component';
-import { CanDeactivateGuard } from 'src/app/_guards/can-deactivate.guard';
+import { CanDeactivateGuard } from 'src/app/_shared/_guards/can-deactivate.guard';
+
 
 const routes: Routes = [
   {

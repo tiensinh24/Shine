@@ -35,7 +35,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   isLoading = true;
   title = 'Products List';
   categories: CategoryBuy[];
-  sub: Subscription;
+  sub = new Subscription();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

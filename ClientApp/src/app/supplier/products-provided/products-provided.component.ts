@@ -40,7 +40,7 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
   isLoading = true;
   title = `Products List`;
   suppliers: Supplier[];
-  sub: Subscription;
+  sub = new Subscription();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -12,8 +11,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LogInComponent } from './log-in/log-in.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './_shared/shared.module';
-import { CoreModule } from './_core/core.module';
 import { MaterialSharedModule } from './_shared/material-shared.module';
+import { CoreModule } from './_shared/_core/core.module';
+import { ConfirmDialogComponent } from './_shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogSharedModule } from './_shared/components/confirm-dialog/confirm-dialog-shared.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,9 @@ import { MaterialSharedModule } from './_shared/material-shared.module';
 
     // Material
     MaterialSharedModule,
+
+    // Dialog
+    ConfirmDialogSharedModule,
 
     AppRoutingModule,
   ],

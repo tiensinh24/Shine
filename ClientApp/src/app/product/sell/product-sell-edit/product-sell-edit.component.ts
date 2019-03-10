@@ -9,8 +9,8 @@ import { CategorySell } from 'src/app/category/sell/_interfaces/category-sell';
 import { environment } from 'src/environments/environment';
 import { ProductSellService } from '../_services/product-sell.service';
 import { CategorySellService } from 'src/app/category/sell/_services/category-sell.service';
-import { DialogService } from 'src/app/_services/dialog.service';
 import { CategorySellDialogComponent } from 'src/app/category/sell/_dialogs/category-sell-dialog/category-sell-dialog.component';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class ProductSellEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private productSellService: ProductSellService,
     private categorySellService: CategorySellService,
-    private dialogService: DialogService,
+    private dialogService: ConfirmDialogService,
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute) {

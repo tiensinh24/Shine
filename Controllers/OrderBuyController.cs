@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
@@ -88,11 +87,19 @@ namespace Shine.Controllers
             var order = await _repository.GetOrderAsync(orderBuy.OrderId);
             return order;
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult<int> DeleteProduct(int id)
+        {
+            _repository.DeleteOrder(id);
+            _repository.Commit();
+            return id;
+        }
 #endregion
 #region OrderProduct
         [HttpPost("addProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task AddProductOrder([FromBody]ProductOrder productOrder)
+        public async Task AddProductOrder([FromBody] ProductOrder productOrder)
         {
             await _repository.AddProductOrderAsync(productOrder);
             await _repository.CommitAsync();
@@ -104,6 +111,27 @@ namespace Shine.Controllers
         {
             await _repository.AddProductOrderRangeAsync(productOrders);
             await _repository.CommitAsync();
+        }
+
+        [HttpPost("addWithDetails")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<bool> AddOrderWithDetails([FromBody] OrderBuyWithDetailsToAddDto orderBuyWithDetailsToAdd)
+        {
+            var orderBuyToAdd = orderBuyWithDetailsToAdd.OrderBuy;
+            var prodDetailsToAdd = orderBuyWithDetailsToAdd.ProductOrders.ToList();
+            try
+            {
+                var orderAdded = await _repository.AddOrderAsync(orderBuyToAdd);
+                prodDetailsToAdd.ForEach(p => p.OrderId = orderAdded.OrderId);
+                await _repository.AddProductOrderRangeAsync(prodDetailsToAdd);
+            }
+            catch (System.Exception)
+            {
+                return false;
+                throw;
+            }
+            await _repository.CommitAsync();
+            return true;
         }
 #endregion
 #endregion

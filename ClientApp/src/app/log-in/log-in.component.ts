@@ -46,14 +46,14 @@ export class LogInComponent implements OnInit {
       res => {
         if (res && res.token) {
           this.router.navigate(['home']);
-          this.snackBar.open(`Welcome ${username}`, 'OK');
+          this.snackBar.open(`Welcome ${username}`, 'Success');
         }
       },
       () => {
         this.formGroup.setErrors({
           auth: 'Invalid username or password'
         });
-        this.snackBar.open('Unauthorized', 'Close');
+        this.snackBar.open('Unauthorized', 'Failed');
       },
     );
   }

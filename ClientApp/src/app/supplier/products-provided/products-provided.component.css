@@ -25,7 +25,7 @@ mat-progress-bar {
   background-color: transparent;
 }
 
-table[mat-table] {  
+table[mat-table] {
   width: 100%;
 }
 
@@ -35,6 +35,11 @@ table[mat-table] {
 
 .mat-row {
   height: auto;
+}
+
+.mat-row:hover {
+  cursor: pointer;
+  background-color: aliceblue;
 }
 
 .mat-cell {
