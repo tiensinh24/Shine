@@ -20,7 +20,7 @@ namespace Shine.Data.Infrastructures.Repositories {
         public IEnumerable<ProductSell> GetProducts () {
             var query = _context.Set<ProductSell>().Include (p => p.Category).Select (p => new {
                 p.ProductId,
-                    p.Name,
+                    p.ProductName,
                     p.Specification,
                     p.Category.CategoryName
             }).AsNoTracking ();
@@ -33,7 +33,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             var product = _context.Set<ProductSell>().FirstOrDefault(p => p.ProductId == productSell.ProductId);
             if (product != null)
             {
-                product.Name = productSell.Name;
+                product.ProductName = productSell.ProductName;
                 product.Specification = productSell.Specification;
                 product.CategoryId = productSell.CategoryId;
             }

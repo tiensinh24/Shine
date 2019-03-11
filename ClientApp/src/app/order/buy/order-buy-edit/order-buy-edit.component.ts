@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { OrderBuyService } from '../_services/order-buy.service';
 import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { SupplierDto } from 'src/app/supplier/_interfaces/supplier-dto';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { Subscription } from 'rxjs';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { ProductOrderDto } from '../_interfaces/product-order-dto';
+import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
 
 @Component({
   selector: 'app-order-buy-edit',
@@ -24,6 +25,8 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   order: OrderBuyDto;
   suppliers: SupplierDto[];
+  orderWithDetailsToAdd: OrderBuyWithDetailsToAddDto;
+
   // Input
   selectedOrder: number;
 
@@ -71,6 +74,10 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  getOrderFromForm() {
+    this.order = this.formGroup.value;
+  }
+
   updateForm() {
     this.formGroup.setValue({
       orderNumber: this.order.orderNumber,
@@ -93,7 +100,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  getProductsToAddFromChild($event) {
+  getProductsToAddFromChild($event: ProductOrderDto[]) {
     this.productsToAdd = $event;
   }
 
@@ -102,7 +109,13 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // this.orderService.addOrderWithDetails()
+    this.getOrderFromForm();
+
+    this.orderWithDetailsToAdd = {
+      orderBuy: this.order,
+      productOrders: this.productsToAdd
+    };
+    this.orderService.addOrderWithDetails(this.orderWithDetailsToAdd).subscribe();
   }
 
   onCancel() {

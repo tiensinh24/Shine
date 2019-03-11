@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
@@ -89,7 +91,7 @@ namespace Shine.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<int> DeleteProduct(int id)
+        public ActionResult<int> DeleteOrder(int id)
         {
             _repository.DeleteOrder(id);
             _repository.Commit();
@@ -97,6 +99,18 @@ namespace Shine.Controllers
         }
 #endregion
 #region OrderProduct
+        [HttpGet("{orderId}/details")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ProductOrderDto>>> GetProductDetailByOrder(int orderId)
+        {
+            var prodDetails = await _repository.GetProductDetailByOrder(orderId);
+            if (prodDetails == null)
+            {
+                return NotFound();
+            }
+            return Ok(prodDetails);
+        }
+
         [HttpPost("addProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task AddProductOrder([FromBody] ProductOrder productOrder)
@@ -132,6 +146,13 @@ namespace Shine.Controllers
             }
             await _repository.CommitAsync();
             return true;
+        }
+
+        [HttpDelete("{orderId}/delete/{productId}")]
+        public async Task DeleteProductOrder(int orderId, int productId)
+        {
+            await _repository.DeleteProductOrder(orderId, productId);
+            await _repository.CommitAsync();
         }
 #endregion
 #endregion

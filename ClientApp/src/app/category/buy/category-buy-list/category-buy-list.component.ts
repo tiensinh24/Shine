@@ -94,6 +94,7 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
 
   }
 
+  // Open category-edit-dialog
   openDialog(categoryId?: number) {
     // Find category in dataSource
     const catEdit = this.dataSource.data.find(c => c.categoryId === categoryId);

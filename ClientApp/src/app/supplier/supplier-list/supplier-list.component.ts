@@ -5,6 +5,7 @@ import {
   MatPaginator,
   MatDialog,
   MatDialogConfig,
+  MatSnackBar,
 } from '@angular/material';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -16,6 +17,7 @@ import { Supplier } from '../_interfaces/supplier';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 import { Country } from 'src/app/country/_interfaces/country';
 import { CountryService } from 'src/app/country/_services/country.service';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-supplier-list',
@@ -52,6 +54,8 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
     private countryService: CountryService,
     private router: Router,
     private dialog: MatDialog,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngAfterViewInit(): void {
@@ -96,14 +100,21 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(supplier: Supplier) {
-    this.supplierService.deleteSupplier(supplier.personId).subscribe(() => {
-      // Get index of deleted row
-      const index = this.dataSource.data.indexOf(<SupplierDto>supplier, 0);
-      // Remove row, update dataSource & remove all selection
-      if (index > -1) {
-        this.dataSource.data.splice(index, 1);
-        this.dataSource._updateChangeSubscription();
-        this.selection.clear();
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${supplier.firstName} ${supplier.lastName}?`)
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.supplierService.deleteSupplier(supplier.personId).subscribe(() => {
+          // Get index of deleted row
+          const index = this.dataSource.data.indexOf(<SupplierDto>supplier, 0);
+          // Remove row, update dataSource & remove all selection
+          if (index > -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource._updateChangeSubscription();
+            this.selection.clear();
+          }
+        });
+        this.snackBar.open(`${supplier.firstName} ${supplier.lastName} deleted`, 'Success');
       }
     });
   }

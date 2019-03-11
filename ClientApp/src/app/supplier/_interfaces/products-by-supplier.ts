@@ -3,7 +3,7 @@ import { SupplierDto } from './supplier-dto';
 export interface ProductsBySupplierDto {
   personId: number;
   productId: number;
-  name: string;
+  productName: string;
   specification: string;
   price: number;
   categoryId: number;

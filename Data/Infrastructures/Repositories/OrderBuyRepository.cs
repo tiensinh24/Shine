@@ -104,6 +104,15 @@ namespace Shine.Data.Infrastructures.Repositories
         }
 
 #region ProductOrder
+        public async Task<IEnumerable<ProductOrderDto>> GetProductDetailByOrder(int id)
+        {
+            var orderDetails = await _context.Set<ProductOrder>().Include(p => p.Product)
+                .Where(p => p.OrderId == id)
+                .ProjectToType<ProductOrderDto>().ToListAsync();
+            
+            return orderDetails;
+        }
+
         public async Task AddProductOrderAsync(ProductOrder productOrder)
         {
             await _context.Set<ProductOrder>().AddAsync(productOrder);
@@ -113,8 +122,19 @@ namespace Shine.Data.Infrastructures.Repositories
         {
             await _context.Set<ProductOrder>().AddRangeAsync(productOrders);
         }
+
+        public async Task DeleteProductOrder(int orderId, int productId)
+        {
+            var productOrder = await _context.Set<ProductOrder>()
+                .FirstOrDefaultAsync(p => p.OrderId == orderId && p.ProductId == productId);
+            if (productOrder != null)
+            {
+                _context.Set<ProductOrder>().Remove(productOrder);
+            }
+        }
 #endregion
 
 #endregion
+
     }
 }

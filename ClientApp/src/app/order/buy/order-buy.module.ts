@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { OrderBuyRoutingModule } from './order-buy-routing.module';
 import { OrderBuyComponent } from './order-buy.component';
@@ -10,6 +9,7 @@ import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { OrderBuyAddProductsComponent } from './order-buy-add-products/order-buy-add-products.component';
+import { OrderBuyProductDetailsComponent } from './order-buy-detail/order-buy-product-details/order-buy-product-details.component';
 
 
 @NgModule({
@@ -20,6 +20,7 @@ import { OrderBuyAddProductsComponent } from './order-buy-add-products/order-buy
     OrderBuyHomeComponent,
     OrderBuyListComponent,
     OrderBuyAddProductsComponent,
+    OrderBuyProductDetailsComponent,
 
   ],
   imports: [

@@ -1,3 +1,48 @@
-<p>
-  order-buy-detail works!
-</p>
+<mat-card fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" class="mat-elevation-z8">
+  <mat-card fxFlex="25">
+    <mat-card-header>
+      <div mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="example-header-image"></div>
+      <mat-card-title>{{orderBuy?.supplierName}}</mat-card-title>
+      <mat-card-subtitle>{{orderBuy?.orderNumber}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <table>
+        <tr>
+          <td class="col-1">Order Number</td>
+          <td class="col-2">{{orderBuy?.orderNumber}}</td>
+        </tr>
+        <tr>
+          <td class="col-1">Date of Issue</td>
+          <td class="col-2">{{orderBuy?.dateOfIssue | date: "dd/MM/yyyy"}}</td>
+        </tr>
+        <tr>
+          <td class="col-1">Time for Payment</td>
+          <td class="col-2"> {{orderBuy?.timeForPayment | date: "dd/MM/yyyy"}}</td>
+        </tr>
+        <tr>
+          <td class="col-1">Supplier</td>
+          <td class="col-2"> {{orderBuy?.supplierName}}</td>
+        </tr>        
+      </table>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
+      <button fxFlex="30" mat-raised-button color="warn" (click)="openDialog()">Edit</button>
+      <button fxFlex="30" mat-raised-button color="primary" [routerLink]="['/order-buy/']">Orders</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <button fxFlexAlign="center" mat-fab (click)="toggleAddProduct()">
+    <mat-icon *ngIf="!isAddProducts" matTooltip="Add products" aria-label="Add products">add</mat-icon>
+    <mat-icon *ngIf="isAddProducts" matTooltip="Products list" aria-label="Products list">list</mat-icon>
+  </button>
+
+  <div fxFlex class="product-table">
+    <div *ngIf="!isAddProducts">
+      <app-order-buy-product-details></app-order-buy-product-details>
+    </div>
+    <!-- <div *ngIf="isAddProducts">
+      <app-order-buy-add-products [title]="title"></app-order-buy-add-products>
+    </div> -->
+  </div>
+</mat-card>

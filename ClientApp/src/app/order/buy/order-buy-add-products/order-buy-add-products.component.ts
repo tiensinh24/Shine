@@ -48,7 +48,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.formGroupDetail = this.fb.group({
-      orderId: [this.orderId, Validators.required],
+      orderId: [this.orderId],
       productId: ['', Validators.required],
       quantity: ['', Validators.required],
       price: ['', Validators.required],
@@ -87,11 +87,11 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
 
       const prod = <ProductsBySupplierDto> {
         productId: productOrder.productId,
-        name: productOrder.productName
+        productName: productOrder.productName
       };
 
       this.products.push(prod);
-      this.products.sort((a, b ) => a.name.localeCompare(b.name));
+      this.products.sort((a, b ) => a.productName.localeCompare(b.productName));
     }
   }
 

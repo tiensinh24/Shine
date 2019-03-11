@@ -5,6 +5,7 @@ import {
   MatSort,
   MatDialogConfig,
   MatDialog,
+  MatSnackBar,
 } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -16,6 +17,7 @@ import { ProductBuy } from '../_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-product-buy-list',
@@ -45,6 +47,8 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     private categoryBuyService: CategoryBuyService,
     private router: Router,
     private dialog: MatDialog,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngAfterViewInit(): void {
@@ -89,16 +93,24 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(productBuy: ProductBuy) {
-    this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
-      // Get index of deleted row
-      const index = this.dataSource.data.indexOf(<ProductBuyDto>productBuy, 0);
-      // Remove row, update dataSource & remove all selection
-      if (index > -1) {
-        this.dataSource.data.splice(index, 1);
-        this.dataSource._updateChangeSubscription();
-        this.selection.clear();
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${productBuy.name}?`);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
+          // Get index of deleted row
+          const index = this.dataSource.data.indexOf(<ProductBuyDto>productBuy, 0);
+          // Remove row, update dataSource & remove all selection
+          if (index > -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource._updateChangeSubscription();
+            this.selection.clear();
+          }
+        });
+        this.snackBar.open(`${productBuy.name} deleted`, 'Success');
       }
     });
+
   }
 
   // Open product-buy-edit dialog

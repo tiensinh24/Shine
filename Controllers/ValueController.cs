@@ -22,7 +22,7 @@ namespace Shine.Controllers
         public IActionResult GetProductsGroupByCategory ()
         {
             var grouped = from b in _context.Set<ProductBuy> ()
-            group new { b.ProductId, b.Name } by b.Category.CategoryName into g
+            group new { b.ProductId, b.ProductName } by b.Category.CategoryName into g
             select new
             {
             Category = g.Key,

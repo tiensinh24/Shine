@@ -31,7 +31,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
     private productBuyService: ProductBuyService,
     private categoryBuyService: CategoryBuyService,
-    private dialogService: ConfirmDialogService,
+    private confirmService: ConfirmDialogService,
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute) { }
@@ -149,7 +149,10 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   canDeactivate(): Observable<boolean> | boolean {
     if (!this.canDeactive) {
       if (this.formGroup.dirty) {
-        return this.dialogService.confirm('Discard changes?');
+        const dialogRef = this.confirmService.openDialog('Discard changes?');
+        dialogRef.afterClosed().subscribe(res => {
+          return res;
+        });
       }
     }
     return true;

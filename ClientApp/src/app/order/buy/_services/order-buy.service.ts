@@ -39,8 +39,12 @@ export class OrderBuyService {
 
 
   // *ProductOrder
+  getProductDetailByOrder(orderId: number): Observable<ProductOrderDto[]> {
+    return this.http.get<ProductOrderDto[]>(`${this.baseUrl}api/orderBuy/${orderId}/details`);
+  }
+
   addOrderWithDetails(orderWithDetails: OrderBuyWithDetailsToAddDto) {
-    return this.http.post(`${this.baseUrl}/api/orderBuy/addWithDetails/`, orderWithDetails);
+    return this.http.post(`${this.baseUrl}api/orderBuy/addWithDetails/`, orderWithDetails);
   }
 
   addProductOrder(productOrder: ProductOrderDto): Observable<void> {
@@ -49,5 +53,9 @@ export class OrderBuyService {
 
   addProductsOrder(productsOrder: ProductOrderDto[]): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProducts/`, productsOrder);
+  }
+
+  deleteProductOrder(orderId: number, productId: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/${orderId}/delete/${productId}`);
   }
 }

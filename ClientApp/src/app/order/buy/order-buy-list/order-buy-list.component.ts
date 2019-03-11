@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatSnackBar } from '@angular/material';
 import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { SupplierDto } from 'src/app/supplier/_interfaces/supplier-dto';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-order-buy-list',
@@ -40,6 +41,8 @@ export class OrderBuyListComponent implements AfterViewInit, OnDestroy {
     private supplierService: SupplierService,
     private router: Router,
     private dialog: MatDialog,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngAfterViewInit(): void {
@@ -84,18 +87,24 @@ export class OrderBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(orderBuy: OrderBuy) {
-    this.orderBuyService.deleteOrder(orderBuy.orderId).subscribe(() => {
-      // Get index of deleted row
-      const index = this.dataSource.data.indexOf(<OrderBuyDto>orderBuy, 0);
-      // Remove row, update dataSource & remove all selection
-      if (index > -1) {
-        this.dataSource.data.splice(index, 1);
-        this.dataSource._updateChangeSubscription();
-        this.selection.clear();
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete order ${orderBuy.orderNumber}?`);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.orderBuyService.deleteOrder(orderBuy.orderId).subscribe(() => {
+          // Get index of deleted row
+          const index = this.dataSource.data.indexOf(<OrderBuyDto>orderBuy, 0);
+          // Remove row, update dataSource & remove all selection
+          if (index > -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource._updateChangeSubscription();
+            this.selection.clear();
+          }
+        });
+        this.snackBar.open(`Order ${orderBuy.orderNumber} deleted`, 'Success');
       }
     });
   }
-
 
   // On input focus: setup filterPredicate to only filter by input column
   setupFilter(column?: string) {

@@ -41,7 +41,7 @@ namespace Shine.Data.Infrastructures.Repositories
             var product = _context.Set<ProductBuy>().FirstOrDefault(p => p.ProductId == productBuy.ProductId);
             if (product != null)
             {
-                product.Name = productBuy.Name;
+                product.ProductName = productBuy.ProductName;
                 product.Specification = productBuy.Specification;
                 product.CategoryId = productBuy.CategoryId;
             }

@@ -11,7 +11,7 @@ namespace Shine.Data.Models
         public int ProductId { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string ProductName { get; set; }
         public string Specification { get; set; }
         public bool ProductType { get; set; }
 #endregion
