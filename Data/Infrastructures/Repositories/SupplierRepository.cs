@@ -105,7 +105,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 .ThenInclude(p => p.Category)
                 .Where(p => p.PersonId == supplierId)
                 .ProjectToType<ProductsBySupplierDto>()
-                .OrderBy(p => p.Name).AsNoTracking();
+                .OrderBy(p => p.ProductName).AsNoTracking();
 
             return query;
         }

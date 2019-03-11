@@ -119,7 +119,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     // this.canDeactive = true;
     const tempProductBuy = <ProductBuy>{};
 
-    tempProductBuy.name = this.formGroup.value.name;
+    tempProductBuy.productName = this.formGroup.value.name;
     tempProductBuy.specification = this.formGroup.value.specification;
     tempProductBuy.categoryId = this.formGroup.value.categoryId;
 

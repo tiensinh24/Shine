@@ -1,5 +1,5 @@
-<mat-card fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" class="mat-elevation-z8">
-  <mat-card fxFlex="25">
+<mat-card fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px" class="mat-elevation-z8">
+  <mat-card fxFlex="20">
     <mat-card-header>
       <div mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="example-header-image"></div>
       <mat-card-title>{{orderBuy?.supplierName}}</mat-card-title>
@@ -23,7 +23,7 @@
         <tr>
           <td class="col-1">Supplier</td>
           <td class="col-2"> {{orderBuy?.supplierName}}</td>
-        </tr>        
+        </tr>
       </table>
     </mat-card-content>
     <mat-card-actions fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
@@ -32,17 +32,7 @@
     </mat-card-actions>
   </mat-card>
 
-  <button fxFlexAlign="center" mat-fab (click)="toggleAddProduct()">
-    <mat-icon *ngIf="!isAddProducts" matTooltip="Add products" aria-label="Add products">add</mat-icon>
-    <mat-icon *ngIf="isAddProducts" matTooltip="Products list" aria-label="Products list">list</mat-icon>
-  </button>
-
   <div fxFlex class="product-table">
-    <div *ngIf="!isAddProducts">
       <app-order-buy-product-details></app-order-buy-product-details>
-    </div>
-    <!-- <div *ngIf="isAddProducts">
-      <app-order-buy-add-products [title]="title"></app-order-buy-add-products>
-    </div> -->
   </div>
 </mat-card>

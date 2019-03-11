@@ -11,6 +11,7 @@ import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ProductsBySupplierDto } from 'src/app/supplier/_interfaces/products-by-supplier';
+import { ProductOrder } from '../../_interfaces/product-order';
 
 @Component({
   selector: 'app-order-buy-product-details',
@@ -22,7 +23,6 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
   orderBuy: OrderBuyDto;
   products: ProductsBySupplierDto[];
   dataSource = new MatTableDataSource<ProductOrderDto>([]);
-  isAddProducts = false;
   formGroupDetail: FormGroup;
 
   orderBuySub = new Subscription();
@@ -87,7 +87,6 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
       rate: ['', Validators.required],
       unit: ['', Validators.required],
 
-      productName: ['']
     });
   }
 
@@ -96,9 +95,12 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
       this.formGroupDetail.patchValue({
         orderId: this.orderBuy.orderId
       });
-      const prodOrder = this.formGroupDetail.value;
+      const prodOrder: ProductOrder = this.formGroupDetail.value;
 
-      this.orderBuyService.addProductOrder(prodOrder).subscribe();
+      this.orderBuyService.addProductOrder(prodOrder).subscribe(() => {
+        const id = +this.route.snapshot.params.orderId;
+        this.getDataSource(id);
+      });
     }
   }
 

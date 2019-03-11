@@ -13,8 +13,7 @@ import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-bu
 })
 export class OrderBuyDetailComponent implements AfterViewInit {
   orderBuy: OrderBuyDto;
-  isAddProducts = false;
-  title: string;
+
 
   constructor(private orderService: OrderBuyService,
     private route: ActivatedRoute,
@@ -25,7 +24,6 @@ export class OrderBuyDetailComponent implements AfterViewInit {
 
     this.orderService.getOrder(id).subscribe(res => {
       this.orderBuy = res;
-      this.title = `Add products for order ${res.orderNumber}`;
     });
   }
 
@@ -66,7 +64,4 @@ export class OrderBuyDetailComponent implements AfterViewInit {
     }
   }
 
-  toggleAddProduct() {
-    this.isAddProducts = !this.isAddProducts;
-  }
 }

@@ -50,7 +50,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
         this.productBuy = res.product;
         this.categories = res.categories;
       });
-      this.title = `Edit ${this.productBuy.name}`;
+      this.title = `Edit ${this.productBuy.productName}`;
       this.updateForm();
     } else {
       this.editMode = false;
@@ -79,7 +79,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
 
   updateForm() {
     this.formGroup.setValue({
-      name: this.productBuy.name,
+      name: this.productBuy.productName,
       specification: this.productBuy.specification,
       categoryId: this.productBuy.categoryId
     });
@@ -120,7 +120,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     this.canDeactive = true;
     const tempProductBuy = <ProductBuy>{};
 
-    tempProductBuy.name = this.formGroup.value.name;
+    tempProductBuy.productName = this.formGroup.value.name;
     tempProductBuy.specification = this.formGroup.value.specification;
     tempProductBuy.categoryId = this.formGroup.value.categoryId;
 

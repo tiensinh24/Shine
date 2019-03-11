@@ -28,7 +28,7 @@ namespace Shine.Data.Dto._Mapster
             ).Map(
                 dest => dest.SupplierId, src => src.PersonId
             ).Map(
-                dest => dest.Name, src => src.Product.ProductName
+                dest => dest.ProductName, src => src.Product.ProductName
             ).Map(
                 dest => dest.Specification, src => src.Product.Specification            
             ).Map(

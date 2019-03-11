@@ -27,7 +27,7 @@ import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.s
 export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   displayedColumns = [
     'select',
-    'name',
+    'productName',
     'specification',
     'categoryName',
     'actions',
@@ -93,7 +93,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(productBuy: ProductBuy) {
-    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${productBuy.name}?`);
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${productBuy.productName}?`);
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
@@ -107,7 +107,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
             this.selection.clear();
           }
         });
-        this.snackBar.open(`${productBuy.name} deleted`, 'Success');
+        this.snackBar.open(`${productBuy.productName} deleted`, 'Success');
       }
     });
 
@@ -132,7 +132,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     if (prodEdit) {
       dialogConfig.data = {
         productId: prodEdit.productId,
-        name: prodEdit.name,
+        productName: prodEdit.productName,
         specification: prodEdit.specification,
         categoryId: prodEdit.categoryId,
         categories: this.categories,

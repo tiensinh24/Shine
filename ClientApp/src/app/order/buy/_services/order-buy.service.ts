@@ -7,6 +7,7 @@ import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { ProductOrderDto } from '../_interfaces/product-order-dto';
 import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
+import { ProductOrder } from '../_interfaces/product-order';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,7 @@ export class OrderBuyService {
     return this.http.post(`${this.baseUrl}api/orderBuy/addWithDetails/`, orderWithDetails);
   }
 
-  addProductOrder(productOrder: ProductOrderDto): Observable<void> {
+  addProductOrder(productOrder: ProductOrder): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
   }
 
