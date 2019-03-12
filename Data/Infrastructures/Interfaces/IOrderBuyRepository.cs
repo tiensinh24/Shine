@@ -24,7 +24,7 @@ namespace Shine.Data.Infrastructures.Interfaces
 
 #region ProductsOrder
         Task<IEnumerable<ProductOrderDto>> GetProductDetailByOrder(int id);
-        Task AddProductOrderAsync(ProductOrder productOrder);
+        Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder);
         Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders);
         Task DeleteProductOrder(int orderId, int productId);
 

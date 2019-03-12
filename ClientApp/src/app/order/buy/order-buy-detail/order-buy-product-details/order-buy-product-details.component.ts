@@ -12,6 +12,7 @@ import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.ser
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ProductsBySupplierDto } from 'src/app/supplier/_interfaces/products-by-supplier';
 import { ProductOrder } from '../../_interfaces/product-order';
+import { isType } from '@angular/core/src/type';
 
 @Component({
   selector: 'app-order-buy-product-details',
@@ -24,6 +25,7 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
   products: ProductsBySupplierDto[];
   dataSource = new MatTableDataSource<ProductOrderDto>([]);
   formGroupDetail: FormGroup;
+  orderId: number;
 
   orderBuySub = new Subscription();
   productsSub = new Subscription();
@@ -38,14 +40,13 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
     private route: ActivatedRoute) { }
 
     ngOnInit(): void {
+      this.orderId = +this.route.snapshot.params.orderId;
       this.createForm();
     }
 
   ngAfterViewInit(): void {
-    const id = +this.route.snapshot.params.orderId;
-
-    this.getDataSource(id);
-    this.getOrderBuy(id);
+    this.getDataSource(this.orderId);
+    this.getOrderBuy(this.orderId);
     setTimeout(() => {
       this.getProductsBySupplier(this.orderBuy.personId);
     });
@@ -68,7 +69,51 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
   getProductsBySupplier(supplierId: number) {
     this.productsSub = this.supplierService.getProductsBySupplier(supplierId).subscribe(res => {
       this.products = res;
+      this.refreshProductSelectionAndDataSource('init');
     });
+  }
+
+  refreshProductSelectionAndDataSource(mode: string, prodOrder?: ProductOrder | ProductOrderDto | any) {
+    if (mode === 'init') {
+      this.dataSource.data.forEach(productOrder => {
+        const index = this.products.findIndex(product => product.productId === productOrder.productId);
+        if (index > -1) {
+          this.products.splice(index, 1);
+        }
+      });
+    }
+
+    if (mode === 'add') {
+      this.orderBuyService.addProductOrder(prodOrder).subscribe(res => {
+        if (res) {
+          // Refresh dataSource
+          this.dataSource.data.push(res);
+          this.dataSource._updateChangeSubscription();
+
+          // Refresh product selection list
+          const index = this.products.findIndex(p => p.productId === res.productId);
+          if (index > -1) {
+            this.products.splice(index, 1);
+          }
+        }
+      });
+    }
+
+    if (mode === 'delete') {
+      const index = this.dataSource.data.findIndex(p => p.productId === prodOrder.productId);
+
+      if (index > -1) {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
+
+        // Refresh product selection list, create new instance to push into product selection list
+        const productOrder = <ProductsBySupplierDto>{
+          productId: prodOrder.productId,
+          productName: prodOrder.productName
+        };
+        this.products.push(productOrder);
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -97,27 +142,31 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
       });
       const prodOrder: ProductOrder = this.formGroupDetail.value;
 
-      this.orderBuyService.addProductOrder(prodOrder).subscribe(() => {
-        const id = +this.route.snapshot.params.orderId;
-        this.getDataSource(id);
-      });
+      this.refreshProductSelectionAndDataSource('add', prodOrder);
     }
   }
 
-  DeleteProductFromOrder(productId: number) {
+  DeleteProductFromOrder(productOrderDto: ProductOrderDto) {
     const orderId = this.orderBuy.orderId;
 
-    this.orderBuyService.deleteProductOrder(orderId, productId).subscribe(() => {
-      this.refreshProducts(productId);
+    this.orderBuyService.deleteProductOrder(orderId, productOrderDto.productId).subscribe(() => {
+      this.refreshProductSelectionAndDataSource('delete', productOrderDto);
     });
   }
 
-  refreshProducts(productId: number) {
-    const index = this.dataSource.data.findIndex(p => p.productId === productId);
+  refreshProducts(productOrderDto: ProductOrderDto) {
+    const index = this.dataSource.data.findIndex(p => p.productId === productOrderDto.productId);
 
     if (index > -1) {
       this.dataSource.data.splice(index, 1);
       this.dataSource._updateChangeSubscription();
+
+      // Refresh product selection list, create new instance to push into product selection list
+      const prodOrder = <ProductsBySupplierDto> {
+        productId: productOrderDto.productId,
+        productName: productOrderDto.productName
+      };
+      this.products.push(prodOrder);
     }
   }
 

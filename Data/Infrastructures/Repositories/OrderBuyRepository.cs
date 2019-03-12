@@ -109,13 +109,15 @@ namespace Shine.Data.Infrastructures.Repositories
             var orderDetails = await _context.Set<ProductOrder>().Include(p => p.Product)
                 .Where(p => p.OrderId == id)
                 .ProjectToType<ProductOrderDto>().ToListAsync();
-            
+
             return orderDetails;
         }
 
-        public async Task AddProductOrderAsync(ProductOrder productOrder)
+        public async Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder)
         {
-            await _context.Set<ProductOrder>().AddAsync(productOrder);
+            var added = await _context.Set<ProductOrder>().AddAsync(productOrder);
+
+            return added.Entity;
         }
 
         public async Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders)

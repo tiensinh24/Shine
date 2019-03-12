@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Mapster;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
+using Shine.Data;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
@@ -21,12 +25,15 @@ namespace Shine.Controllers
     {
 #region Private Field
         private readonly OrderBuyRepository _repository;
+        private readonly AppDbContext _context;
 #endregion
 
 #region Constructor
-        public OrderBuyController(OrderBuyRepository repository)
+        public OrderBuyController(OrderBuyRepository repository,
+            AppDbContext context)
         {
             this._repository = repository;
+            this._context = context;
         }
 
 #endregion
@@ -98,7 +105,7 @@ namespace Shine.Controllers
             return id;
         }
 #endregion
-#region OrderProduct
+#region ProductOrder
         [HttpGet("{orderId}/details")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ProductOrderDto>>> GetProductDetailByOrder(int orderId)
@@ -113,10 +120,15 @@ namespace Shine.Controllers
 
         [HttpPost("addProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task AddProductOrder([FromBody] ProductOrder productOrder)
+        public async Task<ActionResult<ProductOrderDto>> AddProductOrder([FromBody] ProductOrder productOrder)
         {
-            await _repository.AddProductOrderAsync(productOrder);
+            var prodOrderAdded = await _repository.AddProductOrderAsync(productOrder);
             await _repository.CommitAsync();
+
+            return await _context.ProductOrders.Include(p => p.Product)
+                .ProjectToType<ProductOrderDto>()
+                .FirstOrDefaultAsync(p => p.OrderId == prodOrderAdded.OrderId
+                    && p.ProductId == prodOrderAdded.ProductId);
         }
 
         [HttpPost("addProducts")]

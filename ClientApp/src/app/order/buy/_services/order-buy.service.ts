@@ -48,8 +48,8 @@ export class OrderBuyService {
     return this.http.post(`${this.baseUrl}api/orderBuy/addWithDetails/`, orderWithDetails);
   }
 
-  addProductOrder(productOrder: ProductOrder): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
+  addProductOrder(productOrder: ProductOrder): Observable<ProductOrderDto> {
+    return this.http.post<ProductOrderDto>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
   }
 
   addProductsOrder(productsOrder: ProductOrderDto[]): Observable<void> {
