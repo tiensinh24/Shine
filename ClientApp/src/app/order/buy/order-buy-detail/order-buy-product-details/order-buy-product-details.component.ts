@@ -52,6 +52,12 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
     });
   }
 
+  ngOnDestroy(): void {
+    this.orderBuySub.unsubscribe();
+    this.productsSub.unsubscribe();
+    this.dataSourceSub.unsubscribe();
+  }
+
   getDataSource(orderId: number) {
     this.dataSourceSub = this.orderBuyService.getProductDetailByOrder(orderId).subscribe(res => {
       this.dataSource = new MatTableDataSource<ProductOrderDto>(res);
@@ -116,12 +122,6 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
     }
   }
 
-  ngOnDestroy(): void {
-    this.orderBuySub.unsubscribe();
-    this.productsSub.unsubscribe();
-    this.dataSourceSub.unsubscribe();
-  }
-
   createForm() {
     this.formGroupDetail = this.fb.group({
       orderId: [''],
@@ -152,22 +152,6 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
     this.orderBuyService.deleteProductOrder(orderId, productOrderDto.productId).subscribe(() => {
       this.refreshProductSelectionAndDataSource('delete', productOrderDto);
     });
-  }
-
-  refreshProducts(productOrderDto: ProductOrderDto) {
-    const index = this.dataSource.data.findIndex(p => p.productId === productOrderDto.productId);
-
-    if (index > -1) {
-      this.dataSource.data.splice(index, 1);
-      this.dataSource._updateChangeSubscription();
-
-      // Refresh product selection list, create new instance to push into product selection list
-      const prodOrder = <ProductsBySupplierDto> {
-        productId: productOrderDto.productId,
-        productName: productOrderDto.productName
-      };
-      this.products.push(prodOrder);
-    }
   }
 
   get(name: string): AbstractControl {

@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs';
 
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ProductsBySupplierDto } from 'src/app/supplier/_interfaces/products-by-supplier';
-import { ProductOrderDto } from '../_interfaces/product-order-dto';
+import { ProductOrderDto } from '../../_interfaces/product-order-dto';
+
 
 @Component({
   selector: 'app-order-buy-add-products',
@@ -64,7 +65,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
     if (this.formGroupDetail.valid) {
       this.formGroupDetail.patchValue({
         productId: this.formGroupDetail.value.productId.productId,
-        productName: this.formGroupDetail.value.productId.name
+        productName: this.formGroupDetail.value.productId.productName
       });
       this.productsToAdd.push(this.formGroupDetail.value);
       this.refreshProductSelection(this.formGroupDetail.value.productId);

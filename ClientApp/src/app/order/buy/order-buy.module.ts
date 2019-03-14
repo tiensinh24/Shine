@@ -8,9 +8,8 @@ import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
-import { OrderBuyAddProductsComponent } from './order-buy-add-products/order-buy-add-products.component';
+import { OrderBuyAddProductsComponent } from './order-buy-edit/order-buy-add-products/order-buy-add-products.component';
 import { OrderBuyProductDetailsComponent } from './order-buy-detail/order-buy-product-details/order-buy-product-details.component';
-
 
 @NgModule({
   declarations: [
