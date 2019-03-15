@@ -6,7 +6,7 @@ import { SupplierProduct } from '../_interfaces/supplier-product';
 
 interface Products {
   productId: number;
-  name: string;
+  productName: string;
   specification: string;
   price: number;
 }

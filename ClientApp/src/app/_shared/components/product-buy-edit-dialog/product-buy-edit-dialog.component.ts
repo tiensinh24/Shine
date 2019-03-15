@@ -47,10 +47,10 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     this.createForm();
 
     // Edit product
-    if (this.dataFromList.name) {
+    if (this.dataFromList.productId > 0) {
       this.editMode = true;
 
-      this.title = `Edit ${this.dataFromList.name}`;
+      this.title = `Edit ${this.dataFromList.productName}`;
       this.updateForm();
       // Create product
     } else {
@@ -66,7 +66,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.formGroup = this.fb.group({
-      name: ['', Validators.required],
+      productName: ['', Validators.required],
       specification: ['', Validators.required],
       categoryId: ['', Validators.required],
     });
@@ -74,7 +74,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
 
   updateForm() {
     this.formGroup.setValue({
-      name: this.dataFromList.name,
+      productName: this.dataFromList.productName,
       specification: this.dataFromList.specification,
       categoryId: this.dataFromList.categoryId,
     });
@@ -119,7 +119,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     // this.canDeactive = true;
     const tempProductBuy = <ProductBuy>{};
 
-    tempProductBuy.productName = this.formGroup.value.name;
+    tempProductBuy.productName = this.formGroup.value.productName;
     tempProductBuy.specification = this.formGroup.value.specification;
     tempProductBuy.categoryId = this.formGroup.value.categoryId;
 

@@ -72,7 +72,7 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(categoryBuy: CategoryBuy) {
-    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${categoryBuy.categoryName}?`)
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${categoryBuy.categoryName}?`);
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {

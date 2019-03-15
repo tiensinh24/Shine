@@ -25,6 +25,7 @@ button[mat-mini-fab] {
 
 table[mat-table] {
   margin: 1em;
+  width: 97.5%;
 }
 
 
@@ -48,5 +49,3 @@ tr.mat-footer-row {
 .mat-cell {
   padding: 0 8px;
 }
-
-

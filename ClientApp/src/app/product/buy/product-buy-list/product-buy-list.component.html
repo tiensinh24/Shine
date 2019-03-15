@@ -28,13 +28,11 @@
   <ng-container matColumnDef="productName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Product Name</b> </th>
     <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
-    <td mat-footer-cell *matFooterCellDef> Total </td>
   </ng-container>
   <!-- Specification Column -->
   <ng-container matColumnDef="specification">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Specification</b> </th>
     <td mat-cell *matCellDef="let row"> {{row.specification}} </td>
-    <td mat-footer-cell *matFooterCellDef></td>
   </ng-container>
   <!-- CategoryName Column -->
   <ng-container matColumnDef="categoryName">
@@ -69,7 +67,6 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
-  <tr mat-footer-row *matFooterRowDef="['name', 'specification']"></tr>
 </table>
 
 <!-- Paginator & filter -->

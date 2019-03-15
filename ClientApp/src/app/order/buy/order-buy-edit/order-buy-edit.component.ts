@@ -1,5 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+  AbstractControl,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -10,11 +16,12 @@ import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { ProductOrderDto } from '../_interfaces/product-order-dto';
 import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
+import { ProductOrder } from '../_interfaces/product-order';
 
 @Component({
   selector: 'app-order-buy-edit',
   templateUrl: './order-buy-edit.component.html',
-  styleUrls: ['./order-buy-edit.component.css']
+  styleUrls: ['./order-buy-edit.component.css'],
 })
 export class OrderBuyEditComponent implements OnInit, OnDestroy {
   orderSub = new Subscription();
@@ -33,11 +40,13 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   // Output
   productsToAdd: ProductOrderDto[] = [];
 
-  constructor(private orderService: OrderBuyService,
+  constructor(
+    private orderService: OrderBuyService,
     private supplierService: SupplierService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.createForm();
@@ -70,7 +79,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       orderNumber: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
-      personId: ['', Validators.required]
+      personId: ['', Validators.required],
     });
   }
 
@@ -83,7 +92,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       orderNumber: this.order.orderNumber,
       dateOfIssue: this.order.dateOfIssue,
       timeForPayment: this.order.timeForPayment,
-      personId: this.order.personId
+      personId: this.order.personId,
     });
   }
 
@@ -112,14 +121,18 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     this.getOrderFromForm();
 
     this.orderWithDetailsToAdd = {
-      orderBuy: this.order,
-      productOrders: this.productsToAdd
+      orderBuy: <OrderBuy>this.order,
+      productOrders: this.productsToAdd,
     };
-    this.orderService.addOrderWithDetails(this.orderWithDetailsToAdd).subscribe();
+    this.orderService
+      .addOrderWithDetails(this.orderWithDetailsToAdd)
+      .subscribe();
+
+    console.log(this.orderWithDetailsToAdd);
   }
 
   onCancel() {
-    this.router.navigate(['order-buy'])
+    this.router.navigate(['order-buy']);
   }
 
   addOrder(orderBuy: OrderBuy) {
@@ -136,11 +149,9 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     return formControl.hasError('required')
       ? 'You must enter a value'
       : formControl.hasError('email')
-        ? 'Not a valid email'
-        : formControl.hasError('pattern')
-          ? 'Please enter a number!'
-          : '';
+      ? 'Not a valid email'
+      : formControl.hasError('pattern')
+      ? 'Please enter a number!'
+      : '';
   }
-
-
 }

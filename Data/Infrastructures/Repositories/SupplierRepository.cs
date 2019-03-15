@@ -126,11 +126,11 @@ namespace Shine.Data.Infrastructures.Repositories
                 .ProjectToType<ProductBuyDto>();
 
             var result = from b in productsNotAdded
-            group new { b.ProductId, b.Name, b.Specification } by b.CategoryName into g
+            group new { b.ProductId, b.ProductName, b.Specification } by b.CategoryName into g
             select new
             {
             Category = g.Key,
-            Products = g.OrderBy(p => p.Name)
+            Products = g.OrderBy(p => p.ProductName)
             };
 
             return Json(result);

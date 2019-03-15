@@ -1,11 +1,13 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SupplierDto } from '../_interfaces/supplier-dto';
 import { ProductsBySupplierDto } from '../_interfaces/products-by-supplier';
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierProduct } from '../_interfaces/supplier-product';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
 
 @Component({
   selector: 'app-products-added',
@@ -13,7 +15,7 @@ import { SupplierProduct } from '../_interfaces/supplier-product';
   styleUrls: ['./products-added.component.css']
 })
 export class ProductsAddedComponent implements AfterViewInit {
-  displayedcolumn = ['name', 'specification', 'categoryName', 'actions'];
+  displayedcolumn = ['productName', 'specification', 'categoryName', 'actions'];
   supplier: SupplierDto;
   products = new MatTableDataSource<ProductsBySupplierDto>([]);
   isAddProducts = false;
@@ -22,7 +24,9 @@ export class ProductsAddedComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private supplierService: SupplierService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private confirmDialogService: ConfirmDialogService) { }
 
   ngAfterViewInit(): void {
     const id = +this.route.snapshot.params.supplierId;
@@ -38,14 +42,21 @@ export class ProductsAddedComponent implements AfterViewInit {
     });
   }
 
-  DeleteProductFromSupplier(productId: number) {
-    const supplierId = this.supplier.personId;
-    const delEntity = <SupplierProduct>{
-      personId: supplierId,
-      productId: productId
-    };
-    this.supplierService.deleteSupplierProduct(delEntity).subscribe(() => {
-      this.refreshProducts(productId);
+  DeleteProductFromSupplier(product: ProductsBySupplierDto) {
+    const dialogRef = this.confirmDialogService.openDialog(`Are you sure to delete ${product.productName}?`);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        const supplierId = this.supplier.personId;
+        const delEntity = <SupplierProduct>{
+          personId: supplierId,
+          productId: product.productId
+        };
+        this.supplierService.deleteSupplierProduct(delEntity).subscribe(() => {
+          this.refreshProducts(product.productId);
+        });
+        this.snackBar.open(`${product.productName} deleted`, 'Success');
+      }
     });
   }
 

@@ -1,4 +1,4 @@
-<mat-card fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" class="mat-elevation-z8">
+<mat-card fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column" fxLayout.sm="column" class="mat-elevation-z8">
   <mat-card fxFlex="25">
     <mat-card-header>
       <div mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="example-header-image"></div>
@@ -40,11 +40,13 @@
     </mat-card-actions>
   </mat-card>
 
+  <!-- Add button -->
   <button fxFlexAlign="center" mat-fab (click)="toggleAddProduct()">
     <mat-icon *ngIf="!isAddProducts" matTooltip="Add products" aria-label="Add products">add</mat-icon>
     <mat-icon *ngIf="isAddProducts" matTooltip="Products list" aria-label="Products list">list</mat-icon>
   </button>
 
+  <!-- Table -->
   <div fxFlex class="product-table">
     <div *ngIf="!isAddProducts">
       <app-products-added></app-products-added>

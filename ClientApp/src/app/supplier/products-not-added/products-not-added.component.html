@@ -26,7 +26,7 @@
             <th></th>
           </tr>
           <tr class="row-content" *ngFor="let prod of cat.products">
-            <td>{{prod.name}}</td>
+            <td>{{prod.productName}}</td>
             <td>{{prod.specification}}</td>
             <td>
               <mat-icon matTooltip="Add product to supplier" color="primary" (click)="onAdd(prod.productId)">add</mat-icon>
