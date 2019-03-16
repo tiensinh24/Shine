@@ -121,14 +121,13 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     this.getOrderFromForm();
 
     this.orderWithDetailsToAdd = {
-      orderBuy: <OrderBuy>this.order,
+      orderBuy: this.order,
       productOrders: this.productsToAdd,
     };
     this.orderService
       .addOrderWithDetails(this.orderWithDetailsToAdd)
       .subscribe();
 
-    console.log(this.orderWithDetailsToAdd);
   }
 
   onCancel() {

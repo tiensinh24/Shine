@@ -59,13 +59,14 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Output productOrders to main component
   outProductOrders() {
     this.productOrders.emit(this.productsToAdd);
   }
 
   createForm() {
     this.formGroupDetail = this.fb.group({
-      orderId: [this.orderId],
+      orderId: ['0'],
       productId: ['', Validators.required],
       quantity: ['', Validators.required],
       price: ['', Validators.required],
@@ -75,6 +76,12 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
 
       productName: [''],
     });
+
+    if (this.orderId > 0) {
+      this.formGroupDetail.patchValue({
+        orderId: this.orderId
+      });
+    }
   }
 
   addProduct() {
@@ -86,9 +93,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
       this.productsToAdd.push(this.formGroupDetail.value);
       this.refreshProductSelection(this.formGroupDetail.value.productId);
     }
-    // setTimeout(() => {
-    //   this.outProductOrders();
-    // });
+      this.outProductOrders();
   }
 
   refreshProductSelection(productId: number) {
@@ -115,10 +120,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
       this.products.push(prod);
       this.products.sort((a, b) => a.productName.localeCompare(b.productName));
     }
-
-    // setTimeout(() => {
-    //   this.outProductOrders();
-    // });
+      this.outProductOrders();
   }
 
   get(name: string): AbstractControl {

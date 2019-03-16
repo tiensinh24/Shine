@@ -82,10 +82,6 @@ export class OrderBuyListComponent implements AfterViewInit, OnDestroy {
     this.router.navigate(['order-buy', orderBuy.orderId]);
   }
 
-  onEdit(orderBuy: OrderBuy) {
-    this.router.navigate([`order-buy/${orderBuy.orderId}/edit`]);
-  }
-
   onDelete(orderBuy: OrderBuy) {
     const dialogRef = this.confirmService.openDialog(`Are you sure to delete order ${orderBuy.orderNumber}?`);
 

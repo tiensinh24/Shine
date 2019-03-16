@@ -1,19 +1,21 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { OrderBuyService } from '../_services/order-buy.service';
 import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-buy-detail',
   templateUrl: './order-buy-detail.component.html',
   styleUrls: ['./order-buy-detail.component.css']
 })
-export class OrderBuyDetailComponent implements AfterViewInit {
+export class OrderBuyDetailComponent implements AfterViewInit, OnDestroy {
   orderBuy: OrderBuyDto;
 
+  orderBuySub = new Subscription();
 
   constructor(private orderService: OrderBuyService,
     private route: ActivatedRoute,
@@ -22,9 +24,13 @@ export class OrderBuyDetailComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const id = +this.route.snapshot.params.orderId;
 
-    this.orderService.getOrder(id).subscribe(res => {
+    this.orderBuySub = this.orderService.getOrder(id).subscribe(res => {
       this.orderBuy = res;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.orderBuySub.unsubscribe();
   }
 
   // Open order-edit dialog

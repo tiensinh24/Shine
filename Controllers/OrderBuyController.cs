@@ -145,6 +145,7 @@ namespace Shine.Controllers
         {
             var orderBuyToAdd = orderBuyWithDetailsToAdd.OrderBuy;
             var prodDetailsToAdd = orderBuyWithDetailsToAdd.ProductOrders.ToList();
+
             try
             {
                 var orderAdded = await _repository.AddOrderAsync(orderBuyToAdd);

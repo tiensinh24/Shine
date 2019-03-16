@@ -10,6 +10,7 @@ import { SharedModule } from 'src/app/_shared/shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { OrderBuyAddProductsComponent } from './order-buy-edit/order-buy-add-products/order-buy-add-products.component';
 import { OrderBuyProductDetailsComponent } from './order-buy-detail/order-buy-product-details/order-buy-product-details.component';
+import { OrderBuyEditDialogSharedModule } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog-shared.module';
 
 @NgModule({
   declarations: [
@@ -20,17 +21,19 @@ import { OrderBuyProductDetailsComponent } from './order-buy-detail/order-buy-pr
     OrderBuyListComponent,
     OrderBuyAddProductsComponent,
     OrderBuyProductDetailsComponent,
-
   ],
   imports: [
     // Shared
     SharedModule,
 
+    // Dialog
+    OrderBuyEditDialogSharedModule,
+
     // Material
     MaterialSharedModule,
 
     // Routing
-    OrderBuyRoutingModule
-  ]
+    OrderBuyRoutingModule,
+  ],
 })
-export class OrderBuyModule { }
+export class OrderBuyModule {}

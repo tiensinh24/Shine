@@ -16,11 +16,11 @@ const routes: Routes = [
       { path: '', redirectTo: '/order-buy/home', pathMatch: 'full' },
       { path: 'home', component: OrderBuyHomeComponent },
       { path: 'create', component: OrderBuyEditComponent },
-      {
-        path: ':orderId/edit',
-        component: OrderBuyEditComponent,
-        canDeactivate: [CanDeactivateGuard],
-      },
+      // {
+      //   path: ':orderId/edit',
+      //   component: OrderBuyEditComponent,
+      //   canDeactivate: [CanDeactivateGuard],
+      // },
       { path: 'list', component: OrderBuyListComponent },
       { path: ':orderId', component: OrderBuyDetailComponent },
     ],
@@ -29,6 +29,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class OrderBuyRoutingModule { }
+export class OrderBuyRoutingModule {}

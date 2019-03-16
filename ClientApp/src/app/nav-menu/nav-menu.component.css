@@ -20,9 +20,10 @@ mat-toolbar {
 
 .side-nav>mat-sidenav {
   margin-inline-start: -20px;
+  min-width: 250px;
 }
 
-.main-container {  
+.main-container {
   margin: 0 20px;
 }
 
@@ -34,9 +35,7 @@ mat-nav-list>div[routerLink] {
   cursor: pointer;
 }
 
-.mat-expansion-panel-header.mat-expanded {  
+.mat-expansion-panel-header.mat-expanded {
   font-size: larger;
   background-color: powderblue;
 }
-
-

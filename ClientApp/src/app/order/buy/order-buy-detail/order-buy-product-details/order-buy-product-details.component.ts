@@ -24,12 +24,9 @@ import { Subscription } from 'rxjs';
 import { OrderBuyDto } from '../../_interfaces/order-buy-dto';
 import { OrderBuyService } from '../../_services/order-buy.service';
 import { ProductOrderDto } from '../../_interfaces/product-order-dto';
-import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
-import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ProductsBySupplierDto } from 'src/app/supplier/_interfaces/products-by-supplier';
 import { ProductOrder } from '../../_interfaces/product-order';
-import { isType } from '@angular/core/src/type';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 @Component({
@@ -132,6 +129,8 @@ export class OrderBuyProductDetailsComponent
     if (mode === 'add') {
       this.orderBuyService.addProductOrder(prodOrder).subscribe(res => {
         if (res) {
+          this.snackBar.open(`${res.productName} added`, 'Success');
+
           // Refresh dataSource
           this.dataSource.data.push(res);
           this.dataSource._updateChangeSubscription();
@@ -200,7 +199,7 @@ export class OrderBuyProductDetailsComponent
 
         this.orderBuyService
           .deleteProductOrder(orderId, productOrderDto.productId)
-          .subscribe((delRes: boolean) => {
+          .subscribe(() => {
             this.refreshProductSelectionAndDataSource(
               'delete',
               productOrderDto,

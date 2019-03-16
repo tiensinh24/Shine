@@ -58,10 +58,6 @@
         <mat-icon aria-label="Detail">dehaze</mat-icon>
       </button>
 
-      <button matTooltip="Edit order" mat-icon-button color="accent" (click)="onEdit(row)">
-        <mat-icon aria-label="Edit">edit</mat-icon>
-      </button>
-
       <button matTooltip="Delete order" mat-icon-button color="warn" (click)="onDelete(row)">
         <mat-icon aria-label="Delete">delete</mat-icon>
       </button>
@@ -82,7 +78,8 @@
 
   <mat-form-field>
     <mat-label>Select supplier</mat-label>
-    <mat-select #supplierFilter placeholder="Select supplier" (selectionChange)="applyFilter(supplierFilter.value)" (focus)="setupFilter('supplierName')">
+    <mat-select #supplierFilter placeholder="Select supplier" (selectionChange)="applyFilter(supplierFilter.value)"
+      (focus)="setupFilter('supplierName')">
       <mat-option>--All--</mat-option>
       <mat-option *ngFor="let supplier of suppliers" [value]="supplier.firstName + ' ' + supplier.lastName">
         {{supplier.firstName}} {{supplier.lastName}}
