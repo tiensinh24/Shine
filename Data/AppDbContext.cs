@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using Shine.Data.Models;
 using Shine.Data.Models.Config;
@@ -18,12 +19,19 @@ namespace Shine.Data
     public class AppDbContext : IdentityDbContext
     {
         // TODO: Inject IUserSession
-        // private readonly IUserSession _userSession;
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        private readonly IUserSession _userSession;
+
+#region Constructor
+        public AppDbContext(DbContextOptions<AppDbContext> options,
+            IUserSession userSession) : base(options)
         {
-            // this._userSession = userSession;
+            this._userSession = userSession;
+
         }
 
+#endregion
+
+#region DbSet
         public DbSet<Category> Categories { get; set; }
         public DbSet<Cost> Costs { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -49,59 +57,66 @@ namespace Shine.Data
             modelBuilder.ApplyConfiguration(new ProductOrderConfig());
 
             modelBuilder.ShadowProperties();
-            // SetGlobalQueryFilters(modelBuilder);
+            SetGlobalQueryFilters(modelBuilder);
+        }
+#endregion
 
+#region Global Query Filter       
+
+        private void SetGlobalQueryFilters(ModelBuilder modelBuilder)
+        {
+            foreach (var tp in modelBuilder.Model.GetEntityTypes())
+            {
+                var t = tp.ClrType;
+
+                // set global filters
+                if (typeof(ISoftDelete).IsAssignableFrom(t))
+                {
+                    if (typeof(ITenant).IsAssignableFrom(t))
+                    {
+                        // softdeletable and tenant (note do not filter just ITenant - too much filtering! 
+                        // just top level classes that have ITenant
+                        var method = SetGlobalQueryForSoftDeleteAndTenantMethodInfo.MakeGenericMethod(t);
+                        method.Invoke(this, new object[] { modelBuilder });
+                    }
+                    else
+                    {
+                        // softdeletable
+                        var method = SetGlobalQueryForSoftDeleteMethodInfo.MakeGenericMethod(t);
+                        method.Invoke(this, new object[] { modelBuilder });
+                        // }
+                    }
+                }
+            }
         }
 
-        // public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-        // {
-        //     // ChangeTracker.SetShadowProperties(_userSession);
-        //     return await base.SaveChangesAsync(cancellationToken);
-        // }
+        private static readonly MethodInfo SetGlobalQueryForSoftDeleteMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+            .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDelete");
 
-        // private void SetGlobalQueryFilters(ModelBuilder modelBuilder)
-        // {
-        //     foreach (var tp in modelBuilder.Model.GetEntityTypes())
-        //     {
-        //         var t = tp.ClrType;
+        public void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class, ISoftDelete
+        {
+            builder.Entity<T>().HasQueryFilter(item => !EF.Property<bool>(item, "IsDeleted"));
+        }
 
-        //         // set global filters
-        //         if (typeof(ISoftDelete).IsAssignableFrom(t))
-        //         {
-        //             // if (typeof(ITenantEntity).IsAssignableFrom(t))
-        //             // {
-        //             // softdeletable and tenant (note do not filter just ITenant - too much filtering! 
-        //             // just top level classes that have ITenantEntity
-        //             // var method = SetGlobalQueryForSoftDeleteAndTenantMethodInfo.MakeGenericMethod(t);
-        //             // method.Invoke(this, new object[] {modelBuilder});
-        //             // }
-        //             // else
-        //             // {
-        //             // softdeletable
-        //             var method = SetGlobalQueryForSoftDeleteMethodInfo.MakeGenericMethod(t);
-        //             method.Invoke(this, new object[] { modelBuilder });
-        //             // }
-        //         }
-        //     }
-        // }
+        private static readonly MethodInfo SetGlobalQueryForSoftDeleteAndTenantMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+            .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDeleteAndTenant");
 
-        // private static readonly MethodInfo SetGlobalQueryForSoftDeleteMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
-        //     .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDelete");
+        public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenant
+        {
+            builder.Entity<T>().HasQueryFilter(
+                item => !EF.Property<bool>(item, "IsDeleted")
+                && (_userSession.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _userSession.TenantId));
+        }
 
-        // private static readonly MethodInfo SetGlobalQueryForSoftDeleteAndTenantMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
-        //     .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDeleteAndTenant");
+#endregion
 
-        // public void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class, ISoftDelete
-        // {
-        //     builder.Entity<T>().HasQueryFilter(item => !EF.Property<bool>(item, "IsDeleted"));
-        // }
-
-        // // public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenant
-        // // {
-        // //     builder.Entity<T>().HasQueryFilter(
-        // //         item => !EF.Property<bool>(item, "IsDeleted") && 
-        // //                 (_userSession.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _userSession.TenantId));
-        // // }
+#region Automatic Auditing
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            ChangeTracker.SetShadowProperties(_userSession);
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+#endregion
 
 #region Shadow Alt
         //     public override int SaveChanges(bool acceptAllChangesOnSuccess)

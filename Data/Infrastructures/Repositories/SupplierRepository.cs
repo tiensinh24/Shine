@@ -15,15 +15,16 @@ using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
+using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Infrastructures.Repositories
 {
     public class SupplierRepository : Repository, ISupplierRepository
     {
 #region Constructor        
-        public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
-            UserManager<IdentityUser> userManager, IConfiguration configuration
-        ) : base(context, roleManager, userManager, configuration) { }
+
+        public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration, IUserSession userSession) : base(context, roleManager, userManager, configuration, userSession)
+        { }
 #endregion
 
 #region Supplier

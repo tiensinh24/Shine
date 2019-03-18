@@ -1,45 +1,48 @@
-// using System;
-// using Microsoft.EntityFrameworkCore;
-// using Microsoft.EntityFrameworkCore.ChangeTracking;
-// using Shine.Data.Models.Interfaces;
+using System;
 
-// namespace Shine.Data.Models.Config.Extentions
-// {
-//     public static class ChangeTrackerExtensions
-//     {
-//         public static void SetShadowProperties(this ChangeTracker changeTracker, IUserSession userSession)
-//         {
-//             changeTracker.DetectChanges();
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-//             var timestamp = DateTime.UtcNow;
+using Shine.Data.Models.Interfaces;
 
-//             foreach (var entry in changeTracker.Entries())
-//             {
-//                 if (entry.Entity is IAuditedEntityBase)
-//                 {
-//                     if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
-//                     {
-//                         entry.Property("ModifiedOn").CurrentValue = timestamp;
-//                         entry.Property("ModifiedById").CurrentValue = userSession.UserId;
-//                     }
+namespace Shine.Data.Models.Config.Extentions
+{
+    public static class ChangeTrackerExtensions
+    {
+        // Automatic Auditing
+        public static void SetShadowProperties(this ChangeTracker changeTracker, IUserSession userSession)
+        {
+            changeTracker.DetectChanges();
 
-//                     if (entry.State == EntityState.Added)
-//                     {
-//                         entry.Property("CreatedOn").CurrentValue = timestamp;
-//                         entry.Property("CreatedById").CurrentValue = userSession.UserId;
-//                         // if (entry.Entity is ITenant)
-//                         // {
-//                         //     entry.Property("TenantId").CurrentValue = userSession.TenantId;
-//                         // }
-//                     }
-//                 }
+            var timestamp = DateTime.UtcNow;
 
-//                 if (entry.State == EntityState.Deleted && entry.Entity is ISoftDelete)
-//                 {
-//                     entry.State = EntityState.Modified;
-//                     entry.Property("IsDeleted").CurrentValue = true;
-//                 }
-//             }
-//         }
-//     }
-// }
+            foreach (var entry in changeTracker.Entries())
+            {
+                if (entry.Entity is IAuditedEntityBase)
+                {
+                    if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+                    {
+                        entry.Property("ModifiedOn").CurrentValue = timestamp;
+                        entry.Property("ModifiedById").CurrentValue = userSession.UserId;
+                    }
+
+                    if (entry.State == EntityState.Added)
+                    {
+                        entry.Property("CreatedOn").CurrentValue = timestamp;
+                        entry.Property("CreatedById").CurrentValue = userSession.UserId;
+                        if (entry.Entity is ITenant)
+                        {
+                            entry.Property("TenantId").CurrentValue = userSession.TenantId;
+                        }
+                    }
+                }
+
+                if (entry.State == EntityState.Deleted && entry.Entity is ISoftDelete)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Property("IsDeleted").CurrentValue = true;
+                }
+            }
+        }
+    }
+}

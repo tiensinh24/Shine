@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using Newtonsoft.Json;
+
 using Shine.Data.Infrastructures.Interfaces;
+using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Infrastructures.Repositories
 {
@@ -20,18 +24,21 @@ namespace Shine.Data.Infrastructures.Repositories
         protected readonly UserManager<IdentityUser> _userManager;
         protected readonly IConfiguration _configuration;
         protected readonly JsonSerializerSettings _jsonSettings;
+        protected readonly IUserSession _userSession;
 #endregion
 
 #region Constructor
         public Repository(AppDbContext context,
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IUserSession userSession)
         {
             this._context = context;
             this._roleManager = roleManager;
             this._userManager = userManager;
             this._configuration = configuration;
+            this._userSession = userSession;
 
             this._jsonSettings = new JsonSerializerSettings()
             {
@@ -93,6 +100,5 @@ namespace Shine.Data.Infrastructures.Repositories
             await _context.SaveChangesAsync();
         }
 #endregion
-
     }
 }

@@ -87,6 +87,8 @@ namespace Shine
                 };
             });
 
+            services.AddScoped<IUserSession>();
+
             services.AddScoped(typeof(IRepository), typeof(Repository));
             services.AddScoped<TokenRepository>();
             services.AddScoped<ProductBuyRepository>();
