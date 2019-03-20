@@ -21,10 +21,15 @@ namespace Shine.Data.Infrastructures.Repositories
 {
     public class SupplierRepository : Repository, ISupplierRepository
     {
+
+#region Private Field
+        public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration) : base(context, roleManager, userManager, configuration)
+        { }
+
+#endregion
+
 #region Constructor        
 
-        public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration, IUserSession userSession) : base(context, roleManager, userManager, configuration, userSession)
-        { }
 #endregion
 
 #region Supplier
@@ -32,7 +37,6 @@ namespace Shine.Data.Infrastructures.Repositories
         {
             return _context.Set<Supplier>().Include(s => s.Country)
                 .ProjectToType<SupplierDto>().AsNoTracking();
-
         }
 
         public SupplierDto GetSupplier(int id)

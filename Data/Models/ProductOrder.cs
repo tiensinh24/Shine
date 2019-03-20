@@ -3,7 +3,7 @@ using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
 {    
-    public class ProductOrder : IAuditedEntityBase, ISoftDelete
+    public class ProductOrder : IAuditedEntityBase
     {
         #region Properties        
         public int ProductId { get; set; }

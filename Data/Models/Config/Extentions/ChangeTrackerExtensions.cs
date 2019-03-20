@@ -2,7 +2,7 @@ using System;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-
+using Shine.Data.Dto.Token;
 using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models.Config.Extentions
@@ -10,7 +10,7 @@ namespace Shine.Data.Models.Config.Extentions
     public static class ChangeTrackerExtensions
     {
         // Automatic Auditing
-        public static void SetShadowProperties(this ChangeTracker changeTracker, IUserSession userSession)
+        public static void SetShadowProperties(this ChangeTracker changeTracker, UserSession userSession)
         {
             changeTracker.DetectChanges();
 

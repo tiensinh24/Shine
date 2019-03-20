@@ -27,11 +27,11 @@ namespace Shine.Controllers
     public class SupplierController : ControllerBase
     {
 #region Private Fields
-        private readonly SupplierRepository _repository;
+        private readonly ISupplierRepository _repository;
 #endregion
 
 #region Constructor
-        public SupplierController(SupplierRepository repository)
+        public SupplierController(ISupplierRepository repository)
         {
             this._repository = repository;
         }
@@ -59,7 +59,7 @@ namespace Shine.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<SupplierDto> AddSupplier([FromBody] Supplier supplier)
-        {
+        {            
             _repository.Add(supplier);
             _repository.Commit();
             var supReturn = _repository.GetSupplier(supplier.PersonId);

@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Shine.Data;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
@@ -24,12 +25,13 @@ namespace Shine.Controllers
     public class OrderBuyController : ControllerBase
     {
 #region Private Field
-        private readonly OrderBuyRepository _repository;
+        private readonly IOrderBuyRepository _repository;
         private readonly AppDbContext _context;
-#endregion
 
-#region Constructor
-        public OrderBuyController(OrderBuyRepository repository,
+        #endregion
+
+        #region Constructor
+        public OrderBuyController(IOrderBuyRepository repository,
             AppDbContext context)
         {
             this._repository = repository;

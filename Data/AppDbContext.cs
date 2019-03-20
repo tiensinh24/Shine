@@ -1,14 +1,21 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
+using Shine.Data.Dto.Token;
+using Shine.Data.Infrastructures.Services;
 using Shine.Data.Models;
 using Shine.Data.Models.Config;
 using Shine.Data.Models.Config.Extentions;
@@ -18,15 +25,12 @@ namespace Shine.Data
 {
     public class AppDbContext : IdentityDbContext
     {
-        // TODO: Inject IUserSession
-        private readonly IUserSession _userSession;
+        private readonly IOptionsSnapshot<HttpContextAccessor> _httpContextAccessor;
 
 #region Constructor
-        public AppDbContext(DbContextOptions<AppDbContext> options,
-            IUserSession userSession) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            this._userSession = userSession;
-
+            _httpContextAccessor = this.GetService<IOptionsSnapshot<HttpContextAccessor>>();
         }
 
 #endregion
@@ -72,10 +76,10 @@ namespace Shine.Data
                 // set global filters
                 if (typeof(ISoftDelete).IsAssignableFrom(t))
                 {
-                    if (typeof(ITenant).IsAssignableFrom(t))
+                    if (typeof(ITenantEntity).IsAssignableFrom(t))
                     {
                         // softdeletable and tenant (note do not filter just ITenant - too much filtering! 
-                        // just top level classes that have ITenant
+                        // just top level classes that have ITenantEntity
                         var method = SetGlobalQueryForSoftDeleteAndTenantMethodInfo.MakeGenericMethod(t);
                         method.Invoke(this, new object[] { modelBuilder });
                     }
@@ -95,85 +99,94 @@ namespace Shine.Data
 
         public void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class, ISoftDelete
         {
-            builder.Entity<T>().HasQueryFilter(item => !EF.Property<bool>(item, "IsDeleted"));
+            foreach (var tp in builder.Model.GetEntityTypes())
+            {
+                var t = tp.ClrType;
+
+                // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
+                //      Use INotRoot mark on derived type to not apply global query filter
+                if (t.IsAssignableFrom(typeof(INotRoot)))
+                {
+                    builder.Entity<T>().HasQueryFilter(item => !EF.Property<bool>(item, "IsDeleted"));
+                }
+            }
         }
 
         private static readonly MethodInfo SetGlobalQueryForSoftDeleteAndTenantMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
             .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDeleteAndTenant");
 
-        public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenant
+        public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenantEntity
         {
-            builder.Entity<T>().HasQueryFilter(
-                item => !EF.Property<bool>(item, "IsDeleted")
-                && (_userSession.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _userSession.TenantId));
+            foreach (var tp in builder.Model.GetEntityTypes())
+            {
+                var t = tp.ClrType;
+
+                // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
+                //      Use INotRoot mark on derived type to not apply global query filter
+                if (t.IsAssignableFrom(typeof(INotRoot)))
+                {
+                    builder.Entity<T>().HasQueryFilter(
+                        item => !EF.Property<bool>(item, "IsDeleted"));
+                    // TODO
+                    // && (_currentUser.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _currentUser.TenantId));
+                }
+            }
+
         }
 
 #endregion
 
 #region Automatic Auditing
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            ChangeTracker.SetShadowProperties(_userSession);
-            return await base.SaveChangesAsync(cancellationToken);
+            OnBeforeSaving();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
         }
-#endregion
 
-#region Shadow Alt
-        //     public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        //     {
-        //         OnBeforeSaving();
-        //         return base.SaveChanges(acceptAllChangesOnSuccess);
-        //     }
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            OnBeforeSaving();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
 
-        //     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        //     {
-        //         OnBeforeSaving();
-        //         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        //     }
+        private void OnBeforeSaving()
+        {
+            var authenticatedUserId = _httpContextAccessor.Value.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        //     private void OnBeforeSaving()
-        //     {
-        //         var entries = ChangeTracker.Entries();
+            ChangeTracker.DetectChanges();
 
-        //         foreach (var entry in entries)
-        //         {
-        //             if (entry.Entity is Category ||
-        //                 entry.Entity is Cost ||
-        //                 entry.Entity is Country ||
-        //                 entry.Entity is Order ||
-        //                 entry.Entity is User ||
-        //                 entry.Entity is UserProduct ||
-        //                 entry.Entity is Product ||
-        //                 entry.Entity is ProductOrder)
-        //             {
-        //                 var now = DateTime.UtcNow;
-        //                 var user = GetCurrentUser();
-        //                 switch (entry.State)
-        //                 {
-        //                     case EntityState.Modified:
-        //                         entry.CurrentValues["LastUpdatedAt"] = now;
-        //                         entry.CurrentValues["LastUpdatedBy"] = user;
-        //                         break;
+            var timestamp = DateTime.UtcNow;
 
-        //                     case EntityState.Added:
-        //                         entry.CurrentValues["CreatedAt"] = now;
-        //                         entry.CurrentValues["CreatedBy"] = user;
-        //                         entry.CurrentValues["LastUpdatedAt"] = now;
-        //                         entry.CurrentValues["LastUpdatedBy"] = user;
-        //                         break;
-        //                 }
-        //             }
-        //         }
-        //     }
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                if (entry.Entity is IAuditedEntityBase)
+                {
+                    if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+                    {
+                        entry.Property("ModifiedOn").CurrentValue = timestamp;
+                        entry.Property("ModifiedById").CurrentValue = authenticatedUserId;
+                    }
 
-        //     private object GetCurrentUser()
-        //     {
-        //         // TODO: Get current login user
+                    if (entry.State == EntityState.Added)
+                    {
+                        entry.Property("CreatedOn").CurrentValue = timestamp;
+                        entry.Property("CreatedById").CurrentValue = authenticatedUserId;
+                        if (entry.Entity is ITenant)
+                        {
+                            // TODO
+                            // entry.Property("TenantId").CurrentValue = _currentUser.TenantId;
+                        }
+                    }
+                }
 
-        //         throw new NotImplementedException();
-        //     }
-        // }
-#endregion
+                if (entry.State == EntityState.Deleted && entry.Entity is ISoftDelete)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Property("IsDeleted").CurrentValue = true;
+                }
+            }
+
+        }
     }
-
+#endregion
 }

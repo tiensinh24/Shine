@@ -6,7 +6,7 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces
 {
-    public interface IProductBuyRepository
+    public interface IProductBuyRepository : IRepository
     {         
          IEnumerable<ProductBuyDto> GetProducts();
          ProductBuyDto GetProduct(int id);

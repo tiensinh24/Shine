@@ -8,7 +8,7 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces
 {
-    public interface IOrderBuyRepository
+    public interface IOrderBuyRepository : IRepository
     {
 #region Sync
         IEnumerable<OrderBuyDto> GetOrders();

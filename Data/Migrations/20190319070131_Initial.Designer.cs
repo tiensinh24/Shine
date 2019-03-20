@@ -11,8 +11,8 @@ using Shine.Data.Models;
 namespace Shine.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190318005824_FKUsers")]
-    partial class FKUsers
+    [Migration("20190319070131_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,7 +195,7 @@ namespace Shine.Data.Migrations
 
                     b.Property<bool>("CategoryType");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -205,7 +205,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -213,9 +213,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.ToTable("Categories");
 
@@ -230,7 +230,7 @@ namespace Shine.Data.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -246,7 +246,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -256,9 +256,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("CostId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("OrderId");
 
@@ -279,7 +279,7 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CountryNumber");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -289,7 +289,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -301,9 +301,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.ToTable("Countries");
                 });
@@ -314,7 +314,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -327,7 +327,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -346,9 +346,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("OrderNumber")
                         .IsUnique();
@@ -368,7 +368,7 @@ namespace Shine.Data.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -380,7 +380,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -394,9 +394,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("PaymentId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("OrderId");
 
@@ -411,7 +411,7 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CountryId");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -435,7 +435,7 @@ namespace Shine.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -451,9 +451,9 @@ namespace Shine.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.ToTable("Persons");
 
@@ -466,17 +466,13 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("ProductId");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
-
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -484,9 +480,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("PersonId", "ProductId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("ProductId");
 
@@ -499,7 +495,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -509,7 +505,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -521,9 +517,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("PhotoId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("PersonId");
 
@@ -538,7 +534,7 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
@@ -548,7 +544,7 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -565,9 +561,9 @@ namespace Shine.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.ToTable("Products");
 
@@ -580,17 +576,13 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
-
-                    b.Property<string>("ModifiedBy");
+                    b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
                         .ValueGeneratedOnAdd()
@@ -608,9 +600,9 @@ namespace Shine.Data.Migrations
 
                     b.HasKey("ProductId", "OrderId");
 
-                    b.HasIndex("CreatedBy");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("ModifiedBy");
+                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("OrderId");
 
@@ -755,12 +747,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -768,12 +760,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Order", "Order")
@@ -786,12 +778,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -799,12 +791,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Person", "Person")
@@ -817,12 +809,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Order", "Order")
@@ -840,12 +832,12 @@ namespace Shine.Data.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -853,12 +845,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Person", "Person")
@@ -876,12 +868,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Person", "Person")
@@ -899,12 +891,12 @@ namespace Shine.Data.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -912,12 +904,12 @@ namespace Shine.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
+                        .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Order", "Order")

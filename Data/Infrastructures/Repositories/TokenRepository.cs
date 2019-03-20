@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,16 +17,20 @@ using Newtonsoft.Json;
 using Shine.Data.Dto.Token;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
+using Shine.Data.Models.Config.Extentions;
 using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Infrastructures.Repositories
 {
     public class TokenRepository : Repository, ITokenRepository
     {
-#region Constructor
 
-        public TokenRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration, IUserSession userSession) : base(context, roleManager, userManager, configuration, userSession) { }
+#region Constructor
+        public TokenRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration) : base(context, roleManager, userManager, configuration)
+        { }
 #endregion
+
+
         public async Task<IActionResult> GetTokenAsync(TokenRequest tokenRequestDto)
         {
             try
@@ -159,15 +164,15 @@ namespace Shine.Data.Infrastructures.Repositories
             };
         }
 
-        private async Task SetUserSession(IdentityUser user)
-        {
-            var role = await _userManager.GetRolesAsync(user);
+        // private async Task SetUserSession(IdentityUser user)
+        // {
+        //     var role = await _userManager.GetRolesAsync(user);
 
-            _userSession.DisableTenantFilter = false;
-            _userSession.UserId = user.Id;
-            _userSession.UserName = user.UserName;
-            _userSession.Roles = role.ToList();           
-        }
+        //     _userSession.DisableTenantFilter = false;
+        //     _userSession.UserId = user.Id;
+        //     _userSession.UserName = user.UserName;
+        //     _userSession.Roles = role.ToList();
+        // }
 
     }
 }

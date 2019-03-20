@@ -5,12 +5,14 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -19,8 +21,10 @@ using Newtonsoft.Json;
 
 using Shine.Data;
 using Shine.Data.Dto._Mapster;
+using Shine.Data.Dto.Token;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
+using Shine.Data.Infrastructures.Services;
 using Shine.Data.Models;
 using Shine.Data.Models.Interfaces;
 
@@ -87,28 +91,25 @@ namespace Shine
                 };
             });
 
-            services.AddScoped<IUserSession>();
+            services.AddTransient<UserResolverService>();
 
             services.AddScoped(typeof(IRepository), typeof(Repository));
-            services.AddScoped<TokenRepository>();
-            services.AddScoped<ProductBuyRepository>();
-            services.AddScoped<ProductSellRepository>();
-            services.AddScoped<CategoryBuyRepository>();
-            services.AddScoped<CategorySellRepository>();
-            services.AddScoped<CountryRepository>();
-            services.AddScoped<SupplierRepository>();
-            services.AddScoped<OrderBuyRepository>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IProductBuyRepository, ProductBuyRepository>();
+            services.AddScoped<IProductSellRepository, ProductSellRepository>();
+            services.AddScoped<ICategoryBuyRepository, CategoryBuyRepository>();
+            services.AddScoped<ICategorySellRepository, CategorySellRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IOrderBuyRepository, OrderBuyRepository>();
 
-            // services.AddScoped<RepositoryFactory>();
+            services.AddEntityFrameworkSqlServer();
 
-            // Using AddDbContextPool for performences
-            services.AddDbContextPool<AppDbContext>(options =>
+            services.AddDbContextPool<AppDbContext>((serviceProvider, optionsBuilder) =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_dk"));
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_dk"));
+                optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
-
-            // services.AddDbContextPool<AppDbContext>(options => 
-            //     options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));           
 
             services.AddCors(options =>
             {
@@ -183,7 +184,7 @@ namespace Shine
                 var userManager = serviceScope.ServiceProvider.GetService<UserManager<IdentityUser>>();
 
                 // Create the Db if it doesn't exist and applies any pending migration
-                // dbContext.Database.Migrate();
+                dbContext.Database.Migrate();
 
                 // Seed the Db
                 // DbSeeder.Seed(dbContext, roleManager, userManager);

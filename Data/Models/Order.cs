@@ -32,11 +32,11 @@ namespace Shine.Data.Models
 #endregion
     }
 
-    public class OrderBuy : Order
+    public class OrderBuy : Order, INotRoot
     {
     }
 
-    public class OrderSell : Order
+    public class OrderSell : Order, INotRoot
     {
     }
 }

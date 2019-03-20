@@ -24,21 +24,19 @@ namespace Shine.Data.Infrastructures.Repositories
         protected readonly UserManager<IdentityUser> _userManager;
         protected readonly IConfiguration _configuration;
         protected readonly JsonSerializerSettings _jsonSettings;
-        protected readonly IUserSession _userSession;
+        
 #endregion
 
 #region Constructor
         public Repository(AppDbContext context,
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager,
-            IConfiguration configuration,
-            IUserSession userSession)
+            IConfiguration configuration)
         {
             this._context = context;
             this._roleManager = roleManager;
             this._userManager = userManager;
-            this._configuration = configuration;
-            this._userSession = userSession;
+            this._configuration = configuration;        
 
             this._jsonSettings = new JsonSerializerSettings()
             {

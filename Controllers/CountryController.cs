@@ -24,8 +24,8 @@ namespace Shine.Controllers
     [Authorize]
     public class CountryController : ControllerBase
     {
-        private readonly CountryRepository _repository;
-        public CountryController(CountryRepository repository)
+        private readonly ICountryRepository _repository;
+        public CountryController(ICountryRepository repository)
         {
             this._repository = repository;
         }

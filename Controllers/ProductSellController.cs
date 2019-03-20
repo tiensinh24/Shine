@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data.Dto.Products;
+using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
@@ -13,8 +14,8 @@ namespace Shine.Controllers
     [Authorize]
     public class ProductSellController
     {
-        private readonly ProductSellRepository _repository;
-        public ProductSellController(ProductSellRepository repository)
+        private readonly IProductSellRepository _repository;
+        public ProductSellController(IProductSellRepository repository)
         {
             this._repository = repository;
         }

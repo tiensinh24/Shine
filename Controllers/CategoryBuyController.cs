@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data;
+using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
@@ -17,9 +18,9 @@ namespace Shine.Controllers
     [Authorize]
     public class CategoryBuyController : ControllerBase
     {
-        private readonly CategoryBuyRepository _repository;
+        private readonly ICategoryBuyRepository _repository;
 
-        public CategoryBuyController (CategoryBuyRepository repository)
+        public CategoryBuyController (ICategoryBuyRepository repository)
         {
             this._repository = repository;
         }

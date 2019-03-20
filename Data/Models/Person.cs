@@ -40,17 +40,17 @@ namespace Shine.Data.Models
         #endregion
     }    
 
-    public class Employee : Person
+    public class Employee : Person, INotRoot
     {
         
     }
 
-    public class Customer : Person
+    public class Customer : Person, INotRoot
     {
         
     }
 
-    public class Supplier: Person
+    public class Supplier: Person, INotRoot
     {
         
     }

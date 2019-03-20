@@ -2,7 +2,7 @@ using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
 {
-    public class PersonProduct : IAuditedEntityBase, ISoftDelete
+    public class PersonProduct : IAuditedEntityBase
     {
         #region Properties
         public int PersonId { get; set; }

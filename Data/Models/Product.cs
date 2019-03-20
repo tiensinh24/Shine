@@ -27,12 +27,12 @@ namespace Shine.Data.Models
 #endregion
     }
 
-    public class ProductBuy : Product
+    public class ProductBuy : Product, INotRoot
     {
 
     }
 
-    public class ProductSell : Product
+    public class ProductSell : Product, INotRoot
     {
 
     }

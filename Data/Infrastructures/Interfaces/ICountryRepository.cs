@@ -3,7 +3,7 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces
 {
-    public interface ICountryRepository
+    public interface ICountryRepository : IRepository
     {
          IEnumerable<Country> GetCountries();
          Country GetCountry(int id);

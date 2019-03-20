@@ -20,12 +20,12 @@ namespace Shine.Data.Models
         
     }
 
-    public class CategoryBuy : Category
+    public class CategoryBuy : Category, INotRoot
     {
         
     }
 
-    public class CategorySell: Category
+    public class CategorySell: Category, INotRoot
     {
         
     }

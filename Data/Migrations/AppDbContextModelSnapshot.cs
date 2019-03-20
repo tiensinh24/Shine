@@ -470,10 +470,6 @@ namespace Shine.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
-
                     b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedOn")
@@ -583,10 +579,6 @@ namespace Shine.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
 
                     b.Property<string>("ModifiedById");
 

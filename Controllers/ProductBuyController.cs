@@ -24,8 +24,8 @@ namespace Shine.Controllers
     [Authorize]
     public class ProductBuyController : ControllerBase
     {
-        private readonly ProductBuyRepository _repository;
-        public ProductBuyController(ProductBuyRepository repository)
+        private readonly IProductBuyRepository _repository;
+        public ProductBuyController(IProductBuyRepository repository)
         {
             this._repository = repository;
         }

@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using Shine.Data;
 using Shine.Data.Dto.Token;
+using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 
 namespace Shine.Controllers
@@ -19,9 +20,9 @@ namespace Shine.Controllers
     public class TokenController
     {
 #region Constructor
-        private readonly TokenRepository _repository;
+        private readonly ITokenRepository _repository;
 
-        public TokenController(TokenRepository repository)
+        public TokenController(ITokenRepository repository)
         {
             this._repository = repository;
         }

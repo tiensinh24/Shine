@@ -5,6 +5,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shine.Data;
+using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
@@ -15,9 +16,9 @@ namespace Shine.Controllers
     [Authorize]
     public class CategorySellController
     {
-        private readonly CategorySellRepository _repository;
+        private readonly ICategorySellRepository _repository;
 
-        public CategorySellController(CategorySellRepository repository)
+        public CategorySellController(ICategorySellRepository repository)
         {
             this._repository = repository;
         }
