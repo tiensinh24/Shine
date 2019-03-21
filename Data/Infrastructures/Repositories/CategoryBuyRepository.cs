@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+
 using Mapster;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using Newtonsoft.Json;
+
 using Shine.Data.Infrastructures.Interfaces;
+using Shine.Data.Infrastructures.QueryParams;
 using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Repositories
@@ -18,9 +23,33 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategoryBuy> GetCategories()
+        public IEnumerable<CategoryBuy> GetCategories(BaseQueryParams queryParams)
         {
-            return _context.Set<CategoryBuy>().AsNoTracking();
+            var query = _context.Set<CategoryBuy>().AsNoTracking();
+
+            if (!string.IsNullOrEmpty(queryParams.Filter))
+            {
+                query = query.Where(c => c.CategoryName.ToLower().Contains(queryParams.Filter.ToLower()));
+            }
+
+            switch (queryParams.SortOrder)
+            {
+                case "desc":
+                    query = query.OrderByDescending(c => c.CategoryName);
+                    break;
+                default:
+                    query = query.OrderBy(c => c.CategoryName);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(queryParams.PageNumber.ToString()))
+            {
+                query = query.Skip((queryParams.PageNumber - 1) * queryParams.PageSize)
+                    .Take(queryParams.PageSize);
+            }
+
+            return query;
+
         }
 
         public CategoryBuy GetCategory(int id)

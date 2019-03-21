@@ -1,29 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from '../_interfaces/category-buy';
+import { PaginationService } from 'src/app/_shared/_services/pagination.service';
+import { BaseQueryParams } from 'src/app/_shared/_interfaces/base-query-params';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryBuyService {
   baseUrl = environment.URL;
-  catsObs: Observable<CategoryBuy[]>;
+  categoriesObs: Observable<CategoryBuy[]>;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private paginationService: PaginationService) {}
 
-  getCategoryList(): Observable<CategoryBuy[]> {
+  getCategoryList(queryParams?: BaseQueryParams): Observable<CategoryBuy[]> {
     // *Use this to get rid of duplicate request
-    if (this.catsObs) {
-      return this.catsObs;
+    if (this.categoriesObs) {
+      return this.categoriesObs;
     } else {
-      this.catsObs = this.http
-        .get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`)
+      this.categoriesObs = this.http
+        .get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`, {
+          headers: this.paginationService.getBaseQueryParams(queryParams),
+        })
         .pipe(share());
-      return this.catsObs;
+      return this.categoriesObs;
     }
   }
 
@@ -32,17 +36,11 @@ export class CategoryBuyService {
   }
 
   addCategory(categoryBuy: CategoryBuy): Observable<CategoryBuy> {
-    return this.http.post<CategoryBuy>(
-      this.baseUrl + 'api/categoryBuy',
-      categoryBuy,
-    );
+    return this.http.post<CategoryBuy>(this.baseUrl + 'api/categoryBuy', categoryBuy);
   }
 
   updateCategory(categoryBuy: CategoryBuy): Observable<CategoryBuy> {
-    return this.http.put<CategoryBuy>(
-      this.baseUrl + 'api/categoryBuy',
-      categoryBuy,
-    );
+    return this.http.put<CategoryBuy>(this.baseUrl + 'api/categoryBuy', categoryBuy);
   }
 
   deleteCategory(id: number): Observable<number> {
