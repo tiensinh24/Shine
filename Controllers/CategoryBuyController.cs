@@ -32,7 +32,14 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CategoryBuy>> GetCategories(
+        public ActionResult<IEnumerable<CategoryBuy>> GetCategories()
+        {
+            return _repository.GetCategories().ToList();
+        }
+
+        [HttpGet("WithBaseParams")]
+
+        public ActionResult<IEnumerable<CategoryBuy>> GetCategoriesWithBaseParams(
             [FromHeader] string filter, [FromHeader] string sortOrder, [FromHeader] string pageNumber, [FromHeader] string pageSize)
         {
             var queryParams = new BaseQueryParams()
@@ -43,7 +50,8 @@ namespace Shine.Controllers
                 PageSize = Int32.Parse(pageSize)
             };
 
-            return _repository.GetCategories(queryParams).ToList();
+            return _repository.GetCategoriesWithBaseParams(queryParams).ToList();
+
         }
 
         [HttpGet("{id}")]

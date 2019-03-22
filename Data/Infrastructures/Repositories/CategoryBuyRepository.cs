@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,14 @@ namespace Shine.Data.Infrastructures.Repositories
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
-        public IEnumerable<CategoryBuy> GetCategories(BaseQueryParams queryParams)
+
+        public IEnumerable<CategoryBuy> GetCategories()
+        {
+            var query = _context.Set<CategoryBuy>().AsNoTracking();
+            return query;
+        }
+
+        public IEnumerable<CategoryBuy> GetCategoriesWithBaseParams(BaseQueryParams queryParams)
         {
             var query = _context.Set<CategoryBuy>().AsNoTracking();
 
@@ -42,7 +50,7 @@ namespace Shine.Data.Infrastructures.Repositories
                     break;
             }
 
-            if (!string.IsNullOrEmpty(queryParams.PageNumber.ToString()))
+            if (queryParams.PageNumber > 0 && queryParams.PageSize > 0)
             {
                 query = query.Skip((queryParams.PageNumber - 1) * queryParams.PageSize)
                     .Take(queryParams.PageSize);

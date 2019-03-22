@@ -6,7 +6,8 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface ICategoryBuyRepository : IRepository
     {
-        IEnumerable<CategoryBuy> GetCategories(BaseQueryParams queryParams);
+        IEnumerable<CategoryBuy> GetCategories();
+        IEnumerable<CategoryBuy> GetCategoriesWithBaseParams(BaseQueryParams queryParams);
         CategoryBuy GetCategory(int id);
         void UpdateCategory(CategoryBuy categoryBuy);
         void DeleteCategory(int id);

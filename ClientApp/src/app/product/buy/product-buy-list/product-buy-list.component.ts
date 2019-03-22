@@ -1,12 +1,5 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import {
-  MatPaginator,
-  MatTableDataSource,
-  MatSort,
-  MatDialogConfig,
-  MatDialog,
-  MatSnackBar,
-} from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
@@ -25,13 +18,7 @@ import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.s
   styleUrls: ['./product-buy-list.component.css'],
 })
 export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
-  displayedColumns = [
-    'select',
-    'productName',
-    'specification',
-    'categoryName',
-    'actions',
-  ];
+  displayedColumns = ['select', 'productName', 'specification', 'categoryName', 'actions'];
   dataSource = new MatTableDataSource<ProductBuyDto>([]);
   selection = new SelectionModel<ProductBuyDto>(true, []);
   isLoading = true;
@@ -61,7 +48,7 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   getCategories() {
-    this.sub = this.categoryBuyService.getCategoryList().subscribe(res => {
+    this.sub = this.categoryBuyService.getCategories().subscribe(res => {
       this.categories = res;
     });
   }
@@ -110,7 +97,6 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
         this.snackBar.open(`${productBuy.productName} deleted`, 'Success');
       }
     });
-
   }
 
   // Open product-buy-edit dialog
@@ -139,22 +125,17 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
       };
     } else {
       dialogConfig.data = {
-        categories: this.categories
+        categories: this.categories,
       };
     }
 
-    const dialogRef = this.dialog.open(
-      ProductBuyEditDialogComponent,
-      dialogConfig,
-    );
+    const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
 
     // Get data returned from product-edit dialog
     dialogRef.afterClosed().subscribe((res: ProductBuyDto) => {
       // Check if res exists
       if (res) {
-        const index = this.dataSource.data.findIndex(
-          p => p.productId === res.productId,
-        );
+        const index = this.dataSource.data.findIndex(p => p.productId === res.productId);
 
         // Check if data returned is an updated product or a new one
         if (index > -1) {
@@ -171,26 +152,18 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-
   // On input focus: setup filterPredicate to only filter by input column
   setupFilter(column?: string) {
     // Only filter specify column
     if (column.length > 0) {
-      this.dataSource.filterPredicate = (
-        data: ProductBuyDto,
-        filter: string,
-      ) => {
+      this.dataSource.filterPredicate = (data: ProductBuyDto, filter: string) => {
         const textToSearch = (data[column] && data[column].toLowerCase()) || '';
         return textToSearch.indexOf(filter) !== -1;
       };
     } else {
       // If column = '', filter on all column
-      this.dataSource.filterPredicate = (
-        data: ProductBuyDto,
-        filter: string,
-      ) => {
-        const textToSearch =
-          (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
+      this.dataSource.filterPredicate = (data: ProductBuyDto, filter: string) => {
+        const textToSearch = (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
         return textToSearch.indexOf(filter) !== -1;
       };
     }
@@ -217,8 +190,6 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
 
   //  Selects all rows if they are not all selected; otherwise clear selection
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 }

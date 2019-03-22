@@ -1,34 +1,41 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from '../_interfaces/category-buy';
-import { PaginationService } from 'src/app/_shared/_services/pagination.service';
-import { BaseQueryParams } from 'src/app/_shared/_interfaces/base-query-params';
+import { BaseQueryParams } from 'src/app/_shared/_intefaces/base-query-params';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryBuyService {
   baseUrl = environment.URL;
+
   categoriesObs: Observable<CategoryBuy[]>;
 
-  constructor(private http: HttpClient, private paginationService: PaginationService) {}
+  constructor(private http: HttpClient) {}
 
-  getCategoryList(queryParams?: BaseQueryParams): Observable<CategoryBuy[]> {
-    // *Use this to get rid of duplicate request
-    if (this.categoriesObs) {
-      return this.categoriesObs;
-    } else {
-      this.categoriesObs = this.http
-        .get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`, {
-          headers: this.paginationService.getBaseQueryParams(queryParams),
-        })
-        .pipe(share());
-      return this.categoriesObs;
-    }
+  getCategories(): Observable<CategoryBuy[]> {
+    // if (this.categoriesObs) {
+    //   return this.categoriesObs;
+    // } else {
+    // this.categoriesObs = this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy/`).pipe(share());
+    // }
+    return this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`);
+  }
+
+  getCategoriesWithBaseParams(queryParams?: BaseQueryParams): Observable<CategoryBuy[]> {
+    const headerParams = new HttpHeaders()
+      .append('filter', queryParams.filter)
+      .append('sortOrder', queryParams.sortOrder)
+      .append('pageNumber', queryParams.pageNumber.toString())
+      .append('pageSize', queryParams.pageSize.toString());
+
+    return this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy/WithBaseParams`, {
+      headers: headerParams,
+    });
   }
 
   getCategory(id: number): Observable<CategoryBuy> {
