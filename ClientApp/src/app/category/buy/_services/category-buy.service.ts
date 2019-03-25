@@ -6,6 +6,7 @@ import { share } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from '../_interfaces/category-buy';
 import { BaseQueryParams } from 'src/app/_shared/_intefaces/base-query-params';
+import { PagedCategoryBuy } from '../_interfaces/paged-category-buy';
 
 @Injectable({
   providedIn: 'root',
@@ -26,16 +27,20 @@ export class CategoryBuyService {
     return this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`);
   }
 
-  getCategoriesWithBaseParams(queryParams?: BaseQueryParams): Observable<CategoryBuy[]> {
+  getCategoriesWithBaseParams(queryParams?: BaseQueryParams): Observable<PagedCategoryBuy> {
     const headerParams = new HttpHeaders()
       .append('filter', queryParams.filter)
       .append('sortOrder', queryParams.sortOrder)
       .append('pageNumber', queryParams.pageNumber.toString())
       .append('pageSize', queryParams.pageSize.toString());
 
-    return this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy/WithBaseParams`, {
+    return this.http.get<PagedCategoryBuy>(`${this.baseUrl}api/categoryBuy/WithBaseParams`, {
       headers: headerParams,
     });
+  }
+
+  getPagedCategories(pageNumber: number, pageSize: number): Observable<PagedCategoryBuy> {
+    return this.http.get<PagedCategoryBuy>(`${this.baseUrl}api/categoryBuy/Paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   getCategory(id: number): Observable<CategoryBuy> {

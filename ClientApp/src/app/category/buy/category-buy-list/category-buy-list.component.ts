@@ -47,16 +47,16 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
     const queryParams = <BaseQueryParams>{
       filter: '',
       sortOrder: 'desc',
-      pageNumber: 1,
+      pageNumber: 2,
       pageSize: 5,
     };
 
-    this.catsSub = this.categoryBuyService.getCategoriesWithBaseParams(queryParams).subscribe(
+    this.catsSub = this.categoryBuyService.getPagedCategories(1, 5).subscribe(
       res => {
         // Check to loading progress bar
         this.isLoading = false;
 
-        this.dataSource = new MatTableDataSource<CategoryBuy>(res);
+        this.dataSource = new MatTableDataSource<CategoryBuy>(res.items);
         setTimeout(() => (this.dataSource.sort = this.sort));
         setTimeout(() => (this.dataSource.paginator = this.paginator));
       },

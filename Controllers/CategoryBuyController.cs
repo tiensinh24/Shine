@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data;
+using Shine.Data.Dto;
+using Shine.Data.Dto.Categories.Buy;
+using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.QueryParams;
 using Shine.Data.Infrastructures.Repositories;
@@ -32,38 +35,31 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CategoryBuy>> GetCategories()
+        public async Task<ActionResult<IEnumerable<CategoryBuySelectDto>>> GetCategories()
         {
-            return _repository.GetCategories().ToList();
+            var query = await _repository.GetCategoriesAsync(c => c.CategoryName, false);
+            return Ok(query);
         }
 
-        [HttpGet("WithBaseParams")]
+        [HttpGet("Paged")]
 
-        public ActionResult<IEnumerable<CategoryBuy>> GetCategoriesWithBaseParams(
-            [FromHeader] string filter, [FromHeader] string sortOrder, [FromHeader] string pageNumber, [FromHeader] string pageSize)
+        public async Task<ActionResult<Paged<CategoryBuySelectDto>>> GetPagedCategories(int pageNumber, int pageSize)
         {
-            var queryParams = new BaseQueryParams()
-            {
-                Filter = filter,
-                SortOrder = sortOrder,
-                PageNumber = Int32.Parse(pageNumber),
-                PageSize = Int32.Parse(pageSize)
-            };
+            var query = await _repository.GetPagedCategoriesAsync(pageNumber, pageSize, c => c.CategoryName, false);
 
-            return _repository.GetCategoriesWithBaseParams(queryParams).ToList();
-
+            return new Paged<CategoryBuySelectDto>(query);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CategoryBuy> GetCategory(int id)
+        public async Task<ActionResult<CategoryBuySelectDto>> GetCategory(int id)
         {
-            var category = _repository.GetCategory(id);
+            var category = await _repository.GetCategoryAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
-            return category;
+            return Ok(category);
         }
 
         [HttpPost]

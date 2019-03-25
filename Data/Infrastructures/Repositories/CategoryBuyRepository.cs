@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 using Mapster;
 
@@ -10,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 
 using Newtonsoft.Json;
 
+using Shine.Data.Dto.Categories.Buy;
+using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.QueryParams;
 using Shine.Data.Models;
@@ -25,10 +29,20 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public IEnumerable<CategoryBuy> GetCategories()
+        public async Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool? sortOrder = true)
         {
-            var query = _context.Set<CategoryBuy>().AsNoTracking();
-            return query;
+            var query = _context.Set<CategoryBuy>().AsNoTracking()
+                .ProjectToType<CategoryBuySelectDto>();
+
+            if (sortOrder == true)
+            {
+                return await query.OrderBy(sortColumn).ToListAsync();
+
+            }
+            else
+            {
+                return await query.OrderByDescending(sortColumn).ToListAsync();
+            }
         }
 
         public IEnumerable<CategoryBuy> GetCategoriesWithBaseParams(BaseQueryParams queryParams)
@@ -60,15 +74,13 @@ namespace Shine.Data.Infrastructures.Repositories
 
         }
 
-        public CategoryBuy GetCategory(int id)
+        public async Task<CategoryBuySelectDto> GetCategoryAsync(int id)
         {
-            var query = _context.Set<CategoryBuy>().Select(c => new
-            {
-                c.CategoryId,
-                    c.CategoryName
-            }).FirstOrDefault(c => c.CategoryId == id);
+            var query = await _context.Set<CategoryBuy>().AsNoTracking()
+                .ProjectToType<CategoryBuySelectDto>()
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
 
-            return query.Adapt<CategoryBuy>();
+            return query;
         }
 
         public void UpdateCategory(CategoryBuy categoryBuy)
@@ -89,5 +101,25 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
+        public async Task<PaginatedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
+            int pageIndex, int pageSize,
+            Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool? sortOrder = true
+        )
+        {
+            var source = _context.Set<CategoryBuy>().AsNoTracking()
+                .ProjectToType<CategoryBuySelectDto>();
+
+            if (sortOrder == true)
+            {
+                source = source.OrderBy(sortColumn);
+
+            }
+            else
+            {
+                source = source.OrderByDescending(sortColumn);
+            }
+
+            return await PaginatedList<CategoryBuySelectDto>.CreateAsync(source, pageIndex, pageSize);
+        }
     }
 }
