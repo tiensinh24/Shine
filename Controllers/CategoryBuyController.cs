@@ -1,21 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-
-using Mapster;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 
-using Shine.Data;
-using Shine.Data.Dto;
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Categories.Buy;
 using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.Interfaces;
-using Shine.Data.Infrastructures.QueryParams;
-using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
 namespace Shine.Controllers
@@ -43,11 +40,18 @@ namespace Shine.Controllers
 
         [HttpGet("Paged")]
 
-        public async Task<ActionResult<Paged<CategoryBuySelectDto>>> GetPagedCategories(int pageNumber, int pageSize)
+        public async Task<ActionResult<Paged<CategoryBuySelectDto>>> GetPagedCategories(
+            int pageNumber, int pageSize, string sortColumn, bool sortOrder)
         {
-            var query = await _repository.GetPagedCategoriesAsync(pageNumber, pageSize, c => c.CategoryName, false);
+            var options = ScriptOptions.Default.AddReferences(typeof(CategoryBuySelectDto).Assembly);
+
+            Expression<Func<CategoryBuySelectDto, object>> sortCol = sortColumn != null
+                ? await CSharpScript.EvaluateAsync<Expression<Func<CategoryBuySelectDto, object>>>(sortColumn, options) : null;
+
+            var query = await _repository.GetPagedCategoriesAsync(pageNumber, pageSize, sortCol, sortOrder);
 
             return new Paged<CategoryBuySelectDto>(query);
+
         }
 
         [HttpGet("{id}")]

@@ -9,6 +9,8 @@ import { CategoryBuyService } from '../_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { BaseQueryParams } from 'src/app/_shared/_intefaces/base-query-params';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 
 @Component({
   selector: 'app-category-buy-list',
@@ -44,14 +46,17 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   }
 
   getCategoryList() {
-    const queryParams = <BaseQueryParams>{
-      filter: '',
-      sortOrder: 'desc',
-      pageNumber: 2,
-      pageSize: 5,
+    const pagingParams = <PagingParams>{
+      pageIndex: 1,
+      pageSize: 6,
     };
 
-    this.catsSub = this.categoryBuyService.getPagedCategories(1, 5).subscribe(
+    const sortParams = <SortParams>{
+      sortColumn: 'c => c.CategoryName',
+      sortOrder: true,
+    };
+
+    this.catsSub = this.categoryBuyService.getPagedCategories(pagingParams, sortParams).subscribe(
       res => {
         // Check to loading progress bar
         this.isLoading = false;

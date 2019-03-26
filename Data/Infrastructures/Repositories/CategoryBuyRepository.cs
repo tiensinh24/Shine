@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-using Newtonsoft.Json;
-
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Categories.Buy;
 using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.Interfaces;
@@ -29,7 +28,8 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public async Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool? sortOrder = true)
+        public async Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(
+            Expression<Func<CategoryBuySelectDto, object>> sortColumn, bool sortOrder)
         {
             var query = _context.Set<CategoryBuy>().AsNoTracking()
                 .ProjectToType<CategoryBuySelectDto>();
@@ -101,25 +101,25 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
-        public async Task<PaginatedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
+        public async Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
             int pageIndex, int pageSize,
-            Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool? sortOrder = true
-        )
+            Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool sortOrder = false)
         {
             var source = _context.Set<CategoryBuy>().AsNoTracking()
                 .ProjectToType<CategoryBuySelectDto>();
 
-            if (sortOrder == true)
+            if (sortColumn != null)
             {
-                source = source.OrderBy(sortColumn);
+                if (sortOrder == false) source = source.OrderBy(sortColumn);
 
+                if (sortOrder == true) source = source.OrderByDescending(sortColumn);
             }
             else
             {
-                source = source.OrderByDescending(sortColumn);
+                source = source.OrderBy(c => c.CategoryId);
             }
 
-            return await PaginatedList<CategoryBuySelectDto>.CreateAsync(source, pageIndex, pageSize);
+            return await PagedList<CategoryBuySelectDto>.CreateAsync(source, pageIndex, pageSize);
         }
     }
 }

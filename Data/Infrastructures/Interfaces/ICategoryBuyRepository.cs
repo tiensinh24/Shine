@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Categories.Buy;
 using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.QueryParams;
@@ -12,9 +13,10 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface ICategoryBuyRepository : IRepository
     {
-        Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool? sortOrder = true);
-        Task<PaginatedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(int pageIndex, int pageSize,
-            Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool? sortOrder = true);
+        Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(
+            Expression<Func<CategoryBuySelectDto, object>> sortColumn, bool sortOrder);
+        Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(int pageIndex, int pageSize,
+            Expression<Func<CategoryBuySelectDto, object>> sortColumn, bool sortOrder);
         IEnumerable<CategoryBuy> GetCategoriesWithBaseParams(BaseQueryParams queryParams);
         Task<CategoryBuySelectDto> GetCategoryAsync(int id);
         void UpdateCategory(CategoryBuy categoryBuy);

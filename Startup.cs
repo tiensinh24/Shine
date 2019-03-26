@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -23,12 +19,9 @@ using Newtonsoft.Json;
 
 using Shine.Data;
 using Shine.Data.Dto._Mapster;
-using Shine.Data.Dto.Token;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Infrastructures.Services;
-using Shine.Data.Models;
-using Shine.Data.Models.Interfaces;
 
 namespace Shine
 {
@@ -91,15 +84,6 @@ namespace Shine
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true
                 };
-            });
-
-            // Add Url support for paging
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddScoped<IUrlHelper>(factory =>
-            {
-                var actionContext = factory.GetService<IActionContextAccessor>().ActionContext;
-
-                return new UrlHelper(actionContext);
             });
 
             services.AddTransient<UserResolverService>();
