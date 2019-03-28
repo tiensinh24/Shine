@@ -9,12 +9,12 @@ namespace Shine.Data.Dto._Paging
         public int PageIndex { get; }
         public int PageSize { get; }
         public int TotalPages { get; }
-        public bool HasPreviousPage => this.PageIndex > 1;
-        public bool HasNextPage => this.PageIndex < this.TotalPages;
+        public bool HasPreviousPage => this.PageIndex > 0;
+        public bool HasNextPage => this.PageIndex < (this.TotalPages - 1);
         public int NextPageIndex =>
-            this.HasNextPage ? this.PageIndex + 1 : this.TotalPages;
+            this.HasNextPage ? this.PageIndex + 1 : (this.TotalPages - 1);
         public int PreviousPageIndex =>
-            this.HasPreviousPage ? this.PageIndex - 1 : 1;
+            this.HasPreviousPage ? this.PageIndex - 1 : 0;
 
         public PagingHeader(int totalItems, int pageIndex, int pageSize, int totalPages)
         {

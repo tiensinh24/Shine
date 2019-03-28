@@ -9,6 +9,7 @@ import { BaseQueryParams } from 'src/app/_shared/_intefaces/base-query-params';
 import { PagedCategoryBuy } from '../_interfaces/paged-category-buy';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { RequestOptions } from '@angular/http';
 
 @Injectable({
   providedIn: 'root',
@@ -41,14 +42,15 @@ export class CategoryBuyService {
     });
   }
 
-  getPagedCategories(pagingParams: PagingParams, sortParams?: SortParams): Observable<PagedCategoryBuy> {
-    let queryParams = `?pageNumber=${pagingParams.pageIndex}&pageSize=${pagingParams.pageSize}`;
+  getPagedCategories(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedCategoryBuy> {
+    let queryParams = new HttpParams().set('pageIndex', `${pagingParams.pageIndex}`).set('pageSize', `${pagingParams.pageSize}`);
 
     if (sortParams !== undefined) {
-      queryParams = queryParams + `&sortColumn=${sortParams.sortColumn}&sortOrder=${sortParams.sortOrder}`;
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
-    return this.http.get<PagedCategoryBuy>(`${this.baseUrl}api/categoryBuy/Paged${queryParams}`);
+    return this.http.get<PagedCategoryBuy>(`${this.baseUrl}api/categoryBuy/Paged`, { params: queryParams });
   }
 
   getCategory(id: number): Observable<CategoryBuy> {

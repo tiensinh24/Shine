@@ -1,6 +1,10 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
+
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 
 namespace Shine.Data.Helpers
 {
@@ -34,6 +38,21 @@ namespace Shine.Data.Helpers
             }
 
             return ((PropertyInfo) memberExpression.Member).Name;
+        }
+
+        public static async Task<Expression<Func<T, object>>> GetExpressionFromString<T>(string str) where T : class
+        {
+
+            if (str != null)
+            {
+                var options = ScriptOptions.Default.AddReferences(typeof(T).Assembly);
+
+                Expression<Func<T, object>> expression =
+                    await CSharpScript.EvaluateAsync<Expression<Func<T, object>>>(str, options);
+
+                return expression;
+            }
+            return null;
         }
     }
 }

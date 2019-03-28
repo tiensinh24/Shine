@@ -8,7 +8,6 @@ import { CategoryBuy } from '../_interfaces/category-buy';
 import { CategoryBuyService } from '../_services/category-buy.service';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { BaseQueryParams } from 'src/app/_shared/_intefaces/base-query-params';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 
@@ -53,7 +52,7 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
 
     const sortParams = <SortParams>{
       sortColumn: 'c => c.CategoryName',
-      sortOrder: true,
+      sortOrder: 'asc'
     };
 
     this.catsSub = this.categoryBuyService.getPagedCategories(pagingParams, sortParams).subscribe(

@@ -1,4 +1,4 @@
 export interface SortParams {
   sortColumn?: string;
-  sortOrder?: boolean;
+  sortOrder?: string;
 }

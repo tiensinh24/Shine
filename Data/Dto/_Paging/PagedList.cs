@@ -35,7 +35,7 @@ namespace Shine.Data.Dto._Paging
             public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
             {
                 var count = await source.CountAsync();
-                var items = await source.Skip(pageSize * (pageIndex - 1))
+                var items = await source.Skip(pageSize * (pageIndex))
                     .Take(pageSize).ToListAsync();
 
                 return new PagedList<T>(items, count, pageIndex, pageSize);

@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 using Mapster;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Categories.Buy;
+using Shine.Data.Extensions;
 using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.QueryParams;
@@ -29,15 +32,14 @@ namespace Shine.Data.Infrastructures.Repositories
 #endregion
 
         public async Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(
-            Expression<Func<CategoryBuySelectDto, object>> sortColumn, bool sortOrder)
+            Expression<Func<CategoryBuySelectDto, object>> sortColumn, string sortOrder)
         {
             var query = _context.Set<CategoryBuy>().AsNoTracking()
                 .ProjectToType<CategoryBuySelectDto>();
 
-            if (sortOrder == true)
+            if (sortOrder == "asc")
             {
                 return await query.OrderBy(sortColumn).ToListAsync();
-
             }
             else
             {
@@ -102,24 +104,28 @@ namespace Shine.Data.Infrastructures.Repositories
         }
 
         public async Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
-            int pageIndex, int pageSize,
-            Expression<Func<CategoryBuySelectDto, object>> sortColumn = null, bool sortOrder = false)
+            PagingParams pagingParams, SortParams sortParams)
         {
             var source = _context.Set<CategoryBuy>().AsNoTracking()
                 .ProjectToType<CategoryBuySelectDto>();
 
-            if (sortColumn != null)
+            if (!string.IsNullOrEmpty(sortParams.SortColumn))
             {
-                if (sortOrder == false) source = source.OrderBy(sortColumn);
+                var expStr = $"c => c.{sortParams.SortColumn.ToPasCalCase()}";
 
-                if (sortOrder == true) source = source.OrderByDescending(sortColumn);
+                var sortExpression =
+                    await ExpressionHelpers.GetExpressionFromString<CategoryBuySelectDto>(expStr);
+
+                if (sortParams.SortOrder == "asc") source = source.OrderBy(sortExpression);
+
+                if (sortParams.SortOrder == "desc") source = source.OrderByDescending(sortExpression);
             }
             else
             {
                 source = source.OrderBy(c => c.CategoryId);
             }
 
-            return await PagedList<CategoryBuySelectDto>.CreateAsync(source, pageIndex, pageSize);
+            return await PagedList<CategoryBuySelectDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
     }
 }

@@ -10,6 +10,7 @@ import { SharedModule } from 'src/app/_shared/shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog-shared.module';
 import { ConfirmDialogSharedModule } from 'src/app/_shared/components/confirm-dialog/confirm-dialog-shared.module';
+import { CategoryBuyCustomListComponent } from './category-buy-custom-list/category-buy-custom-list.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ConfirmDialogSharedModule } from 'src/app/_shared/components/confirm-di
     CategoryBuyEditComponent,
     CategoryBuyListComponent,
     CategoryBuyDetailComponent,
+    CategoryBuyCustomListComponent,
   ],
   imports: [
     // Shared

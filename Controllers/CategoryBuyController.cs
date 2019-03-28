@@ -34,21 +34,18 @@ namespace Shine.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryBuySelectDto>>> GetCategories()
         {
-            var query = await _repository.GetCategoriesAsync(c => c.CategoryName, false);
+            var query = await _repository.GetCategoriesAsync(c => c.CategoryName, "asc");
             return Ok(query);
         }
 
         [HttpGet("Paged")]
 
         public async Task<ActionResult<Paged<CategoryBuySelectDto>>> GetPagedCategories(
-            int pageNumber, int pageSize, string sortColumn, bool sortOrder)
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams)
         {
-            var options = ScriptOptions.Default.AddReferences(typeof(CategoryBuySelectDto).Assembly);
 
-            Expression<Func<CategoryBuySelectDto, object>> sortCol = sortColumn != null
-                ? await CSharpScript.EvaluateAsync<Expression<Func<CategoryBuySelectDto, object>>>(sortColumn, options) : null;
-
-            var query = await _repository.GetPagedCategoriesAsync(pageNumber, pageSize, sortCol, sortOrder);
+            var query = await _repository.GetPagedCategoriesAsync(
+                pagingParams, sortParams);
 
             return new Paged<CategoryBuySelectDto>(query);
 
