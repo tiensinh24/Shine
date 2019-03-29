@@ -6,7 +6,7 @@ namespace Shine.Data.Extensions
 {
     public static class StringExtensions
     {
-        public static string ToPasCalCase(this string str)
+        public static string ToPascalCase(this string str)
         {
             // // Replace all non-letter and non-digits with an underscore and lowercase the rest.
             // string sample = string.Join("", str?.Select(c => Char.IsLetterOrDigit(c) ? c.ToString().ToLower() : "_").ToArray());

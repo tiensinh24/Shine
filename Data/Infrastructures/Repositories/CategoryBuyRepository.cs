@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 
 using Mapster;
@@ -104,28 +105,53 @@ namespace Shine.Data.Infrastructures.Repositories
         }
 
         public async Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
-            PagingParams pagingParams, SortParams sortParams)
+            PagingParams pagingParams, SortParams sortParams, string filter)
         {
-            var source = _context.Set<CategoryBuy>().AsNoTracking()
+            var source = _context.Set<CategoryBuy>()
+                .AsNoTracking()
                 .ProjectToType<CategoryBuySelectDto>();
 
-            if (!string.IsNullOrEmpty(sortParams.SortColumn))
+            switch (sortParams.SortOrder)
             {
-                var expStr = $"c => c.{sortParams.SortColumn.ToPasCalCase()}";
+                case "asc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "categoryName":
+                            source = source.OrderBy(c => c.CategoryName);
+                            break;
+                        default:
+                            source = source.OrderBy(c => c.CategoryId);
+                            break;
+                    }
+                    break;
 
-                var sortExpression =
-                    await ExpressionHelpers.GetExpressionFromString<CategoryBuySelectDto>(expStr);
+                case "desc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "categoryName":
+                            source = source.OrderByDescending(c => c.CategoryName);
+                            break;
+                        default:
+                            source = source.OrderByDescending(c => c.CategoryId);
+                            break;
+                    }
+                    break;
 
-                if (sortParams.SortOrder == "asc") source = source.OrderBy(sortExpression);
-
-                if (sortParams.SortOrder == "desc") source = source.OrderByDescending(sortExpression);
+                default:
+                    source = source.OrderBy(c => c.CategoryId);
+                    break;
             }
-            else
+
+            var predicate = PredicateBuilder.True<CategoryBuySelectDto>();
+
+            if (!string.IsNullOrEmpty(filter))
             {
-                source = source.OrderBy(c => c.CategoryId);
+                source = source.Where((Expression<Func<CategoryBuySelectDto, bool>>) (c => c.CategoryId.ToString().ToLower().Contains(filter.ToLower())
+                    || c.CategoryName.ToString().ToLower().Contains(filter.ToLower())));
             }
 
             return await PagedList<CategoryBuySelectDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
+
     }
 }

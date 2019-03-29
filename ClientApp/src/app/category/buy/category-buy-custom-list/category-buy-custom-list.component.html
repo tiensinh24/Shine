@@ -1,8 +1,17 @@
 <div class="categories">
-  <div class="spinner-container" *ngIf="dataSource.isLoading | async">
-    <mat-spinner></mat-spinner>
+
+  <!-- Progress bar -->
+  <div class="progress-container" *ngIf="dataSource.isLoading | async">
+    <mat-progress-bar></mat-progress-bar>
   </div>
 
+  <!-- Search box -->
+  <mat-form-field>
+    <input matInput placeholder="Search categories" #input>
+  </mat-form-field>
+
+
+  <!-- Categories table -->
   <table mat-table class="categories-table mat-elevation-z8" [dataSource]="dataSource" matSort
     [matSortActive]="sortParams.sortColumn" [matSortDirection]="sortParams.sortOrder">
 
@@ -21,6 +30,7 @@
 
   </table>
 
-  <mat-paginator [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25]">
+  <mat-paginator [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25]"
+    [showFirstLastButtons]="true">
   </mat-paginator>
 </div>

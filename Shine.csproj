@@ -16,6 +16,7 @@
     <PackageReference Include="Mapster" Version="*"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.1"/>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="*"/>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="*"/>
   </ItemGroup>
   <ItemGroup>
     <Content Remove="$(SpaRoot)**"/>

@@ -15,8 +15,8 @@ namespace Shine.Data.Infrastructures.Interfaces
     {
         Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(
             Expression<Func<CategoryBuySelectDto, object>> sortColumn, string sortOrder);
-        Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(PagingParams pagingParams,
-            SortParams sortParams);
+        Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter);
         IEnumerable<CategoryBuy> GetCategoriesWithBaseParams(BaseQueryParams queryParams);
         Task<CategoryBuySelectDto> GetCategoryAsync(int id);
         void UpdateCategory(CategoryBuy categoryBuy);

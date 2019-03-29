@@ -40,6 +40,7 @@ namespace Shine.Data.Helpers
             return ((PropertyInfo) memberExpression.Member).Name;
         }
 
+        // TODO: this method get performance hit
         public static async Task<Expression<Func<T, object>>> GetExpressionFromString<T>(string str) where T : class
         {
 
@@ -54,5 +55,6 @@ namespace Shine.Data.Helpers
             }
             return null;
         }
+
     }
 }

@@ -41,11 +41,10 @@ namespace Shine.Controllers
         [HttpGet("Paged")]
 
         public async Task<ActionResult<Paged<CategoryBuySelectDto>>> GetPagedCategories(
-            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams)
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
         {
 
-            var query = await _repository.GetPagedCategoriesAsync(
-                pagingParams, sortParams);
+            var query = await _repository.GetPagedCategoriesAsync(pagingParams, sortParams, filter);
 
             return new Paged<CategoryBuySelectDto>(query);
 

@@ -43,7 +43,10 @@ export class CategoryBuyService {
   }
 
   getPagedCategories(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedCategoryBuy> {
-    let queryParams = new HttpParams().set('pageIndex', `${pagingParams.pageIndex}`).set('pageSize', `${pagingParams.pageSize}`);
+    let queryParams = new HttpParams()
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
 
     if (sortParams !== undefined) {
       queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
