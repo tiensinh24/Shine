@@ -2,23 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading.Tasks;
 
 using Mapster;
 
 using Microsoft.AspNetCore.Identity;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Categories.Buy;
-using Shine.Data.Extensions;
-using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.Interfaces;
-using Shine.Data.Infrastructures.QueryParams;
 using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Repositories
@@ -48,35 +42,6 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
-        public IEnumerable<CategoryBuy> GetCategoriesWithBaseParams(BaseQueryParams queryParams)
-        {
-            var query = _context.Set<CategoryBuy>().AsNoTracking();
-
-            if (!string.IsNullOrEmpty(queryParams.Filter))
-            {
-                query = query.Where(c => c.CategoryName.ToLower().Contains(queryParams.Filter.ToLower()));
-            }
-
-            switch (queryParams.SortOrder)
-            {
-                case "desc":
-                    query = query.OrderByDescending(c => c.CategoryName);
-                    break;
-                default:
-                    query = query.OrderBy(c => c.CategoryName);
-                    break;
-            }
-
-            if (queryParams.PageNumber > 0 && queryParams.PageSize > 0)
-            {
-                query = query.Skip((queryParams.PageNumber - 1) * queryParams.PageSize)
-                    .Take(queryParams.PageSize);
-            }
-
-            return query;
-
-        }
-
         public async Task<CategoryBuySelectDto> GetCategoryAsync(int id)
         {
             var query = await _context.Set<CategoryBuy>().AsNoTracking()
@@ -98,6 +63,7 @@ namespace Shine.Data.Infrastructures.Repositories
         public void DeleteCategory(int id)
         {
             var category = _context.Set<CategoryBuy>().FirstOrDefault(c => c.CategoryId == id);
+
             if (category != null)
             {
                 _context.Set<CategoryBuy>().Remove(category);
@@ -107,7 +73,7 @@ namespace Shine.Data.Infrastructures.Repositories
         public async Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
             PagingParams pagingParams, SortParams sortParams, string filter)
         {
-            var source = _context.Set<CategoryBuy>()
+            var source = _context.Categories.OfType<CategoryBuy>()
                 .AsNoTracking()
                 .ProjectToType<CategoryBuySelectDto>();
 
@@ -142,12 +108,9 @@ namespace Shine.Data.Infrastructures.Repositories
                     break;
             }
 
-            var predicate = PredicateBuilder.True<CategoryBuySelectDto>();
-
             if (!string.IsNullOrEmpty(filter))
             {
-                source = source.Where((Expression<Func<CategoryBuySelectDto, bool>>) (c => c.CategoryId.ToString().ToLower().Contains(filter.ToLower())
-                    || c.CategoryName.ToString().ToLower().Contains(filter.ToLower())));
+                source = source.Where(c => c.CategoryName.ToLower().Contains(filter.ToLower()));
             }
 
             return await PagedList<CategoryBuySelectDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);

@@ -99,17 +99,14 @@ namespace Shine.Data
 
         public void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class, ISoftDelete
         {
-            foreach (var tp in builder.Model.GetEntityTypes())
-            {
-                var t = tp.ClrType;
+            // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
+            //      Use INotRoot mark on derived type to not apply global query filter
 
-                // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
-                //      Use INotRoot mark on derived type to not apply global query filter
-                if (t.IsAssignableFrom(typeof(INotRoot)))
-                {
-                    builder.Entity<T>().HasQueryFilter(item => !EF.Property<bool>(item, "IsDeleted"));
-                }
+            if (!typeof(INotRoot).IsAssignableFrom(typeof(T)))
+            {
+                builder.Entity<T>().HasQueryFilter(i => !EF.Property<bool>(i, "IsDeleted"));
             }
+
         }
 
         private static readonly MethodInfo SetGlobalQueryForSoftDeleteAndTenantMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -117,20 +114,18 @@ namespace Shine.Data
 
         public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenantEntity
         {
-            foreach (var tp in builder.Model.GetEntityTypes())
-            {
-                var t = tp.ClrType;
+            
 
                 // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
                 //      Use INotRoot mark on derived type to not apply global query filter
-                if (t.IsAssignableFrom(typeof(INotRoot)))
+                if (!typeof(INotRoot).IsAssignableFrom(typeof(T)))
                 {
                     builder.Entity<T>().HasQueryFilter(
                         item => !EF.Property<bool>(item, "IsDeleted"));
                     // TODO
                     // && (_currentUser.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _currentUser.TenantId));
                 }
-            }
+            
 
         }
 
@@ -183,6 +178,8 @@ namespace Shine.Data
                 {
                     entry.State = EntityState.Modified;
                     entry.Property("IsDeleted").CurrentValue = true;
+                    entry.Property("ModifiedOn").CurrentValue = timestamp;
+                    entry.Property("ModifiedById").CurrentValue = authenticatedUserId;
                 }
             }
 
