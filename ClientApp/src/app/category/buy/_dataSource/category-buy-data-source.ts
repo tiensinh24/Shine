@@ -17,11 +17,12 @@ export class CategoryBuyDataSource implements DataSource<CategoryBuy> {
 
   public isLoading = this.loadingSubject.asObservable();
   public paging = this.pagingSubject.asObservable();
+  public data = this.categoriesSubject.asObservable();
 
   constructor(private categoryBuyService: CategoryBuyService) {}
 
   connect(collectionViewer: CollectionViewer): Observable<CategoryBuy[]> {
-    return this.categoriesSubject.asObservable();
+    return this.data;
   }
 
   disconnect(collectionViewer: CollectionViewer): void {

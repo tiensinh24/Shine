@@ -1,7 +1,7 @@
 <!-- Loading progress bar -->
-<mat-progress-bar *ngIf="isLoading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
 
-<div *ngIf="!isLoading" fxLayout="column">
+<div fxLayout="column">
   <!-- Title -->
   <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
     <span class="fill"></span>
@@ -68,9 +68,13 @@
 
   <!-- Paginator & filter -->
   <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
-    <mat-paginator fxFlex="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+    <mat-paginator fxFlex="50" [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25]"
+      [showFirstLastButtons]="true">
+    </mat-paginator>
+
     <mat-form-field fxFlex>
-      <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('')" placeholder="Filter">
+      <input matInput placeholder="Search categories" #input>
     </mat-form-field>
 
   </mat-card>

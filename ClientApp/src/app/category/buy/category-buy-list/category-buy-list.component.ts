@@ -1,8 +1,9 @@
-import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { MatSort, MatPaginator, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { CategoryBuy } from '../_interfaces/category-buy';
 import { CategoryBuyService } from '../_services/category-buy.service';
@@ -10,23 +11,35 @@ import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { CategoryBuyDataSource } from '../_dataSource/category-buy-data-source';
 
 @Component({
   selector: 'app-category-buy-list',
   templateUrl: './category-buy-list.component.html',
   styleUrls: ['./category-buy-list.component.css'],
 })
-export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
+export class CategoryBuyListComponent implements OnInit, AfterViewInit {
+  dataSource: CategoryBuyDataSource;
   displayedColumns = ['select', 'categoryId', 'categoryName', 'actions'];
-  dataSource = new MatTableDataSource<CategoryBuy>([]);
   selection = new SelectionModel<CategoryBuy>(true, []);
-  isLoading = true;
+  numRows: number;
+
   isEdit: boolean;
   title = 'Category List';
-  catsSub = new Subscription();
 
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('input') input: ElementRef;
+
+  pagingParams = <PagingParams>{
+    pageIndex: 0,
+    pageSize: 8,
+  };
+
+  sortParams = <SortParams>{
+    sortColumn: '',
+    sortOrder: '',
+  };
 
   constructor(
     private categoryBuyService: CategoryBuyService,
@@ -36,36 +49,43 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
     private snackBar: MatSnackBar,
   ) {}
 
+  ngOnInit() {
+    this.dataSource = new CategoryBuyDataSource(this.categoryBuyService);
+    this.dataSource.loadCategories(this.pagingParams, this.sortParams);
+  }
+
   ngAfterViewInit(): void {
-    this.getCategoryList();
+    // Server-side search
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadCategoriesPage();
+        }),
+      )
+      .subscribe();
+
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
+    // on sort or paginate events, load a new page
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(tap(() => this.loadCategoriesPage()))
+      .subscribe();
   }
 
-  ngOnDestroy(): void {
-    this.catsSub.unsubscribe();
-  }
+  loadCategoriesPage() {
+    this.pagingParams.pageIndex = this.paginator.pageIndex;
+    this.pagingParams.pageSize = this.paginator.pageSize;
 
-  getCategoryList() {
-    const pagingParams = <PagingParams>{
-      pageIndex: 1,
-      pageSize: 6,
-    };
+    this.sortParams.sortColumn = this.sort.active;
+    this.sortParams.sortOrder = this.sort.direction;
 
-    const sortParams = <SortParams>{
-      sortColumn: 'c => c.CategoryName',
-      sortOrder: 'asc'
-    };
+    const filter = this.input.nativeElement.value;
 
-    this.catsSub = this.categoryBuyService.getPagedCategories(pagingParams, sortParams).subscribe(
-      res => {
-        // Check to loading progress bar
-        this.isLoading = false;
-
-        this.dataSource = new MatTableDataSource<CategoryBuy>(res.items);
-        setTimeout(() => (this.dataSource.sort = this.sort));
-        setTimeout(() => (this.dataSource.paginator = this.paginator));
-      },
-      () => (this.isLoading = false),
-    );
+    this.dataSource.loadCategories(this.pagingParams, this.sortParams, filter);
   }
 
   onDetail(categoryBuy: CategoryBuy) {
@@ -82,14 +102,7 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.categoryBuyService.deleteCategory(categoryBuy.categoryId).subscribe(() => {
-          // Get index of deleted row
-          const index = this.dataSource.data.indexOf(categoryBuy, 0);
-          // Remove row, update dataSource & remove all selection
-          if (index > -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource._updateChangeSubscription();
-            this.selection.clear();
-          }
+          this.loadCategoriesPage();
         });
         this.snackBar.open(`${categoryBuy.categoryName} deleted`, 'Success');
       }
@@ -99,17 +112,18 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
   // Open category-edit-dialog
   openDialog(categoryId?: number) {
     // Find category in dataSource
-    const catEdit = this.dataSource.data.find(c => c.categoryId === categoryId);
+    let catEdit: CategoryBuy = null;
 
-    const dialogConfig = new MatDialogConfig();
+    this.dataSource.data.subscribe(res => {
+      catEdit = res.find(c => c.categoryId === categoryId);
+    });
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    // Width & height
-    dialogConfig.maxWidth = '100vw';
-    dialogConfig.maxHeight = '100vh';
-    dialogConfig.width = '80%';
-    dialogConfig.height = '80%';
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      width: '80vw',
+      height: '80vh',
+    };
 
     // Send data to category edit component
     if (catEdit) {
@@ -124,67 +138,30 @@ export class CategoryBuyListComponent implements AfterViewInit, OnDestroy {
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
-      // Check if data exists
       if (data) {
-        // Create mode
         if (!catEdit) {
-          this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
-            // Add new category into data source
-            this.dataSource.data.push(res);
-            // Update data source
-            this.dataSource._updateChangeSubscription();
-          });
-          // Edit mode
+          this.categoryBuyService.addCategory(data).subscribe(() => this.loadCategoriesPage());
         } else {
-          this.categoryBuyService.updateCategory(data).subscribe((res: CategoryBuy) => {
-            const index = this.dataSource.data.findIndex(c => c.categoryId === res.categoryId);
-            this.dataSource.data.splice(index, 1, res);
-            this.dataSource._updateChangeSubscription();
-          });
+          this.categoryBuyService.updateCategory(data).subscribe(() => this.loadCategoriesPage());
         }
       }
       this.selection.clear();
     });
   }
 
-  // On input focus: setup filterPredicate to only filter by input column
-  setupFilter(column?: string) {
-    // Only filter specify column
-    if (column.length > 0) {
-      this.dataSource.filterPredicate = (data: CategoryBuy, filter: string) => {
-        const textToSearch = (data[column] && data[column].toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    } else {
-      // If column = '', filter on all column
-      this.dataSource.filterPredicate = (data: CategoryBuy, filter: string) => {
-        const textToSearch = (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    }
-  }
-
-  applyFilter(filterValue: string) {
-    if (filterValue === undefined) {
-      this.dataSource.filter = '';
-    } else {
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   // Whether the number of selected elements matches the total number of rows
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.paginator.pageSize;
     return numSelected === numRows;
   }
 
   //  Selects all rows if they are not all selected; otherwise clear selection
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.subscribe(res => {
+          res.forEach(row => this.selection.select(row));
+        });
   }
 }
