@@ -154,6 +154,7 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
     const numSelected = this.selection.selected.length;
     const numRows = this.paginator.pageSize;
     return numSelected === numRows;
+
   }
 
   //  Selects all rows if they are not all selected; otherwise clear selection
