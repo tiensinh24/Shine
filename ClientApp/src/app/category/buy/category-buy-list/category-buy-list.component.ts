@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angula
 import { MatSort, MatPaginator, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
-import { fromEvent, merge } from 'rxjs';
+import { fromEvent, merge, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { CategoryBuy } from '../_interfaces/category-buy';
@@ -21,7 +21,7 @@ import { CategoryBuyDataSource } from '../_dataSource/category-buy-data-source';
 export class CategoryBuyListComponent implements OnInit, AfterViewInit {
   dataSource: CategoryBuyDataSource;
   displayedColumns = ['select', 'categoryId', 'categoryName', 'actions'];
-  selection = new SelectionModel<CategoryBuy>(true, []);
+  selection = new SelectionModel<CategoryBuy>(true, [], false);
   numRows: number;
 
   isEdit: boolean;
@@ -72,7 +72,12 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
 
     // on sort or paginate events, load a new page
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.loadCategoriesPage()))
+      .pipe(
+        tap(() => {
+          this.loadCategoriesPage();
+          setTimeout(() => this.selection.clear(), 50);
+        }),
+      )
       .subscribe();
   }
 
@@ -153,16 +158,21 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.paginator.pageSize;
-    return numSelected === numRows;
 
+    return numSelected === numRows;
   }
 
-  //  Selects all rows if they are not all selected; otherwise clear selection
+  selectAll() {
+    this.dataSource.data.subscribe(rows => {
+      rows.forEach(row => this.selection.select(row));
+    });
+  }
+
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.subscribe(res => {
-          res.forEach(row => this.selection.select(row));
-        });
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.selectAll();
+    }
   }
 }
