@@ -8,7 +8,7 @@ namespace Shine.Data.Dto._Mapster
     {
         public static void Setting()
         {
-            TypeAdapterConfig<ProductBuy, ProductBuyDto>.NewConfig().Map(
+            TypeAdapterConfig<ProductBuy, ProductBuyListDto>.NewConfig().Map(
                 dest => dest.CategoryName,
                 src => src.Category.CategoryName
             );

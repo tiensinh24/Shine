@@ -40,6 +40,11 @@ tr.mat-footer-row {
   height: auto;
 }
 
+.mat-row:hover {
+  cursor: pointer;
+  background-color: aliceblue;
+}
+
 .mat-cell {
   padding: 0 8px;
 }

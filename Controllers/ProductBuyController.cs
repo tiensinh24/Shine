@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using Shine.Controllers.Interfaces;
 using Shine.Data;
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
@@ -22,59 +24,86 @@ namespace Shine.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ProductBuyController : ControllerBase
+    public class ProductBuyController : ControllerBase, IProductBuyController
     {
+#region Private Field
         private readonly IProductBuyRepository _repository;
+#endregion
+
+#region Constructor
         public ProductBuyController(IProductBuyRepository repository)
         {
             this._repository = repository;
         }
+#endregion
 
+#region Get Values
         [HttpGet]
-        public ActionResult<IEnumerable<ProductBuyDto>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProducts()
         {
-            return _repository.GetProducts().ToList();
+            var query = await _repository.GetProductsAsync(p => p.ProductId, "asc");
+
+            return Ok(query);
+        }
+
+        [HttpGet("Paged")]
+        public async Task<ActionResult<Paged<ProductBuyListDto>>> GetPagedProducts([FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
+        {
+            var query = await _repository.GetPagedProductsAsync(pagingParams, sortParams, filter);
+
+            return new Paged<ProductBuyListDto>(query);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ProductBuyDto> GetProduct(int id)
+        public async Task<ActionResult<ProductBuyListDto>> GetProduct(int id)
         {
-            var product = _repository.GetProduct(id);
+            var product = await _repository.GetProductAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
             return product;
         }
+#endregion
 
+#region Actions
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ProductBuyDto> AddProduct([FromBody] ProductBuy productBuy)
+        public async Task<ActionResult<ProductBuyDto>> AddProduct([FromBody] ProductBuy productBuy)
         {
-            _repository.Add(productBuy);
-            _repository.Commit();
-            var product = _repository.GetProduct(productBuy.ProductId);
-            return product;
+            await _repository.AddProductAsync(productBuy);
+            await _repository.CommitAsync();
+
+            return CreatedAtAction(nameof(GetProduct),
+                new { id = productBuy.ProductId },
+                productBuy.Adapt<ProductBuyDto>());
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ProductBuyDto> UpdateProduct([FromBody] ProductBuy productBuy)
+        public async Task<ActionResult<ProductBuyDto>> UpdateProduct([FromBody] ProductBuy productBuy)
         {
-            _repository.UpdateProduct(productBuy);
-            _repository.Commit();
-            var query = _repository.GetProduct(productBuy.ProductId);
-            return query;
+            var product = await _repository.UpdateProductAsync(productBuy);
+
+            if (product == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return product;
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<int> DeleteProduct(int id)
+        public async Task<ActionResult<ProductBuyDto>> DeleteProduct(int id)
         {
-            _repository.DeleteProduct(id);
-            _repository.Commit();
-            return id;
-        }
+            var product = await _repository.DeleteProductAsync(id);
 
+            if (product == null) return NotFound();            
+
+            await _repository.CommitAsync();
+
+            return product;
+        }
+#endregion
     }
 }

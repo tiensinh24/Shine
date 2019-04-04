@@ -1,17 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-  FormControl,
-} from '@angular/forms';
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
@@ -20,6 +9,7 @@ import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.ser
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
 import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-buy-edit-dialog',
@@ -28,7 +18,8 @@ import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
 })
 export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
-  categories = <CategoryBuy[]>{};
+  categoriesSub: Subscription;
+  categories: CategoryBuy[];
   formGroup: FormGroup;
   editMode: boolean;
   title: string;
@@ -45,6 +36,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
+    this.getCategories();
 
     // Edit product
     if (this.dataFromList.productId > 0) {
@@ -57,12 +49,17 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
       this.editMode = false;
       this.title = 'Create new product';
     }
-    // Get categories from list component without calling API
-    this.categories = this.dataFromList.categories;
   }
 
-  // Destroy all subscription
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.categoriesSub.unsubscribe();
+  }
+
+  getCategories() {
+    this.categoriesSub = this.categoryBuyService.getCategories().subscribe(res => {
+      this.categories = res;
+    });
+  }
 
   createForm() {
     this.formGroup = this.fb.group({
@@ -82,41 +79,32 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
 
   // Open add category dialog
   openDialog() {
-    const dialogConfig = new MatDialogConfig();
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      width: '100vw',
+      height: '100vh',
+    };
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    // Width & height
-    dialogConfig.maxWidth = '100vw';
-    dialogConfig.maxHeight = '100vh';
-    dialogConfig.minWidth = '80%';
-    dialogConfig.height = '80%';
-
-    const dialogRef = this.dialog.open(
-      CategoryBuyDialogComponent,
-      dialogConfig,
-    );
+    const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
 
     // Get data returned from dialog
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
       // Check if data exists
       if (data) {
-        this.categoryBuyService
-          .addCategory(data)
-          .subscribe((res: CategoryBuy) => {
-            // Add new category into categories
-            this.categories.push(res);
-            // Update formControl with new added value
-            this.formGroup.patchValue({
-              categoryId: res.categoryId,
-            });
+        this.categoryBuyService.addCategory(data).subscribe((res: CategoryBuy) => {
+          // Add new category into categories
+          this.categories.push(res);
+          // Update formControl with new added value
+          this.formGroup.patchValue({
+            categoryId: res.categoryId,
           });
+        });
       }
     });
   }
 
   onSubmit() {
-    // this.canDeactive = true;
     const tempProductBuy = <ProductBuy>{};
 
     tempProductBuy.productName = this.formGroup.value.productName;
@@ -127,24 +115,12 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       tempProductBuy.productId = this.dataFromList.productId;
       this.productBuyService.updateProduct(tempProductBuy).subscribe(res => {
-        // Get new product from API & return it to list component
-        const category = this.categories.find(
-          c => c.categoryId === res.categoryId,
-        );
-        const response = <ProductBuyDto>res;
-        response.categoryName = category.categoryName;
-        this.dialogRef.close(response);
+        this.dialogRef.close(res);
       });
       // Create mode
     } else {
       this.productBuyService.addProduct(tempProductBuy).subscribe(res => {
-        // Get new product from API & return it to list component
-        const category = this.categories.find(
-          c => c.categoryId === res.categoryId,
-        );
-        const response = <ProductBuyDto>res;
-        response.categoryName = category.categoryName;
-        this.dialogRef.close(response);
+        this.dialogRef.close(res);
       });
     }
   }

@@ -1,8 +1,8 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy, ElementRef, OnInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Subscription } from 'rxjs';
+import { Subscription, fromEvent, merge } from 'rxjs';
 
 import { ProductBuyDto } from '../_interfaces/product-buy-dto';
 import { ProductBuyService } from '../_services/product-buy.service';
@@ -11,60 +11,88 @@ import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { ProductBuyDataSource } from '../_data-source/product-buy-data-source';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-buy-list',
   templateUrl: './product-buy-list.component.html',
   styleUrls: ['./product-buy-list.component.css'],
 })
-export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
+export class ProductBuyListComponent implements OnInit, AfterViewInit {
+  dataSource: ProductBuyDataSource;
   displayedColumns = ['select', 'productName', 'specification', 'categoryName', 'actions'];
-  dataSource = new MatTableDataSource<ProductBuyDto>([]);
-  selection = new SelectionModel<ProductBuyDto>(true, []);
-  isLoading = true;
-  title = 'Products List';
-  categories: CategoryBuy[];
-  sub = new Subscription();
+  selection = new SelectionModel<ProductBuyDto>(true, [], false);
+  numRows: number;
 
-  @ViewChild(MatSort) sort: MatSort;
+  title = 'Products List';
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('input') input: ElementRef;
+
+  pagingParams = <PagingParams>{
+    pageIndex: 0,
+    pageSize: 8,
+  };
+
+  sortParams = <SortParams>{
+    sortColumn: '',
+    sortOrder: '',
+  };
 
   constructor(
     private productBuyService: ProductBuyService,
-    private categoryBuyService: CategoryBuyService,
     private router: Router,
     private dialog: MatDialog,
     private confirmService: ConfirmDialogService,
     private snackBar: MatSnackBar,
   ) {}
 
+  ngOnInit() {
+    this.dataSource = new ProductBuyDataSource(this.productBuyService);
+    this.dataSource.loadProducts(this.pagingParams, this.sortParams);
+  }
+
   ngAfterViewInit(): void {
-    this.getProductList();
-    this.getCategories();
+    // Server-side search
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadProductsPage();
+        }),
+      )
+      .subscribe();
+
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
+    // on sort or paginate events, load a new page
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => {
+          this.loadProductsPage();
+          setTimeout(() => this.selection.clear(), 50);
+        }),
+      )
+      .subscribe();
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
+  loadProductsPage() {
+    this.pagingParams.pageIndex = this.paginator.pageIndex;
+    this.pagingParams.pageSize = this.paginator.pageSize;
 
-  getCategories() {
-    this.sub = this.categoryBuyService.getCategories().subscribe(res => {
-      this.categories = res;
-    });
-  }
+    this.sortParams.sortColumn = this.sort.active;
+    this.sortParams.sortOrder = this.sort.direction;
 
-  getProductList() {
-    this.sub = this.productBuyService.getProducts().subscribe(
-      res => {
-        // Check to loading progress bar
-        this.isLoading = false;
+    const filter = this.input.nativeElement.value;
 
-        this.dataSource = new MatTableDataSource<ProductBuyDto>(res);
-        setTimeout(() => (this.dataSource.sort = this.sort));
-        setTimeout(() => (this.dataSource.paginator = this.paginator));
-      },
-      () => (this.isLoading = false),
-    );
+    this.dataSource.loadProducts(this.pagingParams, this.sortParams, filter);
   }
 
   onCreate() {
@@ -85,111 +113,70 @@ export class ProductBuyListComponent implements AfterViewInit, OnDestroy {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
-          // Get index of deleted row
-          const index = this.dataSource.data.indexOf(<ProductBuyDto>productBuy, 0);
-          // Remove row, update dataSource & remove all selection
-          if (index > -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource._updateChangeSubscription();
-            this.selection.clear();
-          }
+          this.loadProductsPage();
         });
         this.snackBar.open(`${productBuy.productName} deleted`, 'Success');
       }
     });
   }
 
-  // Open product-buy-edit dialog
+  // Open product-buy-edit-dialog
   openDialog(productId?: number) {
-    const prodEdit = this.dataSource.data.find(p => p.productId === productId);
+    // Find product in dataSource
+    let prodEdit: ProductBuyDto = null;
 
-    const dialogConfig = new MatDialogConfig();
+    this.dataSource.data.subscribe(res => {
+      prodEdit = res.find(c => c.productId === productId);
+    });
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      width: '100vw',
+      height: '100vh',
+    };
 
-    // Width & height
-    dialogConfig.maxWidth = '100vw';
-    dialogConfig.maxHeight = '100vh';
-    dialogConfig.minWidth = '100%';
-    dialogConfig.height = '100%';
-
-    // Send data to product edit dialog component
+    // Send data to product edit component
     if (prodEdit) {
       dialogConfig.data = {
         productId: prodEdit.productId,
         productName: prodEdit.productName,
         specification: prodEdit.specification,
         categoryId: prodEdit.categoryId,
-        categories: this.categories,
-      };
-    } else {
-      dialogConfig.data = {
-        categories: this.categories,
       };
     }
 
+    // Open dialog with config & passed data
     const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
 
-    // Get data returned from product-edit dialog
-    dialogRef.afterClosed().subscribe((res: ProductBuyDto) => {
-      // Check if res exists
-      if (res) {
-        const index = this.dataSource.data.findIndex(p => p.productId === res.productId);
-
-        // Check if data returned is an updated product or a new one
-        if (index > -1) {
-          // Update dataSource
-          this.dataSource.data.splice(index, 1, res);
-          this.dataSource._updateChangeSubscription();
-        } else {
-          // Add new product to dataSource
-          this.dataSource.data.push(res);
-          this.dataSource._updateChangeSubscription();
-        }
+    // Pass data from dialog in to main component
+    dialogRef.afterClosed().subscribe((data: ProductBuyDto) => {
+      if (data) {
+        this.loadProductsPage();
       }
+
       this.selection.clear();
     });
   }
 
-  // On input focus: setup filterPredicate to only filter by input column
-  setupFilter(column?: string) {
-    // Only filter specify column
-    if (column.length > 0) {
-      this.dataSource.filterPredicate = (data: ProductBuyDto, filter: string) => {
-        const textToSearch = (data[column] && data[column].toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    } else {
-      // If column = '', filter on all column
-      this.dataSource.filterPredicate = (data: ProductBuyDto, filter: string) => {
-        const textToSearch = (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    }
-  }
-
-  applyFilter(filterValue: string) {
-    if (filterValue === undefined) {
-      this.dataSource.filter = '';
-    } else {
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  // Whether the number of selected elements matches the total number of rows
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.paginator.pageSize;
+
     return numSelected === numRows;
   }
 
-  //  Selects all rows if they are not all selected; otherwise clear selection
+  selectAll() {
+    this.dataSource.data.subscribe(rows => {
+      rows.forEach(row => this.selection.select(row));
+    });
+  }
+
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.selectAll();
+    }
   }
 }

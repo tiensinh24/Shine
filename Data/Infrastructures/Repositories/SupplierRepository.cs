@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 using Mapster;
 
@@ -10,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 
 using Newtonsoft.Json;
 
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -22,95 +26,166 @@ namespace Shine.Data.Infrastructures.Repositories
     public class SupplierRepository : Repository, ISupplierRepository
     {
 
-#region Private Field
-        public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IConfiguration configuration) : base(context, roleManager, userManager, configuration)
+#region Constructor
+        public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
+            UserManager<IdentityUser> userManager, IConfiguration configuration
+        ) : base(context, roleManager, userManager, configuration)
         { }
 
 #endregion
 
-#region Constructor        
-
-#endregion
-
 #region Supplier
-        public IEnumerable<SupplierDto> GetSuppliers()
-        {
-            return _context.Set<Supplier>().Include(s => s.Country)
-                .ProjectToType<SupplierDto>().AsNoTracking();
-        }
 
-        public SupplierDto GetSupplier(int id)
+#region Get Values
+        public async Task<IEnumerable<SupplierListDto>> GetSuppliersAsync(
+            Expression<Func<SupplierListDto, object>> sortColumn, string sortOrder)
         {
-            return _context.Set<Supplier>().ProjectToType<SupplierDto>()
-                .FirstOrDefault(s => s.PersonId == id);
-        }
+            var query = _context.Set<Supplier>()
+                .Include(s => s.Country)
+                .AsNoTracking()
+                .ProjectToType<SupplierListDto>();
 
-        public void UpdateSupplier(Supplier supplier)
-        {
-            var supp = _context.Set<Supplier>().FirstOrDefault(s => s.PersonId == supplier.PersonId);
-            if (supp != null)
+            if (sortOrder == "asc")
             {
-                supp.PersonNumber = supplier.PersonNumber;
-                supp.FirstName = supplier.FirstName;
-                supp.LastName = supplier.LastName;
-                supp.Gender = supplier.Gender;
-                supp.DateOfBirth = supplier.DateOfBirth;
-                supp.Telephone = supplier.Telephone;
-                supp.Fax = supplier.Fax;
-                supp.CountryId = supplier.CountryId;
+                return await query.OrderBy(sortColumn).ToListAsync();
+            }
+            else
+            {
+                return await query.OrderByDescending(sortColumn).ToListAsync();
             }
         }
 
-        public void DeleteSupplier(int id)
+        public async Task<PagedList<SupplierListDto>> GetPagedSuppliersAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter)
         {
-            var supplier = _context.Set<Supplier>().FirstOrDefault(s => s.PersonId == id);
+            var source = _context.Set<Supplier>()
+                .AsNoTracking()
+                .ProjectToType<SupplierListDto>();
+
+            switch (sortParams.SortOrder)
+            {
+                case "asc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "fullName":
+                            source = source.OrderBy(s => s.FullName);
+                            break;
+                        case "dateOfBirth":
+                            source = source.OrderBy(s => s.DateOfBirth);
+                            break;
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "fullName":
+                            source = source.OrderByDescending(s => s.FullName);
+                            break;
+                        case "dateOfBirth":
+                            source = source.OrderByDescending(s => s.DateOfBirth);
+                            break;
+                    }
+                    break;
+
+                default:
+                    source = source.OrderBy(s => s.FullName);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                source = source.Where(s => s.FullName.ToLower().Contains(filter.ToLower()));
+            }
+
+            return await PagedList<SupplierListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
+
+        }
+
+        public async Task<SupplierListDto> GetSupplierAsync(int id)
+        {
+            var query = await _context.Set<Supplier>()
+                .FirstOrDefaultAsync(s => s.PersonId == id);
+
+            return query.Adapt<SupplierListDto>();
+        }
+
+#endregion
+
+#region Actions
+
+        public async Task AddSupplierAsync(Supplier supplier)
+        {
+            await _context.Set<Supplier>().AddAsync(supplier);
+        }
+
+        public async Task<SupplierDto> UpdateSupplierAsync(Supplier supplier)
+        {
+            var sup = await _context.Set<Supplier>()
+                .FirstOrDefaultAsync(s => s.PersonId == supplier.PersonId);
+
+            if (sup != null)
+            {
+                sup.PersonNumber = sup.PersonNumber;
+                sup.FirstName = sup.FirstName;
+                sup.LastName = sup.LastName;
+                sup.Gender = sup.Gender;
+                sup.DateOfBirth = sup.DateOfBirth;
+                sup.Telephone = sup.Telephone;
+                sup.Fax = sup.Fax;
+                sup.CountryId = sup.CountryId;
+            }
+
+            return sup.Adapt<SupplierDto>();
+        }
+
+        public async Task<SupplierDto> DeleteSupplierAsync(int id)
+        {
+            var supplier = await _context.Set<Supplier>()
+                .FirstOrDefaultAsync(s => s.PersonId == id);
+
             if (supplier != null)
             {
                 _context.Set<Supplier>().Remove(supplier);
             }
+
+            return supplier.Adapt<SupplierDto>();
         }
 #endregion
 
+#endregion
+
 #region SupplierProduct
-        public void DeleteSupplierProduct(PersonProduct supplierProduct)
-        {
-            _context.PersonProducts.Remove(supplierProduct);
-        }
 
-        public IEnumerable<SupplierProductDto> GetProductsForSupplier(int supplierId)
+#region Get Values
+        public async Task<IEnumerable<SupplierProductListDto>> GetSupplierProductsDto()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<SupplierProductDto> GetSupplierProductsDto()
-        {
-            var result = _context.PersonProducts
+            var query = await _context.PersonProducts
                 .Include(p => p.Person).Include(p => p.Product)
                 .Where(p => p.Product.ProductType == true
                     && p.Person.PersonType == PersonType.Supplier)
-                .ProjectToType<SupplierProductDto>().AsNoTracking();
+                .AsNoTracking()
+                .ProjectToType<SupplierProductListDto>()
+                .ToListAsync();
 
-            return result;
+            return query;
         }
 
-        public IEnumerable<SupplierProductDto> GetSuppliersByProduct(int productId)
+        public IEnumerable<SupplierProductListDto> GetSuppliersByProduct(int productId)
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateSupplierProduct(PersonProduct supplierProduct)
+        public async Task<IEnumerable<ProductBuyListDto>> GetProductsBySupplierAsync(int supplierId)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<ProductsBySupplierDto> GetProductsBySupplier(int supplierId)
-        {
-            var query = _context.Set<PersonProduct>()
-                .Include(p => p.Product)
-                .ThenInclude(p => p.Category)
-                .Where(p => p.PersonId == supplierId)
-                .ProjectToType<ProductsBySupplierDto>()
-                .OrderBy(p => p.ProductName).AsNoTracking();
+            var query = await _context.Set<ProductBuy>()
+                .Include(p => p.Category)
+                .Include(p => p.PersonProducts)
+                .OrderBy(p => p.ProductName)
+                .Where(p => p.PersonProducts.Any(s => s.PersonId == supplierId))
+                .AsNoTracking()
+                .ProjectToType<ProductBuyListDto>()
+                .ToListAsync();
 
             return query;
         }
@@ -128,7 +203,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 .Where(p => p.Category.CategoryType == true
                     && !productsAdded.Contains(p.ProductId))
                 .OrderBy(p => p.Category.CategoryName)
-                .ProjectToType<ProductBuyDto>();
+                .ProjectToType<ProductBuyListDto>();
 
             var result = from b in productsNotAdded
             group new { b.ProductId, b.ProductName, b.Specification } by b.CategoryName into g
@@ -141,10 +216,10 @@ namespace Shine.Data.Infrastructures.Repositories
             return Json(result);
         }
 
-        public ProductsGroupBySupplierDto GetProductsGroupBySupplier(int supplierId)
+        public async Task<ProductsGroupBySupplierDto> GetProductsGroupBySupplierAsync(int supplierId)
         {
-            var supplier = GetSupplier(supplierId);
-            var products = this.GetProductsBySupplier(supplierId);
+            var supplier = await GetSupplierAsync(supplierId);
+            var products = await GetProductsBySupplierAsync(supplierId);
 
             var query = new ProductsGroupBySupplierDto()
             {
@@ -153,7 +228,39 @@ namespace Shine.Data.Infrastructures.Repositories
             };
             return query;
         }
+
+        Task<IEnumerable<SupplierProductListDto>> ISupplierRepository.GetSupplierProductsDto()
+        {
+            throw new NotImplementedException();
+        }
 #endregion
 
+#endregion
+
+#region Actions
+        public async Task AddSupplierProductAsync(PersonProduct model)
+        {
+            await _context.PersonProducts.AddAsync(model);
+        }
+
+
+        public async Task<PersonProductDto> DeleteSupplierProductAsync(PersonProduct model)
+        {
+            var entity = await _context.PersonProducts
+                .FirstOrDefaultAsync(p => p.PersonId == model.PersonId
+                    && p.ProductId == model.ProductId);
+
+            if (entity != null)
+            {
+                _context.PersonProducts.Remove(entity);
+            }
+
+            return entity.Adapt<PersonProductDto>();
+
+        }
+
+#endregion
+
+   
     }
 }

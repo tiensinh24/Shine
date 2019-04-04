@@ -1,6 +1,6 @@
 namespace Shine.Data.Dto.SupplierProducts
 {
-    public class SupplierProductDto
+    public class SupplierProductListDto
     {
 #region Properties
         public int PersonId { get; set; }

@@ -182,7 +182,7 @@ namespace Shine
                 dbContext.Database.Migrate();
 
                 // Seed the Db
-                // DbSeeder.Seed(dbContext, roleManager, userManager);
+                DbSeeder.Seed(dbContext, roleManager, userManager);
             }
 #endregion
         }

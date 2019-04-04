@@ -11,7 +11,7 @@ namespace Shine.Data.Dto._Mapster
     {
         public static void Setting()
         {
-            TypeAdapterConfig<PersonProduct, SupplierProductDto>.NewConfig()
+            TypeAdapterConfig<PersonProduct, SupplierProductListDto>.NewConfig()
                 .Map(
                     dest => dest.FullName, src => GetFullName(src.Person.FirstName, src.Person.LastName)
                 ).Map(

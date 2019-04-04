@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Shine.Data.Migrations
+namespace Shine.Data.Migragions
 {
     public partial class Initial : Migration
     {
@@ -292,7 +292,7 @@ namespace Shine.Data.Migrations
                     Gender = table.Column<bool>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
                     Telephone = table.Column<string>(nullable: true),
                     Fax = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: false),

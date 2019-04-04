@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using Shine.Controllers.Interfaces;
 using Shine.Data;
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -24,7 +26,7 @@ namespace Shine.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class SupplierController : ControllerBase
+    public class SupplierController : ControllerBase, ISupplierController
     {
 #region Private Fields
         private readonly ISupplierRepository _repository;
@@ -38,72 +40,102 @@ namespace Shine.Controllers
 #endregion
 
 #region Supplier
+#region Get Values
         [HttpGet]
-        public ActionResult<IEnumerable<SupplierDto>> GetProducts()
+        public async Task<ActionResult<IEnumerable<SupplierListDto>>> GetSuppliers()
         {
-            return _repository.GetSuppliers().ToList();
+            var query = await _repository.GetSuppliersAsync(s => s.FullName, "asc");
+
+            return Ok(query);
+        }
+
+        public async Task<ActionResult<Paged<SupplierListDto>>> GetPagedSuppliers(
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
+        {
+            var query = await _repository.GetPagedSuppliersAsync(pagingParams, sortParams, filter);
+
+            return new Paged<SupplierListDto>(query);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<SupplierDto> GetSupplier(int id)
+        public async Task<ActionResult<SupplierListDto>> GetSupplier(int id)
         {
-            var supplier = _repository.GetSupplier(id);
+            var supplier = await _repository.GetSupplierAsync(id);
+
             if (supplier == null)
             {
                 return NotFound();
             }
+
             return supplier;
         }
+#endregion
 
+#region Actions
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<SupplierDto> AddSupplier([FromBody] Supplier supplier)
-        {            
-            _repository.Add(supplier);
-            _repository.Commit();
-            var supReturn = _repository.GetSupplier(supplier.PersonId);
-            return supReturn;
+        public async Task<ActionResult<SupplierDto>> AddSupplier([FromBody] Supplier supplier)
+        {
+            await _repository.AddSupplierAsync(supplier);
+            await _repository.CommitAsync();
+
+            return CreatedAtAction(nameof(GetSupplier),
+                new { id = supplier.PersonId },
+                supplier.Adapt<SupplierDto>());
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<SupplierDto> UpdateSupplier([FromBody] Supplier supplier)
+        public async Task<ActionResult<SupplierDto>> UpdateSupplier([FromBody] Supplier supplier)
         {
-            _repository.UpdateSupplier(supplier);
-            _repository.Commit();
-            var supReturn = _repository.GetSupplier(supplier.PersonId);
-            return supReturn;
+            await _repository.UpdateSupplierAsync(supplier);
+            await _repository.CommitAsync();
+
+            return CreatedAtAction(nameof(GetSupplier),
+                new { id = supplier.PersonId },
+                supplier.Adapt<SupplierDto>());
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<int> DeleteSupplier(int id)
+        public async Task<ActionResult<SupplierDto>> DeleteSupplier(int id)
         {
-            _repository.DeleteSupplier(id);
-            _repository.Commit();
-            return id;
+            var supplier = await _repository.DeleteSupplierAsync(id);
+
+            if (supplier == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return supplier;
         }
+#endregion
 #endregion
 
 #region SupplierProduct
+#region Get Values
         [HttpGet]
         [Route("products")]
-        public ActionResult<IEnumerable<SupplierProductDto>> GetSupplierProductsDto()
+        public async Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsDto()
         {
-            return _repository.GetSupplierProductsDto().ToList();
+            var query = await _repository.GetSupplierProductsDto();
+
+            return Ok(query);
         }
 
         [HttpGet("{supplierId}/products-group")]
-        public ActionResult<ProductsGroupBySupplierDto> GetProductsGroupBySupplier(int supplierId)
+        public async Task<ActionResult<ProductsGroupBySupplierDto>> GetProductsGroupBySupplier(int supplierId)
         {
-            var products = _repository.GetProductsGroupBySupplier(supplierId);
-            return products;
+            var entity = await _repository.GetProductsGroupBySupplierAsync(supplierId);
+
+            if (entity == null) return NotFound();
+
+            return entity;
         }
 
         [HttpGet("{supplierId}/products")]
         public ActionResult<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplier(int supplierId)
         {
-            var products = _repository.GetProductsBySupplier(supplierId).ToList();
+            var products = _repository.GetProductsBySupplierAsync(supplierId).ToList();
             return products;
         }
 
@@ -113,22 +145,31 @@ namespace Shine.Controllers
             var products = _repository.GetProductsNotBySupplier(supplierId);
             return products;
         }
+#endregion
 
+#region Actions
         [HttpPost("product")]
-        public ActionResult<PersonProduct> AddSupplierProduct(PersonProduct supplierProduct)
+        public async Task AddSupplierProduct(PersonProduct model)
         {
-            _repository.Add(supplierProduct);
-            _repository.Commit();
-            return supplierProduct;
+            await _repository.AddSupplierProductAsync(model);
+
+            await _repository.CommitAsync();
+
         }
 
         [HttpDelete("product")]
-        public ActionResult<PersonProduct> DeleteSupplierProduct(PersonProduct supplierProduct)
+        public async Task<ActionResult<PersonProductDto>> DeleteSupplierProduct(PersonProduct model)
         {
-            _repository.DeleteSupplierProduct(supplierProduct);
-            _repository.Commit();
-            return supplierProduct;
+            var entity = await _repository.DeleteSupplierProductAsync(model);
+
+            if (entity == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return entity;
         }
+#endregion
+
 #endregion
 
     }

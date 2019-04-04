@@ -114,18 +114,16 @@ namespace Shine.Data
 
         public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenantEntity
         {
-            
 
-                // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
-                //      Use INotRoot mark on derived type to not apply global query filter
-                if (!typeof(INotRoot).IsAssignableFrom(typeof(T)))
-                {
-                    builder.Entity<T>().HasQueryFilter(
-                        item => !EF.Property<bool>(item, "IsDeleted"));
-                    // TODO
-                    // && (_currentUser.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _currentUser.TenantId));
-                }
-            
+            // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
+            //      Use INotRoot mark on derived type to not apply global query filter
+            if (!typeof(INotRoot).IsAssignableFrom(typeof(T)))
+            {
+                builder.Entity<T>().HasQueryFilter(
+                    item => !EF.Property<bool>(item, "IsDeleted"));
+                // TODO
+                // && (_currentUser.DisableTenantFilter || EF.Property<int>(item, "TenantId") == _currentUser.TenantId));
+            }
 
         }
 

@@ -4,6 +4,7 @@ export interface SupplierDto {
     gender: boolean;
     firstName: string;
     lastName: string;
+    fullName: string;
     dateOfBirth: Date;
     telephone: string;
     fax: string;

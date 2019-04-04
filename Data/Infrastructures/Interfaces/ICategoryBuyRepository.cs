@@ -11,13 +11,23 @@ namespace Shine.Data.Infrastructures.Interfaces
 {
     public interface ICategoryBuyRepository : IRepository
     {
-        Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(
-            Expression<Func<CategoryBuySelectDto, object>> sortColumn, string sortOrder);
-        Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
+#region Get Values
+        Task<IEnumerable<CategoryBuyDto>> GetCategoriesAsync(
+            Expression<Func<CategoryBuyDto, object>> sortColumn, string sortOrder);
+
+        Task<PagedList<CategoryBuyDto>> GetPagedCategoriesAsync(
             PagingParams pagingParams, SortParams sortParams, string filter);
-        Task<CategoryBuySelectDto> GetCategoryAsync(int id);
-        void UpdateCategory(CategoryBuy categoryBuy);
-        void DeleteCategory(int id);
+
+        Task<CategoryBuyDto> GetCategoryAsync(int id);
+#endregion
+
+#region Actions
+        Task AddCategoryAsync(CategoryBuy categoryBuy);
+
+        Task<CategoryBuyDto> UpdateCategoryAsync(CategoryBuy categoryBuy);
+
+        Task<CategoryBuyDto> DeleteCategoryAsync(int id);
+#endregion
 
     }
 }

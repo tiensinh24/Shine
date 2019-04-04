@@ -11,7 +11,7 @@ import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { CategoryBuyDataSource } from '../_dataSource/category-buy-data-source';
+import { CategoryBuyDataSource } from '../_data-source/category-buy-data-source';
 
 @Component({
   selector: 'app-category-buy-list',
@@ -24,8 +24,7 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<CategoryBuy>(true, [], false);
   numRows: number;
 
-  isEdit: boolean;
-  title = 'Category List';
+  title = 'Categories List';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

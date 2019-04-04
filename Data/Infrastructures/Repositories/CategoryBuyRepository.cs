@@ -26,11 +26,12 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public async Task<IEnumerable<CategoryBuySelectDto>> GetCategoriesAsync(
-            Expression<Func<CategoryBuySelectDto, object>> sortColumn, string sortOrder)
+#region Get Values
+        public async Task<IEnumerable<CategoryBuyDto>> GetCategoriesAsync(
+            Expression<Func<CategoryBuyDto, object>> sortColumn, string sortOrder)
         {
             var query = _context.Set<CategoryBuy>().AsNoTracking()
-                .ProjectToType<CategoryBuySelectDto>();
+                .ProjectToType<CategoryBuyDto>();
 
             if (sortOrder == "asc")
             {
@@ -42,40 +43,12 @@ namespace Shine.Data.Infrastructures.Repositories
             }
         }
 
-        public async Task<CategoryBuySelectDto> GetCategoryAsync(int id)
-        {
-            var query = await _context.Set<CategoryBuy>().AsNoTracking()
-                .ProjectToType<CategoryBuySelectDto>()
-                .FirstOrDefaultAsync(c => c.CategoryId == id);
-
-            return query;
-        }
-
-        public void UpdateCategory(CategoryBuy categoryBuy)
-        {
-            var category = _context.Set<CategoryBuy>().FirstOrDefault(c => c.CategoryId == categoryBuy.CategoryId);
-            if (category != null)
-            {
-                category.CategoryName = categoryBuy.CategoryName;
-            }
-        }
-
-        public void DeleteCategory(int id)
-        {
-            var category = _context.Set<CategoryBuy>().FirstOrDefault(c => c.CategoryId == id);
-
-            if (category != null)
-            {
-                _context.Set<CategoryBuy>().Remove(category);
-            }
-        }
-
-        public async Task<PagedList<CategoryBuySelectDto>> GetPagedCategoriesAsync(
+        public async Task<PagedList<CategoryBuyDto>> GetPagedCategoriesAsync(
             PagingParams pagingParams, SortParams sortParams, string filter)
         {
             var source = _context.Categories.OfType<CategoryBuy>()
                 .AsNoTracking()
-                .ProjectToType<CategoryBuySelectDto>();
+                .ProjectToType<CategoryBuyDto>();
 
             switch (sortParams.SortOrder)
             {
@@ -113,8 +86,53 @@ namespace Shine.Data.Infrastructures.Repositories
                 source = source.Where(c => c.CategoryName.ToLower().Contains(filter.ToLower()));
             }
 
-            return await PagedList<CategoryBuySelectDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
+            return await PagedList<CategoryBuyDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
+
+        public async Task<CategoryBuyDto> GetCategoryAsync(int id)
+        {
+            var query = await _context.Set<CategoryBuy>().AsNoTracking()
+                .ProjectToType<CategoryBuyDto>()
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
+
+            return query;
+        }
+#endregion
+
+#region Actions
+
+        public async Task AddCategoryAsync(CategoryBuy categoryBuy)
+        {
+            await _context.Set<CategoryBuy>().AddAsync(categoryBuy);
+        }
+
+        public async Task<CategoryBuyDto> UpdateCategoryAsync(CategoryBuy categoryBuy)
+        {
+            var category = await _context.Set<CategoryBuy>()
+                .FirstOrDefaultAsync(c => c.CategoryId == categoryBuy.CategoryId);
+
+            if (category != null)
+            {
+                category.CategoryName = categoryBuy.CategoryName;
+            }
+
+            return category.Adapt<CategoryBuyDto>();
+        }
+
+        public async Task<CategoryBuyDto> DeleteCategoryAsync(int id)
+        {
+            var category = await _context.Set<CategoryBuy>()
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
+
+            if (category != null)
+            {
+                _context.Set<CategoryBuy>().Remove(category);
+            }
+
+            return category.Adapt<CategoryBuyDto>();
+        }
+
+#endregion
 
     }
 }
