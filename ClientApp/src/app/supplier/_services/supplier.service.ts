@@ -26,6 +26,8 @@ export class SupplierService {
     return this.http.get<SupplierList[]>(`${this.baseUrl}api/supplier/`);
   }
 
+  
+
   getPagedSuppliers(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedSupplier> {
     let queryParams = new HttpParams()
       .set('pageIndex', `${pagingParams.pageIndex}`)

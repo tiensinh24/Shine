@@ -14,36 +14,27 @@ using Shine.Data.Dto.Countries;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Repositories
-{
-    public class CountryRepository : Repository, ICountryRepository
-    {
-#region Constructor        
+namespace Shine.Data.Infrastructures.Repositories {
+    public class CountryRepository : Repository, ICountryRepository {
+        #region Constructor        
         public CountryRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
-#endregion
+        #endregion
 
-#region Get Values
+        #region Get Values
         public async Task<IEnumerable<CountryDto>> GetCountriesAsync(
-            Expression<Func<CountryDto, object>> sortColumn = null, string sortOrder = "asc")
-        {
+            Expression<Func<CountryDto, object>> sortColumn = null, string sortOrder = "asc") {
             var query = _context.Countries.AsNoTracking()
                 .ProjectToType<CountryDto>();
 
-            if (sortColumn != null)
-            {
-                if (sortOrder == "desc")
-                {
+            if (sortColumn != null) {
+                if (sortOrder == "desc") {
                     query = query.OrderByDescending(sortColumn);
-                }
-                else
-                {
+                } else {
                     query = query.OrderBy(sortColumn);
                 }
-            }
-            else
-            {
+            } else {
                 query = query.OrderBy(c => c.CountryName);
             }
 
@@ -51,8 +42,15 @@ namespace Shine.Data.Infrastructures.Repositories
 
         }
 
-        public async Task<CountryDto> GetCountryAsync(int id)
-        {
+        public async Task<IEnumerable<CountrySelectDto>> GetCountriesSelectAsync() {
+            var query = _context.Countries
+                .AsNoTracking()
+                .ProjectToType<CountrySelectDto>();
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<CountryDto> GetCountryAsync(int id) {
             var query = await _context.Countries
                 .AsNoTracking()
                 .ProjectToType<CountryDto>()
@@ -60,22 +58,19 @@ namespace Shine.Data.Infrastructures.Repositories
 
             return query;
         }
-#endregion
+        #endregion
 
-#region Actions
+        #region Actions
 
-        public async Task AddCountryAsync(Country country)
-        {
+        public async Task AddCountryAsync(Country country) {
             await _context.Countries.AddAsync(country);
         }
 
-        public async Task<CountryDto> UpdateCountryAsync(Country country)
-        {
+        public async Task<CountryDto> UpdateCountryAsync(Country country) {
             var countryEdit = await _context.Countries
                 .FirstOrDefaultAsync(c => c.CountryId == country.CountryId);
 
-            if (countryEdit != null)
-            {
+            if (countryEdit != null) {
                 countryEdit.ContinentName = country.ContinentName;
                 countryEdit.ContinentCode = country.ContinentCode;
                 countryEdit.CountryName = country.ContinentName;
@@ -87,18 +82,16 @@ namespace Shine.Data.Infrastructures.Repositories
             return countryEdit.Adapt<CountryDto>();
         }
 
-        public async Task<CountryDto> DeleteCountryAsync(int id)
-        {
+        public async Task<CountryDto> DeleteCountryAsync(int id) {
             var country = await _context.Countries
                 .FirstOrDefaultAsync(c => c.CountryId == id);
 
-            if (country != null)
-            {
+            if (country != null) {
                 _context.Countries.Remove(country);
             }
 
             return country.Adapt<CountryDto>();
         }
-#endregion
+        #endregion
     }
 }

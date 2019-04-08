@@ -1,45 +1,46 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import {
+    SupplierEditDialogComponent
+} from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 
-import { SupplierService } from '../_services/supplier.service';
-import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+import { AfterViewInit, Component } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+
 import { SupplierList } from '../_interfaces/supplier-list';
+import { SupplierService } from '../_services/supplier.service';
 
 @Component({
   selector: 'app-supplier-detail',
   templateUrl: './supplier-detail.component.html',
-  styleUrls: ['./supplier-detail.component.css']
+  styleUrls: ['./supplier-detail.component.css'],
 })
 export class SupplierDetailComponent implements AfterViewInit {
   supplier: SupplierList;
   isAddProducts = false;
   title: string;
 
-  constructor(private supplierService: SupplierService,
+  constructor(
+    private supplierService: SupplierService,
     private route: ActivatedRoute,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+  ) {}
 
   ngAfterViewInit(): void {
     const id = +this.route.snapshot.params.supplierId;
     this.supplierService.getSupplier(id).subscribe(res => {
       this.supplier = res;
-      this.title = `Add products for ${res.firstName} ${res.lastName}`;
+      this.title = `Add products for ${res.fullName}`;
     });
   }
 
   // Open supplier-edit dialog
   openDialog() {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    // Width & height
-    dialogConfig.maxWidth = '100vw';
-    dialogConfig.maxHeight = '100vh';
-    dialogConfig.minWidth = '100%';
-    dialogConfig.height = '100%';
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      width: '100vw',
+      height: '100vh',
+    };
 
     // Send data to supplier edit dialog component
     if (this.supplier) {
@@ -67,7 +68,6 @@ export class SupplierDetailComponent implements AfterViewInit {
         }
       });
     }
-
   }
 
   toggleAddProduct() {

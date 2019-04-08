@@ -1,32 +1,30 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
+
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { SupplierService } from '../_services/supplier.service';
 import { SupplierProduct } from '../_interfaces/supplier-product';
+import { SupplierService } from '../_services/supplier.service';
 
-interface Products {
-  productId: number;
-  productName: string;
-  specification: string;
-  price: number;
-}
 interface ProductsNotAdded {
   category: string;
-  products?: Products[];
+  products?: ProductBuy[];
 }
 
 @Component({
   selector: 'app-products-not-added',
   templateUrl: './products-not-added.component.html',
-  styleUrls: ['./products-not-added.component.css']
+  styleUrls: ['./products-not-added.component.css'],
 })
 export class ProductsNotAddedComponent implements OnInit {
   productsNotAdded?: ProductsNotAdded;
 
   @Input() title: string;
 
-  constructor(private supplierService: SupplierService,
-    private route: ActivatedRoute) { }
+  constructor(
+    private supplierService: SupplierService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params.supplierId;
@@ -35,9 +33,11 @@ export class ProductsNotAddedComponent implements OnInit {
 
   private getProductsNotAdded(supplierId: number) {
     if (supplierId > 0) {
-      this.supplierService.getProductsNotAdded(supplierId).subscribe((res: ProductsNotAdded) => {
-        this.productsNotAdded = res;
-      });
+      this.supplierService
+        .getProductsNotAdded(supplierId)
+        .subscribe((res: ProductsNotAdded) => {
+          this.productsNotAdded = res;
+        });
     }
   }
 
@@ -45,10 +45,8 @@ export class ProductsNotAddedComponent implements OnInit {
     const supplierId = +this.route.snapshot.params.supplierId;
     const entity = <SupplierProduct>{
       personId: supplierId,
-      productId: productId
+      productId: productId,
     };
     this.supplierService.addSupplierProduct(entity).subscribe();
-
   }
-
 }

@@ -3,12 +3,9 @@ using Mapster;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Models;
 
-namespace Shine.Data.Dto._Mapster
-{
-    public static class SupplierSetting
-    {
-        public static void Setting()
-        {
+namespace Shine.Data.Dto._Mapster {
+    public static class SupplierSetting {
+        public static void Setting() {
             TypeAdapterConfig<Supplier, SupplierListDto>.NewConfig()
                 .Map(
                     dest => dest.FullName, src => src.FirstName + " " + src.LastName

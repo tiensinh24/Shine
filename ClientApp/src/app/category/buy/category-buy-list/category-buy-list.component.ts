@@ -1,17 +1,20 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { MatSort, MatPaginator, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-import { Router } from '@angular/router';
-import { fromEvent, merge, Observable } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-
-import { CategoryBuy } from '../_interfaces/category-buy';
-import { CategoryBuyService } from '../_services/category-buy.service';
-import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import {
+    CategoryBuyDialogComponent
+} from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
+
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
+
 import { CategoryBuyDataSource } from '../_data-source/category-buy-data-source';
+import { CategoryBuy } from '../_interfaces/category-buy';
+import { CategoryBuyService } from '../_services/category-buy.service';
 
 @Component({
   selector: 'app-category-buy-list',
@@ -101,13 +104,17 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(categoryBuy: CategoryBuy) {
-    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${categoryBuy.categoryName}?`);
+    const dialogRef = this.confirmService.openDialog(
+      `Are you sure to delete ${categoryBuy.categoryName}?`,
+    );
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.categoryBuyService.deleteCategory(categoryBuy.categoryId).subscribe(() => {
-          this.loadCategoriesPage();
-        });
+        this.categoryBuyService
+          .deleteCategory(categoryBuy.categoryId)
+          .subscribe(() => {
+            this.loadCategoriesPage();
+          });
         this.snackBar.open(`${categoryBuy.categoryName} deleted`, 'Success');
       }
     });
@@ -138,15 +145,22 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
     }
 
     // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      CategoryBuyDialogComponent,
+      dialogConfig,
+    );
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
       if (data) {
         if (!catEdit) {
-          this.categoryBuyService.addCategory(data).subscribe(() => this.loadCategoriesPage());
+          this.categoryBuyService
+            .addCategory(data)
+            .subscribe(() => this.loadCategoriesPage());
         } else {
-          this.categoryBuyService.updateCategory(data).subscribe(() => this.loadCategoriesPage());
+          this.categoryBuyService
+            .updateCategory(data)
+            .subscribe(() => this.loadCategoriesPage());
         }
       }
       this.selection.clear();

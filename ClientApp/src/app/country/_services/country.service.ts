@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Country } from '../_interfaces/country';
+import { CountrySelect } from '../_interfaces/country-select';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class CountryService {
 
   getCountryList(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.baseUrl}api/country/`);
+  }
+
+  getCountriesSelect(): Observable<CountrySelect[]> {
+    return this.http.get<CountrySelect[]>(`${this.baseUrl}api/country/Select`)
   }
 
   getCountry(id: number): Observable<Country> {

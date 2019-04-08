@@ -1,11 +1,16 @@
 <!-- Loading progress bar -->
-<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
+<mat-progress-bar
+  *ngIf="(dataSource.isLoading | async)"
+  color="accent"
+  aria-label="Progress bar"
+  mode="buffer"
+>
 </mat-progress-bar>
 
 <!-- Title -->
 <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
   <span class="fill"></span>
-  <div class="mat-headline">{{title}}</div>
+  <div class="mat-headline">{{ title }}</div>
   <span class="fill"></span>
   <button mat-mini-fab matTooltip="Go to Sell" [routerLink]="['/product-sell']">
     Buy
@@ -16,69 +21,103 @@
   <!-- Checkbox Column -->
   <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="masterToggle()" [checked]="isAllSelected()"
-        [indeterminate]="!isAllSelected() && selection.hasValue()">
+      <mat-checkbox
+        (change)="masterToggle()"
+        [checked]="isAllSelected()"
+        [indeterminate]="!isAllSelected() && selection.hasValue()"
+      >
       </mat-checkbox>
     </th>
     <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)">
+      <mat-checkbox
+        (click)="selection.toggle(row)"
+        [checked]="selection.isSelected(row)"
+      >
       </mat-checkbox>
     </td>
   </ng-container>
   <!-- ProductName Column -->
   <ng-container matColumnDef="productName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Product Name</b> </th>
-    <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <b>Product Name</b>
+    </th>
+    <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
   </ng-container>
   <!-- Specification Column -->
   <ng-container matColumnDef="specification">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Specification</b> </th>
-    <td mat-cell *matCellDef="let row"> {{row.specification}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <b>Specification</b>
+    </th>
+    <td mat-cell *matCellDef="let row">{{ row.specification }}</td>
   </ng-container>
   <!-- CategoryName Column -->
   <ng-container matColumnDef="categoryName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Category</b> </th>
-    <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Category</b></th>
+    <td mat-cell *matCellDef="let row">{{ row.categoryName }}</td>
   </ng-container>
 
   <!-- Actions Column -->
   <ng-container matColumnDef="actions" stickyEnd>
     <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
       <button mat-icon-button color="primary" (click)="onCreate()">
-        <mat-icon matTooltip="Create new product" aria-label="Create new product">add_circle</mat-icon>
+        <mat-icon
+          matTooltip="Create new product"
+          aria-label="Create new product"
+          >add_circle</mat-icon
+        >
       </button>
     </mat-header-cell>
 
     <mat-cell *matCellDef="let row">
-
-      <button matTooltip="Product detail" mat-icon-button color="primary" (click)="onDetail(row)">
+      <button
+        matTooltip="Product detail"
+        mat-icon-button
+        color="primary"
+        (click)="onDetail(row)"
+      >
         <mat-icon aria-label="Detail">dehaze</mat-icon>
       </button>
 
-      <button matTooltip="Edit product" mat-icon-button color="accent" (click)="openDialog(row.productId)">
+      <button
+        matTooltip="Edit product"
+        mat-icon-button
+        color="accent"
+        (click)="openDialog(row.productId)"
+      >
         <mat-icon aria-label="Edit">edit</mat-icon>
       </button>
 
-      <button matTooltip="Delete product" mat-icon-button color="warn" (click)="onDelete(row)">
+      <button
+        matTooltip="Delete product"
+        mat-icon-button
+        color="warn"
+        (click)="onDelete(row)"
+      >
         <mat-icon aria-label="Delete">delete</mat-icon>
       </button>
-
     </mat-cell>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="selection.toggle(row)"
+  ></tr>
 </table>
 
 <!-- Paginator & filter -->
 <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
-
-  <mat-paginator fxFlex="70" [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8"
-    [pageSizeOptions]="[8, 16, 25]" showFirstLastButtons>
+  <mat-paginator
+    fxFlex="70"
+    [length]="(dataSource.paging | async)?.totalItems"
+    [pageSize]="8"
+    [pageSizeOptions]="[8, 16, 25]"
+    showFirstLastButtons
+  >
   </mat-paginator>
 
   <mat-form-field fxFlex>
-    <input matInput placeholder="Search products" #input>
+    <input matInput placeholder="Search products" #input />
   </mat-form-field>
-
 </mat-card>

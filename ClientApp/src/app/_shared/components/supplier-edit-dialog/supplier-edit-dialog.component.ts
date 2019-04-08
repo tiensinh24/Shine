@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-import { environment } from 'src/environments/environment';
-import { Country } from 'src/app/country/_interfaces/country';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { Supplier } from 'src/app/supplier/_interfaces/supplier';
+import { CountrySelect } from 'src/app/country/_interfaces/country-select';
 import { CountryService } from 'src/app/country/_services/country.service';
+import { Supplier } from 'src/app/supplier/_interfaces/supplier';
+import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-supplier-edit-dialog',
@@ -14,7 +13,7 @@ import { CountryService } from 'src/app/country/_services/country.service';
   styleUrls: ['./supplier-edit-dialog.component.css'],
 })
 export class SupplierEditDialogComponent implements OnInit, OnDestroy {
-  countries = <Country[]>{};
+  countries = <CountrySelect[]>{};
   formGroup: FormGroup;
   editMode: boolean;
   title: string;
@@ -41,9 +40,11 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
       this.title = 'Create new supplier';
     }
 
-    this.countryService.getCountryList().subscribe((res: Country[]) => {
-      this.countries = res;
-    });
+    this.countryService
+      .getCountriesSelect()
+      .subscribe((res: CountrySelect[]) => {
+        this.countries = res;
+      });
   }
 
   ngOnDestroy(): void {}

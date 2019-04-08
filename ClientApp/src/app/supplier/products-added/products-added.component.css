@@ -18,7 +18,8 @@
 }
 
 .mat-paginator-sticky {
-  bottom: 0px;
+  bottom: 0.5px;
   position: sticky;
   z-index: 10;
 }
+

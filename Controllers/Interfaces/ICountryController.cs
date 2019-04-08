@@ -22,9 +22,9 @@ namespace Shine.Controllers.Interfaces
 #endregion
 
 #region Actions
-        Task<ActionResult<CountryDto>> AddCategory([FromBody] Country country);
+        Task<ActionResult<CountryDto>> AddCountry([FromBody] Country country);
 
-        Task<ActionResult<CountryDto>> UpdateCategory([FromBody] Country country);
+        Task<ActionResult<CountryDto>> UpdateCountry([FromBody] Country country);
 
         Task<ActionResult<CountryDto>> DeleteCountry(int id);
 #endregion

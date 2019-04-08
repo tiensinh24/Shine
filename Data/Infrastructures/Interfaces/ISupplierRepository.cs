@@ -11,13 +11,11 @@ using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Interfaces
-{
-    public interface ISupplierRepository : IRepository
-    {
-#region Supplier
+namespace Shine.Data.Infrastructures.Interfaces {
+    public interface ISupplierRepository : IRepository {
+        #region Supplier
 
-#region Get Values
+        #region Get Values
         Task<IEnumerable<SupplierListDto>> GetSuppliersAsync(
             Expression<Func<SupplierListDto, object>> sortColumn, string sortOrder);
 
@@ -26,23 +24,23 @@ namespace Shine.Data.Infrastructures.Interfaces
 
         Task<SupplierListDto> GetSupplierAsync(int id);
 
-#endregion
+        #endregion
 
-#region Actions
+        #region Actions
         Task AddSupplierAsync(Supplier supplier);
 
         Task<SupplierDto> UpdateSupplierAsync(Supplier supplier);
 
         Task<SupplierDto> DeleteSupplierAsync(int id);
 
-#endregion       
+        #endregion       
 
-#endregion
+        #endregion
 
-#region SupplierProduct
+        #region SupplierProduct
 
-#region Get Values
-        Task<IEnumerable<SupplierProductListDto>> GetSupplierProductsDto();
+        #region Get Values
+        Task<IEnumerable<SupplierProductListDto>> GetSupplierProductsListAsync();
 
         IEnumerable<SupplierProductListDto> GetSuppliersByProduct(int productId);
 
@@ -51,15 +49,15 @@ namespace Shine.Data.Infrastructures.Interfaces
         Task<ProductsGroupBySupplierDto> GetProductsGroupBySupplierAsync(int supplierId);
 
         JsonResult GetProductsNotBySupplier(int supplierId);
-#endregion
+        #endregion
 
-#region Actions
+        #region Actions
         Task AddSupplierProductAsync(PersonProduct model);
 
         Task<PersonProductDto> DeleteSupplierProductAsync(PersonProduct model);
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
     }
 }
