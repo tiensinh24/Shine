@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { OrderBuyService } from '../_services/order-buy.service';
 import { Router } from '@angular/router';
 import { OrderBuy } from '../_interfaces/order-buy';
-import { SupplierDto } from 'src/app/supplier/_interfaces/supplier-dto';
+import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
@@ -26,7 +26,7 @@ export class OrderBuyListComponent implements AfterViewInit, OnDestroy {
   ];
   dataSource = new MatTableDataSource<OrderBuyDto>([]);
   selection = new SelectionModel<OrderBuyDto>(true, []);
-  suppliers: SupplierDto[] = [];
+  suppliers: SupplierList[] = [];
   isLoading = true;
   title = 'Order List';
 
@@ -71,7 +71,7 @@ export class OrderBuyListComponent implements AfterViewInit, OnDestroy {
   getSuppliers() {
     this.suppliersSub = this.supplierService.getSuppliers().subscribe(res => {
       this.suppliers = res;
-    })
+    });
   }
 
   onCreate() {

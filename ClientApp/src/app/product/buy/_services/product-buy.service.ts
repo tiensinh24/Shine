@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-import { ProductBuyDto } from '../_interfaces/product-buy-dto';
+import { ProductBuyList } from '../_interfaces/product-buy-list';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { environment } from 'src/environments/environment';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
@@ -20,8 +20,8 @@ export class ProductBuyService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<ProductBuyDto[]> {
-    return this.http.get<ProductBuyDto[]>(this.baseUrl + 'api/productBuy/');
+  getProducts(): Observable<ProductBuyList[]> {
+    return this.http.get<ProductBuyList[]>(this.baseUrl + 'api/productBuy/');
   }
 
   getProduct(id: number): Observable<ProductBuy> {

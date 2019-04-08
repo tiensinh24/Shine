@@ -1,7 +1,7 @@
 import { Paging } from 'src/app/_shared/_intefaces/paging';
-import { ProductBuyDto } from './product-buy-dto';
+import { ProductBuyList } from './product-buy-list';
 
 export interface PagedProductBuy {
-  items: ProductBuyDto[];
+  items: ProductBuyList[];
   paging: Paging;
 }

@@ -1,5 +1,6 @@
 <!-- Loading progress bar -->
-<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
+</mat-progress-bar>
 
 <!-- Title -->
 <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
@@ -72,8 +73,8 @@
 <!-- Paginator & filter -->
 <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
 
-  <mat-paginator fxFlex="50" [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25]"
-    [showFirstLastButtons]="true">
+  <mat-paginator fxFlex="70" [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8"
+    [pageSizeOptions]="[8, 16, 25]" showFirstLastButtons>
   </mat-paginator>
 
   <mat-form-field fxFlex>

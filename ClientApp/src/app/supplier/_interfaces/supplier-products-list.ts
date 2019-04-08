@@ -1,4 +1,4 @@
-export interface SupplierProductsDto {
+export interface SupplierProductsList {
     personId: number;
     productId: number;
     fullName: string;

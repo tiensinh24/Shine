@@ -8,30 +8,15 @@ import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { Paging } from 'src/app/_shared/_intefaces/paging';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { PagedProductBuy } from '../_interfaces/paged-product-buy';
-import { ProductBuyDto } from '../_interfaces/product-buy-dto';
+import { ProductBuyList } from '../_interfaces/product-buy-list';
+import { TableSource } from 'src/app/_shared/_helpers/table-source';
 
-export class ProductBuyDataSource implements DataSource<ProductBuyDto> {
-  private productsSubject = new BehaviorSubject<ProductBuyDto[]>([]);
-  private pagingSubject = new BehaviorSubject<Paging>(null);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-
-  public isLoading = this.loadingSubject.asObservable();
-  public paging = this.pagingSubject.asObservable();
-  public data = this.productsSubject.asObservable();
-
-  constructor(private productBuyService: ProductBuyService) {}
-
-  connect(collectionViewer: CollectionViewer): Observable<ProductBuyDto[]> {
-    return this.data;
+export class ProductBuyDataSource extends TableSource<ProductBuyList> {
+  constructor(private productBuyService: ProductBuyService) {
+    super();
   }
 
-  disconnect(collectionViewer: CollectionViewer): void {
-    this.productsSubject.complete();
-    this.pagingSubject.complete();
-    this.loadingSubject.complete();
-  }
-
-  loadProducts(pagingParams: PagingParams, sortParams?: SortParams, filter = '') {
+  loadData(pagingParams: PagingParams, sortParams?: SortParams, filter = '') {
     this.loadingSubject.next(true);
 
     this.productBuyService
@@ -41,7 +26,7 @@ export class ProductBuyDataSource implements DataSource<ProductBuyDto> {
         finalize(() => this.loadingSubject.next(false)),
       )
       .subscribe((res: PagedProductBuy) => {
-        this.productsSubject.next(res.items);
+        this.dataSubject.next(res.items);
         this.pagingSubject.next(res.paging);
       });
   }

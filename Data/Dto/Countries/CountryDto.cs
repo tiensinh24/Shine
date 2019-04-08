@@ -1,12 +1,7 @@
-using System.Collections.Generic;
-
-using Shine.Data.Models.Interfaces;
-
-namespace Shine.Data.Models
+namespace Shine.Data.Dto.Countries
 {
-    public class Country : IAuditedEntityBase, ISoftDelete
+    public class CountryDto
     {
-#region Properties
         public int CountryId { get; set; }
         public string ContinentName { get; set; }
         public string ContinentCode { get; set; }
@@ -14,10 +9,5 @@ namespace Shine.Data.Models
         public string TwoLetterCountryCode { get; set; }
         public string ThreeLetterCountryCode { get; set; }
         public int CountryNumber { get; set; }
-#endregion
-
-#region Navigation Properties
-        public IEnumerable<Person> Peoples { get; set; }
-#endregion
     }
 }

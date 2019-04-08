@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { OrderBuyService } from '../_services/order-buy.service';
 import { OrderBuyDto } from '../_interfaces/order-buy-dto';
-import { SupplierDto } from 'src/app/supplier/_interfaces/supplier-dto';
+import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { ProductOrderDto } from '../_interfaces/product-order-dto';
@@ -31,7 +31,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   editMode = false;
   formGroup: FormGroup;
   order: OrderBuyDto;
-  suppliers: SupplierDto[];
+  suppliers: SupplierList[];
   orderWithDetailsToAdd: OrderBuyWithDetailsToAddDto;
 
   // Input

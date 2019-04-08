@@ -1,9 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
 using Mapster;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
+using Shine.Data.Dto.Countries;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
@@ -17,21 +24,56 @@ namespace Shine.Data.Infrastructures.Repositories
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
-        public IEnumerable<Country> GetCountries()
+#region Get Values
+        public async Task<IEnumerable<CountryDto>> GetCountriesAsync(
+            Expression<Func<CountryDto, object>> sortColumn = null, string sortOrder = "asc")
         {
-            return _context.Countries.AsNoTracking();
+            var query = _context.Countries.AsNoTracking()
+                .ProjectToType<CountryDto>();
+
+            if (sortColumn != null)
+            {
+                if (sortOrder == "desc")
+                {
+                    query = query.OrderByDescending(sortColumn);
+                }
+                else
+                {
+                    query = query.OrderBy(sortColumn);
+                }
+            }
+            else
+            {
+                query = query.OrderBy(c => c.CountryName);
+            }
+
+            return await query.ToListAsync();
 
         }
 
-        public Country GetCountry(int id)
+        public async Task<CountryDto> GetCountryAsync(int id)
         {
-            return _context.Countries.ProjectToType<Country>()
-                .FirstOrDefault(c => c.CountryId == id);
+            var query = await _context.Countries
+                .AsNoTracking()
+                .ProjectToType<CountryDto>()
+                .FirstOrDefaultAsync(c => c.CountryId == id);
+
+            return query;
+        }
+#endregion
+
+#region Actions
+
+        public async Task AddCountryAsync(Country country)
+        {
+            await _context.Countries.AddAsync(country);
         }
 
-        public void UpdateCountry(Country country)
+        public async Task<CountryDto> UpdateCountryAsync(Country country)
         {
-            var countryEdit = _context.Countries.FirstOrDefault(c => c.CountryId == country.CountryId);
+            var countryEdit = await _context.Countries
+                .FirstOrDefaultAsync(c => c.CountryId == country.CountryId);
+
             if (countryEdit != null)
             {
                 countryEdit.ContinentName = country.ContinentName;
@@ -41,15 +83,22 @@ namespace Shine.Data.Infrastructures.Repositories
                 countryEdit.ThreeLetterCountryCode = country.ThreeLetterCountryCode;
                 countryEdit.CountryNumber = country.CountryNumber;
             }
+
+            return countryEdit.Adapt<CountryDto>();
         }
 
-        public void DeleteCountry(int id)
+        public async Task<CountryDto> DeleteCountryAsync(int id)
         {
-            var country = _context.Countries.FirstOrDefault(c => c.CountryId == id);
+            var country = await _context.Countries
+                .FirstOrDefaultAsync(c => c.CountryId == id);
+
             if (country != null)
             {
                 _context.Countries.Remove(country);
             }
+
+            return country.Adapt<CountryDto>();
         }
+#endregion
     }
 }

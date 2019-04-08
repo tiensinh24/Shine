@@ -16,8 +16,9 @@ import {
 import { Subscription } from 'rxjs';
 
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { ProductsBySupplierDto } from 'src/app/supplier/_interfaces/products-by-supplier';
+
 import { ProductOrderDto } from '../../_interfaces/product-order-dto';
+import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 
 @Component({
   selector: 'app-order-buy-add-products',
@@ -26,7 +27,7 @@ import { ProductOrderDto } from '../../_interfaces/product-order-dto';
 })
 export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   tableTitle = 'Order Details';
-  products: ProductsBySupplierDto[];
+  products: ProductBuyList[];
   formGroupDetail: FormGroup;
   productsToAdd: ProductOrderDto[] = [];
 
@@ -112,7 +113,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
     if (index > -1) {
       this.productsToAdd.splice(index, 1);
 
-      const prod = <ProductsBySupplierDto>{
+      const prod = <ProductBuyList>{
         productId: productOrder.productId,
         productName: productOrder.productName,
       };

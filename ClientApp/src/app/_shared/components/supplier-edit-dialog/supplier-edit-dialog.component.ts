@@ -1,11 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl, } from '@angular/forms';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material';
-import * as moment from 'moment';
-
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { environment } from 'src/environments/environment';
 import { Country } from 'src/app/country/_interfaces/country';
@@ -19,7 +14,6 @@ import { CountryService } from 'src/app/country/_services/country.service';
   styleUrls: ['./supplier-edit-dialog.component.css'],
 })
 export class SupplierEditDialogComponent implements OnInit, OnDestroy {
-  baseUrl = environment.URL;
   countries = <Country[]>{};
   formGroup: FormGroup;
   editMode: boolean;
@@ -32,32 +26,27 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<SupplierEditDialogComponent>,
     // Inject data from supplier-list component
     @Inject(MAT_DIALOG_DATA) public dataFromList,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.createForm();
 
-    if (this.dataFromList.firstName) {
+    if (this.dataFromList) {
       this.editMode = true;
 
-      this.title = `Edit ${this.dataFromList.firstName} ${this.dataFromList.lastName}`;
+      this.title = `Edit ${this.dataFromList.fullName}`;
       this.updateForm();
     } else {
       this.editMode = false;
       this.title = 'Create new supplier';
     }
-    // Get countries from list component without calling API
-    this.countries = this.dataFromList.countries;
-    // If countries not found, call API
-    if (!this.countries) {
-      this.countryService.getCountryList().subscribe((res: Country[]) => {
-        this.countries = res;
-      });
-    }
 
+    this.countryService.getCountryList().subscribe((res: Country[]) => {
+      this.countries = res;
+    });
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   createForm() {
     this.formGroup = this.fb.group({
@@ -157,10 +146,9 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     return formControl.hasError('required')
       ? 'You must enter a value'
       : formControl.hasError('email')
-        ? 'Not a valid email'
-        : formControl.hasError('pattern')
-          ? 'Please enter a number!'
-          : '';
+      ? 'Not a valid email'
+      : formControl.hasError('pattern')
+      ? 'Please enter a number!'
+      : '';
   }
-
 }

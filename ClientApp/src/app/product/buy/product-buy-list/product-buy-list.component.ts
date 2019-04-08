@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription, fromEvent, merge } from 'rxjs';
 
-import { ProductBuyDto } from '../_interfaces/product-buy-dto';
+import { ProductBuyList } from '../_interfaces/product-buy-list';
 import { ProductBuyService } from '../_services/product-buy.service';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
@@ -24,7 +24,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 export class ProductBuyListComponent implements OnInit, AfterViewInit {
   dataSource: ProductBuyDataSource;
   displayedColumns = ['select', 'productName', 'specification', 'categoryName', 'actions'];
-  selection = new SelectionModel<ProductBuyDto>(true, [], false);
+  selection = new SelectionModel<ProductBuyList>(true, [], false);
   numRows: number;
 
   title = 'Products List';
@@ -53,7 +53,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new ProductBuyDataSource(this.productBuyService);
-    this.dataSource.loadProducts(this.pagingParams, this.sortParams);
+    this.dataSource.loadData(this.pagingParams, this.sortParams);
   }
 
   ngAfterViewInit(): void {
@@ -92,7 +92,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
     const filter = this.input.nativeElement.value;
 
-    this.dataSource.loadProducts(this.pagingParams, this.sortParams, filter);
+    this.dataSource.loadData(this.pagingParams, this.sortParams, filter);
   }
 
   onCreate() {
@@ -123,7 +123,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   // Open product-buy-edit-dialog
   openDialog(productId?: number) {
     // Find product in dataSource
-    let prodEdit: ProductBuyDto = null;
+    let prodEdit: ProductBuyList = null;
 
     this.dataSource.data.subscribe(res => {
       prodEdit = res.find(c => c.productId === productId);
@@ -150,7 +150,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
 
     // Pass data from dialog in to main component
-    dialogRef.afterClosed().subscribe((data: ProductBuyDto) => {
+    dialogRef.afterClosed().subscribe((data: ProductBuyList) => {
       if (data) {
         this.loadProductsPage();
       }

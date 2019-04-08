@@ -25,9 +25,10 @@ import { OrderBuyDto } from '../../_interfaces/order-buy-dto';
 import { OrderBuyService } from '../../_services/order-buy.service';
 import { ProductOrderDto } from '../../_interfaces/product-order-dto';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { ProductsBySupplierDto } from 'src/app/supplier/_interfaces/products-by-supplier';
+
 import { ProductOrder } from '../../_interfaces/product-order';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 
 @Component({
   selector: 'app-order-buy-product-details',
@@ -46,7 +47,7 @@ export class OrderBuyProductDetailsComponent
     'actions',
   ];
   orderBuy: OrderBuyDto;
-  products: ProductsBySupplierDto[];
+  products: ProductBuyList[];
   dataSource = new MatTableDataSource<ProductOrderDto>([]);
   formGroupDetail: FormGroup;
   orderId: number;
@@ -156,7 +157,7 @@ export class OrderBuyProductDetailsComponent
         this.dataSource._updateChangeSubscription();
 
         // Refresh product selection list, create new instance to push into product selection list
-        const productOrder = <ProductsBySupplierDto>{
+        const productOrder = <ProductBuyList>{
           productId: prodOrder.productId,
           productName: prodOrder.productName,
         };

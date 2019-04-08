@@ -14,6 +14,7 @@ using Shine.Controllers.Interfaces;
 using Shine.Data;
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Products;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Infrastructures.Interfaces;
@@ -49,6 +50,7 @@ namespace Shine.Controllers
             return Ok(query);
         }
 
+        [HttpGet("Paged")]
         public async Task<ActionResult<Paged<SupplierListDto>>> GetPagedSuppliers(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
         {
@@ -89,12 +91,13 @@ namespace Shine.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<SupplierDto>> UpdateSupplier([FromBody] Supplier supplier)
         {
-            await _repository.UpdateSupplierAsync(supplier);
+            var sup = await _repository.UpdateSupplierAsync(supplier);
+
+            if (sup == null) return NotFound();
+
             await _repository.CommitAsync();
 
-            return CreatedAtAction(nameof(GetSupplier),
-                new { id = supplier.PersonId },
-                supplier.Adapt<SupplierDto>());
+            return sup;
         }
 
         [HttpDelete("{id}")]
@@ -115,7 +118,7 @@ namespace Shine.Controllers
 #region Get Values
         [HttpGet]
         [Route("products")]
-        public async Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsDto()
+        public async Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsList()
         {
             var query = await _repository.GetSupplierProductsDto();
 
@@ -129,14 +132,14 @@ namespace Shine.Controllers
 
             if (entity == null) return NotFound();
 
-            return entity;
+            return Ok(entity);
         }
 
         [HttpGet("{supplierId}/products")]
-        public ActionResult<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplier(int supplierId)
+        public async Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProductsBySupplier(int supplierId)
         {
-            var products = _repository.GetProductsBySupplierAsync(supplierId).ToList();
-            return products;
+            var products = await _repository.GetProductsBySupplierAsync(supplierId);
+            return Ok(products);
         }
 
         [HttpGet("{supplierId}/products-not-added")]

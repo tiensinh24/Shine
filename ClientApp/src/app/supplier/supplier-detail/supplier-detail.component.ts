@@ -4,7 +4,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material';
 
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
-import { SupplierDto } from '../_interfaces/supplier-dto';
+import { SupplierList } from '../_interfaces/supplier-list';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -12,7 +12,7 @@ import { SupplierDto } from '../_interfaces/supplier-dto';
   styleUrls: ['./supplier-detail.component.css']
 })
 export class SupplierDetailComponent implements AfterViewInit {
-  supplier: SupplierDto;
+  supplier: SupplierList;
   isAddProducts = false;
   title: string;
 
@@ -61,7 +61,7 @@ export class SupplierDetailComponent implements AfterViewInit {
       );
 
       // Get data returned from supplier-edit dialog
-      dialogRef.afterClosed().subscribe((res: SupplierDto) => {
+      dialogRef.afterClosed().subscribe((res: SupplierList) => {
         if (res) {
           this.supplier = res;
         }

@@ -29,21 +29,30 @@ namespace Shine.Data.Infrastructures.Repositories
 
 #region Get Values
         public async Task<IEnumerable<ProductBuyListDto>> GetProductsAsync(
-            Expression<Func<ProductBuyListDto, object>> sortColumn, string sortOrder)
+            Expression<Func<ProductBuyListDto, object>> sortColumn = null, string sortOrder = "asc")
         {
             var query = _context.Set<ProductBuy>()
                 .Include(p => p.Category)
                 .AsNoTracking()
                 .ProjectToType<ProductBuyListDto>();
 
-            if (sortOrder == "asc")
+            if (sortColumn != null)
             {
-                return await query.OrderBy(sortColumn).ToListAsync();
+                if (sortOrder == "desc")
+                {
+                    query = query.OrderByDescending(sortColumn);
+                }
+                else
+                {
+                    query = query.OrderBy(sortColumn);
+                }
             }
             else
             {
-                return await query.OrderByDescending(sortColumn).ToListAsync();
+                query = query.OrderBy(p => p.ProductName);
             }
+
+            return await query.ToListAsync();
         }
 
         public async Task<PagedList<ProductBuyListDto>> GetPagedProductsAsync(

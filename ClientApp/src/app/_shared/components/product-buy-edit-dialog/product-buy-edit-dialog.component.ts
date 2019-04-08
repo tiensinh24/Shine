@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
-import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
+import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -29,8 +29,7 @@ namespace Shine.Data.Infrastructures.Repositories
 #region Constructor
         public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager, IConfiguration configuration
-        ) : base(context, roleManager, userManager, configuration)
-        { }
+        ) : base(context, roleManager, userManager, configuration) { }
 
 #endregion
 
@@ -38,21 +37,30 @@ namespace Shine.Data.Infrastructures.Repositories
 
 #region Get Values
         public async Task<IEnumerable<SupplierListDto>> GetSuppliersAsync(
-            Expression<Func<SupplierListDto, object>> sortColumn, string sortOrder)
+            Expression<Func<SupplierListDto, object>> sortColumn = null, string sortOrder = "asc")
         {
             var query = _context.Set<Supplier>()
                 .Include(s => s.Country)
                 .AsNoTracking()
                 .ProjectToType<SupplierListDto>();
 
-            if (sortOrder == "asc")
+            if (sortColumn != null)
             {
-                return await query.OrderBy(sortColumn).ToListAsync();
+                if (sortOrder == "desc")
+                {
+                    query = query.OrderByDescending(sortColumn);
+                }
+                else
+                {
+                    query = query.OrderBy(sortColumn);
+                }
             }
             else
             {
-                return await query.OrderByDescending(sortColumn).ToListAsync();
+                query = query.OrderBy(s => s.FullName);
             }
+
+            return await query.ToListAsync();
         }
 
         public async Task<PagedList<SupplierListDto>> GetPagedSuppliersAsync(
@@ -126,14 +134,14 @@ namespace Shine.Data.Infrastructures.Repositories
 
             if (sup != null)
             {
-                sup.PersonNumber = sup.PersonNumber;
-                sup.FirstName = sup.FirstName;
-                sup.LastName = sup.LastName;
-                sup.Gender = sup.Gender;
-                sup.DateOfBirth = sup.DateOfBirth;
-                sup.Telephone = sup.Telephone;
-                sup.Fax = sup.Fax;
-                sup.CountryId = sup.CountryId;
+                sup.PersonNumber = supplier.PersonNumber;
+                sup.FirstName = supplier.FirstName;
+                sup.LastName = supplier.LastName;
+                sup.Gender = supplier.Gender;
+                sup.DateOfBirth = supplier.DateOfBirth;
+                sup.Telephone = supplier.Telephone;
+                sup.Fax = supplier.Fax;
+                sup.CountryId = supplier.CountryId;
             }
 
             return sup.Adapt<SupplierDto>();
@@ -243,7 +251,6 @@ namespace Shine.Data.Infrastructures.Repositories
             await _context.PersonProducts.AddAsync(model);
         }
 
-
         public async Task<PersonProductDto> DeleteSupplierProductAsync(PersonProduct model)
         {
             var entity = await _context.PersonProducts
@@ -261,6 +268,5 @@ namespace Shine.Data.Infrastructures.Repositories
 
 #endregion
 
-   
     }
 }

@@ -4,7 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 
 import { SupplierService } from '../_services/supplier.service';
-import { SupplierProductsDto } from '../_interfaces/supplier-products-dto';
+import { SupplierProductsList } from '../_interfaces/supplier-products-list';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierProduct } from '../_interfaces/supplier-product';
 import { ProductsProvidedDialogComponent } from 'src/app/_shared/components/products-provided-dialog/products-provided-dialog.component';
@@ -35,8 +35,8 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
     { header: 'Specification', value: 'specification' },
   ];
 
-  dataSource = new MatTableDataSource<SupplierProductsDto>([]);
-  selection = new SelectionModel<SupplierProductsDto>(true, []);
+  dataSource = new MatTableDataSource<SupplierProductsList>([]);
+  selection = new SelectionModel<SupplierProductsList>(true, []);
   isLoading = true;
   title = `Products List`;
   suppliers: Supplier[];
@@ -70,7 +70,7 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
       res => {
         this.isLoading = false;
 
-        this.dataSource = new MatTableDataSource<SupplierProductsDto>(res);
+        this.dataSource = new MatTableDataSource<SupplierProductsList>(res);
         setTimeout(() => (this.dataSource.sort = this.sort));
         setTimeout(() => (this.dataSource.paginator = this.paginator));
       },
@@ -85,7 +85,7 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
   onDelete(supprod: SupplierProduct) {
     this.supplierService.deleteSupplierProduct(supprod).subscribe(() => {
       // Get index of deleted row
-      const index = this.dataSource.data.indexOf(<SupplierProductsDto>supprod, 0);
+      const index = this.dataSource.data.indexOf(<SupplierProductsList>supprod, 0);
       // Remove row, update dataSource & remove all selection
       if (index > -1) {
         this.dataSource.data.splice(index, 1);
@@ -117,7 +117,7 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
       dialogConfig,
     );
 
-    dialogRef.afterClosed().subscribe((res: SupplierProductsDto) => {
+    dialogRef.afterClosed().subscribe((res: SupplierProductsList) => {
       // Check if res exists
       if (res) {
 
@@ -136,7 +136,7 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
     // Only filter specify column
     if (column.length > 0) {
       this.dataSource.filterPredicate = (
-        data: SupplierProductsDto,
+        data: SupplierProductsList,
         filter: string,
       ) => {
         const textToSearch = (data[column] && data[column].toLowerCase()) || '';
@@ -145,7 +145,7 @@ export class ProductsProvidedComponent implements AfterViewInit, OnDestroy {
     } else {
       // If column = '', filter on all column
       this.dataSource.filterPredicate = (
-        data: SupplierProductsDto,
+        data: SupplierProductsList,
         filter: string,
       ) => {
         const textToSearch =

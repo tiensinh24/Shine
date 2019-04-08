@@ -28,19 +28,28 @@ namespace Shine.Data.Infrastructures.Repositories
 
 #region Get Values
         public async Task<IEnumerable<CategoryBuyDto>> GetCategoriesAsync(
-            Expression<Func<CategoryBuyDto, object>> sortColumn, string sortOrder)
+            Expression<Func<CategoryBuyDto, object>> sortColumn = null, string sortOrder = "asc")
         {
             var query = _context.Set<CategoryBuy>().AsNoTracking()
                 .ProjectToType<CategoryBuyDto>();
 
-            if (sortOrder == "asc")
+            if (sortColumn != null)
             {
-                return await query.OrderBy(sortColumn).ToListAsync();
+                if (sortOrder == "desc")
+                {
+                    query = query.OrderByDescending(sortColumn);
+                }
+                else
+                {
+                    query = query.OrderBy(sortColumn);
+                }
             }
             else
             {
-                return await query.OrderByDescending(sortColumn).ToListAsync();
+                query = query.OrderBy(c => c.CategoryName);
             }
+
+            return await query.ToListAsync();
         }
 
         public async Task<PagedList<CategoryBuyDto>> GetPagedCategoriesAsync(
@@ -91,7 +100,8 @@ namespace Shine.Data.Infrastructures.Repositories
 
         public async Task<CategoryBuyDto> GetCategoryAsync(int id)
         {
-            var query = await _context.Set<CategoryBuy>().AsNoTracking()
+            var query = await _context.Set<CategoryBuy>()
+                .AsNoTracking()
                 .ProjectToType<CategoryBuyDto>()
                 .FirstOrDefaultAsync(c => c.CategoryId == id);
 

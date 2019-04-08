@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using Shine.Controllers.Interfaces;
 using Shine.Data;
+using Shine.Data.Dto.Countries;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
@@ -22,7 +24,7 @@ namespace Shine.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CountryController : ControllerBase
+    public class CountryController : ControllerBase, ICountryController
     {
         private readonly ICountryRepository _repository;
         public CountryController(ICountryRepository repository)
@@ -31,20 +33,31 @@ namespace Shine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Country>> GetCountries()
+        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
         {
-            return _repository.GetCountries().OrderBy(c => c.CountryName).ToList();
+            var query = await _repository.GetCountriesAsync(c => c.CountryName, "asc");
+
+            return Ok(query);
+        }
+
+        [HttpGet("Select")]
+        public async Task<ActionResult<IEnumerable<CountrySelectDto>>> GetCountriesSelect()
+        {
+            var query = await _repository.GetCountriesAsync(c => c.CountryName, "asc");
+
+            var countries = query.Adapt<CountrySelectDto>();
+
+            return Ok(countries);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Country> GetCountry(int id)
+        public async Task<ActionResult<CountryDto>> GetCountry(int id)
         {
-            var country = _repository.GetCountry(id);
-            if (country == null)
-            {
-                return NotFound();
-            }
+            var country = await _repository.GetCountryAsync(id);
+
+            if (country == null) return NotFound();
+
             return country;
         }
 
@@ -61,7 +74,7 @@ namespace Shine.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Country> UpdateCountry([FromBody] Country country)
         {
-            _repository.UpdateCountry(country);
+            _repository.UpdateCountryAsync(country);
             _repository.Commit();
             return country.Adapt<Country>();
         }
@@ -69,7 +82,7 @@ namespace Shine.Controllers
         [HttpDelete("{id}")]
         public ActionResult<int> DeleteCountry(int id)
         {
-            _repository.DeleteCountry(id);
+            _repository.DeleteCountryAsync(id);
             _repository.Commit();
             return id;
         }

@@ -50,7 +50,7 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new CategoryBuyDataSource(this.categoryBuyService);
-    this.dataSource.loadCategories(this.pagingParams, this.sortParams);
+    this.dataSource.loadData(this.pagingParams, this.sortParams);
   }
 
   ngAfterViewInit(): void {
@@ -89,7 +89,7 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
 
     const filter = this.input.nativeElement.value;
 
-    this.dataSource.loadCategories(this.pagingParams, this.sortParams, filter);
+    this.dataSource.loadData(this.pagingParams, this.sortParams, filter);
   }
 
   onDetail(categoryBuy: CategoryBuy) {

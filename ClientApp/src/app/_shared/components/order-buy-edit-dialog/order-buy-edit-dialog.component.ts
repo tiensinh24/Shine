@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { SupplierDto } from 'src/app/supplier/_interfaces/supplier-dto';
+import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
 import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
 
 @Component({
@@ -22,7 +22,7 @@ import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
 })
 export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
-  suppliers: SupplierDto[];
+  suppliers: SupplierList[];
   formGroup: FormGroup;
   title: string;
 

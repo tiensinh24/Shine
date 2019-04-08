@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Models;
 
@@ -36,13 +37,13 @@ namespace Shine.Controllers.Interfaces
 #region SupplierProduct
 
 #region Get Values
-    
+        Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsList();
 #endregion
 
 #region Actions
-        Task<IActionResult> AddSupplierProduct(PersonProduct model);
+        Task AddSupplierProduct(PersonProduct model);
 
-        Task<IActionResult> DeleteSupplierProduct(PersonProduct model);
+        Task<ActionResult<PersonProductDto>> DeleteSupplierProduct(PersonProduct model);
 #endregion
     
 #endregion

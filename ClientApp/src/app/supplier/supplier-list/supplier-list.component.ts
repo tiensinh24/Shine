@@ -1,36 +1,31 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
-import {
-  MatTableDataSource,
-  MatSort,
-  MatPaginator,
-  MatDialog,
-  MatDialogConfig,
-  MatSnackBar,
-} from '@angular/material';
+import { Component, AfterViewInit, ViewChild, OnInit, ElementRef } from '@angular/core';
+import { MatSort, MatPaginator, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Subscription } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
-import { SupplierDto } from '../_interfaces/supplier-dto';
+import { SupplierList } from '../_interfaces/supplier-list';
 import { SupplierService } from '../_services/supplier.service';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
-import { Country } from 'src/app/country/_interfaces/country';
-import { CountryService } from 'src/app/country/_services/country.service';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { SupplierDataSource } from '../_data-source/supplier-data-source';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 
 @Component({
   selector: 'app-supplier-list',
   templateUrl: './supplier-list.component.html',
   styleUrls: ['./supplier-list.component.css'],
 })
-export class SupplierListComponent implements AfterViewInit, OnDestroy {
+export class SupplierListComponent implements OnInit, AfterViewInit {
+  dataSource: SupplierDataSource;
   displayedColumns = [
     'select',
     'personNumber',
     'gender',
-    'firstName',
-    'lastName',
+    'fullName',
     'dateOfBirth',
     'telephone',
     'fax',
@@ -39,52 +34,75 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
     'continentName',
     'actions',
   ];
-  dataSource = new MatTableDataSource<SupplierDto>([]);
-  selection = new SelectionModel<SupplierDto>(true, []);
-  isLoading = true;
-  title = 'Supplier List';
-  countries: Country[];
-  sub = new Subscription();
+  selection = new SelectionModel<SupplierList>(true, [], false);
+  numRows: number;
 
-  @ViewChild(MatSort) sort: MatSort;
+  title = 'Suppliers List';
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('input') input: ElementRef;
+
+  pagingParams = <PagingParams>{
+    pageIndex: 0,
+    pageSize: 8,
+  };
+
+  sortParams = <SortParams>{
+    sortColumn: '',
+    sortOrder: '',
+  };
 
   constructor(
     private supplierService: SupplierService,
-    private countryService: CountryService,
     private router: Router,
     private dialog: MatDialog,
     private confirmService: ConfirmDialogService,
     private snackBar: MatSnackBar,
   ) {}
 
+  ngOnInit() {
+    this.dataSource = new SupplierDataSource(this.supplierService);
+    this.dataSource.loadData(this.pagingParams, this.sortParams);
+  }
+
   ngAfterViewInit(): void {
-    this.getSupplierList();
-    this.getCountries();
+    // Server-side search
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadSuppliersPage();
+        }),
+      )
+      .subscribe();
+
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
+    // on sort or paginate events, load a new page
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => {
+          this.loadSuppliersPage();
+          setTimeout(() => this.selection.clear(), 50);
+        }),
+      )
+      .subscribe();
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
+  loadSuppliersPage() {
+    this.pagingParams.pageIndex = this.paginator.pageIndex;
+    this.pagingParams.pageSize = this.paginator.pageSize;
 
-  getCountries() {
-    this.sub = this.countryService.getCountryList().subscribe(res => {
-      this.countries = res;
-    });
-  }
+    this.sortParams.sortColumn = this.sort.active;
+    this.sortParams.sortOrder = this.sort.direction;
 
-  getSupplierList() {
-    this.sub = this.supplierService.getSuppliers().subscribe(
-      res => {
-        // Check to loading progress bar
-        this.isLoading = false;
+    const filter = this.input.nativeElement.value;
 
-        this.dataSource = new MatTableDataSource<SupplierDto>(res);
-        setTimeout(() => (this.dataSource.sort = this.sort));
-        setTimeout(() => (this.dataSource.paginator = this.paginator));
-      },
-      () => (this.isLoading = false),
-    );
+    this.dataSource.loadData(this.pagingParams, this.sortParams, filter);
   }
 
   onCreate() {
@@ -100,43 +118,37 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(supplier: Supplier) {
-    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${supplier.firstName} ${supplier.lastName}?`)
+    const dialogRef = this.confirmService.openDialog(
+      `Are you sure to delete ${supplier.firstName} ${supplier.lastName}?`,
+    );
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.supplierService.deleteSupplier(supplier.personId).subscribe(() => {
-          // Get index of deleted row
-          const index = this.dataSource.data.indexOf(<SupplierDto>supplier, 0);
-          // Remove row, update dataSource & remove all selection
-          if (index > -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource._updateChangeSubscription();
-            this.selection.clear();
-          }
+          this.loadSuppliersPage();
         });
         this.snackBar.open(`${supplier.firstName} ${supplier.lastName} deleted`, 'Success');
       }
     });
   }
 
-  // Open supplier-edit dialog
-  openDialog(personId?: number) {
-    const supplierEdit = this.dataSource.data.find(
-      s => s.personId === personId,
-    );
+  // Open supplier-edit-dialog
+  openDialog(supplierId?: number) {
+    // Find supplier in dataSource
+    let supplierEdit: SupplierList = null;
 
-    const dialogConfig = new MatDialogConfig();
+    this.dataSource.data.subscribe(res => {
+      supplierEdit = res.find(c => c.personId === supplierId);
+    });
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      width: '100vw',
+      height: '100vh',
+    };
 
-    // Width & height
-    dialogConfig.maxWidth = '100vw';
-    dialogConfig.maxHeight = '100vh';
-    dialogConfig.minWidth = '100%';
-    dialogConfig.height = '100%';
-
-    // Send data to supplier edit dialog component
+    // Send data to supplier edit component
     if (supplierEdit) {
       dialogConfig.data = {
         personId: supplierEdit.personId,
@@ -144,87 +156,45 @@ export class SupplierListComponent implements AfterViewInit, OnDestroy {
         gender: supplierEdit.gender,
         firstName: supplierEdit.firstName,
         lastName: supplierEdit.lastName,
+        fullName: supplierEdit.fullName,
         dateOfBirth: supplierEdit.dateOfBirth,
         telephone: supplierEdit.telephone,
         fax: supplierEdit.fax,
         countryId: supplierEdit.countryId,
-        countries: this.countries,
-      };
-    } else {
-      dialogConfig.data = {
-        countries: this.countries
       };
     }
 
-    const dialogRef = this.dialog.open(
-      SupplierEditDialogComponent,
-      dialogConfig,
-    );
+    // Open dialog with config & passed data
+    const dialogRef = this.dialog.open(SupplierEditDialogComponent, dialogConfig);
 
-    // Get data returned from supplier-edit dialog
-    dialogRef.afterClosed().subscribe((res: SupplierDto) => {
-      // Check if res exists
-      if (res) {
-        const index = this.dataSource.data.findIndex(
-          s => s.personId === res.personId,
-        );
-
-        // Check if data returned is an updated supplier or a new one
-        if (index > -1) {
-          // Update dataSource
-          this.dataSource.data.splice(index, 1, res);
-          this.dataSource._updateChangeSubscription();
-        } else {
-          // Add new supplier to dataSource
-          this.dataSource.data.push(res);
-          this.dataSource._updateChangeSubscription();
-        }
+    // Pass data from dialog in to main component
+    dialogRef.afterClosed().subscribe((data: SupplierList) => {
+      if (data) {
+        this.loadSuppliersPage();
       }
+
       this.selection.clear();
     });
   }
 
-  // On input focus: setup filterPredicate to only filter by input column
-  setupFilter(column?: string) {
-    // Only filter specify column
-    if (column.length > 0) {
-      this.dataSource.filterPredicate = (data: SupplierDto, filter: string) => {
-        const textToSearch = (data[column] && data[column].toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    } else {
-      // If column = '', filter on all column
-      this.dataSource.filterPredicate = (data: SupplierDto, filter: string) => {
-        const textToSearch =
-          (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    }
-  }
-
-  applyFilter(filterValue: string) {
-    if (filterValue === undefined) {
-      this.dataSource.filter = '';
-    } else {
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  // Whether the number of selected elements matches the total number of rows
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.paginator.pageSize;
+
     return numSelected === numRows;
   }
 
-  //  Selects all rows if they are not all selected; otherwise clear selection
+  selectAll() {
+    this.dataSource.data.subscribe(rows => {
+      rows.forEach(row => this.selection.select(row));
+    });
+  }
+
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.selectAll();
+    }
   }
 }

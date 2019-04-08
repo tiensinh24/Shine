@@ -2,12 +2,12 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { SupplierDto } from '../_interfaces/supplier-dto';
-import { ProductsBySupplierDto } from '../_interfaces/products-by-supplier';
+import { SupplierList } from '../_interfaces/supplier-list';
+
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierProduct } from '../_interfaces/supplier-product';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
+import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 
 @Component({
   selector: 'app-products-added',
@@ -16,8 +16,8 @@ import { ProductBuyDto } from 'src/app/product/buy/_interfaces/product-buy-dto';
 })
 export class ProductsAddedComponent implements AfterViewInit {
   displayedcolumn = ['productName', 'specification', 'categoryName', 'actions'];
-  supplier: SupplierDto;
-  products = new MatTableDataSource<ProductsBySupplierDto>([]);
+  supplier: SupplierList;
+  products = new MatTableDataSource<ProductBuyList>([]);
   isAddProducts = false;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -32,7 +32,7 @@ export class ProductsAddedComponent implements AfterViewInit {
     const id = +this.route.snapshot.params.supplierId;
     this.supplierService.getProductsGroupBySupplier(id).subscribe(res => {
       this.supplier = res.supplier;
-      this.products = new MatTableDataSource<ProductsBySupplierDto>(res.products);
+      this.products = new MatTableDataSource<ProductBuyList>(res.products);
       setTimeout(() => (this.products.sort = this.sort));
       setTimeout(() => (this.products.paginator = this.paginator));
     });
@@ -42,7 +42,7 @@ export class ProductsAddedComponent implements AfterViewInit {
     });
   }
 
-  DeleteProductFromSupplier(product: ProductsBySupplierDto) {
+  DeleteProductFromSupplier(product: ProductBuyList) {
     const dialogRef = this.confirmDialogService.openDialog(`Are you sure to delete ${product.productName}?`);
 
     dialogRef.afterClosed().subscribe(res => {

@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { SupplierDto } from '../_interfaces/supplier-dto';
+import { SupplierList } from '../_interfaces/supplier-list';
 import { Supplier } from '../_interfaces/supplier';
-import { SupplierProductsDto } from '../_interfaces/supplier-products-dto';
+import { SupplierProductsList } from '../_interfaces/supplier-products-list';
 import { SupplierProduct } from '../_interfaces/supplier-product';
-import { ProductsGroupBySupplier, ProductsBySupplierDto } from '../_interfaces/products-by-supplier';
+import { ProductsGroupBySupplier} from '../_interfaces/products-by-supplier';
+import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { PagedSupplier } from '../_interfaces/paged-supplier';
 
 
 @Injectable({
@@ -18,20 +22,34 @@ export class SupplierService {
 
   constructor(private http: HttpClient) { }
 
-  getSuppliers(): Observable<SupplierDto[]> {
-    return this.http.get<SupplierDto[]>(`${this.baseUrl}api/supplier/`);
+  getSuppliers(): Observable<SupplierList[]> {
+    return this.http.get<SupplierList[]>(`${this.baseUrl}api/supplier/`);
   }
 
-  getSupplier(id: number): Observable<SupplierDto> {
-    return this.http.get<SupplierDto>(`${this.baseUrl}api/supplier/${id}`);
+  getPagedSuppliers(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedSupplier> {
+    let queryParams = new HttpParams()
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
+
+    if (sortParams !== undefined) {
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }
+
+    return this.http.get<PagedSupplier>(`${this.baseUrl}api/supplier/Paged`, { params: queryParams });
   }
 
-  addSupplier(supplier: Supplier): Observable<SupplierDto> {
-    return this.http.post<SupplierDto>(`${this.baseUrl}api/supplier/`, supplier);
+  getSupplier(id: number): Observable<SupplierList> {
+    return this.http.get<SupplierList>(`${this.baseUrl}api/supplier/${id}`);
   }
 
-  updateSupplier(supplier: Supplier): Observable<SupplierDto> {
-    return this.http.put<SupplierDto>(`${this.baseUrl}api/supplier/`, supplier);
+  addSupplier(supplier: Supplier): Observable<SupplierList> {
+    return this.http.post<SupplierList>(`${this.baseUrl}api/supplier/`, supplier);
+  }
+
+  updateSupplier(supplier: Supplier): Observable<SupplierList> {
+    return this.http.put<SupplierList>(`${this.baseUrl}api/supplier/`, supplier);
   }
 
   deleteSupplier(id: number): Observable<number> {
@@ -42,14 +60,14 @@ export class SupplierService {
 
   // *SupplierProduct
 
-  getProductsBySupplier(supplierId: number): Observable<ProductsBySupplierDto[]> {
-    return this.http.get<ProductsBySupplierDto[]>(`${this.baseUrl}api/supplier/${supplierId}/products/`);
+  getProductsBySupplier(supplierId: number): Observable<ProductBuyList[]> {
+    return this.http.get<ProductBuyList[]>(`${this.baseUrl}api/supplier/${supplierId}/products/`);
   }
 
 
 
-  getSupplierProducts(): Observable<SupplierProductsDto[]> {
-    return this.http.get<SupplierProductsDto[]>(`${this.baseUrl}api/supplier/products/`);
+  getSupplierProducts(): Observable<SupplierProductsList[]> {
+    return this.http.get<SupplierProductsList[]>(`${this.baseUrl}api/supplier/products/`);
   }
 
   getProductsGroupBySupplier(supplierId: number): Observable<ProductsGroupBySupplier> {
