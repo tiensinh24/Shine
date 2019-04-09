@@ -52,6 +52,7 @@ export class ProductsNotAddedComponent implements OnInit {
 
     const dialogRef = this.confirmService.openDialog(`Are you sure to add this product?`);
 
+    // TODO remove newly add product
     dialogRef.afterClosed().subscribe(dialogRes => {
       if (dialogRes) {
         this.supplierService.addSupplierProduct(entity).subscribe((res: SupplierProduct) => {
