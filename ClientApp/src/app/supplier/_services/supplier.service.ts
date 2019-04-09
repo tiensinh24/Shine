@@ -5,14 +5,14 @@ import { Observable } from 'rxjs';
 
 import { SupplierList } from '../_interfaces/supplier-list';
 import { Supplier } from '../_interfaces/supplier';
-import { SupplierProductsList } from '../_interfaces/supplier-products-list';
+import { ProductsBySupplier } from '../_interfaces/supplier-products-list';
 import { SupplierProduct } from '../_interfaces/supplier-product';
-import { ProductsGroupBySupplier} from '../_interfaces/products-by-supplier';
 import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { PagedSupplier } from '../_interfaces/paged-supplier';
-
+import { PagedProductBuy } from 'src/app/product/buy/_interfaces/paged-product-buy';
+import { SupplierDetail } from '../_interfaces/supplier-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +20,11 @@ import { PagedSupplier } from '../_interfaces/paged-supplier';
 export class SupplierService {
   baseUrl = environment.URL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getSuppliers(): Observable<SupplierList[]> {
     return this.http.get<SupplierList[]>(`${this.baseUrl}api/supplier/`);
   }
-
-  
 
   getPagedSuppliers(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedSupplier> {
     let queryParams = new HttpParams()
@@ -39,11 +37,11 @@ export class SupplierService {
       queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
-    return this.http.get<PagedSupplier>(`${this.baseUrl}api/supplier/Paged`, { params: queryParams });
+    return this.http.get<PagedSupplier>(`${this.baseUrl}api/supplier/paged`, { params: queryParams });
   }
 
-  getSupplier(id: number): Observable<SupplierList> {
-    return this.http.get<SupplierList>(`${this.baseUrl}api/supplier/${id}`);
+  getSupplier(id: number): Observable<SupplierDetail> {
+    return this.http.get<SupplierDetail>(`${this.baseUrl}api/supplier/${id}`);
   }
 
   addSupplier(supplier: Supplier): Observable<SupplierList> {
@@ -58,22 +56,36 @@ export class SupplierService {
     return this.http.delete<number>(`${this.baseUrl}api/supplier/${id}`);
   }
 
-
-
   // *SupplierProduct
 
   getProductsBySupplier(supplierId: number): Observable<ProductBuyList[]> {
     return this.http.get<ProductBuyList[]>(`${this.baseUrl}api/supplier/${supplierId}/products/`);
   }
 
-
-
-  getSupplierProducts(): Observable<SupplierProductsList[]> {
-    return this.http.get<SupplierProductsList[]>(`${this.baseUrl}api/supplier/products/`);
+  getSupplierProducts(): Observable<ProductsBySupplier[]> {
+    return this.http.get<ProductsBySupplier[]>(`${this.baseUrl}api/supplier/products/`);
   }
 
-  getProductsGroupBySupplier(supplierId: number): Observable<ProductsGroupBySupplier> {
-    return this.http.get<ProductsGroupBySupplier>(`${this.baseUrl}api/supplier/${supplierId}/products-group`);
+  getPagedProductsBySupplier(
+    supplierId: number,
+    pagingParams: PagingParams,
+    sortParams?: SortParams,
+    filter = ''
+  ): Observable<PagedProductBuy> {
+    let queryParams = new HttpParams()
+      .set('supplierId', `${supplierId}`)
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
+
+    if (sortParams !== undefined) {
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }
+
+    return this.http.get<PagedProductBuy>(`${this.baseUrl}api/supplier/${supplierId}/paged-products`, {
+      params: queryParams
+    });
   }
 
   getProductsNotAdded(supplierId: number): Observable<any> {
@@ -85,7 +97,6 @@ export class SupplierService {
   }
 
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {
-    return this.http.request<SupplierProduct>
-      ('delete', `${this.baseUrl}api/supplier/product/`, { body: supprod });
+    return this.http.request<SupplierProduct>('delete', `${this.baseUrl}api/supplier/product/`, { body: supprod });
   }
 }

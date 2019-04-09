@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { SupplierProduct } from '../_interfaces/supplier-product';
 import { SupplierService } from '../_services/supplier.service';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { MatSnackBar } from '@angular/material';
 
 interface ProductsNotAdded {
   category: string;
@@ -14,16 +16,19 @@ interface ProductsNotAdded {
 @Component({
   selector: 'app-products-not-added',
   templateUrl: './products-not-added.component.html',
-  styleUrls: ['./products-not-added.component.css'],
+  styleUrls: ['./products-not-added.component.css']
 })
 export class ProductsNotAddedComponent implements OnInit {
   productsNotAdded?: ProductsNotAdded;
+  supplierId = +this.route.snapshot.params.supplierId;
 
   @Input() title: string;
 
   constructor(
     private supplierService: SupplierService,
     private route: ActivatedRoute,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -33,20 +38,35 @@ export class ProductsNotAddedComponent implements OnInit {
 
   private getProductsNotAdded(supplierId: number) {
     if (supplierId > 0) {
-      this.supplierService
-        .getProductsNotAdded(supplierId)
-        .subscribe((res: ProductsNotAdded) => {
-          this.productsNotAdded = res;
-        });
+      this.supplierService.getProductsNotAdded(supplierId).subscribe((res: ProductsNotAdded) => {
+        this.productsNotAdded = res;
+      });
     }
   }
 
   onAdd(productId: number) {
-    const supplierId = +this.route.snapshot.params.supplierId;
     const entity = <SupplierProduct>{
-      personId: supplierId,
-      productId: productId,
+      personId: this.supplierId,
+      productId: productId
     };
-    this.supplierService.addSupplierProduct(entity).subscribe();
+
+    const dialogRef = this.confirmService.openDialog(`Are you sure to add this product?`);
+
+    dialogRef.afterClosed().subscribe(dialogRes => {
+      if (dialogRes) {
+        this.supplierService.addSupplierProduct(entity).subscribe((res: SupplierProduct) => {
+          if (res) {
+            this.snackBar.open(`Product Added`, 'Succes');
+            // Find index of newly add product
+            const index = this.productsNotAdded.products.findIndex(p => p.productId === res.productId);
+
+            // Remove newly add product from products list
+            if (index > -1) {
+              this.productsNotAdded.products.splice(index, 1);
+            }
+          }
+        });
+      }
+    });
   }
 }

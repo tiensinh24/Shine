@@ -24,16 +24,16 @@ using Shine.Data.Models.Interfaces;
 namespace Shine.Data.Infrastructures.Repositories {
     public class SupplierRepository : Repository, ISupplierRepository {
 
-        #region Constructor
+#region Constructor
         public SupplierRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager, IConfiguration configuration
         ) : base(context, roleManager, userManager, configuration) { }
 
-        #endregion
+#endregion
 
-        #region Supplier
+#region Supplier
 
-        #region Get Values
+#region Get Values
         public async Task<IEnumerable<SupplierListDto>> GetSuppliersAsync(
             Expression<Func<SupplierListDto, object>> sortColumn = null, string sortOrder = "asc") {
             var query = _context.Set<Supplier>()
@@ -104,9 +104,9 @@ namespace Shine.Data.Infrastructures.Repositories {
             return query.Adapt<SupplierListDto>();
         }
 
-        #endregion
+#endregion
 
-        #region Actions
+#region Actions
 
         public async Task AddSupplierAsync(Supplier supplier) {
             await _context.Set<Supplier>().AddAsync(supplier);
@@ -140,18 +140,17 @@ namespace Shine.Data.Infrastructures.Repositories {
 
             return supplier.Adapt<SupplierDto>();
         }
-        #endregion
+#endregion
 
-        #endregion
+#endregion
 
-        #region SupplierProduct
+#region SupplierProduct
 
-        #region Get Values
+#region Get Values
         public async Task<IEnumerable<SupplierProductListDto>> GetSupplierProductsDto() {
             var query = await _context.PersonProducts
-                .Include(p => p.Person).Include(p => p.Product)
-                .Where(p => p.Product.ProductType == true
-                    && p.Person.PersonType == PersonType.Supplier)
+                .Include(p => p.Person)
+                .Include(p => p.Product)
                 .AsNoTracking()
                 .ProjectToType<SupplierProductListDto>()
                 .ToListAsync();
@@ -159,21 +158,73 @@ namespace Shine.Data.Infrastructures.Repositories {
             return query;
         }
 
-        public IEnumerable<SupplierProductListDto> GetSuppliersByProduct(int productId) {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<IEnumerable<ProductBuyListDto>> GetProductsBySupplierAsync(int supplierId) {
-            var query = await _context.Set<ProductBuy>()
-                .Include(p => p.Category)
-                .Include(p => p.PersonProducts)
-                .OrderBy(p => p.ProductName)
-                .Where(p => p.PersonProducts.Any(s => s.PersonId == supplierId))
+        public async Task<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplierAsync(int supplierId) {
+            var query = await _context.PersonProducts
+                .Include(p => p.Product)
+                .ThenInclude(p => p.Category)
+                .Include(p => p.Person)
                 .AsNoTracking()
-                .ProjectToType<ProductBuyListDto>()
+                .ProjectToType<ProductsBySupplierDto>()
+                .Where(p => p.PersonId == supplierId)
                 .ToListAsync();
 
             return query;
+        }
+
+        public async Task<PagedList<ProductsBySupplierDto>> GetPagedProductsBySupplierAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter,
+            Expression<Func<ProductsBySupplierDto, bool>> condition) {
+
+            var source = _context.PersonProducts
+                .Include(p => p.Product)
+                .ThenInclude(p => p.Category)
+                .Include(p => p.Person)
+                .AsNoTracking()
+                .ProjectToType<ProductsBySupplierDto>();
+
+            switch (sortParams.SortOrder) {
+                case "asc":
+                    switch (sortParams.SortColumn) {
+                        case "productName":
+                            source = source.OrderBy(p => p.ProductName);
+                            break;
+                        case "specification":
+                            source = source.OrderBy(p => p.Specification);
+                            break;
+                        case "categoryName":
+                            source = source.OrderBy(p => p.CategoryName);
+                            break;
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn) {
+                        case "productName":
+                            source = source.OrderByDescending(p => p.ProductName);
+                            break;
+                        case "specification":
+                            source = source.OrderByDescending(p => p.Specification);
+                            break;
+                        case "categoryName":
+                            source = source.OrderByDescending(p => p.CategoryName);
+                            break;
+                    }
+                    break;
+
+                default:
+                    source = source.OrderBy(c => c.ProductName);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(filter)) {
+                source = source.Where(p => (p.ProductName + p.CategoryName).ToLower().Contains(filter.ToLower()));
+            }
+
+            if (condition != null) {
+                source = source.Where(condition);
+            }
+
+            return await PagedList<ProductsBySupplierDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
         public JsonResult GetProductsNotBySupplier(int supplierId) {
@@ -200,25 +251,14 @@ namespace Shine.Data.Infrastructures.Repositories {
             return Json(result);
         }
 
-        public async Task<ProductsGroupBySupplierDto> GetProductsGroupBySupplierAsync(int supplierId) {
-            var supplier = await GetSupplierAsync(supplierId);
-            var products = await GetProductsBySupplierAsync(supplierId);
-
-            var query = new ProductsGroupBySupplierDto() {
-                Supplier = supplier,
-                Products = products
-            };
-            return query;
-        }
-
         Task<IEnumerable<SupplierProductListDto>> ISupplierRepository.GetSupplierProductsListAsync() {
             throw new NotImplementedException();
         }
-        #endregion
+#endregion
 
-        #endregion
+#endregion
 
-        #region Actions
+#region Actions
         public async Task AddSupplierProductAsync(PersonProduct model) {
             await _context.PersonProducts.AddAsync(model);
         }
@@ -236,7 +276,7 @@ namespace Shine.Data.Infrastructures.Repositories {
 
         }
 
-        #endregion
+#endregion
 
     }
 }

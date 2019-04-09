@@ -18,22 +18,19 @@ using Shine.Data.Helpers;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
-namespace Shine.Controllers
-{
+namespace Shine.Controllers {
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CategoryBuyController : ControllerBase, ICategoryBuyController
-    {
+    public class CategoryBuyController : ControllerBase, ICategoryBuyController {
 #region Private Field
         private readonly ICategoryBuyRepository _repository;
 
 #endregion
 
 #region Constructor
-        public CategoryBuyController(ICategoryBuyRepository repository)
-        {
+        public CategoryBuyController(ICategoryBuyRepository repository) {
 
             this._repository = repository;
         }
@@ -41,17 +38,15 @@ namespace Shine.Controllers
 
 #region Get Values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoryBuyDto>>> GetCategories()
-        {
+        public async Task<ActionResult<IEnumerable<CategoryBuyDto>>> GetCategories() {
             var query = await _repository.GetCategoriesAsync(c => c.CategoryName, "asc");
             return Ok(query);
         }
 
-        [HttpGet("Paged")]
+        [HttpGet("paged")]
 
         public async Task<ActionResult<Paged<CategoryBuyDto>>> GetPagedCategories(
-            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
-        {
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
 
             var query = await _repository.GetPagedCategoriesAsync(pagingParams, sortParams, filter);
 
@@ -61,11 +56,9 @@ namespace Shine.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CategoryBuyDto>> GetCategory(int id)
-        {
+        public async Task<ActionResult<CategoryBuyDto>> GetCategory(int id) {
             var category = await _repository.GetCategoryAsync(id);
-            if (category == null)
-            {
+            if (category == null) {
                 return NotFound();
             }
             return Ok(category);
@@ -75,8 +68,7 @@ namespace Shine.Controllers
 #region Actions
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CategoryBuyDto>> AddCategory([FromBody] CategoryBuy categoryBuy)
-        {
+        public async Task<ActionResult<CategoryBuyDto>> AddCategory([FromBody] CategoryBuy categoryBuy) {
             await _repository.AddCategoryAsync(categoryBuy);
             await _repository.CommitAsync();
 
@@ -88,8 +80,7 @@ namespace Shine.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CategoryBuyDto>> UpdateCategory([FromBody] CategoryBuy categoryBuy)
-        {
+        public async Task<ActionResult<CategoryBuyDto>> UpdateCategory([FromBody] CategoryBuy categoryBuy) {
             var category = await _repository.UpdateCategoryAsync(categoryBuy);
 
             if (category == null) return NotFound();
@@ -100,12 +91,11 @@ namespace Shine.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CategoryBuyDto>> DeleteCategory(int id)
-        {
+        public async Task<ActionResult<CategoryBuyDto>> DeleteCategory(int id) {
             var category = await _repository.DeleteCategoryAsync(id);
 
             if (category == null) return NotFound();
-            
+
             await _repository.CommitAsync();
 
             return category;

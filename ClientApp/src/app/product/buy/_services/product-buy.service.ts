@@ -11,7 +11,7 @@ import { ProductBuy } from '../_interfaces/product-buy';
 import { ProductBuyList } from '../_interfaces/product-buy-list';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProductBuyService {
   baseUrl = environment.URL;
@@ -26,67 +26,26 @@ export class ProductBuyService {
     return this.http.get<ProductBuy>(this.baseUrl + 'api/productBuy/' + id);
   }
 
-  getPagedProducts(
-    pagingParams: PagingParams,
-    sortParams?: SortParams,
-    filter = '',
-  ): Observable<PagedProductBuy> {
+  getPagedProducts(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedProductBuy> {
     let queryParams = new HttpParams()
       .set('pageIndex', `${pagingParams.pageIndex}`)
       .set('pageSize', `${pagingParams.pageSize}`)
       .set('filter', `${filter}`);
 
     if (sortParams !== undefined) {
-      queryParams = queryParams.append(
-        'sortColumn',
-        `${sortParams.sortColumn}`,
-      );
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
       queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
-    return this.http.get<PagedProductBuy>(
-      `${this.baseUrl}api/productBuy/Paged`,
-      { params: queryParams },
-    );
-  }
-
-  getPagedProductsBySupplier(
-    supplierId: number,
-    pagingParams: PagingParams,
-    sortParams?: SortParams,
-    filter = '',
-  ): Observable<PagedProductBuy> {
-    let queryParams = new HttpParams()
-      .set('pageIndex', `${pagingParams.pageIndex}`)
-      .set('pageSize', `${pagingParams.pageSize}`)
-      .set('filter', `${filter}`);
-
-    if (sortParams !== undefined) {
-      queryParams = queryParams.append(
-        'sortColumn',
-        `${sortParams.sortColumn}`,
-      );
-      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
-    }
-
-    return this.http.get<PagedProductBuy>(
-      `${this.baseUrl}api/productBuy/by-supplier/${supplierId}/Paged`,
-      { params: queryParams },
-    );
+    return this.http.get<PagedProductBuy>(`${this.baseUrl}api/productBuy/paged`, { params: queryParams });
   }
 
   addProduct(productBuy: ProductBuy): Observable<ProductBuy> {
-    return this.http.post<ProductBuy>(
-      this.baseUrl + 'api/productBuy/',
-      productBuy,
-    );
+    return this.http.post<ProductBuy>(this.baseUrl + 'api/productBuy/', productBuy);
   }
 
   updateProduct(productBuy: ProductBuy): Observable<ProductBuy> {
-    return this.http.put<ProductBuy>(
-      this.baseUrl + 'api/productBuy/',
-      productBuy,
-    );
+    return this.http.put<ProductBuy>(this.baseUrl + 'api/productBuy/', productBuy);
   }
 
   deleteProduct(id: number): Observable<number> {

@@ -27,18 +27,19 @@ namespace Shine.Controllers {
     [ApiController]
     [Authorize]
     public class SupplierController : ControllerBase, ISupplierController {
-        #region Private Fields
+#region Private Fields
         private readonly ISupplierRepository _repository;
-        #endregion
 
-        #region Constructor
+#endregion
+
+#region Constructor
         public SupplierController(ISupplierRepository repository) {
             this._repository = repository;
         }
-        #endregion
+#endregion
 
-        #region Supplier
-        #region Get Values
+#region Supplier
+#region Get Values
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SupplierListDto>>> GetSuppliers() {
@@ -47,7 +48,7 @@ namespace Shine.Controllers {
             return Ok(query);
         }
 
-        [HttpGet("Paged")]
+        [HttpGet("paged")]
         public async Task<ActionResult<Paged<SupplierListDto>>> GetPagedSuppliers(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
             var query = await _repository.GetPagedSuppliersAsync(pagingParams, sortParams, filter);
@@ -67,9 +68,9 @@ namespace Shine.Controllers {
             return supplier;
         }
 
-        #endregion Get Values
+#endregion Get Values
 
-        #region Actions
+#region Actions
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<SupplierDto>> AddSupplier([FromBody] Supplier supplier) {
@@ -105,11 +106,12 @@ namespace Shine.Controllers {
 
             return supplier;
         }
-        #endregion
-        #endregion
+#endregion
+#endregion
 
-        #region SupplierProduct
-        #region Get Values
+#region SupplierProduct
+#region Get Values
+
         [HttpGet]
         [Route("products")]
         public async Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsList() {
@@ -118,19 +120,19 @@ namespace Shine.Controllers {
             return Ok(query);
         }
 
-        [HttpGet("{supplierId}/products-group")]
-        public async Task<ActionResult<ProductsGroupBySupplierDto>> GetProductsGroupBySupplier(int supplierId) {
-            var entity = await _repository.GetProductsGroupBySupplierAsync(supplierId);
-
-            if (entity == null) return NotFound();
-
-            return Ok(entity);
-        }
-
         [HttpGet("{supplierId}/products")]
         public async Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProductsBySupplier(int supplierId) {
             var products = await _repository.GetProductsBySupplierAsync(supplierId);
             return Ok(products);
+        }
+
+        [HttpGet("{supplierId}/paged-products")]
+        public async Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsBySupplier(
+            [FromQuery] int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
+            var query = await _repository.GetPagedProductsBySupplierAsync(
+                pagingParams, sortParams, filter, p => p.PersonId == supplierId);
+
+            return new Paged<ProductsBySupplierDto>(query);
         }
 
         [HttpGet("{supplierId}/products-not-added")]
@@ -138,9 +140,9 @@ namespace Shine.Controllers {
             var products = _repository.GetProductsNotBySupplier(supplierId);
             return products;
         }
-        #endregion
+#endregion
 
-        #region Actions
+#region Actions
         [HttpPost("product")]
         public async Task AddSupplierProduct(PersonProduct model) {
             await _repository.AddSupplierProductAsync(model);
@@ -159,9 +161,9 @@ namespace Shine.Controllers {
 
             return entity;
         }
-        #endregion
+#endregion
 
-        #endregion
+#endregion
 
     }
 }

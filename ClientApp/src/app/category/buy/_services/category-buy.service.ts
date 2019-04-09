@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { share } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from '../_interfaces/category-buy';
-import { BaseQueryParams } from 'src/app/_shared/_intefaces/base-query-params';
 import { PagedCategoryBuy } from '../_interfaces/paged-category-buy';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { RequestOptions } from '@angular/http';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CategoryBuyService {
   baseUrl = environment.URL;
@@ -28,18 +25,6 @@ export class CategoryBuyService {
     // this.categoriesObs = this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy/`).pipe(share());
     // }
     return this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`);
-  }
-
-  getCategoriesWithBaseParams(queryParams?: BaseQueryParams): Observable<PagedCategoryBuy> {
-    const headerParams = new HttpHeaders()
-      .append('filter', queryParams.filter)
-      .append('sortOrder', queryParams.sortOrder)
-      .append('pageNumber', queryParams.pageNumber.toString())
-      .append('pageSize', queryParams.pageSize.toString());
-
-    return this.http.get<PagedCategoryBuy>(`${this.baseUrl}api/categoryBuy/WithBaseParams`, {
-      headers: headerParams,
-    });
   }
 
   getPagedCategories(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedCategoryBuy> {

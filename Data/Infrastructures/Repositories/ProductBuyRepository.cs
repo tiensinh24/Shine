@@ -17,10 +17,8 @@ using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Repositories
-{
-    public class ProductBuyRepository : Repository, IProductBuyRepository
-    {
+namespace Shine.Data.Infrastructures.Repositories {
+    public class ProductBuyRepository : Repository, IProductBuyRepository {
 #region Constructor        
         public ProductBuyRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager, IConfiguration configuration
@@ -29,26 +27,19 @@ namespace Shine.Data.Infrastructures.Repositories
 
 #region Get Values
         public async Task<IEnumerable<ProductBuyListDto>> GetProductsAsync(
-            Expression<Func<ProductBuyListDto, object>> sortColumn = null, string sortOrder = "asc")
-        {
+            Expression<Func<ProductBuyListDto, object>> sortColumn = null, string sortOrder = "asc") {
             var query = _context.Set<ProductBuy>()
                 .Include(p => p.Category)
                 .AsNoTracking()
                 .ProjectToType<ProductBuyListDto>();
 
-            if (sortColumn != null)
-            {
-                if (sortOrder == "desc")
-                {
+            if (sortColumn != null) {
+                if (sortOrder == "desc") {
                     query = query.OrderByDescending(sortColumn);
-                }
-                else
-                {
+                } else {
                     query = query.OrderBy(sortColumn);
                 }
-            }
-            else
-            {
+            } else {
                 query = query.OrderBy(p => p.ProductName);
             }
 
@@ -56,17 +47,15 @@ namespace Shine.Data.Infrastructures.Repositories
         }
 
         public async Task<PagedList<ProductBuyListDto>> GetPagedProductsAsync(
-            PagingParams pagingParams, SortParams sortParams, string filter)
-        {
+            PagingParams pagingParams, SortParams sortParams, string filter,
+            Expression<Func<ProductBuyListDto, bool>> condition) {
             var source = _context.Set<ProductBuy>()
                 .AsNoTracking()
                 .ProjectToType<ProductBuyListDto>();
 
-            switch (sortParams.SortOrder)
-            {
+            switch (sortParams.SortOrder) {
                 case "asc":
-                    switch (sortParams.SortColumn)
-                    {
+                    switch (sortParams.SortColumn) {
                         case "productName":
                             source = source.OrderBy(p => p.ProductName);
                             break;
@@ -80,8 +69,7 @@ namespace Shine.Data.Infrastructures.Repositories
                     break;
 
                 case "desc":
-                    switch (sortParams.SortColumn)
-                    {
+                    switch (sortParams.SortColumn) {
                         case "productName":
                             source = source.OrderByDescending(p => p.ProductName);
                             break;
@@ -99,16 +87,18 @@ namespace Shine.Data.Infrastructures.Repositories
                     break;
             }
 
-            if (!string.IsNullOrEmpty(filter))
-            {
-                source = source.Where(p => p.ProductName.ToLower().Contains(filter.ToLower()));
+            if (!string.IsNullOrEmpty(filter)) {
+                source = source.Where(p => (p.ProductName + p.CategoryName).ToLower().Contains(filter.ToLower()));
+            }
+
+            if (condition != null) {
+                source = source.Where(condition);
             }
 
             return await PagedList<ProductBuyListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public async Task<ProductBuyListDto> GetProductAsync(int id)
-        {
+        public async Task<ProductBuyListDto> GetProductAsync(int id) {
             var query = await _context.Set<ProductBuy>()
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.ProductId == id);
@@ -119,18 +109,15 @@ namespace Shine.Data.Infrastructures.Repositories
 #endregion
 
 #region Actions
-        public async Task AddProductAsync(ProductBuy productBuy)
-        {
+        public async Task AddProductAsync(ProductBuy productBuy) {
             await _context.Set<ProductBuy>().AddAsync(productBuy);
         }
 
-        public async Task<ProductBuyDto> UpdateProductAsync(ProductBuy productBuy)
-        {
+        public async Task<ProductBuyDto> UpdateProductAsync(ProductBuy productBuy) {
             var product = await _context.Set<ProductBuy>()
                 .FirstOrDefaultAsync(p => p.ProductId == productBuy.ProductId);
 
-            if (product != null)
-            {
+            if (product != null) {
                 product.ProductName = productBuy.ProductName;
                 product.Specification = productBuy.Specification;
                 product.CategoryId = productBuy.CategoryId;
@@ -139,13 +126,11 @@ namespace Shine.Data.Infrastructures.Repositories
             return product.Adapt<ProductBuyDto>();
         }
 
-        public async Task<ProductBuyDto> DeleteProductAsync(int id)
-        {
+        public async Task<ProductBuyDto> DeleteProductAsync(int id) {
             var product = await _context.Set<ProductBuy>()
                 .FirstOrDefaultAsync(p => p.ProductId == id);
 
-            if (product != null)
-            {
+            if (product != null) {
                 _context.Set<ProductBuy>().Remove(product);
             }
 

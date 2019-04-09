@@ -3,9 +3,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { ProductBuyDataSource } from 'src/app/product/buy/_data-source/product-buy-data-source';
 import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
-import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -14,22 +12,18 @@ import { ActivatedRoute } from '@angular/router';
 
 import { SupplierProduct } from '../_interfaces/supplier-product';
 import { SupplierService } from '../_services/supplier.service';
+import { ProductsBySupplierDataSource } from 'src/app/supplier/_data-source/products-by-supplier-data-source';
 
 @Component({
   selector: 'app-products-added',
   templateUrl: './products-added.component.html',
-  styleUrls: ['./products-added.component.css'],
+  styleUrls: ['./products-added.component.css']
 })
 export class ProductsAddedComponent implements OnInit, AfterViewInit {
-  dataSource: ProductBuyDataSource;
-  displayedColumns = [
-    'select',
-    'productName',
-    'specification',
-    'categoryName',
-    'actions',
-  ];
+  dataSource: ProductsBySupplierDataSource;
+  displayedColumns = ['select', 'productName', 'specification', 'categoryName', 'actions'];
   selection = new SelectionModel<ProductBuyList>(true, [], false);
+  supplierId: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -37,25 +31,25 @@ export class ProductsAddedComponent implements OnInit, AfterViewInit {
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
-    pageSize: 8,
+    pageSize: 8
   };
 
   sortParams = <SortParams>{
     sortColumn: '',
-    sortOrder: '',
+    sortOrder: ''
   };
 
   constructor(
     private supplierService: SupplierService,
-    private productBuyService: ProductBuyService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private confirmDialogService: ConfirmDialogService,
+    private confirmDialogService: ConfirmDialogService
   ) {}
 
   ngOnInit() {
-    this.dataSource = new ProductBuyDataSource(this.productBuyService);
-    this.dataSource.loadData(this.pagingParams, this.sortParams);
+    this.supplierId = +this.route.snapshot.params.supplierId;
+    this.dataSource = new ProductsBySupplierDataSource(this.supplierService);
+    this.dataSource.loadData(this.supplierId, this.pagingParams, this.sortParams);
   }
 
   ngAfterViewInit(): void {
@@ -67,7 +61,7 @@ export class ProductsAddedComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.paginator.pageIndex = 0;
           this.loadProductsPage();
-        }),
+        })
       )
       .subscribe();
 
@@ -80,7 +74,7 @@ export class ProductsAddedComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.loadProductsPage();
           setTimeout(() => this.selection.clear(), 50);
-        }),
+        })
       )
       .subscribe();
   }
@@ -94,20 +88,17 @@ export class ProductsAddedComponent implements OnInit, AfterViewInit {
 
     const filter = this.input.nativeElement.value;
 
-    this.dataSource.loadData(this.pagingParams, this.sortParams, filter);
+    this.dataSource.loadData(this.supplierId, this.pagingParams, this.sortParams, filter);
   }
 
   DeleteProductFromSupplier(product: ProductBuyList) {
-    const dialogRef = this.confirmDialogService.openDialog(
-      `Are you sure to delete ${product.productName}?`,
-    );
+    const dialogRef = this.confirmDialogService.openDialog(`Are you sure to delete ${product.productName}?`);
 
     dialogRef.afterClosed().subscribe((res: boolean) => {
       if (res) {
-        const supplierId = this.route.snapshot.params.id;
         const delEntity = <SupplierProduct>{
-          personId: supplierId,
-          productId: product.productId,
+          personId: this.supplierId,
+          productId: product.productId
         };
         this.supplierService.deleteSupplierProduct(delEntity).subscribe(() => {
           this.loadProductsPage();

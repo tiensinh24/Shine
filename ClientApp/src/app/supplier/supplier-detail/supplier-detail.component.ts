@@ -1,33 +1,33 @@
-import {
-    SupplierEditDialogComponent
-} from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 
-import { AfterViewInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { SupplierList } from '../_interfaces/supplier-list';
 import { SupplierService } from '../_services/supplier.service';
+import { SupplierDetail } from '../_interfaces/supplier-detail';
 
 @Component({
   selector: 'app-supplier-detail',
   templateUrl: './supplier-detail.component.html',
-  styleUrls: ['./supplier-detail.component.css'],
+  styleUrls: ['./supplier-detail.component.css']
 })
-export class SupplierDetailComponent implements AfterViewInit {
-  supplier: SupplierList;
+export class SupplierDetailComponent implements OnInit {
+  supplier: SupplierDetail;
   isAddProducts = false;
+  supplierId: number;
   title: string;
 
-  constructor(
-    private supplierService: SupplierService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-  ) {}
+  constructor(private supplierService: SupplierService, private route: ActivatedRoute, private dialog: MatDialog) {}
 
-  ngAfterViewInit(): void {
-    const id = +this.route.snapshot.params.supplierId;
-    this.supplierService.getSupplier(id).subscribe(res => {
+  ngOnInit(): void {
+    this.supplierId = +this.route.snapshot.params.supplierId;
+
+    this.getSupplier();
+  }
+
+  getSupplier() {
+    this.supplierService.getSupplier(this.supplierId).subscribe(res => {
       this.supplier = res;
       this.title = `Add products for ${res.fullName}`;
     });
@@ -39,7 +39,7 @@ export class SupplierDetailComponent implements AfterViewInit {
       disableClose: true,
       autoFocus: true,
       width: '100vw',
-      height: '100vh',
+      height: '100vh'
     };
 
     // Send data to supplier edit dialog component
@@ -53,18 +53,14 @@ export class SupplierDetailComponent implements AfterViewInit {
         dateOfBirth: this.supplier.dateOfBirth,
         telephone: this.supplier.telephone,
         fax: this.supplier.fax,
-        countryId: this.supplier.countryId,
+        countryId: this.supplier.countryId
       };
 
-      const dialogRef = this.dialog.open(
-        SupplierEditDialogComponent,
-        dialogConfig,
-      );
+      const dialogRef = this.dialog.open(SupplierEditDialogComponent, dialogConfig);
 
-      // Get data returned from supplier-edit dialog
-      dialogRef.afterClosed().subscribe((res: SupplierList) => {
+      dialogRef.afterClosed().subscribe(res => {
         if (res) {
-          this.supplier = res;
+          this.getSupplier();
         }
       });
     }

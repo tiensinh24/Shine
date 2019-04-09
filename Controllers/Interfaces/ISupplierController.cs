@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Models;
 
-namespace Shine.Controllers.Interfaces
-{
-    public interface ISupplierController
-    {
+namespace Shine.Controllers.Interfaces {
+    public interface ISupplierController {
 #region Supplier
 
 #region Get Values
@@ -38,6 +37,9 @@ namespace Shine.Controllers.Interfaces
 
 #region Get Values
         Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsList();
+
+        Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsBySupplier(
+            int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 #endregion
 
 #region Actions
@@ -45,7 +47,7 @@ namespace Shine.Controllers.Interfaces
 
         Task<ActionResult<PersonProductDto>> DeleteSupplierProduct(PersonProduct model);
 #endregion
-    
+
 #endregion
 
     }

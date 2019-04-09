@@ -7,10 +7,8 @@ using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Models;
 
-namespace Shine.Controllers.Interfaces
-{
-    public interface IProductBuyController
-    {
+namespace Shine.Controllers.Interfaces {
+    public interface IProductBuyController {
 #region Get Values
         Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProducts();
 

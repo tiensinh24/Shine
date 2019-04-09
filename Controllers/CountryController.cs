@@ -26,17 +26,17 @@ namespace Shine.Controllers {
     [Authorize]
     public class CountryController : ControllerBase, ICountryController {
 
-        #region Private Fields
+#region Private Fields
         private readonly ICountryRepository _repository;
-        #endregion
+#endregion
 
-        #region Constructor
+#region Constructor
         public CountryController(ICountryRepository repository) {
             this._repository = repository;
         }
-        #endregion
+#endregion
 
-        #region Get Values
+#region Get Values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries() {
             var query = await _repository.GetCountriesAsync(c => c.CountryName, "asc");
@@ -44,14 +44,14 @@ namespace Shine.Controllers {
             return Ok(query);
         }
 
-        [HttpGet("Select")]
+        [HttpGet("select")]
         public async Task<ActionResult<IEnumerable<CountrySelectDto>>> GetCountriesSelect() {
             var query = await _repository.GetCountriesSelectAsync();
 
             return Ok(query);
         }
 
-        [HttpGet("Paged")]
+        [HttpGet("paged")]
         public Task<ActionResult<Paged<CountryDto>>> GetPagedCountries(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
             throw new NotImplementedException();
@@ -66,9 +66,9 @@ namespace Shine.Controllers {
 
             return country;
         }
-        #endregion
+#endregion
 
-        #region Actions
+#region Actions
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<CountryDto>> AddCountry([FromBody] Country country) {
@@ -103,7 +103,7 @@ namespace Shine.Controllers {
             return country.Adapt<CountryDto>();
         }
 
-        #endregion
+#endregion
 
     }
 }

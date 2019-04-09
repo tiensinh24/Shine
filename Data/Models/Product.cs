@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 using Shine.Data.Models.Interfaces;
 
-namespace Shine.Data.Models
-{
-    public abstract class Product : IAuditedEntityBase, ISoftDelete
-    {
+namespace Shine.Data.Models {
+    public abstract class Product : IAuditedEntityBase, ISoftDelete {
 #region Properties
         public int ProductId { get; set; }
 
@@ -27,13 +25,11 @@ namespace Shine.Data.Models
 #endregion
     }
 
-    public class ProductBuy : Product, INotRoot
-    {
+    public class ProductBuy : Product, INotRoot {
 
     }
 
-    public class ProductSell : Product, INotRoot
-    {
+    public class ProductSell : Product, INotRoot {
 
     }
 }

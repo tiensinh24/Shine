@@ -1,5 +1,8 @@
+using System.Linq;
+
 using Mapster;
 
+using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Models;
 

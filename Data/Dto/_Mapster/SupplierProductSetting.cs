@@ -5,12 +5,9 @@ using Mapster;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Models;
 
-namespace Shine.Data.Dto._Mapster
-{
-    public static class SupplierProductSetting
-    {
-        public static void Setting()
-        {
+namespace Shine.Data.Dto._Mapster {
+    public static class SupplierProductSetting {
+        public static void Setting() {
             TypeAdapterConfig<PersonProduct, SupplierProductListDto>.NewConfig()
                 .Map(
                     dest => dest.FullName, src => GetFullName(src.Person.FirstName, src.Person.LastName)
@@ -22,28 +19,26 @@ namespace Shine.Data.Dto._Mapster
                     dest => dest.Specification, src => src.Product.Specification
                 );
 
-            TypeAdapterConfig<PersonProduct, ProductsBySupplierDto>.NewConfig().Map(
-                dest => dest.CategoryName,
-                src => src.Product.Category.CategoryName
-            ).Map(
-                dest => dest.SupplierId, src => src.PersonId
-            ).Map(
-                dest => dest.ProductName, src => src.Product.ProductName
-            ).Map(
-                dest => dest.Specification, src => src.Product.Specification            
-            ).Map(
-                dest => dest.CategoryId, src => src.Product.CategoryId
-            );
+            TypeAdapterConfig<PersonProduct, ProductsBySupplierDto>.NewConfig()
+                .Map(
+                    dest => dest.CategoryName, src => src.Product.Category.CategoryName
+                ).Map(
+                    dest => dest.PersonId, src => src.PersonId
+                ).Map(
+                    dest => dest.ProductName, src => src.Product.ProductName
+                ).Map(
+                    dest => dest.Specification, src => src.Product.Specification
+                ).Map(
+                    dest => dest.CategoryId, src => src.Product.CategoryId
+                );
         }
 
-        static string GetFullName(string firstName, string lastName)
-        {
+        static string GetFullName(string firstName, string lastName) {
             var fullName = firstName + ' ' + lastName;
             return fullName;
         }
 
-        static int GetAge(DateTime Dob)
-        {
+        static int GetAge(DateTime Dob) {
             var year = DateTime.Now.Year - Dob.Year;
             var month = DateTime.Now.Month - Dob.Month;
             // if (month < 0) { year--; month += 12; }
