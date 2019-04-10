@@ -1,12 +1,12 @@
 <!-- Loading progress bar -->
-<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
+<mat-progress-bar *ngIf="(dataSource.isLoading | async)" color="accent" aria-label="Progress bar" mode="buffer">
 </mat-progress-bar>
 
 <div fxLayout="column">
   <!-- Title -->
   <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
     <span class="fill"></span>
-    <span class="mat-headline">{{title}}</span>
+    <span class="mat-headline">{{ title }}</span>
     <span class="fill"></span>
     <button mat-mini-fab matTooltip="Go to Sell" [routerLink]="['/category-sell']">
       Buy
@@ -17,24 +17,26 @@
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="masterToggle()" [checked]="isAllSelected()"
-          [indeterminate]="!isAllSelected() && selection.hasValue()">
+        <mat-checkbox
+          (change)="masterToggle()"
+          [checked]="isAllSelected()"
+          [indeterminate]="!isAllSelected() && selection.hasValue()"
+        >
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)">
-        </mat-checkbox>
+        <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)"> </mat-checkbox>
       </td>
     </ng-container>
     <!-- CategoryId Column -->
     <ng-container matColumnDef="categoryId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Category ID</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.categoryId}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Category ID</b></th>
+      <td mat-cell *matCellDef="let row">{{ row.categoryId }}</td>
     </ng-container>
     <!-- CategoryName Column -->
     <ng-container matColumnDef="categoryName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Category Name</b> </th>
-      <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Category Name</b></th>
+      <td mat-cell *matCellDef="let row">{{ row.categoryName }}</td>
     </ng-container>
 
     <!-- Actions Column -->
@@ -46,9 +48,8 @@
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row">
-
         <button matTooltip="Category detail" mat-icon-button color="primary" (click)="onDetail(row)">
-          <mat-icon aria-label="Detail">dehaze</mat-icon>
+          <mat-icon aria-label="Detail">list_alt</mat-icon>
         </button>
 
         <button matTooltip="Edit category" mat-icon-button color="accent" (click)="onEdit(row)">
@@ -58,7 +59,6 @@
         <button matTooltip="Delete category" mat-icon-button color="warn" (click)="onDelete(row)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
-
       </mat-cell>
     </ng-container>
 
@@ -68,14 +68,17 @@
 
   <!-- Paginator & filter -->
   <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
-
-    <mat-paginator fxFlex="60" [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8"
-      [pageSizeOptions]="[8, 16, 25]" [showFirstLastButtons]="true">
+    <mat-paginator
+      fxFlex="60"
+      [length]="(dataSource.paging | async)?.totalItems"
+      [pageSize]="8"
+      [pageSizeOptions]="[8, 16, 25]"
+      [showFirstLastButtons]="true"
+    >
     </mat-paginator>
 
     <mat-form-field fxFlex>
-      <input matInput placeholder="Search categories" #input>
+      <input matInput placeholder="Search categories" #input />
     </mat-form-field>
-
   </mat-card>
 </div>

@@ -1,22 +1,26 @@
 <mat-card fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px" class="mat-elevation-z8">
   <mat-card fxFlex="20">
     <mat-card-header>
-      <div mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="example-header-image"></div>
-      <mat-card-title>{{orderBuy?.orderNumber}}</mat-card-title>
-      <mat-card-subtitle>{{orderBuy?.dateOfIssue | date: "dd/MM/yyyy"}}</mat-card-subtitle>
+      <div
+        mat-card-avatar
+        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        class="example-header-image"
+      ></div>
+      <mat-card-title>{{ orderBuy?.orderNumber }}</mat-card-title>
+      <mat-card-subtitle>{{ orderBuy?.dateOfIssue | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
     </mat-card-header>
     <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
     <mat-card-content>
       <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
         <p>Order Number</p>
-        <span>{{orderBuy?.orderNumber}}</span>
+        <span>{{ orderBuy?.orderNumber }}</span>
         <mat-divider></mat-divider>
         <p>Date of Issue</p>
-        <span>{{orderBuy?.dateOfIssue | date: "dd/MM/yyyy"}}</span>
+        <span>{{ orderBuy?.dateOfIssue | date: 'dd/MM/yyyy' }}</span>
         <p>Time for Payment</p>
-        <span>{{orderBuy?.timeForPayment | date: "dd/MM/yyyy"}}</span>
+        <span>{{ orderBuy?.timeForPayment | date: 'dd/MM/yyyy' }}</span>
         <p>Supplier</p>
-        <span>{{orderBuy?.supplierName}}</span>
+        <span>{{ orderBuy?.supplierName }}</span>
       </div>
     </mat-card-content>
 
@@ -24,7 +28,7 @@
 
     <mat-card-actions fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
       <button fxFlex="30" mat-raised-button color="warn" (click)="openDialog()">Edit</button>
-      <button fxFlex="30" mat-raised-button color="primary" [routerLink]="['/order-buy/']">Orders</button>
+      <button fxFlex="30" mat-raised-button color="primary" [routerLink]="['/order-buy/']">Lists</button>
     </mat-card-actions>
   </mat-card>
 

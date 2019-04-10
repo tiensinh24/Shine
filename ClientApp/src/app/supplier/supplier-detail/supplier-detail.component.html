@@ -1,10 +1,4 @@
-<mat-card
-  fxLayout="row"
-  fxLayoutGap="16px"
-  fxLayout.xs="column"
-  fxLayout.sm="column"
-  class="mat-elevation-z8"
->
+<mat-card fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column" fxLayout.sm="column" class="mat-elevation-z8">
   <mat-card fxFlex="25">
     <mat-card-header>
       <div
@@ -12,23 +6,15 @@
         src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         class="example-header-image"
       ></div>
-      <mat-card-title
-        >{{ supplier?.firstName }} {{ supplier?.lastName }}</mat-card-title
-      >
+      <mat-card-title>{{ supplier?.firstName }} {{ supplier?.lastName }}</mat-card-title>
       <mat-card-subtitle>{{ supplier?.gender | gender }}</mat-card-subtitle>
     </mat-card-header>
-    <img
-      mat-card-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Photo of a Shiba Inu"
-    />
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" />
     <mat-card-content>
       <table>
         <tr>
           <td class="col-1">Full Name</td>
-          <td class="col-2">
-            {{ supplier?.firstName }} {{ supplier?.lastName }}
-          </td>
+          <td class="col-2">{{ supplier?.firstName }} {{ supplier?.lastName }}</td>
         </tr>
         <tr>
           <td class="col-1">Age</td>
@@ -56,31 +42,16 @@
       <button fxFlex="30" mat-raised-button color="warn" (click)="openDialog()">
         Edit
       </button>
-      <button
-        fxFlex="30"
-        mat-raised-button
-        color="primary"
-        [routerLink]="['/supplier/list']"
-      >
-        Suppliers
+      <button fxFlex="30" mat-raised-button color="primary" [routerLink]="['/supplier/list']">
+        Lists
       </button>
     </mat-card-actions>
   </mat-card>
 
   <!-- Add button -->
   <button fxFlexAlign="center" mat-fab (click)="toggleAddProduct()">
-    <mat-icon
-      *ngIf="!isAddProducts"
-      matTooltip="Add products"
-      aria-label="Add products"
-      >add</mat-icon
-    >
-    <mat-icon
-      *ngIf="isAddProducts"
-      matTooltip="Products list"
-      aria-label="Products list"
-      >list</mat-icon
-    >
+    <mat-icon *ngIf="!isAddProducts" matTooltip="Add products" aria-label="Add products">add</mat-icon>
+    <mat-icon *ngIf="isAddProducts" matTooltip="Products list" aria-label="Products list">list</mat-icon>
   </button>
 
   <!-- Table -->
