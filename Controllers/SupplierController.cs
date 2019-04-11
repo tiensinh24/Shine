@@ -106,6 +106,17 @@ namespace Shine.Controllers {
 
             return supplier;
         }
+
+        [HttpDelete("delete-all")]
+        public async Task<bool> DeleteSuppliers([FromHeader] string[] ids) {
+            var query = await _repository.DeleteSuppliersAsync(ids);
+
+            if (query) {
+                await _repository.CommitAsync();
+            }
+
+            return query;
+        }
 #endregion
 #endregion
 

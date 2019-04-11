@@ -1,23 +1,6 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  OnDestroy,
-} from '@angular/core';
-import {
-  MatTableDataSource,
-  MatSort,
-  MatPaginator,
-  MatSnackBar,
-} from '@angular/material';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-  FormControl,
-} from '@angular/forms';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -33,24 +16,16 @@ import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list
 @Component({
   selector: 'app-order-buy-product-details',
   templateUrl: './order-buy-product-details.component.html',
-  styleUrls: ['./order-buy-product-details.component.css'],
+  styleUrls: ['./order-buy-product-details.component.css']
 })
-export class OrderBuyProductDetailsComponent
-  implements OnInit, AfterViewInit, OnDestroy {
-  displayedcolumn = [
-    'productName',
-    'quantity',
-    'price',
-    'tax',
-    'rate',
-    'unit',
-    'actions',
-  ];
+export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+  displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'actions'];
   orderBuy: OrderBuyDto;
   products: ProductBuyList[];
   dataSource = new MatTableDataSource<ProductOrderDto>([]);
   formGroupDetail: FormGroup;
   orderId: number;
+  isAdd = false;
 
   orderBuySub = new Subscription();
   productsSub = new Subscription();
@@ -65,7 +40,7 @@ export class OrderBuyProductDetailsComponent
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private confirmDialogService: ConfirmDialogService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -77,7 +52,7 @@ export class OrderBuyProductDetailsComponent
     this.getDataSource(this.orderId);
     this.getOrderBuy(this.orderId);
     setTimeout(() => {
-      this.getProductsBySupplier(this.orderBuy.personId);
+      // this.getProductsBySupplier(this.orderBuy.personId);
     });
   }
 
@@ -88,13 +63,11 @@ export class OrderBuyProductDetailsComponent
   }
 
   getDataSource(orderId: number) {
-    this.dataSourceSub = this.orderBuyService
-      .getProductDetailByOrder(orderId)
-      .subscribe(res => {
-        this.dataSource = new MatTableDataSource<ProductOrderDto>(res);
-        setTimeout(() => (this.dataSource.sort = this.sort));
-        setTimeout(() => (this.dataSource.paginator = this.paginator));
-      });
+    this.dataSourceSub = this.orderBuyService.getProductDetailByOrder(orderId).subscribe(res => {
+      this.dataSource = new MatTableDataSource<ProductOrderDto>(res);
+      setTimeout(() => (this.dataSource.sort = this.sort));
+      setTimeout(() => (this.dataSource.paginator = this.paginator));
+    });
   }
 
   getOrderBuy(orderId: number) {
@@ -104,23 +77,16 @@ export class OrderBuyProductDetailsComponent
   }
 
   getProductsBySupplier(supplierId: number) {
-    this.productsSub = this.supplierService
-      .getProductsBySupplier(supplierId)
-      .subscribe(res => {
-        this.products = res;
-        this.refreshProductSelectionAndDataSource('init');
-      });
+    this.productsSub = this.supplierService.getProductsBySupplier(supplierId).subscribe(res => {
+      this.products = res;
+      this.refreshProductSelectionAndDataSource('init');
+    });
   }
 
-  refreshProductSelectionAndDataSource(
-    mode: string,
-    prodOrder?: ProductOrder | ProductOrderDto | any,
-  ) {
+  refreshProductSelectionAndDataSource(mode: string, prodOrder?: ProductOrder | ProductOrderDto | any) {
     if (mode === 'init') {
       this.dataSource.data.forEach(productOrder => {
-        const index = this.products.findIndex(
-          product => product.productId === productOrder.productId,
-        );
+        const index = this.products.findIndex(product => product.productId === productOrder.productId);
         if (index > -1) {
           this.products.splice(index, 1);
         }
@@ -137,9 +103,7 @@ export class OrderBuyProductDetailsComponent
           this.dataSource._updateChangeSubscription();
 
           // Refresh product selection list
-          const index = this.products.findIndex(
-            p => p.productId === res.productId,
-          );
+          const index = this.products.findIndex(p => p.productId === res.productId);
           if (index > -1) {
             this.products.splice(index, 1);
           }
@@ -148,9 +112,7 @@ export class OrderBuyProductDetailsComponent
     }
 
     if (mode === 'delete') {
-      const index = this.dataSource.data.findIndex(
-        p => p.productId === prodOrder.productId,
-      );
+      const index = this.dataSource.data.findIndex(p => p.productId === prodOrder.productId);
 
       if (index > -1) {
         this.dataSource.data.splice(index, 1);
@@ -159,7 +121,7 @@ export class OrderBuyProductDetailsComponent
         // Refresh product selection list, create new instance to push into product selection list
         const productOrder = <ProductBuyList>{
           productId: prodOrder.productId,
-          productName: prodOrder.productName,
+          productName: prodOrder.productName
         };
         this.products.push(productOrder);
       }
@@ -174,14 +136,14 @@ export class OrderBuyProductDetailsComponent
       price: ['', Validators.required],
       tax: [''],
       rate: ['', Validators.required],
-      unit: ['', Validators.required],
+      unit: ['', Validators.required]
     });
   }
 
   addProductOrder() {
     if (this.formGroupDetail.valid) {
       this.formGroupDetail.patchValue({
-        orderId: this.orderBuy.orderId,
+        orderId: this.orderBuy.orderId
       });
       const prodOrder: ProductOrder = this.formGroupDetail.value;
 
@@ -190,26 +152,16 @@ export class OrderBuyProductDetailsComponent
   }
 
   DeleteProductFromOrder(productOrderDto: ProductOrderDto) {
-    const dialogRef = this.confirmDialogService.openDialog(
-      `Are you sure to delete ${productOrderDto.productName}?`,
-    );
+    const dialogRef = this.confirmDialogService.openDialog(`Are you sure to delete ${productOrderDto.productName}?`);
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         const orderId = this.orderBuy.orderId;
 
-        this.orderBuyService
-          .deleteProductOrder(orderId, productOrderDto.productId)
-          .subscribe(() => {
-            this.refreshProductSelectionAndDataSource(
-              'delete',
-              productOrderDto,
-            );
-            this.snackBar.open(
-              `${productOrderDto.productName} deleted`,
-              'Success',
-            );
-          });
+        this.orderBuyService.deleteProductOrder(orderId, productOrderDto.productId).subscribe(() => {
+          this.refreshProductSelectionAndDataSource('delete', productOrderDto);
+          this.snackBar.open(`${productOrderDto.productName} deleted`, 'Success');
+        });
       }
     });
   }
@@ -226,5 +178,9 @@ export class OrderBuyProductDetailsComponent
       : formControl.hasError('pattern')
       ? 'Please enter a number!'
       : '';
+  }
+
+  toggleAdd() {
+    this.isAdd = !this.isAdd;
   }
 }

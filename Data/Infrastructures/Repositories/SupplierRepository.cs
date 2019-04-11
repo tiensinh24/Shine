@@ -140,6 +140,20 @@ namespace Shine.Data.Infrastructures.Repositories {
 
             return supplier.Adapt<SupplierDto>();
         }
+
+        public async Task<bool> DeleteSuppliersAsync(string[] ids) {
+            var suppliers = await _context.Set<Supplier>()
+                .Where(s => ids.Contains(s.PersonId.ToString()))
+                .ToListAsync();
+
+            if (suppliers != null) {
+                _context.Set<Supplier>().RemoveRange(suppliers);
+
+                return true;
+            }
+            return false;
+        }
+
 #endregion
 
 #endregion

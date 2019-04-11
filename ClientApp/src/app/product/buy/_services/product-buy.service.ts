@@ -51,4 +51,8 @@ export class ProductBuyService {
   deleteProduct(id: number): Observable<number> {
     return this.http.delete<number>(this.baseUrl + 'api/productBuy/' + id);
   }
+
+  deleteProducts(idList: string[]): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}api/productBuy/delete-all`, { headers: { ids: idList } });
+  }
 }

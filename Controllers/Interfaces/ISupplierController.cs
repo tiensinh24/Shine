@@ -29,6 +29,8 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<SupplierDto>> DeleteSupplier(int id);
 
+        Task<bool> DeleteSuppliers(string[] ids);
+
 #endregion
 
 #endregion

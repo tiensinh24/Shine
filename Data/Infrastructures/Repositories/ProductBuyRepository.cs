@@ -137,6 +137,18 @@ namespace Shine.Data.Infrastructures.Repositories {
             return product.Adapt<ProductBuyDto>();
         }
 
+        public async Task<bool> DeleteProductsAsync(string[] ids) {
+            var products = await _context.Set<ProductBuy>()
+                .Where(c => ids.Contains(c.ProductId.ToString()))
+                .ToListAsync();
+
+            if (products != null) {
+                _context.Set<ProductBuy>().RemoveRange(products);
+
+                return true;
+            }
+            return false;
+        }
 #endregion
     }
 }

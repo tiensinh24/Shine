@@ -5,12 +5,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 
-
-
 @Component({
   selector: 'app-category-buy-dialog',
   templateUrl: './category-buy-dialog.component.html',
-  styleUrls: ['./category-buy-dialog.component.css'],
+  styleUrls: ['./category-buy-dialog.component.css']
 })
 export class CategoryBuyDialogComponent implements OnInit {
   title: string;
@@ -19,11 +17,10 @@ export class CategoryBuyDialogComponent implements OnInit {
   formGroup: FormGroup;
 
   constructor(
-    private categoryBuyService: CategoryBuyService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CategoryBuyDialogComponent>,
     // Inject data from main component
-    @Inject(MAT_DIALOG_DATA) public data: CategoryBuy,
+    @Inject(MAT_DIALOG_DATA) public data: CategoryBuy
   ) {}
 
   ngOnInit() {
@@ -43,13 +40,13 @@ export class CategoryBuyDialogComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.fb.group({
-      categoryName: ['', Validators.required],
+      categoryName: ['', Validators.required]
     });
   }
 
   updateForm() {
     this.formGroup.setValue({
-      categoryName: this.data.categoryName,
+      categoryName: this.data.categoryName
     });
   }
 

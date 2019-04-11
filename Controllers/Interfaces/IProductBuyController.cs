@@ -24,6 +24,8 @@ namespace Shine.Controllers.Interfaces {
         Task<ActionResult<ProductBuyDto>> UpdateProduct([FromBody] ProductBuy productBuy);
 
         Task<ActionResult<ProductBuyDto>> DeleteProduct(int id);
+
+        Task<bool> DeleteProducts(string[] ids);
 #endregion
     }
 }

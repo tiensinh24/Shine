@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
 using Shine.Controllers.Interfaces;
+using Shine.Data;
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Categories.Buy;
 using Shine.Data.Helpers;
@@ -26,13 +28,15 @@ namespace Shine.Controllers {
     public class CategoryBuyController : ControllerBase, ICategoryBuyController {
 #region Private Field
         private readonly ICategoryBuyRepository _repository;
+        private readonly AppDbContext _context;
 
 #endregion
 
 #region Constructor
-        public CategoryBuyController(ICategoryBuyRepository repository) {
+        public CategoryBuyController(ICategoryBuyRepository repository, AppDbContext context) {
 
             this._repository = repository;
+            this._context = context;
         }
 #endregion
 
@@ -99,6 +103,17 @@ namespace Shine.Controllers {
             await _repository.CommitAsync();
 
             return category;
+        }
+
+        [HttpDelete("delete-all")]
+        public async Task<bool> DeleteCategories([FromHeader] string[] ids) {
+            var query = await _repository.DeleteCategoriesAsync(ids);
+
+            if (query) {
+                await _repository.CommitAsync();
+            }
+
+            return query;
         }
 
 #endregion

@@ -56,6 +56,10 @@ export class SupplierService {
     return this.http.delete<number>(`${this.baseUrl}api/supplier/${id}`);
   }
 
+  deleteSuppliers(idList: string[]): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}api/supplier/delete-all`, { headers: { ids: idList } });
+  }
+
   // *SupplierProduct
 
   getProductsBySupplier(supplierId: number): Observable<ProductBuyList[]> {

@@ -96,6 +96,17 @@ namespace Shine.Controllers {
             return product;
         }
 
+        [HttpDelete("delete-all")]
+        public async Task<bool> DeleteProducts([FromHeader] string[] ids) {
+            var query = await _repository.DeleteProductsAsync(ids);
+
+            if (query) {
+                await _repository.CommitAsync();
+            }
+
+            return query;
+        }
+
 #endregion
     }
 }

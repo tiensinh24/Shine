@@ -38,6 +38,7 @@ export class SupplierDetailComponent implements OnInit {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
+      maxWidth: '100vw',
       width: '100vw',
       height: '100vh'
     };
@@ -50,6 +51,7 @@ export class SupplierDetailComponent implements OnInit {
         gender: this.supplier.gender,
         firstName: this.supplier.firstName,
         lastName: this.supplier.lastName,
+        fullName: this.supplier.fullName,
         dateOfBirth: this.supplier.dateOfBirth,
         telephone: this.supplier.telephone,
         fax: this.supplier.fax,

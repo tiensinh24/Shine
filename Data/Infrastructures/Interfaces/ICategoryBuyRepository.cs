@@ -7,10 +7,8 @@ using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Categories.Buy;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Interfaces
-{
-    public interface ICategoryBuyRepository : IRepository
-    {
+namespace Shine.Data.Infrastructures.Interfaces {
+    public interface ICategoryBuyRepository : IRepository {
 #region Get Values
         Task<IEnumerable<CategoryBuyDto>> GetCategoriesAsync(
             Expression<Func<CategoryBuyDto, object>> sortColumn, string sortOrder);
@@ -27,6 +25,8 @@ namespace Shine.Data.Infrastructures.Interfaces
         Task<CategoryBuyDto> UpdateCategoryAsync(CategoryBuy categoryBuy);
 
         Task<CategoryBuyDto> DeleteCategoryAsync(int id);
+
+        Task<bool> DeleteCategoriesAsync(string[] ids);
 #endregion
 
     }

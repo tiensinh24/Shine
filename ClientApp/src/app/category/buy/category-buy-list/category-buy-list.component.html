@@ -8,12 +8,14 @@
     <span class="fill"></span>
     <span class="mat-headline">{{ title }}</span>
     <span class="fill"></span>
+
     <button mat-mini-fab matTooltip="Go to Sell" [routerLink]="['/category-sell']">
       Buy
     </button>
   </mat-card>
+
   <!-- Table -->
-  <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+  <table #table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
@@ -44,6 +46,16 @@
       <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
         <button mat-icon-button color="primary" (click)="openDialog()">
           <mat-icon matTooltip="Create new category" aria-label="Create new category">add_circle</mat-icon>
+        </button>
+
+        <button
+          *ngIf="selection.hasValue()"
+          matTooltip="Delete selected categories"
+          mat-icon-button
+          color="warn"
+          (click)="onDeleteSeleted()"
+        >
+          <mat-icon>delete_sweep</mat-icon>
         </button>
       </mat-header-cell>
 

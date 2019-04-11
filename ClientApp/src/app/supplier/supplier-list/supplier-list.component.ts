@@ -17,7 +17,7 @@ import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 @Component({
   selector: 'app-supplier-list',
   templateUrl: './supplier-list.component.html',
-  styleUrls: ['./supplier-list.component.css'],
+  styleUrls: ['./supplier-list.component.css']
 })
 export class SupplierListComponent implements OnInit, AfterViewInit {
   dataSource: SupplierDataSource;
@@ -32,7 +32,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     // 'countryId',
     'countryName',
     'continentName',
-    'actions',
+    'actions'
   ];
   selection = new SelectionModel<SupplierList>(true, [], false);
   numRows: number;
@@ -45,12 +45,12 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
-    pageSize: 8,
+    pageSize: 8
   };
 
   sortParams = <SortParams>{
     sortColumn: '',
-    sortOrder: '',
+    sortOrder: ''
   };
 
   constructor(
@@ -58,7 +58,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialog: MatDialog,
     private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -75,7 +75,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.paginator.pageIndex = 0;
           this.loadSuppliersPage();
-        }),
+        })
       )
       .subscribe();
 
@@ -88,7 +88,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.loadSuppliersPage();
           setTimeout(() => this.selection.clear(), 50);
-        }),
+        })
       )
       .subscribe();
   }
@@ -119,15 +119,43 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
 
   onDelete(supplier: Supplier) {
     const dialogRef = this.confirmService.openDialog(
-      `Are you sure to delete ${supplier.firstName} ${supplier.lastName}?`,
+      `Are you sure to delete ${supplier.firstName} ${supplier.lastName}?`
     );
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.supplierService.deleteSupplier(supplier.personId).subscribe(() => {
           this.loadSuppliersPage();
+          this.snackBar.open(`${supplier.firstName} ${supplier.lastName} deleted`, 'Success');
+          setTimeout(() => this.selection.clear(), 50);
         });
-        this.snackBar.open(`${supplier.firstName} ${supplier.lastName} deleted`, 'Success');
+      }
+    });
+  }
+
+  onDeleteSelected() {
+    let suppliers: SupplierList[];
+    const suppliersToDelete: string[] = [];
+    this.dataSource.data.subscribe(data => (suppliers = data));
+
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete those suppliers`);
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        suppliers.forEach(supplier => {
+          if (this.selection.isSelected(supplier)) {
+            suppliersToDelete.push(supplier.personId.toString());
+          }
+        });
+        this.supplierService.deleteSuppliers(suppliersToDelete).subscribe((resp: boolean) => {
+          if (resp) {
+            this.loadSuppliersPage();
+            this.snackBar.open('Supplier deleted', 'Success');
+          } else {
+            this.snackBar.open('Can not delete suppliers', 'Error');
+          }
+          setTimeout(() => this.selection.clear(), 50);
+        });
       }
     });
   }
@@ -144,8 +172,9 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
+      maxWidth: '100vw',
       width: '100vw',
-      height: '100vh',
+      height: '100vh'
     };
 
     // Send data to supplier edit component
@@ -160,7 +189,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
         dateOfBirth: supplierEdit.dateOfBirth,
         telephone: supplierEdit.telephone,
         fax: supplierEdit.fax,
-        countryId: supplierEdit.countryId,
+        countryId: supplierEdit.countryId
       };
     }
 

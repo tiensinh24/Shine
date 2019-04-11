@@ -33,6 +33,8 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
         Task<SupplierDto> DeleteSupplierAsync(int id);
 
+        Task<bool> DeleteSuppliersAsync(string[] ids);
+
 #endregion       
 
 #endregion

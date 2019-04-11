@@ -38,7 +38,7 @@ export class CategoryBuyService {
       queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
-    return this.http.get<PagedCategoryBuy>(`${this.baseUrl}api/categoryBuy/Paged`, { params: queryParams });
+    return this.http.get<PagedCategoryBuy>(`${this.baseUrl}api/categoryBuy/paged`, { params: queryParams });
   }
 
   getCategory(id: number): Observable<CategoryBuy> {
@@ -55,5 +55,9 @@ export class CategoryBuyService {
 
   deleteCategory(id: number): Observable<number> {
     return this.http.delete<number>(this.baseUrl + 'api/categoryBuy/' + id);
+  }
+
+  deleteCategories(idList: string[]): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}api/categoryBuy/delete-all`, { headers: { ids: idList } });
   }
 }

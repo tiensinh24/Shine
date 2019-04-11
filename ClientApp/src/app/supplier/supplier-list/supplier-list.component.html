@@ -74,6 +74,10 @@
       <button mat-icon-button color="primary" (click)="onCreate()">
         <mat-icon matTooltip="Create new supplier" aria-label="Create new supplier">add_circle</mat-icon>
       </button>
+
+      <button *ngIf="selection.hasValue()" mat-icon-button color="warn" (click)="onDeleteSelected()">
+        <mat-icon matTooltip="Delete selected suppliers" aria-label="Delete selected suppliers">delete_sweep</mat-icon>
+      </button>
     </mat-header-cell>
 
     <mat-cell *matCellDef="let row">

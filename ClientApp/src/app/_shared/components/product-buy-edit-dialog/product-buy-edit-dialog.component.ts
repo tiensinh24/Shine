@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
@@ -8,13 +9,11 @@ import { environment } from 'src/environments/environment';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
-import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-buy-edit-dialog',
   templateUrl: './product-buy-edit-dialog.component.html',
-  styleUrls: ['./product-buy-edit-dialog.component.css'],
+  styleUrls: ['./product-buy-edit-dialog.component.css']
 })
 export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
@@ -31,7 +30,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<ProductBuyEditDialogComponent>,
     // Inject data from product-buy-list component
-    @Inject(MAT_DIALOG_DATA) public dataFromList,
+    @Inject(MAT_DIALOG_DATA) public dataFromList
   ) {}
 
   ngOnInit() {
@@ -65,7 +64,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     this.formGroup = this.fb.group({
       productName: ['', Validators.required],
       specification: ['', Validators.required],
-      categoryId: ['', Validators.required],
+      categoryId: ['', Validators.required]
     });
   }
 
@@ -73,7 +72,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     this.formGroup.setValue({
       productName: this.dataFromList.productName,
       specification: this.dataFromList.specification,
-      categoryId: this.dataFromList.categoryId,
+      categoryId: this.dataFromList.categoryId
     });
   }
 
@@ -82,8 +81,8 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
-      width: '100vw',
-      height: '100vh',
+      width: '500px',
+      height: '320px'
     };
 
     const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
@@ -97,7 +96,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
           this.categories.push(res);
           // Update formControl with new added value
           this.formGroup.patchValue({
-            categoryId: res.categoryId,
+            categoryId: res.categoryId
           });
         });
       }

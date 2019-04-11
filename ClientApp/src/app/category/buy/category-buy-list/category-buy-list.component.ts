@@ -3,9 +3,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import {
-    CategoryBuyDialogComponent
-} from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
+import { CategoryBuyDialogComponent } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog.component';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -19,36 +17,34 @@ import { CategoryBuyService } from '../_services/category-buy.service';
 @Component({
   selector: 'app-category-buy-list',
   templateUrl: './category-buy-list.component.html',
-  styleUrls: ['./category-buy-list.component.css'],
+  styleUrls: ['./category-buy-list.component.css']
 })
 export class CategoryBuyListComponent implements OnInit, AfterViewInit {
   dataSource: CategoryBuyDataSource;
   displayedColumns = ['select', 'categoryId', 'categoryName', 'actions'];
-  selection = new SelectionModel<CategoryBuy>(true, [], false);
+  selection = new SelectionModel<CategoryBuy>(true, []);
   numRows: number;
-
   title = 'Categories List';
+
+  pagingParams = <PagingParams>{
+    pageIndex: 0,
+    pageSize: 8
+  };
+  sortParams = <SortParams>{
+    sortColumn: '',
+    sortOrder: ''
+  };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
-
-  pagingParams = <PagingParams>{
-    pageIndex: 0,
-    pageSize: 8,
-  };
-
-  sortParams = <SortParams>{
-    sortColumn: '',
-    sortOrder: '',
-  };
 
   constructor(
     private categoryBuyService: CategoryBuyService,
     private router: Router,
     private dialog: MatDialog,
     private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -65,7 +61,7 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.paginator.pageIndex = 0;
           this.loadCategoriesPage();
-        }),
+        })
       )
       .subscribe();
 
@@ -78,7 +74,7 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.loadCategoriesPage();
           setTimeout(() => this.selection.clear(), 50);
-        }),
+        })
       )
       .subscribe();
   }
@@ -104,18 +100,42 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(categoryBuy: CategoryBuy) {
-    const dialogRef = this.confirmService.openDialog(
-      `Are you sure to delete ${categoryBuy.categoryName}?`,
-    );
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${categoryBuy.categoryName}?`);
 
-    dialogRef.afterClosed().subscribe(res => {
+    dialogRef.afterClosed().subscribe((res: boolean) => {
       if (res) {
-        this.categoryBuyService
-          .deleteCategory(categoryBuy.categoryId)
-          .subscribe(() => {
+        this.categoryBuyService.deleteCategory(categoryBuy.categoryId).subscribe(() => {
+          this.loadCategoriesPage();
+          this.snackBar.open(`${categoryBuy.categoryName} deleted`, 'Success');
+          setTimeout(() => this.selection.clear(), 50);
+        });
+      }
+    });
+  }
+
+  onDeleteSeleted() {
+    let categories: CategoryBuy[];
+    const categoriesToDelete: string[] = [];
+    this.dataSource.data.subscribe(data => (categories = data));
+
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete those categories?`);
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        categories.forEach(category => {
+          if (this.selection.isSelected(category)) {
+            categoriesToDelete.push(category.categoryId.toString());
+          }
+        });
+        this.categoryBuyService.deleteCategories(categoriesToDelete).subscribe((resp: boolean) => {
+          if (resp) {
             this.loadCategoriesPage();
-          });
-        this.snackBar.open(`${categoryBuy.categoryName} deleted`, 'Success');
+            this.snackBar.open('Categories deleted', 'Success');
+          } else {
+            this.snackBar.open(`Can not delete categories`, 'Error');
+          }
+          setTimeout(() => this.selection.clear(), 50);
+        });
       }
     });
   }
@@ -132,35 +152,28 @@ export class CategoryBuyListComponent implements OnInit, AfterViewInit {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
-      width: '80vw',
-      height: '80vh',
+      width: '500px',
+      height: '320px'
     };
 
     // Send data to category edit component
     if (catEdit) {
       dialogConfig.data = {
         categoryId: catEdit.categoryId,
-        categoryName: catEdit.categoryName,
+        categoryName: catEdit.categoryName
       };
     }
 
     // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(
-      CategoryBuyDialogComponent,
-      dialogConfig,
-    );
+    const dialogRef = this.dialog.open(CategoryBuyDialogComponent, dialogConfig);
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: CategoryBuy) => {
       if (data) {
         if (!catEdit) {
-          this.categoryBuyService
-            .addCategory(data)
-            .subscribe(() => this.loadCategoriesPage());
+          this.categoryBuyService.addCategory(data).subscribe(() => this.loadCategoriesPage());
         } else {
-          this.categoryBuyService
-            .updateCategory(data)
-            .subscribe(() => this.loadCategoriesPage());
+          this.categoryBuyService.updateCategory(data).subscribe(() => this.loadCategoriesPage());
         }
       }
       this.selection.clear();

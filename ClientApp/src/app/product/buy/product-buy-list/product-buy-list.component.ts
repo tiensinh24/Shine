@@ -1,20 +1,14 @@
-import { fromEvent, merge, Subscription } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import {
-    ProductBuyEditDialogComponent
-} from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
-import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
-import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
+import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-    MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatTableDataSource
-} from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { ProductBuyDataSource } from '../_data-source/product-buy-data-source';
 import { ProductBuy } from '../_interfaces/product-buy';
@@ -24,17 +18,11 @@ import { ProductBuyService } from '../_services/product-buy.service';
 @Component({
   selector: 'app-product-buy-list',
   templateUrl: './product-buy-list.component.html',
-  styleUrls: ['./product-buy-list.component.css'],
+  styleUrls: ['./product-buy-list.component.css']
 })
 export class ProductBuyListComponent implements OnInit, AfterViewInit {
   dataSource: ProductBuyDataSource;
-  displayedColumns = [
-    'select',
-    'productName',
-    'specification',
-    'categoryName',
-    'actions',
-  ];
+  displayedColumns = ['select', 'productName', 'specification', 'categoryName', 'actions'];
   selection = new SelectionModel<ProductBuyList>(true, [], false);
 
   title = 'Products List';
@@ -45,12 +33,12 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
-    pageSize: 8,
+    pageSize: 8
   };
 
   sortParams = <SortParams>{
     sortColumn: '',
-    sortOrder: '',
+    sortOrder: ''
   };
 
   constructor(
@@ -58,7 +46,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialog: MatDialog,
     private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -75,7 +63,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.paginator.pageIndex = 0;
           this.loadProductsPage();
-        }),
+        })
       )
       .subscribe();
 
@@ -88,7 +76,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.loadProductsPage();
           setTimeout(() => this.selection.clear(), 50);
-        }),
+        })
       )
       .subscribe();
   }
@@ -118,18 +106,42 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(productBuy: ProductBuy) {
-    const dialogRef = this.confirmService.openDialog(
-      `Are you sure to delete ${productBuy.productName}?`,
-    );
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${productBuy.productName}?`);
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.productBuyService
-          .deleteProduct(productBuy.productId)
-          .subscribe(() => {
+        this.productBuyService.deleteProduct(productBuy.productId).subscribe(() => {
+          this.loadProductsPage();
+          this.snackBar.open(`${productBuy.productName} deleted`, 'Success');
+          setTimeout(() => this.selection.clear(), 50);
+        });
+      }
+    });
+  }
+
+  onDeleteSelected() {
+    let products: ProductBuyList[];
+    const productsToDelete: string[] = [];
+    this.dataSource.data.subscribe(data => (products = data));
+
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete those products?`);
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        products.forEach(product => {
+          if (this.selection.isSelected(product)) {
+            productsToDelete.push(product.productId.toString());
+          }
+        });
+        this.productBuyService.deleteProducts(productsToDelete).subscribe((resp: boolean) => {
+          if (resp) {
             this.loadProductsPage();
-          });
-        this.snackBar.open(`${productBuy.productName} deleted`, 'Success');
+            this.snackBar.open('Products deleted', 'Success');
+          } else {
+            this.snackBar.open('Can not delete products', 'Error');
+          }
+          setTimeout(() => this.selection.clear(), 50);
+        });
       }
     });
   }
@@ -146,8 +158,9 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
+      maxWidth: '100vw',
       width: '100vw',
-      height: '100vh',
+      height: '100vh'
     };
 
     // Send data to product edit component
@@ -156,15 +169,12 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
         productId: prodEdit.productId,
         productName: prodEdit.productName,
         specification: prodEdit.specification,
-        categoryId: prodEdit.categoryId,
+        categoryId: prodEdit.categoryId
       };
     }
 
     // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(
-      ProductBuyEditDialogComponent,
-      dialogConfig,
-    );
+    const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: ProductBuyList) => {

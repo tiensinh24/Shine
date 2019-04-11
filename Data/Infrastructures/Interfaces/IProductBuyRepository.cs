@@ -29,6 +29,8 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
         Task<ProductBuyDto> DeleteProductAsync(int id);
 
+        Task<bool> DeleteProductsAsync(string[] ids);
+
 #endregion
     }
 }

@@ -1,5 +1,5 @@
 <!-- Dialog title -->
-<mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{title}}</mat-card>
+<mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{ title }}</mat-card>
 
 <mat-card mat-dialog-content class="mat-elevation-z1">
   <!-- Formgroup -->
@@ -7,27 +7,27 @@
     <!-- Product Name -->
     <mat-form-field appearance="outline">
       <mat-label>Product Name</mat-label>
-      <input matInput placeholder="Product Name" formControlName="productName" required autofocus>
-      <mat-error *ngIf="get('productName').invalid">{{getErrorMessage(get('productName'))}}</mat-error>
+      <input matInput placeholder="Product Name" formControlName="productName" required autofocus />
+      <mat-error *ngIf="get('productName').invalid">{{ getErrorMessage(get('productName')) }}</mat-error>
     </mat-form-field>
     <!-- Specification -->
     <mat-form-field appearance="outline">
       <mat-label>Specification</mat-label>
-      <input matInput placeholder="Specification" formControlName="specification" required>
-      <mat-error *ngIf="get('specification').invalid">{{getErrorMessage(get('specification'))}}</mat-error>
-    </mat-form-field>    
+      <input matInput placeholder="Specification" formControlName="specification" required />
+      <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage(get('specification')) }}</mat-error>
+    </mat-form-field>
     <!-- CategoryId -->
     <mat-form-field appearance="outline">
       <mat-label>Select category</mat-label>
       <mat-select placeholder="Select category" formControlName="categoryId" required>
         <mat-option *ngFor="let category of categories" [value]="category.categoryId">
-          {{category.categoryName}}
+          {{ category.categoryName }}
         </mat-option>
         <mat-option>
           <button mat-flat-button color="primary" (click)="openDialog()">Add New Category</button>
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="get('categoryId').invalid">{{getErrorMessage(get('categoryId'))}}</mat-error>
+      <mat-error *ngIf="get('categoryId').invalid">{{ getErrorMessage(get('categoryId')) }}</mat-error>
     </mat-form-field>
     <!-- Action Buttons -->
     <mat-card-actions fxLayout="row">

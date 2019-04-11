@@ -15,10 +15,8 @@ using Shine.Data.Dto.Categories.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Repositories
-{
-    public class CategoryBuyRepository : Repository, ICategoryBuyRepository
-    {
+namespace Shine.Data.Infrastructures.Repositories {
+    public class CategoryBuyRepository : Repository, ICategoryBuyRepository {
 #region Constructor
 
         public CategoryBuyRepository(AppDbContext context, RoleManager<IdentityRole> roleManager,
@@ -28,24 +26,17 @@ namespace Shine.Data.Infrastructures.Repositories
 
 #region Get Values
         public async Task<IEnumerable<CategoryBuyDto>> GetCategoriesAsync(
-            Expression<Func<CategoryBuyDto, object>> sortColumn = null, string sortOrder = "asc")
-        {
+            Expression<Func<CategoryBuyDto, object>> sortColumn = null, string sortOrder = "asc") {
             var query = _context.Set<CategoryBuy>().AsNoTracking()
                 .ProjectToType<CategoryBuyDto>();
 
-            if (sortColumn != null)
-            {
-                if (sortOrder == "desc")
-                {
+            if (sortColumn != null) {
+                if (sortOrder == "desc") {
                     query = query.OrderByDescending(sortColumn);
-                }
-                else
-                {
+                } else {
                     query = query.OrderBy(sortColumn);
                 }
-            }
-            else
-            {
+            } else {
                 query = query.OrderBy(c => c.CategoryName);
             }
 
@@ -53,17 +44,14 @@ namespace Shine.Data.Infrastructures.Repositories
         }
 
         public async Task<PagedList<CategoryBuyDto>> GetPagedCategoriesAsync(
-            PagingParams pagingParams, SortParams sortParams, string filter)
-        {
+            PagingParams pagingParams, SortParams sortParams, string filter) {
             var source = _context.Categories.OfType<CategoryBuy>()
                 .AsNoTracking()
                 .ProjectToType<CategoryBuyDto>();
 
-            switch (sortParams.SortOrder)
-            {
+            switch (sortParams.SortOrder) {
                 case "asc":
-                    switch (sortParams.SortColumn)
-                    {
+                    switch (sortParams.SortColumn) {
                         case "categoryName":
                             source = source.OrderBy(c => c.CategoryName);
                             break;
@@ -74,8 +62,7 @@ namespace Shine.Data.Infrastructures.Repositories
                     break;
 
                 case "desc":
-                    switch (sortParams.SortColumn)
-                    {
+                    switch (sortParams.SortColumn) {
                         case "categoryName":
                             source = source.OrderByDescending(c => c.CategoryName);
                             break;
@@ -90,16 +77,14 @@ namespace Shine.Data.Infrastructures.Repositories
                     break;
             }
 
-            if (!string.IsNullOrEmpty(filter))
-            {
+            if (!string.IsNullOrEmpty(filter)) {
                 source = source.Where(c => c.CategoryName.ToLower().Contains(filter.ToLower()));
             }
 
             return await PagedList<CategoryBuyDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public async Task<CategoryBuyDto> GetCategoryAsync(int id)
-        {
+        public async Task<CategoryBuyDto> GetCategoryAsync(int id) {
             var query = await _context.Set<CategoryBuy>()
                 .AsNoTracking()
                 .ProjectToType<CategoryBuyDto>()
@@ -111,35 +96,43 @@ namespace Shine.Data.Infrastructures.Repositories
 
 #region Actions
 
-        public async Task AddCategoryAsync(CategoryBuy categoryBuy)
-        {
+        public async Task AddCategoryAsync(CategoryBuy categoryBuy) {
             await _context.Set<CategoryBuy>().AddAsync(categoryBuy);
         }
 
-        public async Task<CategoryBuyDto> UpdateCategoryAsync(CategoryBuy categoryBuy)
-        {
+        public async Task<CategoryBuyDto> UpdateCategoryAsync(CategoryBuy categoryBuy) {
             var category = await _context.Set<CategoryBuy>()
                 .FirstOrDefaultAsync(c => c.CategoryId == categoryBuy.CategoryId);
 
-            if (category != null)
-            {
+            if (category != null) {
                 category.CategoryName = categoryBuy.CategoryName;
             }
 
             return category.Adapt<CategoryBuyDto>();
         }
 
-        public async Task<CategoryBuyDto> DeleteCategoryAsync(int id)
-        {
+        public async Task<CategoryBuyDto> DeleteCategoryAsync(int id) {
             var category = await _context.Set<CategoryBuy>()
                 .FirstOrDefaultAsync(c => c.CategoryId == id);
 
-            if (category != null)
-            {
+            if (category != null) {
                 _context.Set<CategoryBuy>().Remove(category);
             }
 
             return category.Adapt<CategoryBuyDto>();
+        }
+
+        public async Task<bool> DeleteCategoriesAsync(string[] ids) {
+            var categories = await _context.Set<CategoryBuy>()
+                .Where(c => ids.Contains(c.CategoryId.ToString()))
+                .ToListAsync();
+
+            if (categories != null) {
+                _context.Set<CategoryBuy>().RemoveRange(categories);
+
+                return true;
+            }
+            return false;
         }
 
 #endregion
