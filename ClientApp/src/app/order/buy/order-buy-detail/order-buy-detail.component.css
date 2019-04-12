@@ -14,11 +14,6 @@
   margin-top: 10px;
 }
 
-.product-table {
-  width: 100%;
-  height: calc(100vh - 155px);
-  overflow-y: auto;
-}
 
 .mat-paginator-sticky {
   bottom: 0px;

@@ -1,4 +1,4 @@
-<mat-card fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="16px" class="mat-elevation-z8">
+<mat-card fxLayout="row" fxLayoutGap="16px" class="mat-elevation-z8">
   <mat-card fxFlex="20">
     <mat-card-header>
       <div
@@ -9,7 +9,7 @@
       <mat-card-title>{{ orderBuy?.orderNumber }}</mat-card-title>
       <mat-card-subtitle>{{ orderBuy?.dateOfIssue | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
     </mat-card-header>
-    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" />
     <mat-card-content>
       <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
         <p>Order Number</p>
@@ -32,7 +32,7 @@
     </mat-card-actions>
   </mat-card>
 
-  <div fxFlex class="product-table">
+  <div fxFlex>
     <app-order-buy-product-details></app-order-buy-product-details>
   </div>
 </mat-card>

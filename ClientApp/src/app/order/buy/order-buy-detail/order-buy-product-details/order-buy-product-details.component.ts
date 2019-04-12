@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -39,20 +39,21 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
     private supplierService: SupplierService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private confirmDialogService: ConfirmDialogService,
+    private confirmService: ConfirmDialogService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.orderId = +this.route.snapshot.params.orderId;
     this.createForm();
+    this.getOrderBuy(this.orderId);
   }
 
   ngAfterViewInit(): void {
     this.getDataSource(this.orderId);
-    this.getOrderBuy(this.orderId);
+
     setTimeout(() => {
-      // this.getProductsBySupplier(this.orderBuy.personId);
+      this.getProductsBySupplier(this.orderBuy.personId);
     });
   }
 
@@ -152,7 +153,7 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
   }
 
   DeleteProductFromOrder(productOrderDto: ProductOrderDto) {
-    const dialogRef = this.confirmDialogService.openDialog(`Are you sure to delete ${productOrderDto.productName}?`);
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${productOrderDto.productName}?`);
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {

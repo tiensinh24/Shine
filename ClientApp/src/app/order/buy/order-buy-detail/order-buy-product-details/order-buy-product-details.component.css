@@ -23,4 +23,12 @@
     z-index: 10;
   }
 
-  
+.product-table {
+  width: 100%;
+  height: calc(100vh - 155px);
+  overflow-y: auto;
+}
+
+.sidenav-form {
+  margin-left: 1em;
+}
