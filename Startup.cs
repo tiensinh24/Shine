@@ -22,13 +22,11 @@ using Shine.Data.Dto._Mapster;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Infrastructures.Services;
+using Shine.Helpers;
 
-namespace Shine
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
+namespace Shine {
+    public class Startup {
+        public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
@@ -39,8 +37,7 @@ namespace Shine
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options =>
-                {
+                .AddJsonOptions(options => {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
@@ -48,8 +45,7 @@ namespace Shine
             services.AddEntityFrameworkSqlServer();
 
             // Add ASP.NET Identity support
-            services.AddIdentity<IdentityUser, IdentityRole>(opts =>
-            {
+            services.AddIdentity<IdentityUser, IdentityRole>(opts => {
                 opts.Password.RequireDigit = true;
                 opts.Password.RequireLowercase = true;
                 opts.Password.RequireUppercase = true;
@@ -58,18 +54,15 @@ namespace Shine
             }).AddEntityFrameworkStores<AppDbContext>();
 
             // Add Authentication with JWT Tokens
-            services.AddAuthentication(opts =>
-            {
+            services.AddAuthentication(opts => {
                 opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
-            {
+            }).AddJwtBearer(cfg => {
                 // Only disable when development
                 cfg.RequireHttpsMetadata = false;
                 cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters()
-                {
+                cfg.TokenValidationParameters = new TokenValidationParameters() {
                     // Standard configuration
                     ValidIssuer = Configuration["Auth:Jwt:Issuer"],
                     ValidAudience = Configuration["Auth:Jwt:Audience"],
@@ -97,41 +90,37 @@ namespace Shine
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<IOrderBuyRepository, OrderBuyRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
 
             services.AddEntityFrameworkSqlServer();
 
-            services.AddDbContextPool<AppDbContext>((serviceProvider, optionsBuilder) =>
-            {
+            services.AddDbContextPool<AppDbContext>((serviceProvider, optionsBuilder) => {
                 optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_dk"));
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll", builder =>
-                {
+            services.AddCors(options => {
+                options.AddPolicy("AllowAll", builder => {
                     builder.AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });
             });
 
+            // Setting Cloudinary image upload
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
+            services.AddSpaStaticFiles(configuration => {
                 configuration.RootPath = "ClientApp/dist";
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+            } else {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
@@ -146,22 +135,19 @@ namespace Shine
             // UseAuthentication() must before UseMvc
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
-            {
+            app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
+            app.UseSpa(spa => {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
+                if (env.IsDevelopment()) {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
@@ -172,8 +158,7 @@ namespace Shine
 #region Seeder
             // Create a service scope to get an AppDbContext instance using DI
             using(var serviceScope =
-                app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
+                app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
                 var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
                 var userManager = serviceScope.ServiceProvider.GetService<UserManager<IdentityUser>>();

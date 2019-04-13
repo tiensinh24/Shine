@@ -21,15 +21,12 @@ using Shine.Data.Models.Config;
 using Shine.Data.Models.Config.Extentions;
 using Shine.Data.Models.Interfaces;
 
-namespace Shine.Data
-{
-    public class AppDbContext : IdentityDbContext
-    {
+namespace Shine.Data {
+    public class AppDbContext : IdentityDbContext {
         private readonly IOptionsSnapshot<HttpContextAccessor> _httpContextAccessor;
 
 #region Constructor
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
             _httpContextAccessor = this.GetService<IOptionsSnapshot<HttpContextAccessor>>();
         }
 
@@ -47,8 +44,7 @@ namespace Shine.Data
         public DbSet<ProductOrder> ProductOrders { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new CategoryConfig());
@@ -67,24 +63,18 @@ namespace Shine.Data
 
 #region Global Query Filter       
 
-        private void SetGlobalQueryFilters(ModelBuilder modelBuilder)
-        {
-            foreach (var tp in modelBuilder.Model.GetEntityTypes())
-            {
+        private void SetGlobalQueryFilters(ModelBuilder modelBuilder) {
+            foreach (var tp in modelBuilder.Model.GetEntityTypes()) {
                 var t = tp.ClrType;
 
                 // set global filters
-                if (typeof(ISoftDelete).IsAssignableFrom(t))
-                {
-                    if (typeof(ITenantEntity).IsAssignableFrom(t))
-                    {
+                if (typeof(ISoftDelete).IsAssignableFrom(t)) {
+                    if (typeof(ITenantEntity).IsAssignableFrom(t)) {
                         // softdeletable and tenant (note do not filter just ITenant - too much filtering! 
                         // just top level classes that have ITenantEntity
                         var method = SetGlobalQueryForSoftDeleteAndTenantMethodInfo.MakeGenericMethod(t);
                         method.Invoke(this, new object[] { modelBuilder });
-                    }
-                    else
-                    {
+                    } else {
                         // softdeletable
                         var method = SetGlobalQueryForSoftDeleteMethodInfo.MakeGenericMethod(t);
                         method.Invoke(this, new object[] { modelBuilder });
@@ -97,13 +87,11 @@ namespace Shine.Data
         private static readonly MethodInfo SetGlobalQueryForSoftDeleteMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
             .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDelete");
 
-        public void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class, ISoftDelete
-        {
+        public void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class, ISoftDelete {
             // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
             //      Use INotRoot mark on derived type to not apply global query filter
 
-            if (!typeof(INotRoot).IsAssignableFrom(typeof(T)))
-            {
+            if (!typeof(INotRoot).IsAssignableFrom(typeof(T))) {
                 builder.Entity<T>().HasQueryFilter(i => !EF.Property<bool>(i, "IsDeleted"));
             }
 
@@ -112,13 +100,11 @@ namespace Shine.Data
         private static readonly MethodInfo SetGlobalQueryForSoftDeleteAndTenantMethodInfo = typeof(AppDbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
             .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDeleteAndTenant");
 
-        public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenantEntity
-        {
+        public void SetGlobalQueryForSoftDeleteAndTenant<T>(ModelBuilder builder) where T : class, ISoftDelete, ITenantEntity {
 
             // *Because Filters can only be defined for the root Entity Type of an inheritance hierarchy,
             //      Use INotRoot mark on derived type to not apply global query filter
-            if (!typeof(INotRoot).IsAssignableFrom(typeof(T)))
-            {
+            if (!typeof(INotRoot).IsAssignableFrom(typeof(T))) {
                 builder.Entity<T>().HasQueryFilter(
                     item => !EF.Property<bool>(item, "IsDeleted"));
                 // TODO
@@ -130,50 +116,41 @@ namespace Shine.Data
 #endregion
 
 #region Automatic Auditing
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
+        public override int SaveChanges(bool acceptAllChangesOnSuccess) {
             OnBeforeSaving();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        {
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken)) {
             OnBeforeSaving();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        private void OnBeforeSaving()
-        {
+        private void OnBeforeSaving() {
             var authenticatedUserId = _httpContextAccessor.Value.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             ChangeTracker.DetectChanges();
 
             var timestamp = DateTime.UtcNow;
 
-            foreach (var entry in ChangeTracker.Entries())
-            {
-                if (entry.Entity is IAuditedEntityBase)
-                {
-                    if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
-                    {
+            foreach (var entry in ChangeTracker.Entries()) {
+                if (entry.Entity is IAuditedEntityBase) {
+                    if (entry.State == EntityState.Added || entry.State == EntityState.Modified) {
                         entry.Property("ModifiedOn").CurrentValue = timestamp;
                         entry.Property("ModifiedById").CurrentValue = authenticatedUserId;
                     }
 
-                    if (entry.State == EntityState.Added)
-                    {
+                    if (entry.State == EntityState.Added) {
                         entry.Property("CreatedOn").CurrentValue = timestamp;
                         entry.Property("CreatedById").CurrentValue = authenticatedUserId;
-                        if (entry.Entity is ITenant)
-                        {
+                        if (entry.Entity is ITenant) {
                             // TODO
                             // entry.Property("TenantId").CurrentValue = _currentUser.TenantId;
                         }
                     }
                 }
 
-                if (entry.State == EntityState.Deleted && entry.Entity is ISoftDelete)
-                {
+                if (entry.State == EntityState.Deleted && entry.Entity is ISoftDelete) {
                     entry.State = EntityState.Modified;
                     entry.Property("IsDeleted").CurrentValue = true;
                     entry.Property("ModifiedOn").CurrentValue = timestamp;

@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.1"/>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="*"/>
     <PackageReference Include="System.Linq.Dynamic.Core" Version="*"/>
+    <PackageReference Include="CloudinaryDotNet" Version="1.7.0"/>
   </ItemGroup>
   <ItemGroup>
     <Content Remove="$(SpaRoot)**"/>
