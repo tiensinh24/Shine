@@ -5,6 +5,7 @@ using CloudinaryDotNet.Actions;
 
 using Mapster;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -54,10 +55,9 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #region Actions
 
-        public async Task<PhotoDto> AddPhotoForPersonAsync(int personId,
-            PhotoForCreationDto photoForCreationDto) {
+        public async Task<Photo> AddPhotoAsync(PhotoUploadDto model) {
 
-            var file = photoForCreationDto.File;
+            var file = model.File;
 
             var uploadResult = new ImageUploadResult();
 
@@ -73,14 +73,17 @@ namespace Shine.Data.Infrastructures.Repositories {
                 }
             }
 
-            photoForCreationDto.PhotoUrl = uploadResult.Uri.ToString();
-            photoForCreationDto.PublicId = uploadResult.PublicId;
+            var photoToAdd = new Photo() {
+                PersonId = model.PersonId,
+                Description = model.Description,
+                PublicId = uploadResult.PublicId,
+                PhotoUrl = uploadResult.Uri.ToString(),
+                DateAdded = uploadResult.CreatedAt
+            };
 
-            var photo = photoForCreationDto.Adapt<Photo>();
+            await _context.Photos.AddAsync(photoToAdd);
 
-            await _context.Photos.AddAsync(photo);
-
-            return photo.Adapt<PhotoDto>();
+            return photoToAdd;
 
         }
 

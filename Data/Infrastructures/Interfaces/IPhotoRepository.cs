@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Http;
+
 using Shine.Data.Dto.Photos;
 using Shine.Data.Models;
 
@@ -14,8 +16,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #region Actions
 
-        Task<PhotoDto> AddPhotoForPersonAsync(int personId,
-            PhotoForCreationDto photoForCreationDto);
+        Task<Photo> AddPhotoAsync(PhotoUploadDto model);
 
 #endregion
     }

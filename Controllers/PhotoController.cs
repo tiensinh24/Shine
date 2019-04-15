@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 
 using CloudinaryDotNet;
 
+using Mapster;
+
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -22,7 +25,6 @@ namespace Shine.Controllers {
 #region Private Fields
 
         private readonly IPhotoRepository _repository;
-        private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
 
 #endregion
 
@@ -34,11 +36,32 @@ namespace Shine.Controllers {
 
 #endregion
 
+#region Get Values
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PhotoDto>> GetPhoto(int id) {
+            var photo = await _repository.GetPhotoAsync(id);
+
+            if (photo == null) {
+                return NotFound();
+            }
+
+            return photo;
+        }
+
+#endregion
+
 #region Actions
 
-        [HttpPost("personId")]
-        public async Task<ActionResult<PhotoDto>> AddPhotoForPerson(int personId) {
-            var photo = await _repository.AddPhotoForPersonAsync(personId)
+        [HttpPost]
+        public async Task<ActionResult<PhotoDto>> AddPhotoForPerson([FromForm] PhotoUploadDto model) {
+            var photo = await _repository.AddPhotoAsync(model);
+
+            if (photo != null)
+                await _repository.CommitAsync();
+
+            return CreatedAtAction(nameof(GetPhoto), new { id = photo.PhotoId }, photo.Adapt<PhotoDto>());
+
         }
 
 #endregion
