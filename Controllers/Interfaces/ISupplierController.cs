@@ -19,7 +19,7 @@ namespace Shine.Controllers.Interfaces {
         Task<ActionResult<Paged<SupplierListDto>>> GetPagedSuppliers(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-        Task<ActionResult<SupplierListDto>> GetSupplier(int id);
+        Task<ActionResult<SupplierDetailDto>> GetSupplier(int id);
 #endregion
 
 #region Actions

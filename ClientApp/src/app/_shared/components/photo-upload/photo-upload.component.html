@@ -1,0 +1,25 @@
+<h1>Upload photo!</h1>
+<div>
+  <div *ngIf="error !== null">
+    {{ error }}
+  </div>
+  <div *ngIf="photoRes?.status === 'error'">
+    {{ photoRes.message }}
+  </div>
+  <div *ngIf="photoRes?.status === 'progress'">
+    <div role="progressbar" [style.width.%]="photoRes.message" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+      {{ photoRes.message }}%
+    </div>
+  </div>
+
+  <form fxLayout="column" fxLayoutGap="16px" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <input type="file" name="file" (change)="onFileChange($event)" />
+    <mat-form-field>
+      <input matInput placeholder="Description" formControlName="description" />
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isMain">Main photo</mat-checkbox>
+
+    <button mat-raised-button color="primary" type="submit">Upload</button>
+  </form>
+</div>

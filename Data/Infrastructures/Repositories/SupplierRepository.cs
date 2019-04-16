@@ -96,12 +96,13 @@ namespace Shine.Data.Infrastructures.Repositories {
 
         }
 
-        public async Task<SupplierListDto> GetSupplierAsync(int id) {
+        public async Task<SupplierDetailDto> GetSupplierAsync(int id) {
             var query = await _context.Set<Supplier>()
                 .Include(s => s.Country)
+                .Include(s => s.Photos)
                 .FirstOrDefaultAsync(s => s.PersonId == id);
 
-            return query.Adapt<SupplierListDto>();
+            return query.Adapt<SupplierDetailDto>();
         }
 
 #endregion

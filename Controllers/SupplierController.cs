@@ -58,7 +58,7 @@ namespace Shine.Controllers {
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<SupplierListDto>> GetSupplier(int id) {
+        public async Task<ActionResult<SupplierDetailDto>> GetSupplier(int id) {
             var supplier = await _repository.GetSupplierAsync(id);
 
             if (supplier == null) {

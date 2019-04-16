@@ -3,17 +3,17 @@ import { CountryService } from 'src/app/country/_services/country.service';
 import { Supplier } from 'src/app/supplier/_interfaces/supplier';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-supplier-edit-dialog',
   templateUrl: './supplier-edit-dialog.component.html',
-  styleUrls: ['./supplier-edit-dialog.component.css'],
+  styleUrls: ['./supplier-edit-dialog.component.css']
 })
 export class SupplierEditDialogComponent implements OnInit, OnDestroy {
-  countries = <CountrySelect[]>{};
+  countries: CountrySelect[];
   formGroup: FormGroup;
   editMode: boolean;
   title: string;
@@ -24,7 +24,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     private countryService: CountryService,
     private dialogRef: MatDialogRef<SupplierEditDialogComponent>,
     // Inject data from supplier-list component
-    @Inject(MAT_DIALOG_DATA) public dataFromList,
+    @Inject(MAT_DIALOG_DATA) public dataFromList
   ) {}
 
   ngOnInit() {
@@ -39,12 +39,13 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
       this.editMode = false;
       this.title = 'Create new supplier';
     }
+    this.getCountrySelect();
+  }
 
-    this.countryService
-      .getCountriesSelect()
-      .subscribe((res: CountrySelect[]) => {
-        this.countries = res;
-      });
+  getCountrySelect() {
+    this.countryService.getCountriesSelect().subscribe((res: CountrySelect[]) => {
+      this.countries = res;
+    });
   }
 
   ngOnDestroy(): void {}
@@ -58,7 +59,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
       personNumber: [],
       telephone: [],
       fax: [],
-      countryId: ['', Validators.required],
+      countryId: ['', Validators.required]
     });
   }
 
@@ -71,7 +72,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
       personNumber: this.dataFromList.personNumber,
       telephone: this.dataFromList.telephone,
       fax: this.dataFromList.fax,
-      countryId: this.dataFromList.countryId,
+      countryId: this.dataFromList.countryId
     });
   }
 

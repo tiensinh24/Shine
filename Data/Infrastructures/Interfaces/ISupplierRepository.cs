@@ -22,7 +22,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<PagedList<SupplierListDto>> GetPagedSuppliersAsync(
             PagingParams pagingParams, SortParams sortParams, string filter);
 
-        Task<SupplierListDto> GetSupplierAsync(int id);
+        Task<SupplierDetailDto> GetSupplierAsync(int id);
 
 #endregion
 

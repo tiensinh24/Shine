@@ -18,6 +18,23 @@ namespace Shine.Data.Dto._Mapster {
                 )
                 .Map(
                     dest => dest.ContinentName, src => src.Country.ContinentName
+                )
+                .Map(
+                    dest => dest.PhotosUrl, src => src.Photos.Select(p => p.PhotoUrl)
+                );
+
+            TypeAdapterConfig<Supplier, SupplierDetailDto>.NewConfig()
+                .Map(
+                    dest => dest.FullName, src => src.FirstName + " " + src.LastName
+                )
+                .Map(
+                    dest => dest.CountryName, src => src.Country.CountryName
+                )
+                .Map(
+                    dest => dest.ContinentName, src => src.Country.ContinentName
+                )
+                .Map(
+                    dest => dest.PhotosUrl, src => src.Photos.Select(p => p.PhotoUrl)
                 );
 
         }

@@ -9,7 +9,8 @@
       <mat-card-title>{{ supplier?.firstName }} {{ supplier?.lastName }}</mat-card-title>
       <mat-card-subtitle>{{ supplier?.gender | gender }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" />
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" /> -->
+    <img mat-card-image src="{{ mainPhotoUrl }}" alt="Photo of a Shiba Inu" />
     <mat-card-content>
       <table>
         <tr>
@@ -48,11 +49,14 @@
     </mat-card-actions>
   </mat-card>
 
-  <!-- Add button -->
+  <!-- Button Group -->
   <button fxFlexAlign="center" mat-fab (click)="toggleAddProduct()">
     <mat-icon *ngIf="!isAddProducts" matTooltip="Add products" aria-label="Add products">add</mat-icon>
     <mat-icon *ngIf="isAddProducts" matTooltip="Products list" aria-label="Products list">list</mat-icon>
   </button>
+
+  <!-- TODO test upload photo -->
+  <app-photo-upload [personId]="supplierId"></app-photo-upload>
 
   <!-- Table -->
   <div fxFlex class="product-table">

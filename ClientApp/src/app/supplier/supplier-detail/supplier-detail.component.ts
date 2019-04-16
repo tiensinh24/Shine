@@ -1,6 +1,6 @@
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,8 +12,9 @@ import { SupplierDetail } from '../_interfaces/supplier-detail';
   templateUrl: './supplier-detail.component.html',
   styleUrls: ['./supplier-detail.component.css']
 })
-export class SupplierDetailComponent implements OnInit {
+export class SupplierDetailComponent implements OnInit, AfterViewInit {
   supplier: SupplierDetail;
+  mainPhotoUrl: string;
   isAddProducts = false;
   supplierId: number;
   title: string;
@@ -22,14 +23,18 @@ export class SupplierDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.supplierId = +this.route.snapshot.params.supplierId;
+  }
 
+  ngAfterViewInit(): void {
     this.getSupplier();
   }
 
   getSupplier() {
     this.supplierService.getSupplier(this.supplierId).subscribe(res => {
       this.supplier = res;
+      this.mainPhotoUrl = res.PhotosUrl.slice(1, 1).toString();
       this.title = `Add products for ${res.fullName}`;
+      console.log(this.mainPhotoUrl);
     });
   }
 

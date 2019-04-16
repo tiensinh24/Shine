@@ -8,6 +8,9 @@ import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerComponent } from './customer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PhotoUploadComponent } from '../_shared/components/photo-upload/photo-upload.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/photo-upload-shared.module';
 
 @NgModule({
   declarations: [
@@ -17,9 +20,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CustomerListComponent,
     CustomerComponent
   ],
-  imports: [
-    CommonModule,
-    CustomerRoutingModule
-  ]
+  imports: [CommonModule, CustomerRoutingModule, PhotoUploadSharedModule]
 })
-export class CustomerModule { }
+export class CustomerModule {}

@@ -12,4 +12,6 @@ export interface SupplierDetail {
 
   countryName: string;
   continentName: string;
+
+  PhotosUrl: string[];
 }

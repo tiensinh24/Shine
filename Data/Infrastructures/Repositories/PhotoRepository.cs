@@ -76,6 +76,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             var photoToAdd = new Photo() {
                 PersonId = model.PersonId,
                 Description = model.Description,
+                IsMain = model.IsMain,
                 PublicId = uploadResult.PublicId,
                 PhotoUrl = uploadResult.Uri.ToString(),
                 DateAdded = uploadResult.CreatedAt

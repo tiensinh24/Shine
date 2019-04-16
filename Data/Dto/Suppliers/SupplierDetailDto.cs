@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 
 namespace Shine.Data.Dto.Suppliers {
-    public class SupplierListDto {
+    public class SupplierDetailDto {
+
 #region Properties
         public int PersonId { get; set; }
         public string PersonNumber { get; set; }
@@ -24,6 +25,5 @@ namespace Shine.Data.Dto.Suppliers {
 #region Photos Navigation
         public IEnumerable<string> PhotosUrl { get; set; }
 #endregion
-
     }
 }
