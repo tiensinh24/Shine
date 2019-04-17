@@ -3,7 +3,7 @@ import { CountryService } from 'src/app/country/_services/country.service';
 import { Supplier } from 'src/app/supplier/_interfaces/supplier';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 
-import { Component, Inject, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 

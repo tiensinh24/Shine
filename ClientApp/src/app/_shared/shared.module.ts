@@ -5,8 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { GenderPipe } from './_pipes/gender.pipe';
 import { AgePipe } from './_pipes/age.pipe';
-
-
+import { NgxGalleryModule } from 'ngx-gallery';
 
 @NgModule({
   declarations: [GenderPipe, AgePipe],
@@ -19,6 +18,9 @@ import { AgePipe } from './_pipes/age.pipe';
 
     // Flex
     FlexLayoutModule,
+
+    // Ngx-gallery
+    NgxGalleryModule
   ],
   exports: [
     // Pipe
@@ -33,6 +35,9 @@ import { AgePipe } from './_pipes/age.pipe';
 
     // Flex
     FlexLayoutModule,
-  ],
+
+    // Ngx-gallery
+    NgxGalleryModule
+  ]
 })
 export class SharedModule {}

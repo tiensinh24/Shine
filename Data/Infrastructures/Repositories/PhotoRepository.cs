@@ -78,7 +78,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                 Description = model.Description,
                 IsMain = model.IsMain,
                 PublicId = uploadResult.PublicId,
-                PhotoUrl = uploadResult.Uri.ToString(),
+                PhotoUrl = uploadResult.SecureUri.ToString(),
                 DateAdded = uploadResult.CreatedAt
             };
 

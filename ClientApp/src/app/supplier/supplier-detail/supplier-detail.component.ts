@@ -6,35 +6,84 @@ import { ActivatedRoute } from '@angular/router';
 
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierDetail } from '../_interfaces/supplier-detail';
+import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 
 @Component({
   selector: 'app-supplier-detail',
   templateUrl: './supplier-detail.component.html',
   styleUrls: ['./supplier-detail.component.css']
 })
-export class SupplierDetailComponent implements OnInit, AfterViewInit {
-  supplier: SupplierDetail;
-  mainPhotoUrl: string;
+export class SupplierDetailComponent implements OnInit {
+  supplier = <SupplierDetail>{};
+  photos = <PhotoForPerson[]>{};
+  mainPhotoUrl = '';
   isAddProducts = false;
   supplierId: number;
   title: string;
 
+  // Ngx-Gallery
+  galleryOptions: NgxGalleryOptions[];
+  galleryImages: NgxGalleryImage[];
+
   constructor(private supplierService: SupplierService, private route: ActivatedRoute, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.supplierId = +this.route.snapshot.params.supplierId;
-  }
-
-  ngAfterViewInit(): void {
     this.getSupplier();
   }
 
+  getImage() {
+    this.galleryOptions = [
+      {
+        width: '400px',
+        height: '400px',
+        thumbnailsColumns: 4,
+        imageAnimation: NgxGalleryAnimation.Slide
+      },
+      // max-width 800
+      {
+        breakpoint: 800,
+        width: '100%',
+        height: '600px',
+        imagePercent: 80,
+        thumbnailsPercent: 20,
+        thumbnailsMargin: 20,
+        thumbnailMargin: 20
+      },
+      // max-width 400
+      {
+        breakpoint: 400,
+        preview: false
+      }
+    ];
+
+    this.galleryImages = [
+      {
+        small: 'assets/1-small.jpg',
+        medium: 'assets/1-medium.jpg',
+        big: 'assets/1-big.jpg'
+        // url: `${this.mainPhotoUrl}`
+      },
+      {
+        small: 'assets/1-small.jpg',
+        medium: 'assets/1-medium.jpg',
+        big: 'assets/1-big.jpg'
+      }
+      // {
+      //   small: 'assets/3-small.jpg',
+      //   medium: 'assets/3-medium.jpg',
+      //   big: 'assets/3-big.jpg'
+      // }
+    ];
+  }
+
   getSupplier() {
+    this.supplierId = +this.route.snapshot.params.supplierId;
+
     this.supplierService.getSupplier(this.supplierId).subscribe(res => {
       this.supplier = res;
-      this.mainPhotoUrl = res.PhotosUrl.slice(1, 1).toString();
+      this.mainPhotoUrl = res.photos.find(p => p.isMain === true).photoUrl;
       this.title = `Add products for ${res.fullName}`;
-      console.log(this.mainPhotoUrl);
     });
   }
 

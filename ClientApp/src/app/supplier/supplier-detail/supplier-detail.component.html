@@ -1,41 +1,38 @@
 <mat-card fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column" fxLayout.sm="column" class="mat-elevation-z8">
-  <mat-card fxFlex="25">
+  <mat-card fxFlex="20">
     <mat-card-header>
-      <div
-        mat-card-avatar
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        class="example-header-image"
-      ></div>
-      <mat-card-title>{{ supplier?.firstName }} {{ supplier?.lastName }}</mat-card-title>
-      <mat-card-subtitle>{{ supplier?.gender | gender }}</mat-card-subtitle>
+      <img mat-card-avatar src="{{ mainPhotoUrl }}" alt="" />
+
+      <mat-card-title>{{ supplier.fullName }}</mat-card-title>
+      <mat-card-subtitle>{{ supplier.gender | gender }}</mat-card-subtitle>
     </mat-card-header>
-    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" /> -->
-    <img mat-card-image src="{{ mainPhotoUrl }}" alt="Photo of a Shiba Inu" />
+
+    <img mat-card-image src="{{ mainPhotoUrl }}" alt="Photo of {{ supplier.fullName }}" />
     <mat-card-content>
       <table>
         <tr>
           <td class="col-1">Full Name</td>
-          <td class="col-2">{{ supplier?.firstName }} {{ supplier?.lastName }}</td>
+          <td class="col-2">{{ supplier.fullName }}</td>
         </tr>
         <tr>
           <td class="col-1">Age</td>
-          <td class="col-2">{{ supplier?.dateOfBirth | age }}</td>
+          <td class="col-2">{{ supplier.dateOfBirth | age }}</td>
         </tr>
         <tr>
           <td class="col-1">Telephone</td>
-          <td class="col-2">{{ supplier?.telephone }}</td>
+          <td class="col-2">{{ supplier.telephone }}</td>
         </tr>
         <tr>
           <td class="col-1">Fax</td>
-          <td class="col-2">{{ supplier?.fax }}</td>
+          <td class="col-2">{{ supplier.fax }}</td>
         </tr>
         <tr>
           <td class="col-1">Continent</td>
-          <td class="col-2">{{ supplier?.continentName }}</td>
+          <td class="col-2">{{ supplier.continentName }}</td>
         </tr>
         <tr>
           <td class="col-1">Country</td>
-          <td class="col-2">{{ supplier?.countryName }}</td>
+          <td class="col-2">{{ supplier.countryName }}</td>
         </tr>
       </table>
     </mat-card-content>
@@ -56,7 +53,7 @@
   </button>
 
   <!-- TODO test upload photo -->
-  <app-photo-upload [personId]="supplierId"></app-photo-upload>
+  <!-- <app-photo-upload [personId]="supplierId"></app-photo-upload> -->
 
   <!-- Table -->
   <div fxFlex class="product-table">
@@ -68,3 +65,6 @@
     </div>
   </div>
 </mat-card>
+
+<!-- TODO test ngx-gallery -->
+<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>

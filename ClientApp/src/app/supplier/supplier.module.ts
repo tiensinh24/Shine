@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
@@ -12,8 +13,6 @@ import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-e
 import { ProductsProvidedComponent } from './products-provided/products-provided.component';
 import { ProductsNotAddedComponent } from './products-not-added/products-not-added.component';
 import { ProductsAddedComponent } from './products-added/products-added.component';
-import { PhotoUploadComponent } from '../_shared/components/photo-upload/photo-upload.component';
-import { FileUploadModule } from 'ng2-file-upload';
 import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/photo-upload-shared.module';
 
 @NgModule({
@@ -39,6 +38,9 @@ import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/phot
 
     // Photo upload
     PhotoUploadSharedModule,
+
+    // Ngx-Gallery
+    NgxGalleryModule,
 
     // Routing
     SupplierRoutingModule

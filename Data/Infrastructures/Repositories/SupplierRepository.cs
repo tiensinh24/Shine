@@ -38,6 +38,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             Expression<Func<SupplierListDto, object>> sortColumn = null, string sortOrder = "asc") {
             var query = _context.Set<Supplier>()
                 .Include(s => s.Country)
+                .Include(s => s.Photos)
                 .AsNoTracking()
                 .ProjectToType<SupplierListDto>();
 
@@ -58,6 +59,8 @@ namespace Shine.Data.Infrastructures.Repositories {
             PagingParams pagingParams, SortParams sortParams, string filter) {
             var source = _context.Set<Supplier>()
                 .AsNoTracking()
+                .Include(s => s.Country)
+                .Include(s => s.Photos)
                 .ProjectToType<SupplierListDto>();
 
             switch (sortParams.SortOrder) {

@@ -14,11 +14,11 @@ export class PhotoService {
 
   constructor(private http: HttpClient) {}
 
-  upload(photoUpload: FormData): Observable<any> {
+  upload(photoUpload: FormData): Observable<Photo> {
     const uploadUrl = `${this.baseUrl}api/photo`;
 
     return this.http
-      .post<any>(uploadUrl, photoUpload, {
+      .post<Photo>(uploadUrl, photoUpload, {
         reportProgress: true,
         observe: 'events'
       })
