@@ -7,7 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierDetail } from '../_interfaces/supplier-detail';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
-import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import {
+  NgxGalleryOptions,
+  NgxGalleryImage,
+  NgxGalleryAnimation,
+  NgxGalleryLayout,
+  NgxGalleryImageSize,
+  NgxGalleryOrder
+} from 'ngx-gallery';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -23,8 +30,8 @@ export class SupplierDetailComponent implements OnInit {
   title: string;
 
   // Ngx-Gallery
-  galleryOptions: NgxGalleryOptions[];
-  galleryImages: NgxGalleryImage[];
+  galleryOptions: NgxGalleryOptions[] = [];
+  galleryImages: NgxGalleryImage[] = [];
 
   constructor(private supplierService: SupplierService, private route: ActivatedRoute, private dialog: MatDialog) {}
 
@@ -32,58 +39,47 @@ export class SupplierDetailComponent implements OnInit {
     this.getSupplier();
   }
 
-  getImage() {
+  getImage(photos?: PhotoForPerson[]) {
     this.galleryOptions = [
       {
-        width: '400px',
-        height: '400px',
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide
-      },
-      // max-width 800
-      {
-        breakpoint: 800,
         width: '100%',
-        height: '600px',
-        imagePercent: 80,
-        thumbnailsPercent: 20,
-        thumbnailsMargin: 20,
-        thumbnailMargin: 20
-      },
-      // max-width 400
-      {
-        breakpoint: 400,
-        preview: false
+        height: '220px',
+
+        imageArrows: false,
+        imageArrowsAutoHide: true,
+        imageSize: NgxGalleryImageSize.Contain,
+        imageInfinityMove: true,
+        imageBullets: true,
+        imageAutoPlay: true,
+        imageAutoPlayPauseOnHover: true,
+        previewCloseOnClick: true,
+        previewCloseOnEsc: true,
+        thumbnails: false,
+        imageAnimation: NgxGalleryAnimation.Slide
       }
     ];
 
-    this.galleryImages = [
-      {
-        small: 'assets/1-small.jpg',
-        medium: 'assets/1-medium.jpg',
-        big: 'assets/1-big.jpg'
-        // url: `${this.mainPhotoUrl}`
-      },
-      {
-        small: 'assets/1-small.jpg',
-        medium: 'assets/1-medium.jpg',
-        big: 'assets/1-big.jpg'
-      }
-      // {
-      //   small: 'assets/3-small.jpg',
-      //   medium: 'assets/3-medium.jpg',
-      //   big: 'assets/3-big.jpg'
-      // }
-    ];
+    photos.forEach(photo => {
+      const image = <NgxGalleryImage>{
+        small: photo.photoUrl,
+        medium: photo.photoUrl,
+        big: photo.photoUrl,
+        description: photo.description
+      };
+      this.galleryImages.push(image);
+    });
   }
 
   getSupplier() {
     this.supplierId = +this.route.snapshot.params.supplierId;
 
     this.supplierService.getSupplier(this.supplierId).subscribe(res => {
-      this.supplier = res;
-      this.mainPhotoUrl = res.photos.find(p => p.isMain === true).photoUrl;
-      this.title = `Add products for ${res.fullName}`;
+      if (res) {
+        this.supplier = res;
+        this.mainPhotoUrl = res.photos.find(p => p.isMain === true).photoUrl;
+        this.title = `Add products for ${res.fullName}`;
+        this.getImage(res.photos);
+      }
     });
   }
 

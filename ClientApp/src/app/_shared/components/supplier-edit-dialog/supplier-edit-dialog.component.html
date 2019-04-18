@@ -1,9 +1,9 @@
 <!-- Dialog title -->
 <mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{ title }}</mat-card>
 
-<mat-card mat-dialog-content class="mat-elevation-z4">
+<mat-card fxLayout="row" fxLayoutGap="16px" mat-dialog-content class="mat-elevation-z4">
   <!-- Formgroup -->
-  <form fxLayout="column" [formGroup]="formGroup">
+  <form fxFlex="editMode ? 75 : 100" fxLayout="column" [formGroup]="formGroup">
     <!-- Row 1 -->
     <div fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column">
       <!-- FirstName -->
@@ -75,6 +75,12 @@
       <mat-error *ngIf="get('countryId').invalid">{{ getErrorMessage(get('countryId')) }}</mat-error>
     </mat-form-field>
   </form>
+
+  <!-- Photo upload for supplier -->
+  <div fxLayout="row" fxLayoutGap="16px" *ngIf="editMode" fxFlex>
+    <mat-divider [vertical]="true"></mat-divider>
+    <app-photo-upload [personId]="dataFromList.personId"></app-photo-upload>
+  </div>
 </mat-card>
 <!-- Action Buttons -->
 <div fxLayout="row" fxLayoutGap="16px">

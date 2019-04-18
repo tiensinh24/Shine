@@ -29,7 +29,7 @@ export class PhotoUploadComponent implements OnInit {
     this.formGroup = this.fb.group({
       file: [''],
       description: [''],
-      isMain: []
+      isMain: [false]
     });
   }
 
