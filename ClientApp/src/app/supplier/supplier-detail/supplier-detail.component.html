@@ -1,7 +1,7 @@
-<mat-card fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column" fxLayout.sm="column" class="mat-elevation-z8">
+<mat-card fxLayout="row" fxLayoutGap="16px" class="mat-elevation-z8">
   <mat-card fxFlex="20">
     <mat-card-header>
-      <img mat-card-avatar src="{{ mainPhotoUrl }}" alt="" />
+      <img mat-card-avatar src="{{ mainPhotoUrl }}" />
 
       <mat-card-title>{{ supplier.fullName }}</mat-card-title>
       <mat-card-subtitle>{{ supplier.gender | gender }}</mat-card-subtitle>
@@ -48,20 +48,38 @@
   </mat-card>
 
   <!-- Button Group -->
-  <button fxFlexAlign="center" mat-fab (click)="toggleAddProduct()">
-    <mat-icon *ngIf="!isAddProducts" matTooltip="Add products" aria-label="Add products">add</mat-icon>
-    <mat-icon *ngIf="isAddProducts" matTooltip="Products list" aria-label="Products list">list</mat-icon>
-  </button>
+  <div fxLayout="column" fxLayoutGap="64px">
+    <!-- More/Less button -->
+    <button *ngIf="!multiButton" mat-mini-fab color="primary" (click)="toggleMultiButton()">
+      <mat-icon>expand_more</mat-icon>
+    </button>
+    <button *ngIf="multiButton" mat-mini-fab color="primary" (click)="toggleMultiButton()">
+      <mat-icon>expand_less</mat-icon>
+    </button>
 
-  <!-- TODO test upload photo -->
-  <!-- <app-photo-upload [personId]="supplierId"></app-photo-upload> -->
+    <!-- Expand buttons -->
+    <div *ngIf="multiButton" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="16px">
+      <button *ngIf="!isGallery" mat-mini-fab (click)="toggleGallery()">
+        <mat-icon matTooltip="Gallery">photo_library</mat-icon>
+      </button>
+      <button *ngIf="!isAdd" mat-mini-fab (click)="toggleAdd()">
+        <mat-icon matTooltip="Add products" aria-label="Add products">add</mat-icon>
+      </button>
+      <button *ngIf="!isList" mat-mini-fab (click)="toggleList()">
+        <mat-icon matTooltip="Products list" aria-label="Products list">list</mat-icon>
+      </button>
+    </div>
+  </div>
 
-  <!-- Table -->
+  <!-- Table details-->
   <div fxFlex class="product-table">
-    <div *ngIf="!isAddProducts">
+    <div *ngIf="isGallery">
+      <app-photo-upload></app-photo-upload>
+    </div>
+    <div *ngIf="isList">
       <app-products-added></app-products-added>
     </div>
-    <div *ngIf="isAddProducts">
+    <div *ngIf="isAdd">
       <app-products-not-added [title]="title"></app-products-not-added>
     </div>
   </div>

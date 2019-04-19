@@ -7,5 +7,5 @@ export interface Photo {
   isMain: boolean;
 
   status: string;
-  message: string;
+  message: number;
 }

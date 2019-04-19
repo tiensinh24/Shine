@@ -1,20 +1,13 @@
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
 
 import { SupplierService } from '../_services/supplier.service';
 import { SupplierDetail } from '../_interfaces/supplier-detail';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
-import {
-  NgxGalleryOptions,
-  NgxGalleryImage,
-  NgxGalleryAnimation,
-  NgxGalleryLayout,
-  NgxGalleryImageSize,
-  NgxGalleryOrder
-} from 'ngx-gallery';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -24,10 +17,13 @@ import {
 export class SupplierDetailComponent implements OnInit {
   supplier = <SupplierDetail>{};
   photos = <PhotoForPerson[]>{};
-  mainPhotoUrl = '';
-  isAddProducts = false;
+  mainPhotoUrl = 'assets/1-small.jpg';
   supplierId: number;
   title: string;
+  multiButton = false;
+  isGallery = false;
+  isList = true;
+  isAdd = false;
 
   // Ngx-Gallery
   galleryOptions: NgxGalleryOptions[] = [];
@@ -39,7 +35,7 @@ export class SupplierDetailComponent implements OnInit {
     this.getSupplier();
   }
 
-  getImage(photos?: PhotoForPerson[]) {
+  getImagesForGallery(photos: PhotoForPerson[]) {
     this.galleryOptions = [
       {
         width: '100%',
@@ -59,15 +55,24 @@ export class SupplierDetailComponent implements OnInit {
       }
     ];
 
-    photos.forEach(photo => {
+    if (photos.length > 0) {
+      photos.forEach(photo => {
+        const image = <NgxGalleryImage>{
+          small: photo.photoUrl,
+          medium: photo.photoUrl,
+          big: photo.photoUrl,
+          description: photo.description
+        };
+        this.galleryImages.push(image);
+      });
+    } else {
       const image = <NgxGalleryImage>{
-        small: photo.photoUrl,
-        medium: photo.photoUrl,
-        big: photo.photoUrl,
-        description: photo.description
+        small: 'assets/default.jpg',
+        medium: 'assets/default.jpg',
+        big: 'assets/default.jpg'
       };
       this.galleryImages.push(image);
-    });
+    }
   }
 
   getSupplier() {
@@ -76,9 +81,12 @@ export class SupplierDetailComponent implements OnInit {
     this.supplierService.getSupplier(this.supplierId).subscribe(res => {
       if (res) {
         this.supplier = res;
-        this.mainPhotoUrl = res.photos.find(p => p.isMain === true).photoUrl;
+        if (res.photos.length > 0) {
+          this.mainPhotoUrl = res.photos.find(p => p.isMain === true).photoUrl;
+        }
+        this.getImagesForGallery(res.photos);
+
         this.title = `Add products for ${res.fullName}`;
-        this.getImage(res.photos);
       }
     });
   }
@@ -118,7 +126,25 @@ export class SupplierDetailComponent implements OnInit {
     }
   }
 
-  toggleAddProduct() {
-    this.isAddProducts = !this.isAddProducts;
+  toggleMultiButton() {
+    this.multiButton = !this.multiButton;
+  }
+
+  toggleGallery() {
+    this.isGallery = !this.isGallery;
+    this.isList = false;
+    this.isAdd = false;
+  }
+
+  toggleList() {
+    this.isList = !this.isList;
+    this.isGallery = false;
+    this.isAdd = false;
+  }
+
+  toggleAdd() {
+    this.isAdd = !this.isAdd;
+    this.isGallery = false;
+    this.isList = false;
   }
 }

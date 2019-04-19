@@ -14,24 +14,22 @@ export class PhotoService {
 
   constructor(private http: HttpClient) {}
 
-  upload(photoUpload: FormData): Observable<any> {
+  upload(formData: FormData): Observable<any> {
     const uploadUrl = `${this.baseUrl}api/photo`;
 
     return this.http
-      .post<any>(uploadUrl, photoUpload, {
+      .post<any>(uploadUrl, formData, {
         reportProgress: true,
         observe: 'events'
       })
       .pipe(
-        map((event: any) => {
+        map(event => {
           switch (event.type) {
             case HttpEventType.UploadProgress:
               const progress = Math.round((100 * event.loaded) / event.total);
-              console.log(progress);
               return { status: 'progress', message: progress };
 
             case HttpEventType.Response:
-              console.log(event.body);
               return event.body;
             default:
               return `Unhandled event: ${event.type}`;

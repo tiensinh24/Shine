@@ -6,8 +6,8 @@
   <div *ngIf="photoRes?.status === 'error'">
     {{ photoRes.message }}
   </div>
-  <div *ngIf="photoRes?.status === 'progress'">
-    <mat-progress-bar [style.width.%]="photoRes.message"> {{ photoRes.message }}% </mat-progress-bar>
+  <div *ngIf="progressRes.status === 'progress'">
+    <mat-progress-bar [style.width.%]="progressRes.message"> {{ photoRes.message }}% </mat-progress-bar>
   </div>
 
   <form fxLayout="column" fxLayoutGap="16px" [formGroup]="formGroup" (ngSubmit)="onSubmit()">

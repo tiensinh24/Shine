@@ -16,6 +16,7 @@ export class PhotoUploadComponent implements OnInit {
   formGroup: FormGroup;
   error: string;
   photoRes: Photo;
+  progressRes = { status: '', message: 0 };
 
   @Input() personId: number;
 
@@ -55,6 +56,7 @@ export class PhotoUploadComponent implements OnInit {
     this.photoService.upload(formData).subscribe(
       res => {
         this.photoRes = res;
+        this.progressRes = res;
       },
       err => {
         this.error = err;
