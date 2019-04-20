@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using CloudinaryDotNet;
@@ -44,11 +46,20 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #region Get Values
 
-        public async Task<PhotoDto> GetPhotoAsync(int id) {
+        public async Task<IEnumerable<PhotoForPersonDto>> GetPhotosAsync(int personId) {
+            var photos = await _context.Photos
+                .Where(p => p.PersonId == personId)
+                .ProjectToType<PhotoForPersonDto>()
+                .ToListAsync();
+
+            return photos;
+        }
+
+        public async Task<PhotoForPersonDto> GetPhotoAsync(int id) {
             var photo = await _context.Photos
                 .FirstOrDefaultAsync(p => p.PhotoId == id);
 
-            return photo.Adapt<PhotoDto>();
+            return photo.Adapt<PhotoForPersonDto>();
         }
 
 #endregion
@@ -86,6 +97,47 @@ namespace Shine.Data.Infrastructures.Repositories {
 
             return photoToAdd;
 
+        }
+
+        public async Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files) {
+            var photosToAdd = new List<Photo>();
+
+            foreach (var file in files) {
+                var uploadResult = this.UploadPhoto(file);
+
+                if (uploadResult != null) {
+                    var photo = new Photo() {
+                    PersonId = personId,
+                    PublicId = uploadResult.PublicId,
+                    PhotoUrl = uploadResult.SecureUri.ToString(),
+                    DateAdded = uploadResult.CreatedAt
+                    };
+
+                    photosToAdd.Add(photo);
+                }
+            }
+
+            await _context.Photos.AddRangeAsync(photosToAdd);
+
+            return photosToAdd;
+        }
+
+        private ImageUploadResult UploadPhoto(IFormFile file) {
+            var uploadResult = new ImageUploadResult();
+
+            if (file.Length > 0) {
+                using(var stream = file.OpenReadStream()) {
+                    var uploadParams = new ImageUploadParams() {
+                    File = new FileDescription(file.Name, stream),
+                    Transformation = new Transformation()
+                    .Width(500).Height(500).Crop("fill").Gravity("face")
+                    };
+
+                    uploadResult = _cloudinary.Upload(uploadParams);
+                }
+            }
+
+            return uploadResult;
         }
 
 #endregion

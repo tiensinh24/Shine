@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { GenderPipe } from './_pipes/gender.pipe';
 import { AgePipe } from './_pipes/age.pipe';
-import { NgxGalleryModule } from 'ngx-gallery';
 
 @NgModule({
   declarations: [GenderPipe, AgePipe],

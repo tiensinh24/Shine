@@ -17,7 +17,7 @@ import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
 export class SupplierDetailComponent implements OnInit {
   supplier = <SupplierDetail>{};
   photos = <PhotoForPerson[]>{};
-  mainPhotoUrl = 'assets/1-small.jpg';
+  mainPhotoUrl = 'assets/default.jpg';
   supplierId: number;
   title: string;
   multiButton = false;

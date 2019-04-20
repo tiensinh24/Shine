@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using CloudinaryDotNet.Actions;
 
 using Microsoft.AspNetCore.Http;
 
@@ -10,13 +13,17 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #region Get Values
 
-        Task<PhotoDto> GetPhotoAsync(int id);
+        Task<IEnumerable<PhotoForPersonDto>> GetPhotosAsync(int personId);
+
+        Task<PhotoForPersonDto> GetPhotoAsync(int id);
 
 #endregion
 
 #region Actions
 
         Task<Photo> AddPhotoAsync(PhotoUploadDto model);
+
+        Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files);
 
 #endregion
     }

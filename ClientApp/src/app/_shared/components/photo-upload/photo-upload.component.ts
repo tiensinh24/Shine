@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FileUploader } from 'ng2-file-upload';
 
 import { environment } from 'src/environments/environment';
 import { PhotoService } from 'src/app/photo/_services/photo.service';
@@ -12,13 +13,15 @@ import { Photo } from 'src/app/photo/_interfaces/photo';
 })
 export class PhotoUploadComponent implements OnInit {
   baseUrl = environment.URL;
-
   formGroup: FormGroup;
   error: string;
   photoRes: Photo;
   progressRes = { status: '', message: 0 };
-
   @Input() personId: number;
+
+  // *File upload
+  uploader: FileUploader = new FileUploader({ url: this.baseUrl });
+  hasBaseDropZoneOver = false;
 
   constructor(private fb: FormBuilder, private photoService: PhotoService) {}
 
@@ -62,5 +65,11 @@ export class PhotoUploadComponent implements OnInit {
         this.error = err;
       }
     );
+  }
+
+  // *file upload test section
+
+  fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
   }
 }

@@ -1,22 +1,28 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto.Photos;
+using Shine.Data.Models;
 
 namespace Shine.Controllers.Interfaces {
     public interface IPhotoController {
 
 #region Get Values
 
-        Task<ActionResult<PhotoDto>> GetPhoto(int id);
+        Task<ActionResult<IEnumerable<PhotoForPersonDto>>> GetPhotos(int personId);
+
+        Task<ActionResult<PhotoForPersonDto>> GetPhoto(int id);
 
 #endregion
 
 #region Actions
 
-        Task<ActionResult<PhotoDto>> AddPhotoForPerson([FromForm] PhotoUploadDto model);
+        Task<ActionResult<IEnumerable<Photo>>> AddPhotosForPerson(int personId, [FromForm] IEnumerable<IFormFile> files);
+
+        Task<ActionResult<PhotoForPersonDto>> AddPhotoForPerson([FromForm] PhotoUploadDto model);
 
 #endregion
     }
