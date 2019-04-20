@@ -100,6 +100,9 @@ namespace Shine.Data.Infrastructures.Repositories {
         }
 
         public async Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files) {
+            var mainPhoto = await _context.Photos
+                .FirstOrDefaultAsync(p => p.IsMain == true);
+
             var photosToAdd = new List<Photo>();
 
             foreach (var file in files) {
@@ -115,6 +118,10 @@ namespace Shine.Data.Infrastructures.Repositories {
 
                     photosToAdd.Add(photo);
                 }
+            }
+
+            if (mainPhoto == null) {
+                photosToAdd[0].IsMain = true;
             }
 
             await _context.Photos.AddRangeAsync(photosToAdd);
