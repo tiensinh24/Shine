@@ -68,13 +68,19 @@
       <button *ngIf="!isList" mat-mini-fab (click)="toggleList()">
         <mat-icon matTooltip="Products list" aria-label="Products list">list</mat-icon>
       </button>
+      <button *ngIf="!isUpload" mat-mini-fab (click)="toggleUpload()">
+        <mat-icon matTooltip="Upload photos" aria-label="Upload photos">cloud_upload</mat-icon>
+      </button>
     </div>
   </div>
 
   <!-- Table details-->
   <div fxFlex class="product-table">
-    <div *ngIf="isGallery">
-      <app-photo-upload></app-photo-upload>
+    <div *ngIf="isGallery" fxLayoutAlign="center center">
+      <app-photo-gallery [photos]="supplier.photos"></app-photo-gallery>
+    </div>
+    <div *ngIf="isUpload">
+      <app-photo-upload [personId]="supplierId"></app-photo-upload>
     </div>
     <div *ngIf="isList">
       <app-products-added></app-products-added>

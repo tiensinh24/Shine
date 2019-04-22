@@ -1,10 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FileUploader } from 'ng2-file-upload';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/_services/auth.service';
 import { environment } from 'src/environments/environment';
-import { PhotoService } from 'src/app/photo/_services/photo.service';
-import { Photo } from 'src/app/photo/_interfaces/photo';
+import { FileUploaderCustom } from '../../_helpers/file-uploader-custom';
 
 @Component({
   selector: 'app-photo-upload',
@@ -13,63 +10,39 @@ import { Photo } from 'src/app/photo/_interfaces/photo';
 })
 export class PhotoUploadComponent implements OnInit {
   baseUrl = environment.URL;
-  formGroup: FormGroup;
-  error: string;
-  photoRes: Photo;
-  progressRes = { status: '', message: 0 };
-  @Input() personId: number;
 
-  // *File upload
-  uploader: FileUploader = new FileUploader({ url: this.baseUrl });
+  @Input() personId = 0;
+
+  uploader: FileUploaderCustom;
   hasBaseDropZoneOver = false;
 
-  constructor(private fb: FormBuilder, private photoService: PhotoService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.createForm();
+    this.initializeUploader();
   }
-
-  createForm() {
-    this.formGroup = this.fb.group({
-      file: [''],
-      description: [''],
-      isMain: [false]
-    });
-  }
-
-  getFormData(formData: FormData) {
-    formData.append('file', this.formGroup.get('file').value);
-    formData.append('description', this.formGroup.get('description').value);
-    formData.append('isMain', this.formGroup.get('isMain').value);
-    formData.append('personId', this.personId.toString());
-  }
-
-  onFileChange(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.formGroup.get('file').setValue(file);
-    }
-  }
-
-  onSubmit() {
-    const formData = new FormData();
-
-    this.getFormData(formData);
-
-    this.photoService.upload(formData).subscribe(
-      res => {
-        this.photoRes = res;
-        this.progressRes = res;
-      },
-      err => {
-        this.error = err;
-      }
-    );
-  }
-
-  // *file upload test section
 
   fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
+  }
+
+  initializeUploader() {
+    const uploadUrl = `${this.baseUrl}api/photo/${this.personId}`;
+
+    this.uploader = new FileUploaderCustom({
+      url: uploadUrl,
+      authToken: 'Bearer ' + this.authService.getLocalAuth().token,
+      isHTML5: true,
+      allowedFileType: ['image'],
+      removeAfterUpload: true,
+      autoUpload: false,
+      maxFileSize: 10 * 1024 * 1024
+    });
+  }
+
+  // * Custom method upload all files with only 1 api call
+  //    Instead of uploader.uploadAll() method (call api multiple times)
+  uploadAllFiles() {
+    this.uploader.uploadAllFiles();
   }
 }

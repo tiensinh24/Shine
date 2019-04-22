@@ -22,7 +22,7 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<IEnumerable<Photo>>> AddPhotosForPerson(int personId, [FromForm] IEnumerable<IFormFile> files);
 
-        Task<ActionResult<PhotoForPersonDto>> AddPhotoForPerson([FromForm] PhotoUploadDto model);
+        Task<ActionResult<PhotoForPersonDto>> AddPhotoForPerson(int personId, [FromForm] IFormFile file);
 
 #endregion
     }

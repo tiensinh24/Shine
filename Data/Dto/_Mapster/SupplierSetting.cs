@@ -20,7 +20,7 @@ namespace Shine.Data.Dto._Mapster {
                     dest => dest.ContinentName, src => src.Country.ContinentName
                 )
                 .Map(
-                    dest => dest.Photos, src => src.Photos.Select(p => new { p.PhotoUrl, p.Description, p.IsMain })
+                    dest => dest.Photos, src => src.Photos.Select(p => new { p.PhotoId, p.PhotoUrl, p.IsMain })
                 );
 
             TypeAdapterConfig<Supplier, SupplierDetailDto>.NewConfig()
@@ -34,7 +34,7 @@ namespace Shine.Data.Dto._Mapster {
                     dest => dest.ContinentName, src => src.Country.ContinentName
                 )
                 .Map(
-                    dest => dest.Photos, src => src.Photos.Select(p => new { p.PhotoUrl, p.Description, p.IsMain })
+                    dest => dest.Photos, src => src.Photos.Select(p => new { p.PhotoId, p.PhotoUrl, p.IsMain })
                 );
 
         }

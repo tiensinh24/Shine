@@ -1,13 +1,11 @@
-import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
-
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
-
-import { SupplierService } from '../_services/supplier.service';
-import { SupplierDetail } from '../_interfaces/supplier-detail';
+import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
+import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+import { SupplierDetail } from '../_interfaces/supplier-detail';
+import { SupplierService } from '../_services/supplier.service';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -22,6 +20,7 @@ export class SupplierDetailComponent implements OnInit {
   title: string;
   multiButton = false;
   isGallery = false;
+  isUpload = false;
   isList = true;
   isAdd = false;
 
@@ -40,7 +39,6 @@ export class SupplierDetailComponent implements OnInit {
       {
         width: '100%',
         height: '220px',
-
         imageArrows: false,
         imageArrowsAutoHide: true,
         imageSize: NgxGalleryImageSize.Contain,
@@ -60,8 +58,7 @@ export class SupplierDetailComponent implements OnInit {
         const image = <NgxGalleryImage>{
           small: photo.photoUrl,
           medium: photo.photoUrl,
-          big: photo.photoUrl,
-          description: photo.description
+          big: photo.photoUrl
         };
         this.galleryImages.push(image);
       });
@@ -134,17 +131,27 @@ export class SupplierDetailComponent implements OnInit {
     this.isGallery = !this.isGallery;
     this.isList = false;
     this.isAdd = false;
+    this.isUpload = false;
+  }
+
+  toggleUpload() {
+    this.isUpload = !this.isUpload;
+    this.isGallery = false;
+    this.isList = false;
+    this.isAdd = false;
   }
 
   toggleList() {
     this.isList = !this.isList;
     this.isGallery = false;
     this.isAdd = false;
+    this.isUpload = false;
   }
 
   toggleAdd() {
     this.isAdd = !this.isAdd;
     this.isGallery = false;
+    this.isUpload = false;
     this.isList = false;
   }
 }

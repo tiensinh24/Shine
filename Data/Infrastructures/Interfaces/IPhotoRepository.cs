@@ -21,7 +21,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #region Actions
 
-        Task<Photo> AddPhotoAsync(PhotoUploadDto model);
+        Task<Photo> AddPhotoAsync(int personId, IFormFile file);
 
         Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files);
 

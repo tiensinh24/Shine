@@ -66,32 +66,24 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #region Actions
 
-        public async Task<Photo> AddPhotoAsync(PhotoUploadDto model) {
+        public async Task<Photo> AddPhotoAsync(int personId, IFormFile file) {
+            var mainPhoto = await _context.Photos
+                .FirstOrDefaultAsync(p => p.IsMain == true && p.PersonId == personId);
 
-            var file = model.File;
+            var uploadResult = this.UploadPhoto(file);
+            Photo photoToAdd = null;
 
-            var uploadResult = new ImageUploadResult();
-
-            if (file.Length > 0) {
-                using(var stream = file.OpenReadStream()) {
-                    var uploadParams = new ImageUploadParams() {
-                    File = new FileDescription(file.Name, stream),
-                    Transformation = new Transformation()
-                    .Width(500).Height(500).Crop("fill").Gravity("face")
-                    };
-
-                    uploadResult = _cloudinary.Upload(uploadParams);
-                }
-            }
-
-            var photoToAdd = new Photo() {
-                PersonId = model.PersonId,
-                Description = model.Description,
-                IsMain = model.IsMain,
+            if (uploadResult != null) {
+                photoToAdd = new Photo() {
+                PersonId = personId,
                 PublicId = uploadResult.PublicId,
                 PhotoUrl = uploadResult.SecureUri.ToString(),
-                DateAdded = uploadResult.CreatedAt
-            };
+                };
+            }
+
+            if (mainPhoto == null) {
+                photoToAdd.IsMain = true;
+            }
 
             await _context.Photos.AddAsync(photoToAdd);
 
@@ -101,7 +93,7 @@ namespace Shine.Data.Infrastructures.Repositories {
 
         public async Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files) {
             var mainPhoto = await _context.Photos
-                .FirstOrDefaultAsync(p => p.IsMain == true);
+                .FirstOrDefaultAsync(p => p.IsMain == true && p.PersonId == personId);
 
             var photosToAdd = new List<Photo>();
 
@@ -113,7 +105,6 @@ namespace Shine.Data.Infrastructures.Repositories {
                     PersonId = personId,
                     PublicId = uploadResult.PublicId,
                     PhotoUrl = uploadResult.SecureUri.ToString(),
-                    DateAdded = uploadResult.CreatedAt
                     };
 
                     photosToAdd.Add(photo);

@@ -12,7 +12,6 @@ namespace Shine.Data.Models {
         public string PublicId { get; set; }
         public string PhotoUrl { get; set; }
         public string Description { get; set; }
-        public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
 
 #endregion

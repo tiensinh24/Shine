@@ -1,28 +1,3 @@
-<!-- <h1>Upload photo!</h1>
-<div>
-  <div *ngIf="error !== null">
-    {{ error }}
-  </div>
-  <div *ngIf="photoRes?.status === 'error'">
-    {{ photoRes.message }}
-  </div>
-  <div *ngIf="progressRes.status === 'progress'">
-    <mat-progress-bar [style.width.%]="progressRes.message"> {{ photoRes.message }}% </mat-progress-bar>
-  </div>
-
-  <form fxLayout="column" fxLayoutGap="16px" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-    <input type="file" name="file" (change)="onFileChange($event)" />
-    <mat-form-field>
-      <input matInput placeholder="Description" formControlName="description" />
-    </mat-form-field>
-
-    <mat-checkbox formControlName="isMain">Main photo</mat-checkbox>
-
-    <button mat-raised-button color="primary" type="submit">Upload</button>
-  </form>
-</div> -->
-
-<!-- *File upload test section -->
 <div fxLayout="row" fxLayoutGap="32px">
   <mat-card fxLayout="column" fxLayoutAlign="space-around center" fxFlex="20" class="mat-elevation-z1">
     <mat-card-content [ngClass]="{ 'ng-file-over': hasBaseDropZoneOver }" class="drop-zone">
@@ -95,7 +70,7 @@
       <button
         mat-stroked-button
         color="primary"
-        (click)="uploader.uploadAll()"
+        (click)="uploadAllFiles()"
         [disabled]="!uploader.getNotUploadedItems().length"
       >
         <mat-icon>cloud_upload</mat-icon>

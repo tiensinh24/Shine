@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { NgxGalleryModule } from 'ngx-gallery';
-
-import { SupplierRoutingModule } from './supplier-routing.module';
-import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
+import { ProductsAddedComponent } from './products-added/products-added.component';
+import { ProductsNotAddedComponent } from './products-not-added/products-not-added.component';
+import { ProductsProvidedComponent } from './products-provided/products-provided.component';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
+import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
+import { SupplierRoutingModule } from './supplier-routing.module';
 import { SupplierComponent } from './supplier.component';
-import { SharedModule } from '../_shared/shared.module';
-import { MaterialSharedModule } from '../_shared/material-shared.module';
-import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
-import { ProductsProvidedComponent } from './products-provided/products-provided.component';
-import { ProductsNotAddedComponent } from './products-not-added/products-not-added.component';
-import { ProductsAddedComponent } from './products-added/products-added.component';
+import { PhotoGallerySharedModule } from '../_shared/components/photo-gallery/photo-gallery-shared.module';
 import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/photo-upload-shared.module';
+import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
+import { MaterialSharedModule } from '../_shared/material-shared.module';
+import { SharedModule } from '../_shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -38,6 +39,9 @@ import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/phot
 
     // Photo upload
     PhotoUploadSharedModule,
+
+    // Photo gallery
+    PhotoGallerySharedModule,
 
     // Ngx-Gallery
     NgxGalleryModule,

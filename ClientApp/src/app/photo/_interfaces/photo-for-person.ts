@@ -1,5 +1,5 @@
 export interface PhotoForPerson {
+  photoId: number;
   photoUrl: string;
-  description: string;
   isMain: boolean;
 }
