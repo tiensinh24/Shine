@@ -64,7 +64,8 @@ namespace Shine.Controllers {
 
 #region Actions
 
-        [HttpPost("{personId}")]
+        // Not use
+        [HttpPost("{personId}/not-use")]
 
         public async Task<ActionResult<IEnumerable<Photo>>> AddPhotosForPerson(int personId, [FromForm] IEnumerable<IFormFile> files) {
             var photos = await _repository.AddPhotosAsync(personId, files);
@@ -75,8 +76,7 @@ namespace Shine.Controllers {
             return Ok(photos);
         }
 
-        // Not use
-        [HttpPost("{personId}/not-use")]
+        [HttpPost("{personId}")]
         public async Task<ActionResult<PhotoForPersonDto>> AddPhotoForPerson(int personId, [FromForm] IFormFile file) {
             var photo = await _repository.AddPhotoAsync(personId, file);
 

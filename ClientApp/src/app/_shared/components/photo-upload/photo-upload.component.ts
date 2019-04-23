@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FileUploader } from 'ng2-file-upload';
 import { AuthService } from 'src/app/auth/_services/auth.service';
+import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
 import { environment } from 'src/environments/environment';
-import { FileUploaderCustom } from '../../_helpers/file-uploader-custom';
 
 @Component({
   selector: 'app-photo-upload',
@@ -10,10 +11,13 @@ import { FileUploaderCustom } from '../../_helpers/file-uploader-custom';
 })
 export class PhotoUploadComponent implements OnInit {
   baseUrl = environment.URL;
+  // newPhotos: PhotoForPerson[] = [];
 
   @Input() personId = 0;
 
-  uploader: FileUploaderCustom;
+  @Output() newPhoto = new EventEmitter<PhotoForPerson>();
+
+  uploader: FileUploader;
   hasBaseDropZoneOver = false;
 
   constructor(private authService: AuthService) {}
@@ -29,20 +33,20 @@ export class PhotoUploadComponent implements OnInit {
   initializeUploader() {
     const uploadUrl = `${this.baseUrl}api/photo/${this.personId}`;
 
-    this.uploader = new FileUploaderCustom({
+    this.uploader = new FileUploader({
       url: uploadUrl,
       authToken: 'Bearer ' + this.authService.getLocalAuth().token,
       isHTML5: true,
       allowedFileType: ['image'],
-      removeAfterUpload: true,
       autoUpload: false,
       maxFileSize: 10 * 1024 * 1024
     });
-  }
 
-  // * Custom method upload all files with only 1 api call
-  //    Instead of uploader.uploadAll() method (call api multiple times)
-  uploadAllFiles() {
-    this.uploader.uploadAllFiles();
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      if (response) {
+        const photo = JSON.parse(response);
+        this.newPhoto.emit(photo);
+      }
+    };
   }
 }

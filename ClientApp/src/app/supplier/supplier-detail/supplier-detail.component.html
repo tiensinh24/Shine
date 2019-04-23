@@ -80,7 +80,7 @@
       <app-photo-gallery [photos]="supplier.photos"></app-photo-gallery>
     </div>
     <div *ngIf="isUpload">
-      <app-photo-upload [personId]="supplierId"></app-photo-upload>
+      <app-photo-upload [personId]="supplierId" (newPhoto)="refreshPhoto($event)"></app-photo-upload>
     </div>
     <div *ngIf="isList">
       <app-products-added></app-products-added>

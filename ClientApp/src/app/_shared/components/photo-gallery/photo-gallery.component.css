@@ -3,3 +3,8 @@ mat-card-title {
 	margin-bottom: 16px;
 	color: royalblue;
 }
+
+.fa-trash {
+	background: tomato;
+	color: red;
+}

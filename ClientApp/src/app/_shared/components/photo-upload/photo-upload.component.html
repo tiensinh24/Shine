@@ -70,7 +70,7 @@
       <button
         mat-stroked-button
         color="primary"
-        (click)="uploadAllFiles()"
+        (click)="uploader.uploadAll()"
         [disabled]="!uploader.getNotUploadedItems().length"
       >
         <mat-icon>cloud_upload</mat-icon>

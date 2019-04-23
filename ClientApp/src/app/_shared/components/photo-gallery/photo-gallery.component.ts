@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
+import { NgxGalleryAction, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+import { PhotoService } from 'src/app/photo/_services/photo.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-photo-gallery',
@@ -8,18 +10,29 @@ import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
   styleUrls: ['./photo-gallery.component.css']
 })
 export class PhotoGalleryComponent implements OnInit {
+  baseUrl = environment.URL;
+
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
 
   @Input() photos: PhotoForPerson[] = [];
 
-  constructor() {}
+  constructor(private photoService: PhotoService) {}
 
   ngOnInit() {
     this.getImagesForGallery(this.photos);
   }
 
   private getImagesForGallery(photos: PhotoForPerson[]) {
+    const deleteAction: NgxGalleryAction = {
+      icon: 'fa fa-trash',
+      titleText: 'Delete photo',
+      onClick: (event: Event) => {
+        this.photoService.deletePhoto(`${this.baseUrl}api/photo/${event.currentTarget.}`)
+      }
+
+    };
+
     this.galleryOptions = [
       {
         width: '545px',
@@ -27,8 +40,10 @@ export class PhotoGalleryComponent implements OnInit {
         imageSize: NgxGalleryImageSize.Contain,
         imageAutoPlay: true,
         imageAutoPlayPauseOnHover: true,
+        thumbnailActions: [deleteAction],
         previewAutoPlay: true,
         previewAutoPlayPauseOnHover: true,
+        previewInfinityMove: true,
         thumbnailsMargin: 32
       },
       { breakpoint: 500, width: '300px', height: '300px', thumbnailsColumns: 3 },
@@ -40,7 +55,8 @@ export class PhotoGalleryComponent implements OnInit {
         const image = <NgxGalleryImage>{
           small: photo.photoUrl,
           medium: photo.photoUrl,
-          big: photo.photoUrl
+          big: photo.photoUrl,
+          url: photo.photoId.toString()
         };
         this.galleryImages.push(image);
       });

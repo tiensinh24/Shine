@@ -23,6 +23,7 @@ export class SupplierDetailComponent implements OnInit {
   isUpload = false;
   isList = true;
   isAdd = false;
+  isNoPhoto = false;
 
   // Ngx-Gallery
   galleryOptions: NgxGalleryOptions[] = [];
@@ -63,6 +64,8 @@ export class SupplierDetailComponent implements OnInit {
         this.galleryImages.push(image);
       });
     } else {
+      this.isNoPhoto = true;
+
       const image = <NgxGalleryImage>{
         small: 'assets/default.jpg',
         medium: 'assets/default.jpg',
@@ -120,6 +123,27 @@ export class SupplierDetailComponent implements OnInit {
           this.getSupplier();
         }
       });
+    }
+  }
+
+  refreshPhoto(photo: PhotoForPerson) {
+    this.supplier.photos.push(photo);
+
+    const image = <NgxGalleryImage>{
+      small: photo.photoUrl,
+      medium: photo.photoUrl,
+      big: photo.photoUrl
+    };
+
+    if (this.isNoPhoto) {
+      this.galleryImages.shift();
+      this.isNoPhoto = false;
+    }
+
+    this.galleryImages.push(image);
+
+    if (photo.isMain) {
+      this.mainPhotoUrl = photo.photoUrl;
     }
   }
 

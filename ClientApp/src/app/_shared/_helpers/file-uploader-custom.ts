@@ -19,7 +19,7 @@ export class FileUploaderCustom extends FileUploader {
       item.isSuccess = false;
       item.isCancel = false;
       item.isError = false;
-      item.progress = 0;
+      // item.progress = 0;
 
       if (typeof item._file.size !== 'number') {
         throw new TypeError('The file specified is no longer valid');
