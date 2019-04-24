@@ -1,14 +1,12 @@
 <!-- Toolbar -->
 <mat-toolbar color="primary">
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
-
     <button mat-icon-button (click)="drawer.toggle()">
       <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
-    <div fxLayout="row" fxLayoutAlign="start center" [routerLink]="['/home']" routerLinkActive="router-link-active"
-      matTooltip="Home">
-      <mat-icon svgIcon='logo' style="width:40px; height:40px"></mat-icon>
+    <div fxLayout="row" fxLayoutAlign="start center" [routerLink]="['/home']" matTooltip="Home">
+      <mat-icon svgIcon="logo" style="width:40px; height:40px"></mat-icon>
       <button class="home-logo" mat-button>Shine</button>
     </div>
 
@@ -22,42 +20,78 @@
       <!-- Row 1 -->
       <div fxLayout="row">
         <!-- Category -->
-        <button [routerLink]="['/category-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center"
-          fxLayoutGap="8px" style="height: 100%;">
+        <button
+          [routerLink]="['/category-buy']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
           <mat-icon style="font-size: 48px" color="primary">category</mat-icon>
           <span>Category</span>
         </button>
         <!-- Product -->
-        <button [routerLink]="['/product-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center"
-          fxLayoutGap="8px" style="height: 100%;">
+        <button
+          [routerLink]="['/product-buy']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
           <mat-icon style="font-size: 48px" color="primary">shopping_cart</mat-icon>
           <span>Product</span>
         </button>
         <!-- suppliers -->
-        <button mat-menu-item [routerLink]="['/supplier']" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px"
-          style="height: 100%;">
+        <button
+          mat-menu-item
+          [routerLink]="['/supplier']"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
           <mat-icon style="font-size: 48px" color="primary">account_circle</mat-icon>
           <span>Supplier</span>
         </button>
       </div>
       <!-- Row 2 -->
       <div fxLayout="row">
-        <button [routerLink]="['/customer']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px"
-          style="height: 100%;">
+        <button
+          [routerLink]="['/customer']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
           <mat-icon style="font-size: 48px" color="primary">supervised_user_circle</mat-icon>
           <span>Customer</span>
         </button>
 
-        <button [routerLink]="['/order-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px"
-          style="height: 100%;">
+        <button
+          [routerLink]="['/order-buy']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
           <mat-icon style="font-size: 48px" color="primary">receipt</mat-icon>
           <span>Order</span>
         </button>
       </div>
       <!-- Row 3 -->
       <div fxLayout="row">
-        <button [routerLink]="['/admin']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px"
-          style="height: 100%;">
+        <button
+          [routerLink]="['/admin']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
           <mat-icon style="font-size: 48px" color="primary">dashboard</mat-icon>
           <span>Admin</span>
         </button>
@@ -70,7 +104,7 @@
     </mat-menu>
 
     <!-- Account menu -->
-    <button mat-icon-button [matMenuTriggerFor]="account" matTooltip="Welcome {{user}}">
+    <button mat-icon-button [matMenuTriggerFor]="account" matTooltip="Welcome {{ user }}">
       <mat-icon *ngIf="!isLoggedIn()">lock</mat-icon>
       <mat-icon *ngIf="isLoggedIn()">account_circle</mat-icon>
     </button>
@@ -84,7 +118,6 @@
         Logout
       </button>
     </mat-menu>
-
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -99,9 +132,7 @@
         <!-- Account group -->
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>
-              Welcome {{user}}
-            </mat-panel-title>
+            <mat-panel-title> Welcome {{ user }} </mat-panel-title>
           </mat-expansion-panel-header>
         </mat-expansion-panel>
         <!-- Product group -->
@@ -112,7 +143,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-nav-list>
-            <mat-list-item routerLink='/product-buy/list' routerLinkActive="active">
+            <mat-list-item routerLink="/product-buy/list" routerLinkActive="active">
               Products List
             </mat-list-item>
           </mat-nav-list>
@@ -125,10 +156,10 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-nav-list>
-            <mat-list-item routerLink='/admin/manager-user' routerLinkActive="active">
+            <mat-list-item routerLink="/admin/manager-user" routerLinkActive="active">
               Manager User
             </mat-list-item>
-            <mat-list-item routerLink='/admin/manager-role' routerLinkActive="active">
+            <mat-list-item routerLink="/admin/manager-role" routerLinkActive="active">
               Manager Role
             </mat-list-item>
           </mat-nav-list>
@@ -141,7 +172,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-nav-list>
-            <mat-list-item routerLink='/login' routerLinkActive="active">
+            <mat-list-item routerLink="/login" routerLinkActive="active">
               <mat-icon>account_circle_outlined</mat-icon>Login
             </mat-list-item>
           </mat-nav-list>
@@ -151,7 +182,6 @@
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>
-
       </mat-accordion>
     </mat-nav-list>
   </mat-sidenav>
@@ -160,3 +190,7 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<section class="footer">
+  Place holder for footer
+</section>

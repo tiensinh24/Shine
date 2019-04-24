@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { NgxGalleryAction, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
 import { PhotoService } from 'src/app/photo/_services/photo.service';
 import { environment } from 'src/environments/environment';
+import { ConfirmDialogService } from '../../_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-photo-gallery',
@@ -17,30 +19,40 @@ export class PhotoGalleryComponent implements OnInit {
 
   @Input() photos: PhotoForPerson[] = [];
 
-  constructor(private photoService: PhotoService) {}
+  @Output() newMainPhoto = new EventEmitter<PhotoForPerson>();
+
+  constructor(
+    private photoService: PhotoService,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.getImagesForGallery(this.photos);
   }
 
   private getImagesForGallery(photos: PhotoForPerson[]) {
-    const deleteAction: NgxGalleryAction = {
-      icon: 'fa fa-trash',
-      titleText: 'Delete photo',
-      onClick: (event: Event) => {
-        this.photoService.deletePhoto(`${this.baseUrl}api/photo/${event.currentTarget.}`)
+    const deleteAction: NgxGalleryAction[] = [
+      {
+        icon: 'fa fa-trash',
+        titleText: 'Delete photo',
+        onClick: this.deletePhoto.bind(this)
+      },
+      {
+        icon: 'fa fa-check-circle',
+        titleText: 'Set main',
+        onClick: this.setMainPhoto.bind(this)
       }
-
-    };
+    ];
 
     this.galleryOptions = [
       {
-        width: '545px',
+        width: '600px',
         height: '545px',
         imageSize: NgxGalleryImageSize.Contain,
         imageAutoPlay: true,
         imageAutoPlayPauseOnHover: true,
-        thumbnailActions: [deleteAction],
+        thumbnailActions: deleteAction,
         previewAutoPlay: true,
         previewAutoPlayPauseOnHover: true,
         previewInfinityMove: true,
@@ -68,5 +80,39 @@ export class PhotoGalleryComponent implements OnInit {
       };
       this.galleryImages.push(image);
     }
+  }
+
+  deletePhoto(event: Event, index: number): void {
+    const dialogRef = this.confirmService.openDialog('Are you sure to delete this photo?');
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        const photoId = +this.galleryImages[index].url;
+        this.galleryImages.splice(index, 1);
+
+        this.photoService.deletePhoto(photoId).subscribe((photo: PhotoForPerson) => {
+          if (photo) {
+            this.snackBar.open('Photo deleted', 'Success');
+          }
+        });
+      }
+    });
+  }
+
+  setMainPhoto(event: Event, index: number): void {
+    const photoId = +this.galleryImages[index].url;
+
+    const photoToUpdate = <PhotoForPerson>{
+      photoId: photoId,
+      personId: this.photos[0].personId,
+      isMain: true
+    };
+
+    this.photoService.updatePhoto(photoToUpdate).subscribe((photo: PhotoForPerson) => {
+      if (photo) {
+        this.newMainPhoto.emit(photo);
+        this.snackBar.open('Photo has set to main', 'Success');
+      }
+    });
   }
 }

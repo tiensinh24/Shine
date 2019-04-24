@@ -82,7 +82,7 @@ export class SupplierDetailComponent implements OnInit {
       if (res) {
         this.supplier = res;
         if (res.photos.length > 0) {
-          this.mainPhotoUrl = res.photos.find(p => p.isMain === true).photoUrl;
+          this.mainPhotoUrl = this.supplier.photos.find(p => p.isMain === true).photoUrl;
         }
         this.getImagesForGallery(res.photos);
 
@@ -126,7 +126,8 @@ export class SupplierDetailComponent implements OnInit {
     }
   }
 
-  refreshPhoto(photo: PhotoForPerson) {
+  // Get from @Output
+  refreshPhotoUpload(photo: PhotoForPerson) {
     this.supplier.photos.push(photo);
 
     const image = <NgxGalleryImage>{
@@ -145,6 +146,11 @@ export class SupplierDetailComponent implements OnInit {
     if (photo.isMain) {
       this.mainPhotoUrl = photo.photoUrl;
     }
+  }
+
+  // Get from @Output
+  refreshSetMainPhoto(photo: PhotoForPerson) {
+    this.mainPhotoUrl = photo.photoUrl;
   }
 
   toggleMultiButton() {

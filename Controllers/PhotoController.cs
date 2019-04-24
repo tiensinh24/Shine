@@ -49,7 +49,7 @@ namespace Shine.Controllers {
             return Ok(photos);
         }
 
-        [HttpGet("{id}lll")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<PhotoForPersonDto>> GetPhoto(int id) {
             var photo = await _repository.GetPhotoAsync(id);
 
@@ -67,7 +67,7 @@ namespace Shine.Controllers {
         // Not use
         [HttpPost("{personId}/not-use")]
 
-        public async Task<ActionResult<IEnumerable<Photo>>> AddPhotosForPerson(int personId, [FromForm] IEnumerable<IFormFile> files) {
+        public async Task<ActionResult<IEnumerable<PhotoForPersonDto>>> AddPhotosForPerson(int personId, [FromForm] IEnumerable<IFormFile> files) {
             var photos = await _repository.AddPhotosAsync(personId, files);
 
             if (photos != null)
@@ -85,6 +85,28 @@ namespace Shine.Controllers {
 
             return CreatedAtAction(nameof(GetPhoto), new { id = photo.PhotoId }, photo.Adapt<PhotoForPersonDto>());
 
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<PhotoForPersonDto>> SetMainPhoto(PhotoForPersonDto photo) {
+            var photoToSet = await _repository.SetMainPhotoAsync(photo);
+
+            if (photoToSet == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return photoToSet;
+        }
+
+        [HttpDelete("{photoId}")]
+        public async Task<ActionResult<PhotoForPersonDto>> DeletePhoto(int photoId) {
+            var photo = await _repository.DeletePhotoAsync(photoId);
+
+            if (photo == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return photo;
         }
 
 #endregion

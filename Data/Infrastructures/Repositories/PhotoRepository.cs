@@ -138,6 +138,35 @@ namespace Shine.Data.Infrastructures.Repositories {
             return uploadResult;
         }
 
+        public async Task<PhotoForPersonDto> SetMainPhotoAsync(PhotoForPersonDto photo) {
+            var currentMain = await _context.Photos
+                .Where(p => p.IsMain == true && p.PersonId == photo.PersonId)
+                .FirstOrDefaultAsync();
+
+            var photoToSet = await _context.Photos
+                .FirstOrDefaultAsync(p => p.PhotoId == photo.PhotoId);
+
+            if (photoToSet != null) {
+                if (currentMain != null) {
+                    currentMain.IsMain = false;
+                }
+                photoToSet.IsMain = true;
+            }
+
+            return photoToSet.Adapt<PhotoForPersonDto>();
+        }
+
+        public async Task<PhotoForPersonDto> DeletePhotoAsync(int id) {
+            var photo = await _context.Photos
+                .FirstOrDefaultAsync(p => p.PhotoId == id);
+
+            if (photo != null) {
+                _context.Photos.Remove(photo);
+            }
+
+            return photo.Adapt<PhotoForPersonDto>();
+        }
+
 #endregion
 
     }

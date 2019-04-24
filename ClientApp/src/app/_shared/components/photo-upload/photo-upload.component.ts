@@ -11,7 +11,6 @@ import { environment } from 'src/environments/environment';
 })
 export class PhotoUploadComponent implements OnInit {
   baseUrl = environment.URL;
-  // newPhotos: PhotoForPerson[] = [];
 
   @Input() personId = 0;
 

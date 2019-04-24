@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
-
-import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
-import { environment } from 'src/environments/environment';
-import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
+import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
+import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
+import { environment } from 'src/environments/environment';
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
 
 @Component({
@@ -38,7 +37,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
     this.getCategories();
 
     // Edit product
-    if (this.dataFromList.productId > 0) {
+    if (this.dataFromList) {
       this.editMode = true;
 
       this.title = `Edit ${this.dataFromList.productName}`;

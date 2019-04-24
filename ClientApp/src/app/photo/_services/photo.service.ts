@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PhotoForPerson } from '../_interfaces/photo-for-person';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,11 @@ export class PhotoService {
 
   constructor(private http: HttpClient) {}
 
-  deletePhoto(photoId: number) {
-    this.http.delete(`${this.baseUrl}api/photo/${photoId}`);
+  deletePhoto(photoId: number): Observable<PhotoForPerson> {
+    return this.http.delete<PhotoForPerson>(`${this.baseUrl}api/photo/${photoId}`);
+  }
+
+  updatePhoto(photo: PhotoForPerson): Observable<PhotoForPerson> {
+    return this.http.put<PhotoForPerson>(`${this.baseUrl}api/photo`, photo);
   }
 }

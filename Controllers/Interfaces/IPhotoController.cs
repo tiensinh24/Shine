@@ -20,9 +20,13 @@ namespace Shine.Controllers.Interfaces {
 
 #region Actions
 
-        Task<ActionResult<IEnumerable<Photo>>> AddPhotosForPerson(int personId, [FromForm] IEnumerable<IFormFile> files);
+        Task<ActionResult<IEnumerable<PhotoForPersonDto>>> AddPhotosForPerson(int personId, [FromForm] IEnumerable<IFormFile> files);
 
         Task<ActionResult<PhotoForPersonDto>> AddPhotoForPerson(int personId, [FromForm] IFormFile file);
+
+        Task<ActionResult<PhotoForPersonDto>> SetMainPhoto(PhotoForPersonDto photo);
+
+        Task<ActionResult<PhotoForPersonDto>> DeletePhoto(int photoId);
 
 #endregion
     }

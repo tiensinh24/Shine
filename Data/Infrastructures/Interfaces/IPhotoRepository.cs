@@ -23,7 +23,11 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
         Task<Photo> AddPhotoAsync(int personId, IFormFile file);
 
+        Task<PhotoForPersonDto> SetMainPhotoAsync(PhotoForPersonDto photo);
+
         Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files);
+
+        Task<PhotoForPersonDto> DeletePhotoAsync(int id);
 
 #endregion
     }
