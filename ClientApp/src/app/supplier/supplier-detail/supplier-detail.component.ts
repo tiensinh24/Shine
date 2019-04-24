@@ -18,7 +18,7 @@ export class SupplierDetailComponent implements OnInit {
   mainPhotoUrl = 'assets/default.jpg';
   supplierId: number;
   title: string;
-  multiButton = false;
+  multiButton = true;
   isGallery = false;
   isUpload = false;
   isList = true;
