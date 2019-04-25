@@ -3,9 +3,5 @@ export interface Photo {
   publicId: number;
   photoUrl: string;
   description: string;
-  dateAdded: Date;
   isMain: boolean;
-
-  status: string;
-  message: number;
 }

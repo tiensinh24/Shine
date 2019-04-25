@@ -1,18 +1,17 @@
-import { Component, AfterViewInit, ViewChild, OnInit, ElementRef } from '@angular/core';
-import { MatSort, MatPaginator, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-
-import { SupplierList } from '../_interfaces/supplier-list';
-import { SupplierService } from '../_services/supplier.service';
-import { Supplier } from '../_interfaces/supplier';
-import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { SupplierDataSource } from '../_data-source/supplier-data-source';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+import { SupplierDataSource } from '../_data-source/supplier-data-source';
+import { Supplier } from '../_interfaces/supplier';
+import { SupplierList } from '../_interfaces/supplier-list';
+import { SupplierService } from '../_services/supplier.service';
 
 @Component({
   selector: 'app-supplier-list',
@@ -173,8 +172,9 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
       disableClose: true,
       autoFocus: true,
       maxWidth: '100vw',
-      width: '100vw',
-      height: '100vh'
+      maxHeight: '100vh',
+      width: '800px',
+      height: '510px'
     };
 
     // Send data to supplier edit component

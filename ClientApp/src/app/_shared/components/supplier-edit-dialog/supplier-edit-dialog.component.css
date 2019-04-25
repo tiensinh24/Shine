@@ -13,3 +13,7 @@
 .fill {
     flex: 1 1 auto;
 }
+
+.gender-group {
+    margin: 0 0 16px 2px;
+}

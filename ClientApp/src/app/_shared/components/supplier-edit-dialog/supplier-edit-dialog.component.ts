@@ -1,11 +1,10 @@
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CountrySelect } from 'src/app/country/_interfaces/country-select';
 import { CountryService } from 'src/app/country/_services/country.service';
 import { Supplier } from 'src/app/supplier/_interfaces/supplier';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-supplier-edit-dialog',
@@ -54,7 +53,7 @@ export class SupplierEditDialogComponent implements OnInit, OnDestroy {
     this.formGroup = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      gender: ['', [Validators.required]],
+      gender: [true, [Validators.required]],
       dateOfBirth: ['', Validators.required],
       personNumber: [],
       telephone: [],

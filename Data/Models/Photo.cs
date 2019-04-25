@@ -17,11 +17,13 @@ namespace Shine.Data.Models {
 #endregion
 
 #region FK
-        public int PersonId { get; set; }
+        public int? PersonId { get; set; }
+        public int? ProductId { get; set; }
 #endregion
 
 #region Navigation Properties
         public Person Person { get; set; }
+        public Product Product { get; set; }
 #endregion
     }
 }

@@ -13,6 +13,8 @@ export class PhotoUploadComponent implements OnInit {
   baseUrl = environment.URL;
 
   @Input() personId = 0;
+  @Input() productId = 0;
+  @Input() uploadUrl = '';
 
   @Output() newPhoto = new EventEmitter<PhotoForPerson>();
 
@@ -30,10 +32,8 @@ export class PhotoUploadComponent implements OnInit {
   }
 
   initializeUploader() {
-    const uploadUrl = `${this.baseUrl}api/photo/${this.personId}`;
-
     this.uploader = new FileUploader({
-      url: uploadUrl,
+      url: this.uploadUrl,
       authToken: 'Bearer ' + this.authService.getLocalAuth().token,
       isHTML5: true,
       allowedFileType: ['image'],

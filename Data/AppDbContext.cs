@@ -55,6 +55,7 @@ namespace Shine.Data {
             modelBuilder.ApplyConfiguration(new PersonProductConfig());
             modelBuilder.ApplyConfiguration(new ProductConfig());
             modelBuilder.ApplyConfiguration(new ProductOrderConfig());
+            modelBuilder.ApplyConfiguration(new PhotoConfig());
 
             modelBuilder.ShadowProperties();
             SetGlobalQueryFilters(modelBuilder);

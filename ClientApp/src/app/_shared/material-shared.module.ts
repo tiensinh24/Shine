@@ -1,17 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
-  MatSortModule, MatToolbarModule, MatTooltipModule, MatButtonModule,
-  MatSidenavModule, MatIconModule, MatSelectModule, MatCheckboxModule,
-  MatListModule, MatCardModule, MatProgressSpinnerModule, MatDialogModule,
-  MatMenuModule, MatExpansionModule, MatGridListModule, MatSnackBarModule,
-  MatProgressBarModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatDividerModule,
-  MatStepperModule} from '@angular/material';
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-
-
 
 @NgModule({
   declarations: [],
@@ -42,8 +31,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatMomentDateModule,
     MatDividerModule,
     MatStepperModule,
-    
-
+    MatRadioModule
   ],
   exports: [
     MatTableModule,
@@ -72,7 +60,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatMomentDateModule,
     MatDividerModule,
     MatStepperModule,
-
+    MatRadioModule
   ]
 })
-export class MaterialSharedModule { }
+export class MaterialSharedModule {}
