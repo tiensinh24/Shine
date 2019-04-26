@@ -22,13 +22,13 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   dataSource: SupplierDataSource;
   displayedColumns = [
     'select',
+    'photo',
     'personNumber',
     'gender',
     'fullName',
     'dateOfBirth',
     'telephone',
     'fax',
-    // 'countryId',
     'countryName',
     'continentName',
     'actions'

@@ -49,3 +49,9 @@ tr.mat-footer-row {
 .mat-cell {
   padding: 0 8px;
 }
+
+.avatar>img {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}

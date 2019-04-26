@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Photos;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;

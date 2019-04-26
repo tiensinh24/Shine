@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { NgxGalleryAction, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
+import { Photo } from 'src/app/photo/_interfaces/photo';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
 import { PhotoService } from 'src/app/photo/_services/photo.service';
 import { environment } from 'src/environments/environment';
@@ -108,7 +109,7 @@ export class PhotoGalleryComponent implements OnInit {
       isMain: true
     };
 
-    this.photoService.updatePhoto(photoToUpdate).subscribe((photo: PhotoForPerson) => {
+    this.photoService.setMainPhotoForPerson(photoToUpdate).subscribe((photo: PhotoForPerson) => {
       if (photo) {
         this.newMainPhoto.emit(photo);
         this.snackBar.open('Photo has set to main', 'Success');

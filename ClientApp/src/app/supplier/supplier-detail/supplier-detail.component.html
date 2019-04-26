@@ -1,5 +1,5 @@
 <mat-card fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" class="mat-elevation-z8">
-  <mat-card fxFlex="20" fxFlex.xs="100">
+  <mat-card fxFlex="25" fxFlex.xs="100">
     <mat-card-header>
       <img mat-card-avatar src="{{ mainPhotoUrl }}" />
 
@@ -80,7 +80,7 @@
       <app-photo-gallery [photos]="supplier.photos" (newMainPhoto)="refreshSetMainPhoto($event)"></app-photo-gallery>
     </div>
     <div *ngIf="isUpload">
-      <app-photo-upload [personId]="supplierId" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
+      <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
     </div>
     <div *ngIf="isList">
       <app-products-added></app-products-added>

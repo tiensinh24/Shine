@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { AuthService } from 'src/app/auth/_services/auth.service';
-import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+import { Photo } from 'src/app/photo/_interfaces/photo';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,11 +12,9 @@ import { environment } from 'src/environments/environment';
 export class PhotoUploadComponent implements OnInit {
   baseUrl = environment.URL;
 
-  @Input() personId = 0;
-  @Input() productId = 0;
   @Input() uploadUrl = '';
 
-  @Output() newPhoto = new EventEmitter<PhotoForPerson>();
+  @Output() newPhoto = new EventEmitter<Photo>();
 
   uploader: FileUploader;
   hasBaseDropZoneOver = false;

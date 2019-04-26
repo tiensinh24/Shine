@@ -25,7 +25,7 @@ namespace Shine.Data.Dto.Suppliers {
 #endregion
 
 #region Photos Navigation
-        public IEnumerable<PhotoForPersonDto> Photos { get; set; }
+        public string PhotoUrl { get; set; }
 #endregion
 
     }

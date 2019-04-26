@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using CloudinaryDotNet;
@@ -46,27 +48,61 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #region Get Values
 
-        public async Task<IEnumerable<PhotoForPersonDto>> GetPhotosAsync(int personId) {
+        public async Task<IEnumerable<PhotoDto>> GetPhotosAsync(Expression<Func<Photo, bool>> predicate) {
             var photos = await _context.Photos
-                .Where(p => p.PersonId == personId)
-                .ProjectToType<PhotoForPersonDto>()
+                .Where(predicate)
+                .ProjectToType<PhotoDto>()
                 .ToListAsync();
 
             return photos;
         }
 
-        public async Task<PhotoForPersonDto> GetPhotoAsync(int id) {
+        public async Task<PhotoDto> GetPhotoAsync(int photoId) {
             var photo = await _context.Photos
-                .FirstOrDefaultAsync(p => p.PhotoId == id);
+                .ProjectToType<PhotoDto>()
+                .FirstOrDefaultAsync(p => p.PhotoId == photoId);
 
-            return photo.Adapt<PhotoForPersonDto>();
+            return photo;
         }
 
 #endregion
 
 #region Actions
 
-        public async Task<Photo> AddPhotoAsync(int personId, IFormFile file) {
+        public async Task<PhotoDto> DeletePhotoAsync(int photoId) {
+            var photo = await _context.Photos
+                .FirstOrDefaultAsync(p => p.PhotoId == photoId);
+
+            if (photo != null) {
+                _context.Photos.Remove(photo);
+            }
+
+            return photo.Adapt<PhotoDto>();
+        }
+
+        private ImageUploadResult UploadPhoto(IFormFile file) {
+            var uploadResult = new ImageUploadResult();
+
+            if (file.Length > 0) {
+                using(var stream = file.OpenReadStream()) {
+                    var uploadParams = new ImageUploadParams() {
+                    File = new FileDescription(file.Name, stream),
+                    Transformation = new Transformation()
+                    .Width(500).Height(500).Crop("fill").Gravity("face")
+                    };
+
+                    uploadResult = _cloudinary.Upload(uploadParams);
+                }
+            }
+
+            return uploadResult;
+        }
+
+#endregion
+
+#region Person
+
+        public async Task<Photo> AddPhotoForPersonAsync(int personId, IFormFile file) {
             var mainPhoto = await _context.Photos
                 .FirstOrDefaultAsync(p => p.IsMain == true && p.PersonId == personId);
 
@@ -91,54 +127,7 @@ namespace Shine.Data.Infrastructures.Repositories {
 
         }
 
-        public async Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files) {
-            var mainPhoto = await _context.Photos
-                .FirstOrDefaultAsync(p => p.IsMain == true && p.PersonId == personId);
-
-            var photosToAdd = new List<Photo>();
-
-            foreach (var file in files) {
-                var uploadResult = this.UploadPhoto(file);
-
-                if (uploadResult != null) {
-                    var photo = new Photo() {
-                    PersonId = personId,
-                    PublicId = uploadResult.PublicId,
-                    PhotoUrl = uploadResult.SecureUri.ToString(),
-                    };
-
-                    photosToAdd.Add(photo);
-                }
-            }
-
-            if (mainPhoto == null) {
-                photosToAdd[0].IsMain = true;
-            }
-
-            await _context.Photos.AddRangeAsync(photosToAdd);
-
-            return photosToAdd;
-        }
-
-        private ImageUploadResult UploadPhoto(IFormFile file) {
-            var uploadResult = new ImageUploadResult();
-
-            if (file.Length > 0) {
-                using(var stream = file.OpenReadStream()) {
-                    var uploadParams = new ImageUploadParams() {
-                    File = new FileDescription(file.Name, stream),
-                    Transformation = new Transformation()
-                    .Width(500).Height(500).Crop("fill").Gravity("face")
-                    };
-
-                    uploadResult = _cloudinary.Upload(uploadParams);
-                }
-            }
-
-            return uploadResult;
-        }
-
-        public async Task<PhotoForPersonDto> SetMainPhotoAsync(PhotoForPersonDto photo) {
+        public async Task<PhotoForPersonDto> SetMainPhotoForPersonAsync(PhotoForPersonDto photo) {
             var currentMain = await _context.Photos
                 .Where(p => p.IsMain == true && p.PersonId == photo.PersonId)
                 .FirstOrDefaultAsync();
@@ -155,18 +144,6 @@ namespace Shine.Data.Infrastructures.Repositories {
 
             return photoToSet.Adapt<PhotoForPersonDto>();
         }
-
-        public async Task<PhotoForPersonDto> DeletePhotoAsync(int id) {
-            var photo = await _context.Photos
-                .FirstOrDefaultAsync(p => p.PhotoId == id);
-
-            if (photo != null) {
-                _context.Photos.Remove(photo);
-            }
-
-            return photo.Adapt<PhotoForPersonDto>();
-        }
-
 #endregion
 
     }

@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using CloudinaryDotNet.Actions;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto.Photos;
 using Shine.Data.Models;
@@ -13,21 +16,23 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #region Get Values
 
-        Task<IEnumerable<PhotoForPersonDto>> GetPhotosAsync(int personId);
+        Task<IEnumerable<PhotoDto>> GetPhotosAsync(Expression<Func<Photo, bool>> predicate);
 
-        Task<PhotoForPersonDto> GetPhotoAsync(int id);
+        Task<PhotoDto> GetPhotoAsync(int photoId);
 
 #endregion
 
 #region Actions
 
-        Task<Photo> AddPhotoAsync(int personId, IFormFile file);
+        Task<PhotoDto> DeletePhotoAsync(int photoId);
 
-        Task<PhotoForPersonDto> SetMainPhotoAsync(PhotoForPersonDto photo);
+#endregion
 
-        Task<IEnumerable<Photo>> AddPhotosAsync(int personId, IEnumerable<IFormFile> files);
+#region Person
 
-        Task<PhotoForPersonDto> DeletePhotoAsync(int id);
+        Task<Photo> AddPhotoForPersonAsync(int personId, [FromForm] IFormFile file);
+
+        Task<PhotoForPersonDto> SetMainPhotoForPersonAsync(PhotoForPersonDto photo);
 
 #endregion
     }

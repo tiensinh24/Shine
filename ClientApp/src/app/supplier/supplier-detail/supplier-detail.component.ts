@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
 import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+import { environment } from 'src/environments/environment';
 import { SupplierDetail } from '../_interfaces/supplier-detail';
 import { SupplierService } from '../_services/supplier.service';
 
@@ -13,6 +14,7 @@ import { SupplierService } from '../_services/supplier.service';
   styleUrls: ['./supplier-detail.component.css']
 })
 export class SupplierDetailComponent implements OnInit {
+  baseUrl = environment.URL;
   supplier = <SupplierDetail>{};
   photos = <PhotoForPerson[]>{};
   mainPhotoUrl = 'assets/default.jpg';
@@ -24,6 +26,7 @@ export class SupplierDetailComponent implements OnInit {
   isList = true;
   isAdd = false;
   isNoPhoto = false;
+  photoUploadUrl: string;
 
   // Ngx-Gallery
   galleryOptions: NgxGalleryOptions[] = [];
@@ -80,6 +83,8 @@ export class SupplierDetailComponent implements OnInit {
 
     this.supplierService.getSupplier(this.supplierId).subscribe(res => {
       if (res) {
+        this.photoUploadUrl = `${this.baseUrl}api/photo/person/${res.personId}`;
+
         this.supplier = res;
         if (res.photos.length > 0) {
           this.mainPhotoUrl = this.supplier.photos.find(p => p.isMain === true).photoUrl;

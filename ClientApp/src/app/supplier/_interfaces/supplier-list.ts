@@ -1,3 +1,5 @@
+import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+
 export interface SupplierList {
   personId: number;
   personNumber: string;
@@ -13,5 +15,5 @@ export interface SupplierList {
   countryName: string;
   continentName: string;
 
-  PhotosUrl: string[];
+  photoUrl: string;
 }

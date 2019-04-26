@@ -20,8 +20,8 @@ namespace Shine.Data.Dto._Mapster {
                     dest => dest.ContinentName, src => src.Country.ContinentName
                 )
                 .Map(
-                    dest => dest.Photos,
-                    src => src.Photos.Select(p => new { p.PersonId, p.PhotoId, p.PhotoUrl, p.IsMain }).OrderByDescending(p => p.IsMain)
+                    dest => dest.PhotoUrl,
+                    src => src.Photos.FirstOrDefault(p => p.IsMain).PhotoUrl
                 );
 
             TypeAdapterConfig<Supplier, SupplierDetailDto>.NewConfig()

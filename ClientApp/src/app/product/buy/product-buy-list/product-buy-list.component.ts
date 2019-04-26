@@ -1,19 +1,19 @@
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
-
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
-import { Router } from '@angular/router';
-
 import { ProductBuyDataSource } from '../_data-source/product-buy-data-source';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { ProductBuyList } from '../_interfaces/product-buy-list';
 import { ProductBuyService } from '../_services/product-buy.service';
+
+
 
 @Component({
   selector: 'app-product-buy-list',
@@ -22,7 +22,7 @@ import { ProductBuyService } from '../_services/product-buy.service';
 })
 export class ProductBuyListComponent implements OnInit, AfterViewInit {
   dataSource: ProductBuyDataSource;
-  displayedColumns = ['select', 'productName', 'specification', 'categoryName', 'actions'];
+  displayedColumns = ['select', 'photo', 'productName', 'specification', 'categoryName', 'actions'];
   selection = new SelectionModel<ProductBuyList>(true, [], false);
 
   title = 'Products List';
