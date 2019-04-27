@@ -19,7 +19,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
             PagingParams pagingParams, SortParams sortParams, string filter,
             Expression<Func<ProductBuyListDto, bool>> condition);
 
-        Task<ProductBuyListDto> GetProductAsync(int id);
+        Task<ProductBuyDetailDto> GetProductAsync(int productId);
 #endregion
 
 #region Actions
@@ -27,7 +27,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
         Task<ProductBuyDto> UpdateProductAsync(ProductBuy productBuy);
 
-        Task<ProductBuyDto> DeleteProductAsync(int id);
+        Task<ProductBuyDto> DeleteProductAsync(int productId);
 
         Task<bool> DeleteProductsAsync(string[] ids);
 

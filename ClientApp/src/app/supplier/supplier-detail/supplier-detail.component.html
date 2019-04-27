@@ -48,7 +48,7 @@
   </mat-card>
 
   <!-- Button Group -->
-  <div fxLayout.xs="row" fxLayout="column" fxLayoutGap="64px">
+  <div class="more-button" fxLayout.xs="row" fxLayout="column" fxLayoutGap="64px">
     <!-- More/Less button -->
     <button *ngIf="!multiButton" mat-mini-fab color="primary" (click)="toggleMultiButton()">
       <mat-icon>expand_more</mat-icon>
@@ -58,7 +58,14 @@
     </button>
 
     <!-- Expand buttons -->
-    <div *ngIf="multiButton" fxLayout="column" fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="16px">
+    <div
+      class="expand-buttons"
+      *ngIf="multiButton"
+      fxLayout="column"
+      fxLayout.xs="row"
+      fxLayoutAlign="center"
+      fxLayoutGap="16px"
+    >
       <button *ngIf="!isGallery" mat-mini-fab (click)="toggleGallery()">
         <mat-icon matTooltip="Gallery">photo_library</mat-icon>
       </button>
@@ -77,7 +84,10 @@
   <!-- Table details-->
   <div fxFlex class="product-table">
     <div *ngIf="isGallery" fxLayoutAlign="center center">
-      <app-photo-gallery [photos]="supplier.photos" (newMainPhoto)="refreshSetMainPhoto($event)"></app-photo-gallery>
+      <app-person-photo-gallery
+        [photos]="supplier.photos"
+        (newMainPhoto)="refreshSetMainPhoto($event)"
+      ></app-person-photo-gallery>
     </div>
     <div *ngIf="isUpload">
       <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>

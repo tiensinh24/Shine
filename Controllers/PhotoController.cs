@@ -94,5 +94,30 @@ namespace Shine.Controllers {
 
 #endregion
 
+#region Product
+
+        [HttpPost("product/{productId}")]
+        public async Task<ActionResult<PhotoForProductDto>> AddPhotoForProduct(int productId, [FromForm] IFormFile file) {
+            var photo = await _repository.AddPhotoForProductAsync(productId, file);
+
+            if (photo != null)
+                await _repository.CommitAsync();
+
+            return CreatedAtAction(nameof(GetPhoto), new { photoId = photo.PhotoId }, photo.Adapt<PhotoForProductDto>());
+        }
+
+        [HttpPut("product/set-main")]
+        public async Task<ActionResult<PhotoForProductDto>> SetMainPhotoForProduct(PhotoForProductDto photo) {
+            var photoToSet = await _repository.SetMainPhotoForProductAsync(photo);
+
+            if (photoToSet == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return photoToSet;
+        }
+
+#endregion
+
     }
 }

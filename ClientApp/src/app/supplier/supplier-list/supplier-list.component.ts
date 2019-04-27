@@ -174,7 +174,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '800px',
-      height: '510px'
+      height: '495px'
     };
 
     // Send data to supplier edit component

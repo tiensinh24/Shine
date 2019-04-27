@@ -1,14 +1,15 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { environment } from 'src/environments/environment';
-
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-
 import { PagedProductBuy } from '../_interfaces/paged-product-buy';
 import { ProductBuy } from '../_interfaces/product-buy';
+import { ProductBuyDetail } from '../_interfaces/product-buy-detail';
 import { ProductBuyList } from '../_interfaces/product-buy-list';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class ProductBuyService {
     return this.http.get<ProductBuyList[]>(this.baseUrl + 'api/productBuy/');
   }
 
-  getProduct(id: number): Observable<ProductBuy> {
-    return this.http.get<ProductBuy>(this.baseUrl + 'api/productBuy/' + id);
+  getProduct(productId: number): Observable<ProductBuyDetail> {
+    return this.http.get<ProductBuyDetail>(this.baseUrl + 'api/productBuy/' + productId);
   }
 
   getPagedProducts(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedProductBuy> {
@@ -48,8 +49,8 @@ export class ProductBuyService {
     return this.http.put<ProductBuy>(this.baseUrl + 'api/productBuy/', productBuy);
   }
 
-  deleteProduct(id: number): Observable<number> {
-    return this.http.delete<number>(this.baseUrl + 'api/productBuy/' + id);
+  deleteProduct(productId: number): Observable<number> {
+    return this.http.delete<number>(this.baseUrl + 'api/productBuy/' + productId);
   }
 
   deleteProducts(idList: string[]): Observable<boolean> {

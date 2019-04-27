@@ -35,5 +35,14 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<PhotoForPersonDto> SetMainPhotoForPersonAsync(PhotoForPersonDto photo);
 
 #endregion
+
+#region Product
+
+        Task<Photo> AddPhotoForProductAsync(int productId, [FromForm] IFormFile file);
+
+        Task<PhotoForProductDto> SetMainPhotoForProductAsync(PhotoForProductDto photo);
+
+#endregion
+
     }
 }

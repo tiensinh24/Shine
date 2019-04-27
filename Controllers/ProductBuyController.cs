@@ -50,10 +50,10 @@ namespace Shine.Controllers {
             return new Paged<ProductBuyListDto>(query);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{productId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ProductBuyListDto>> GetProduct(int id) {
-            var product = await _repository.GetProductAsync(id);
+        public async Task<ActionResult<ProductBuyDetailDto>> GetProduct(int productId) {
+            var product = await _repository.GetProductAsync(productId);
             if (product == null) {
                 return NotFound();
             }
@@ -69,7 +69,7 @@ namespace Shine.Controllers {
             await _repository.CommitAsync();
 
             return CreatedAtAction(nameof(GetProduct),
-                new { id = productBuy.ProductId },
+                new { productId = productBuy.ProductId },
                 productBuy.Adapt<ProductBuyDto>());
         }
 
@@ -85,9 +85,9 @@ namespace Shine.Controllers {
             return product;
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ProductBuyDto>> DeleteProduct(int id) {
-            var product = await _repository.DeleteProductAsync(id);
+        [HttpDelete("{productId}")]
+        public async Task<ActionResult<ProductBuyDto>> DeleteProduct(int productId) {
+            var product = await _repository.DeleteProductAsync(productId);
 
             if (product == null) return NotFound();
 

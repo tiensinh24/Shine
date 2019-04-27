@@ -7,7 +7,7 @@
   <!-- Gender -->
   <div class="gender-group" fxLayout="row" fxLayoutGap="32px" fxFlex="50">
     <mat-label>Gender</mat-label>
-    <mat-radio-group fxLayoutGap="16px" formControlName="gender">
+    <mat-radio-group fxLayoutGap="32px" formControlName="gender">
       <mat-radio-button [value]="true">Male</mat-radio-button>
       <mat-radio-button [value]="false">Female</mat-radio-button>
     </mat-radio-group>
@@ -15,7 +15,7 @@
   </div>
 
   <!-- Row 2 -->
-  <div fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column">
+  <div fxLayout="row" fxLayoutGap="32px" fxLayoutGap.xs="0" fxLayout.xs="column">
     <!-- FirstName -->
     <mat-form-field appearance="outline" fxFlex="50">
       <mat-label>First Name</mat-label>
@@ -31,7 +31,7 @@
   </div>
 
   <!-- Row 3 -->
-  <div fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column">
+  <div fxLayout="row" fxLayoutGap="32px" fxLayoutGap.xs="0" fxLayout.xs="column">
     <!-- DateOfBirth -->
     <mat-form-field appearance="outline" fxFlex="50">
       <mat-label>Date Of Birth</mat-label>
@@ -53,7 +53,7 @@
   </div>
 
   <!-- Row 4 -->
-  <div fxLayout="row" fxLayoutGap="16px" fxLayout.xs="column">
+  <div fxLayout="row" fxLayoutGap="32px" fxLayoutGap.xs="0" fxLayout.xs="column">
     <!-- PersonNumber -->
     <mat-form-field appearance="outline" fxFlex="33">
       <mat-label>Person Number</mat-label>
@@ -76,7 +76,7 @@
 </form>
 
 <!-- Action Buttons -->
-<div fxLayout="row" fxLayoutGap="16px">
+<div fxLayout="row" fxLayoutGap="32px">
   <div class="fill"></div>
   <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
     Submit

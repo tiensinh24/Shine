@@ -36,7 +36,8 @@ namespace Shine.Data.Dto._Mapster {
                 )
                 .Map(
                     dest => dest.Photos,
-                    src => src.Photos.Select(p => new { p.PersonId, p.PhotoId, p.PhotoUrl, p.IsMain }).OrderByDescending(p => p.IsMain)
+                    src => src.Photos.Select(p => new { p.PersonId, p.PhotoId, p.PhotoUrl, p.IsMain })
+                    .OrderByDescending(p => p.IsMain)
                 );
 
         }

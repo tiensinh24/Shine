@@ -1,3 +1,32 @@
-<p>
-  product-buy-detail works!
-</p>
+<h1 class="mat-display-1">{{ product.productName }}</h1>
+
+<div *ngIf="!isUploadPhoto" fxLayout="row" fxLayoutGap="32px">
+  <div fxFlex="40" class="photo-gallery">
+    <app-product-photo-gallery *ngIf="product.photos" [photos]="product.photos"></app-product-photo-gallery>
+  </div>
+
+  <div fxLayout="column">
+    <table fxFlex class="product-detail">
+      <tr>
+        <td>Name</td>
+        <td>:{{ product.productName }}</td>
+      </tr>
+      <tr>
+        <td>Specification</td>
+        <td>:{{ product.specification }}</td>
+      </tr>
+      <tr>
+        <td>Category</td>
+        <td>:{{ product.categoryName }}</td>
+      </tr>
+    </table>
+
+    <button mat-raised-button color="primary">Edit</button>
+
+    <button mat-raised-button color="ascent">List</button>
+
+    <button mat-raised-button (click)="toggleUploadPhoto()">Upload photos</button>
+  </div>
+</div>
+
+<app-photo-upload *ngIf="isUploadPhoto" [uploadUrl]="photoUploadUrl"></app-photo-upload>

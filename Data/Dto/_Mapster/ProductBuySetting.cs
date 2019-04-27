@@ -2,6 +2,7 @@ using System.Linq;
 
 using Mapster;
 
+using Shine.Data.Dto.Photos;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Models;
@@ -15,6 +16,16 @@ namespace Shine.Data.Dto._Mapster {
                 )
                 .Map(
                     dest => dest.PhotoUrl, src => src.Photos.FirstOrDefault(p => p.IsMain).PhotoUrl
+                );
+
+            TypeAdapterConfig<ProductBuy, ProductBuyDetailDto>.NewConfig()
+                .Map(
+                    dest => dest.CategoryName, source => source.Category.CategoryName
+                )
+                .Map(
+                    dest => dest.Photos,
+                    src => src.Photos.Select(p => new { p.ProductId, p.PhotoId, p.PhotoUrl, p.IsMain })
+                    .OrderByDescending(p => p.IsMain)
                 );
 
         }

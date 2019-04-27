@@ -9,12 +9,11 @@ import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { SupplierComponent } from './supplier.component';
-import { PhotoGallerySharedModule } from '../_shared/components/photo-gallery/photo-gallery-shared.module';
+import { PersonPhotoGallerySharedModule } from '../_shared/components/person-photo-gallery/person-photo-gallery-shared.module';
 import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/photo-upload-shared.module';
 import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SharedModule } from '../_shared/shared.module';
-
 
 @NgModule({
   declarations: [
@@ -41,7 +40,7 @@ import { SharedModule } from '../_shared/shared.module';
     PhotoUploadSharedModule,
 
     // Photo gallery
-    PhotoGallerySharedModule,
+    PersonPhotoGallerySharedModule,
 
     // Ngx-Gallery
     NgxGalleryModule,

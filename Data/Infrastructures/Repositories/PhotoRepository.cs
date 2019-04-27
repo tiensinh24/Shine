@@ -80,24 +80,6 @@ namespace Shine.Data.Infrastructures.Repositories {
             return photo.Adapt<PhotoDto>();
         }
 
-        private ImageUploadResult UploadPhoto(IFormFile file) {
-            var uploadResult = new ImageUploadResult();
-
-            if (file.Length > 0) {
-                using(var stream = file.OpenReadStream()) {
-                    var uploadParams = new ImageUploadParams() {
-                    File = new FileDescription(file.Name, stream),
-                    Transformation = new Transformation()
-                    .Width(500).Height(500).Crop("fill").Gravity("face")
-                    };
-
-                    uploadResult = _cloudinary.Upload(uploadParams);
-                }
-            }
-
-            return uploadResult;
-        }
-
 #endregion
 
 #region Person
@@ -143,6 +125,73 @@ namespace Shine.Data.Infrastructures.Repositories {
             }
 
             return photoToSet.Adapt<PhotoForPersonDto>();
+        }
+#endregion
+
+#region Product
+
+        public async Task<Photo> AddPhotoForProductAsync(int productId, IFormFile file) {
+            var mainPhoto = await _context.Photos
+                .FirstOrDefaultAsync(p => p.IsMain == true && p.ProductId == productId);
+
+            var uploadResult = this.UploadPhoto(file);
+            Photo photoToAdd = null;
+
+            if (uploadResult != null) {
+                photoToAdd = new Photo() {
+                ProductId = productId,
+                PublicId = uploadResult.PublicId,
+                PhotoUrl = uploadResult.SecureUri.ToString(),
+                };
+            }
+
+            if (mainPhoto == null) {
+                photoToAdd.IsMain = true;
+            }
+
+            await _context.Photos.AddAsync(photoToAdd);
+
+            return photoToAdd;
+
+        }
+
+        public async Task<PhotoForProductDto> SetMainPhotoForProductAsync(PhotoForProductDto photo) {
+            var currentMain = await _context.Photos
+                .Where(p => p.IsMain == true && p.ProductId == photo.ProductId)
+                .FirstOrDefaultAsync();
+
+            var photoToSet = await _context.Photos
+                .FirstOrDefaultAsync(p => p.PhotoId == photo.PhotoId);
+
+            if (photoToSet != null) {
+                if (currentMain != null) {
+                    currentMain.IsMain = false;
+                }
+                photoToSet.IsMain = true;
+            }
+
+            return photoToSet.Adapt<PhotoForProductDto>();
+        }
+
+#endregion
+
+#region Private Methods
+        private ImageUploadResult UploadPhoto(IFormFile file) {
+            var uploadResult = new ImageUploadResult();
+
+            if (file.Length > 0) {
+                using(var stream = file.OpenReadStream()) {
+                    var uploadParams = new ImageUploadParams() {
+                    File = new FileDescription(file.Name, stream),
+                    Transformation = new Transformation()
+                    .Width(500).Height(500).Crop("fill").Gravity("face")
+                    };
+
+                    uploadResult = _cloudinary.Upload(uploadParams);
+                }
+            }
+
+            return uploadResult;
         }
 #endregion
 

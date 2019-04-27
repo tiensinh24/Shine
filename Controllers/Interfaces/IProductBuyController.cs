@@ -15,7 +15,7 @@ namespace Shine.Controllers.Interfaces {
         Task<ActionResult<Paged<ProductBuyListDto>>> GetPagedProducts(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-        Task<ActionResult<ProductBuyListDto>> GetProduct(int id);
+        Task<ActionResult<ProductBuyDetailDto>> GetProduct(int productId);
 #endregion
 
 #region Actions
@@ -23,7 +23,7 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<ProductBuyDto>> UpdateProduct([FromBody] ProductBuy productBuy);
 
-        Task<ActionResult<ProductBuyDto>> DeleteProduct(int id);
+        Task<ActionResult<ProductBuyDto>> DeleteProduct(int productId);
 
         Task<bool> DeleteProducts(string[] ids);
 #endregion

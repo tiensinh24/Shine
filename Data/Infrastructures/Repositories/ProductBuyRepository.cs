@@ -98,12 +98,13 @@ namespace Shine.Data.Infrastructures.Repositories {
             return await PagedList<ProductBuyListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public async Task<ProductBuyListDto> GetProductAsync(int id) {
+        public async Task<ProductBuyDetailDto> GetProductAsync(int productId) {
             var query = await _context.Set<ProductBuy>()
                 .Include(p => p.Category)
-                .FirstOrDefaultAsync(p => p.ProductId == id);
+                .Include(p => p.Photos)
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
 
-            return query.Adapt<ProductBuyListDto>();
+            return query.Adapt<ProductBuyDetailDto>();
         }
 
 #endregion
@@ -126,9 +127,9 @@ namespace Shine.Data.Infrastructures.Repositories {
             return product.Adapt<ProductBuyDto>();
         }
 
-        public async Task<ProductBuyDto> DeleteProductAsync(int id) {
+        public async Task<ProductBuyDto> DeleteProductAsync(int productId) {
             var product = await _context.Set<ProductBuy>()
-                .FirstOrDefaultAsync(p => p.ProductId == id);
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
 
             if (product != null) {
                 _context.Set<ProductBuy>().Remove(product);
