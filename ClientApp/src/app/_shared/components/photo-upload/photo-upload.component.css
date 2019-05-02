@@ -43,4 +43,11 @@
 	margin: 16px 0;
 }
 
+mat-card-title {
+	text-align: center;
+	font-size: large;
+	color: rebeccapurple;
+	margin-bottom: 1em;
+}
+
 

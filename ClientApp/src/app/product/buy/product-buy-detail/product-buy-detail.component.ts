@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
 import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
 import { environment } from 'src/environments/environment';
 import { ProductBuyDetail } from '../_interfaces/product-buy-detail';
@@ -17,7 +19,12 @@ export class ProductBuyDetailComponent implements OnInit {
   photoUploadUrl = '';
   isUploadPhoto = false;
 
-  constructor(private productService: ProductBuyService, private route: ActivatedRoute) {}
+  constructor(
+    private productService: ProductBuyService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getProduct();
@@ -36,5 +43,42 @@ export class ProductBuyDetailComponent implements OnInit {
 
   toggleUploadPhoto() {
     this.isUploadPhoto = !this.isUploadPhoto;
+  }
+
+  // Open product-buy-edit-dialog
+  openEditDialog() {
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '800px',
+      height: '500px',
+      panelClass: 'custom-dialog',
+      data: {
+        productId: this.product.productId,
+        productName: this.product.productName,
+        specification: this.product.specification,
+        categoryId: this.product.categoryId
+      }
+    };
+
+    // Open dialog with config & passed data
+    const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
+
+    // Pass data from dialog in to main component
+    dialogRef.afterClosed().subscribe((data: ProductBuyDetail) => {
+      if (data) {
+        this.product = data;
+      }
+    });
+  }
+
+  onEdit() {
+    this.openEditDialog();
+  }
+
+  onList() {
+    this.router.navigate(['product-buy/list']);
   }
 }

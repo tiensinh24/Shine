@@ -1,44 +1,45 @@
-<!-- Dialog title -->
-<mat-card mat-dialog-title class="card-title mat-headline mat-elevation-z8">{{ title }}</mat-card>
+<div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="32px">
+  <!-- Dialog title -->
+  <h1 mat-dialog-title class="mat-display-1">{{ title }}</h1>
 
-<mat-card mat-dialog-content class="mat-elevation-z1">
-  <!-- Formgroup -->
-  <form fxLayout="column" [formGroup]="formGroup">
-    <!-- Product Name -->
-    <mat-form-field appearance="outline">
-      <mat-label>Product Name</mat-label>
-      <input matInput placeholder="Product Name" formControlName="productName" required autofocus />
-      <mat-error *ngIf="get('productName').invalid">{{ getErrorMessage(get('productName')) }}</mat-error>
-    </mat-form-field>
-    <!-- Specification -->
-    <mat-form-field appearance="outline">
-      <mat-label>Specification</mat-label>
-      <input matInput placeholder="Specification" formControlName="specification" required />
-      <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage(get('specification')) }}</mat-error>
-    </mat-form-field>
-    <!-- CategoryId -->
-    <mat-form-field appearance="outline">
-      <mat-label>Select category</mat-label>
-      <mat-select placeholder="Select category" formControlName="categoryId" required>
-        <mat-option *ngFor="let category of categories" [value]="category.categoryId">
-          {{ category.categoryName }}
-        </mat-option>
-        <mat-option>
-          <button mat-flat-button color="primary" (click)="openDialog()">Add New Category</button>
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="get('categoryId').invalid">{{ getErrorMessage(get('categoryId')) }}</mat-error>
-    </mat-form-field>
-    <!-- Action Buttons -->
-    <mat-card-actions fxLayout="row">
-      <div class="fill"></div>
-      <button fxFlex="20" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
-        Submit
-      </button>
-      <button fxFlex="20" mat-raised-button color="warn" (click)="onCancel()">
-        Cancel
-      </button>
-      <div class="fill"></div>
-    </mat-card-actions>
-  </form>
-</mat-card>
+  <mat-dialog-content>
+    <!-- Formgroup -->
+    <form fxLayout="column" [formGroup]="formGroup">
+      <!-- Product Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Product Name</mat-label>
+        <input matInput placeholder="Product Name" formControlName="productName" required autofocus />
+        <mat-error *ngIf="get('productName').invalid">{{ getErrorMessage(get('productName')) }}</mat-error>
+      </mat-form-field>
+      <!-- Specification -->
+      <mat-form-field appearance="outline">
+        <mat-label>Specification</mat-label>
+        <input matInput placeholder="Specification" formControlName="specification" required />
+        <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage(get('specification')) }}</mat-error>
+      </mat-form-field>
+      <!-- CategoryId -->
+      <mat-form-field appearance="outline">
+        <mat-label>Select category</mat-label>
+        <mat-select placeholder="Select category" formControlName="categoryId" required>
+          <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+            {{ category.categoryName }}
+          </mat-option>
+          <mat-option>
+            <button mat-flat-button color="primary" (click)="openDialog()">Add New Category</button>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="get('categoryId').invalid">{{ getErrorMessage(get('categoryId')) }}</mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <!-- Action Buttons -->
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+      Submit
+    </button>
+    <button mat-raised-button color="warn" (click)="onCancel()">
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</div>

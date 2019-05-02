@@ -46,7 +46,13 @@ export class ProductPhotoGalleryComponent implements OnInit {
     ];
 
     this.galleryOptions = [
-      { width: '100%', imageSize: 'contain', thumbnailsMoveSize: 4 },
+      {
+        width: '100%',
+        imageSize: 'contain',
+        imageActions: deleteAction,
+        imageInfinityMove: true,
+        thumbnailsMoveSize: 4
+      },
       { breakpoint: 500, width: '300px', height: '300px', thumbnailsColumns: 3 },
       { breakpoint: 300, width: '100%', height: '200px', thumbnailsColumns: 2 }
     ];

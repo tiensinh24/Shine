@@ -1,32 +1,49 @@
-<h1 class="mat-display-1">{{ product.productName }}</h1>
+<div fxLayout="row" fxLayoutGap="32px">
+  <!-- Card gallery -->
+  <mat-card fxFlex="30" class="photo-gallery">
+    <mat-card-content>
+      <app-product-photo-gallery *ngIf="product.photos" [photos]="product.photos"></app-product-photo-gallery>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-fab color="accent" (click)="toggleUploadPhoto()">
+        <mat-icon matTooltip="Upload photos">cloud</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
 
-<div *ngIf="!isUploadPhoto" fxLayout="row" fxLayoutGap="32px">
-  <div fxFlex="40" class="photo-gallery">
-    <app-product-photo-gallery *ngIf="product.photos" [photos]="product.photos"></app-product-photo-gallery>
-  </div>
+  <mat-card class="main-content" fxFlex>
+    <div *ngIf="!isUploadPhoto" fxLayout="column" fxLayoutAlign="space-between">
+      <mat-card-header class="title">
+        <h1>{{ product.productName }}</h1>
+      </mat-card-header>
 
-  <div fxLayout="column">
-    <table fxFlex class="product-detail">
-      <tr>
-        <td>Name</td>
-        <td>:{{ product.productName }}</td>
-      </tr>
-      <tr>
-        <td>Specification</td>
-        <td>:{{ product.specification }}</td>
-      </tr>
-      <tr>
-        <td>Category</td>
-        <td>:{{ product.categoryName }}</td>
-      </tr>
-    </table>
+      <mat-card-content class="product-table">
+        <table>
+          <tr>
+            <td><span>Name</span></td>
+            <td>{{ product.productName }}</td>
+          </tr>
+          <tr>
+            <td><span>Specification</span></td>
+            <td>{{ product.specification }}</td>
+          </tr>
+          <tr>
+            <td><span>Category</span></td>
+            <td>{{ product.categoryName }}</td>
+          </tr>
+        </table>
+      </mat-card-content>
 
-    <button mat-raised-button color="primary">Edit</button>
+      <mat-card-footer fxLayout="row" class="sticky-bottom" fxFlexAlign="end">
+        <button mat-icon-button color="primary" matTooltip="Edit product" (click)="onEdit()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" matTooltip="Products list" (click)="onList()">
+          <mat-icon>list</mat-icon>
+        </button>
+      </mat-card-footer>
+    </div>
 
-    <button mat-raised-button color="ascent">List</button>
-
-    <button mat-raised-button (click)="toggleUploadPhoto()">Upload photos</button>
-  </div>
+    <app-photo-upload *ngIf="isUploadPhoto" [uploadUrl]="photoUploadUrl"></app-photo-upload>
+  </mat-card>
 </div>
-
-<app-photo-upload *ngIf="isUploadPhoto" [uploadUrl]="photoUploadUrl"></app-photo-upload>
