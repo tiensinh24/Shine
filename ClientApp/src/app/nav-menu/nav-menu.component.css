@@ -28,7 +28,7 @@ mat-toolbar {
 }
 
 .main-container-mobile {
-  margin: 0;
+  margin: 0 10px;
 }
 
 .active {

@@ -1,16 +1,21 @@
+import {
+    ProductBuyEditDialogComponent
+} from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
+import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
+import { environment } from 'src/environments/environment';
+
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
-import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
-import { environment } from 'src/environments/environment';
+
 import { ProductBuyDetail } from '../_interfaces/product-buy-detail';
+import { ProductBuyList } from '../_interfaces/product-buy-list';
 import { ProductBuyService } from '../_services/product-buy.service';
 
 @Component({
   selector: 'app-product-buy-detail',
   templateUrl: './product-buy-detail.component.html',
-  styleUrls: ['./product-buy-detail.component.css']
+  styleUrls: ['./product-buy-detail.component.css'],
 })
 export class ProductBuyDetailComponent implements OnInit {
   baseUrl = environment.URL;
@@ -23,7 +28,7 @@ export class ProductBuyDetailComponent implements OnInit {
     private productService: ProductBuyService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -35,7 +40,9 @@ export class ProductBuyDetailComponent implements OnInit {
 
     this.productService.getProduct(this.productId).subscribe(res => {
       if (res) {
-        this.photoUploadUrl = `${this.baseUrl}api/photo/product/${res.productId}`;
+        this.photoUploadUrl = `${this.baseUrl}api/photo/product/${
+          res.productId
+        }`;
         this.product = res;
       }
     });
@@ -59,17 +66,20 @@ export class ProductBuyDetailComponent implements OnInit {
         productId: this.product.productId,
         productName: this.product.productName,
         specification: this.product.specification,
-        categoryId: this.product.categoryId
-      }
+        categoryId: this.product.categoryId,
+      },
     };
 
     // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      ProductBuyEditDialogComponent,
+      dialogConfig,
+    );
 
     // Pass data from dialog in to main component
-    dialogRef.afterClosed().subscribe((data: ProductBuyDetail) => {
+    dialogRef.afterClosed().subscribe((data: ProductBuyList) => {
       if (data) {
-        this.product = data;
+        this.getProduct();
       }
     });
   }

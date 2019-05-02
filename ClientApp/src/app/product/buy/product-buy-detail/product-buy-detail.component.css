@@ -4,7 +4,7 @@
 }
 
 .photo-gallery {
-	margin: 1em 0 0 1em;
+	margin-top: 1em;
 	width: 100%;
 	background: mediumslateblue;
 	box-shadow:  2px 2px 20px 2px mediumslateblue;
@@ -53,10 +53,12 @@ mat-card-content {
 }
 
 .sticky-bottom {
-	margin: 20px 20px;
-	position: absolute;
+	margin: 20px 20px;	
 	bottom: 0;
 	right: 0;
 	z-index: 1;
+}
+.sticky-bottom.desktop {
+	position: absolute;
 }
 
