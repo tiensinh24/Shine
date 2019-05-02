@@ -39,11 +39,15 @@
 }
 
 .more-button>button:hover {
-  transform: scale(1.1);
-  animation-duration: 500;
+  transform: scale(1.2);
+  transition: 150ms;
+}
+
+.expand-buttons>button {
+  transition: 100ms linear;  
 }
 
 .expand-buttons>button:hover {
-  transform: scale(1.1);
-  animation-duration: 500;
+  transform: scale(1.2);
+  transition: 150ms;
 }
