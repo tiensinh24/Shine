@@ -11,6 +11,8 @@ h1[mat-dialog-title] {
   height: 80px;
   color: white;
   background: slateblue;
+  -webkit-box-shadow: 3px 2px 15px 2px darkslategrey;
+          box-shadow: 3px 2px 15px 2px darkslategrey;
 }
 
 mat-dialog-content {

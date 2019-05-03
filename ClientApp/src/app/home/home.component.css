@@ -11,6 +11,9 @@
           box-sizing: content-box;
   /* 3 */
   margin: 5em auto 0;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
   border: solid 5px tomato;
 }
 
