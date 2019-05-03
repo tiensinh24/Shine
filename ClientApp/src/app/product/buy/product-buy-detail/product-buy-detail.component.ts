@@ -1,13 +1,9 @@
-import {
-    ProductBuyEditDialogComponent
-} from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
-import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
-import { environment } from 'src/environments/environment';
-
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
+import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
+import { environment } from 'src/environments/environment';
 import { ProductBuyDetail } from '../_interfaces/product-buy-detail';
 import { ProductBuyList } from '../_interfaces/product-buy-list';
 import { ProductBuyService } from '../_services/product-buy.service';
@@ -15,11 +11,12 @@ import { ProductBuyService } from '../_services/product-buy.service';
 @Component({
   selector: 'app-product-buy-detail',
   templateUrl: './product-buy-detail.component.html',
-  styleUrls: ['./product-buy-detail.component.css'],
+  styleUrls: ['./product-buy-detail.component.css']
 })
 export class ProductBuyDetailComponent implements OnInit {
   baseUrl = environment.URL;
   product = <ProductBuyDetail>{};
+  photos: PhotoForProduct[] = [];
   productId: number;
   photoUploadUrl = '';
   isUploadPhoto = false;
@@ -28,7 +25,7 @@ export class ProductBuyDetailComponent implements OnInit {
     private productService: ProductBuyService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -40,10 +37,9 @@ export class ProductBuyDetailComponent implements OnInit {
 
     this.productService.getProduct(this.productId).subscribe(res => {
       if (res) {
-        this.photoUploadUrl = `${this.baseUrl}api/photo/product/${
-          res.productId
-        }`;
+        this.photoUploadUrl = `${this.baseUrl}api/photo/product/${res.productId}`;
         this.product = res;
+        this.photos = res.photos;
       }
     });
   }
@@ -66,15 +62,12 @@ export class ProductBuyDetailComponent implements OnInit {
         productId: this.product.productId,
         productName: this.product.productName,
         specification: this.product.specification,
-        categoryId: this.product.categoryId,
-      },
+        categoryId: this.product.categoryId
+      }
     };
 
     // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(
-      ProductBuyEditDialogComponent,
-      dialogConfig,
-    );
+    const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: ProductBuyList) => {
@@ -82,6 +75,13 @@ export class ProductBuyDetailComponent implements OnInit {
         this.getProduct();
       }
     });
+  }
+
+  // Receive from @Output
+  refreshPhotoUpload(photo: PhotoForProduct) {
+    // Array is immutable, use push will not trigger change detection
+    //  So we create a new array to trigger CD
+    this.photos = this.photos.concat(photo);
   }
 
   onEdit() {

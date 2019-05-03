@@ -1,0 +1,40 @@
+.mat-elevation-z8 {
+  margin: 1em;
+}
+
+.mat-card-header {
+  color: tomato;
+}
+
+.mat-card-content p {
+  color: royalblue;
+}
+
+.mat-card-actions button {
+  margin-top: 10px;
+}
+
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.mat-header-cell {
+  background-color: aliceblue;
+  color: royalblue;
+}
+
+.mat-row {
+  height: auto;
+}
+
+.mat-cell {
+  padding: 0 8px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}

@@ -14,9 +14,9 @@
   margin-top: 10px;
 }
 
-
 .mat-paginator-sticky {
   bottom: 0px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
 }
@@ -35,6 +35,7 @@
 }
 
 .example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
   background-size: cover;
 }
+/*# sourceMappingURL=order-buy-detail.component.css.map */

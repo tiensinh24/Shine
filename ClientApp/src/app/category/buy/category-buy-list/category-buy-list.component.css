@@ -1,55 +1,61 @@
 .fill {
-    flex: 1 1 auto;
-  }
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+}
 
-  mat-progress-bar {
-    margin-bottom: 8px;
-  }
+mat-progress-bar {
+  margin-bottom: 8px;
+}
 
-  .mat-paginator-sticky {
-    bottom: 0px;
-    position: sticky;
-    z-index: 10;
-  }
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 10;
+}
 
-  button[mat-mini-fab] {
-    align-self: center;
-  }
+button[mat-mini-fab] {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
 
-  .card-title {
-    background-color: royalblue;
-    margin-bottom: -15px;
-    text-align: center;
-    color: white;
-    height: 60px;
-  }
+.card-title {
+  background-color: royalblue;
+  margin-bottom: -15px;
+  text-align: center;
+  color: white;
+  height: 60px;
+}
 
-  div>table[mat-table] {
-    margin: 1em;
-    width: 97.5%;
-  }
+div > table[mat-table] {
+  margin: 1em;
+  width: 97.5%;
+}
 
-  [mat-sort-header] {
-    color: royalblue;
-  }
+[mat-sort-header] {
+  color: royalblue;
+}
 
-  tr.mat-footer-row {
-    font-weight: bold;
-  }
+tr.mat-footer-row {
+  font-weight: bold;
+}
 
-  mat-card.row-reverse {
-    height: 30px;
-  }
+mat-card.row-reverse {
+  height: 30px;
+}
 
-  .mat-row {
-    height: auto;
-  }
+.mat-row {
+  height: auto;
+}
 
-  .mat-row:hover {
-    cursor: pointer;
-    background-color: aliceblue;
-  }
+.mat-row:hover {
+  cursor: pointer;
+  background-color: aliceblue;
+}
 
-  .mat-cell {
-    padding: 0 4px;
-  }
+.mat-cell {
+  padding: 0 4px;
+}
+/*# sourceMappingURL=category-buy-list.component.css.map */

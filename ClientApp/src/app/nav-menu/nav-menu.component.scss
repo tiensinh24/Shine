@@ -1,0 +1,54 @@
+.fill {
+  flex: 1 1 auto;
+}
+
+mat-toolbar [routerLinkActive] {
+  cursor: pointer;
+}
+
+.home-logo {
+  font-size: larger;
+}
+
+mat-toolbar {
+  margin-bottom: 16px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-image: url(../../assets/default.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+.side-nav {
+  height: calc(100vh - 80px);
+}
+
+.side-nav>mat-sidenav {
+  margin-inline-start: -20px;
+  min-width: 250px;
+}
+
+.main-container {
+  margin: 0 100px;
+}
+
+.main-container-mobile {
+  margin: 0 10px;
+}
+
+.active {
+  color: royalblue;
+}
+
+mat-nav-list>div[routerLink] {
+  cursor: pointer;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  font-size: larger;
+  background-color: powderblue;
+}

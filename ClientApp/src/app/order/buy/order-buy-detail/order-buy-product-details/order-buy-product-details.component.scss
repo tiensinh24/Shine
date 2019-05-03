@@ -1,0 +1,34 @@
+.mat-elevation-z2 {
+    margin: 1px;
+  }
+  
+  .mat-header-cell {
+    background-color: aliceblue;
+    color: royalblue;
+  }
+  
+  .mat-cell {
+    border-bottom: 1px dotted blueviolet;
+    padding: 0 8px;
+  }
+  
+  .mat-row:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+  }
+  
+  .mat-paginator-sticky {
+    bottom: 0px;
+    position: sticky;
+    z-index: 10;
+  }
+
+.product-table {
+  width: 100%;
+  height: calc(100vh - 155px);
+  overflow-y: auto;
+}
+
+.sidenav-form {
+  margin-left: 1em;
+}

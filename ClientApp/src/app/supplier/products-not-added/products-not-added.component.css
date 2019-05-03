@@ -10,6 +10,7 @@
   background: aliceblue;
   color: royalblue;
   top: 0px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
 }
@@ -25,12 +26,17 @@
 
 .expand-header .mat-expansion-panel-header-title,
 .expand-header .mat-expansion-panel-header-description {
-  flex-basis: 0;
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
 }
 
 .expand-header .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 table {
@@ -54,3 +60,4 @@ tr.row-content:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }
+/*# sourceMappingURL=products-not-added.component.css.map */

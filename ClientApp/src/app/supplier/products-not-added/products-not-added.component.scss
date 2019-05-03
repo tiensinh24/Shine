@@ -1,0 +1,56 @@
+.mat-elevation-z8 {
+  margin: 1em 0;
+}
+
+.card-content {
+  margin: 1px;
+}
+
+.card-title {
+  background: aliceblue;
+  color: royalblue;
+  top: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.mat-expansion-panel {
+  border-bottom: dotted 1px blueviolet;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  font-size: large;
+  background-color: sandybrown;
+}
+
+.expand-header .mat-expansion-panel-header-title,
+.expand-header .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.expand-header .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  font: 400;
+  color: steelblue;
+  text-align: left;
+}
+
+th,
+td {
+  border-bottom: 1px solid orange;
+  padding: 8px;
+}
+
+tr.row-content:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}

@@ -1,4 +1,3 @@
-
 .mat-headline {
   text-align: center;
   color: white;
@@ -8,5 +7,6 @@
 }
 
 [mat-dialog-content] {
-  margin:  1px;
+  margin: 1px;
 }
+/*# sourceMappingURL=category-buy-dialog.component.css.map */

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "products-provided-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "products-provided-dialog.component.css"
+}

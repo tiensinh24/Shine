@@ -1,23 +1,17 @@
-import {
-    NgxGalleryAction, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryLayout, NgxGalleryOptions
-} from 'ngx-gallery';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { NgxGalleryAction, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
 import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
 import { PhotoService } from 'src/app/photo/_services/photo.service';
 import { environment } from 'src/environments/environment';
-
-import {
-    AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, OnInit, Output
-} from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-
 import { ConfirmDialogService } from '../../_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-product-photo-gallery',
   templateUrl: './product-photo-gallery.component.html',
-  styleUrls: ['./product-photo-gallery.component.css'],
+  styleUrls: ['./product-photo-gallery.component.css']
 })
-export class ProductPhotoGalleryComponent implements OnInit {
+export class ProductPhotoGalleryComponent implements OnChanges {
   baseUrl = environment.URL;
 
   galleryOptions: NgxGalleryOptions[] = [];
@@ -30,11 +24,14 @@ export class ProductPhotoGalleryComponent implements OnInit {
   constructor(
     private photoService: PhotoService,
     private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit() {
-    this.getImagesForGallery(this.photos);
+  ngOnChanges(changes: SimpleChanges) {
+    const change = changes['photos'];
+    if (change.currentValue !== change.previousValue) {
+      this.getImagesForGallery(change.currentValue);
+    }
   }
 
   private getImagesForGallery(photos: PhotoForProduct[]) {
@@ -42,13 +39,13 @@ export class ProductPhotoGalleryComponent implements OnInit {
       {
         icon: 'fa fa-trash',
         titleText: 'Delete photo',
-        onClick: this.deletePhoto.bind(this),
+        onClick: this.deletePhoto.bind(this)
       },
       {
         icon: 'fa fa-check-circle',
         titleText: 'Set main',
-        onClick: this.setMainPhoto.bind(this),
-      },
+        onClick: this.setMainPhoto.bind(this)
+      }
     ];
 
     this.galleryOptions = [
@@ -57,49 +54,46 @@ export class ProductPhotoGalleryComponent implements OnInit {
         imageSize: 'contain',
         imageActions: deleteAction,
         imageInfinityMove: true,
-        thumbnailsMoveSize: 4,
-      },
-      // { breakpoint: 500, width: '300px', height: '300px', thumbnailsColumns: 3 },
-      // { breakpoint: 300, width: '100%', height: '200px', thumbnailsColumns: 2 }
+        thumbnailsMoveSize: 4
+      }
     ];
 
     if (photos) {
       photos.forEach(photo => {
-        const image = <NgxGalleryImage>{
-          small: photo.photoUrl,
-          medium: photo.photoUrl,
-          big: photo.photoUrl,
-          url: photo.photoId.toString(),
-        };
-        this.galleryImages.push(image);
+        if (this.galleryImages.findIndex(p => p.url === photo.photoId.toString()) === -1) {
+          const image = <NgxGalleryImage>{
+            small: photo.photoUrl,
+            medium: photo.photoUrl,
+            big: photo.photoUrl,
+            url: photo.photoId.toString()
+          };
+
+          this.galleryImages.push(image);
+        }
       });
     } else {
       const image = <NgxGalleryImage>{
         small: 'assets/default.jpg',
         medium: 'assets/default.jpg',
-        big: 'assets/default.jpg',
+        big: 'assets/default.jpg'
       };
       this.galleryImages.push(image);
     }
   }
 
   deletePhoto(event: Event, index: number): void {
-    const dialogRef = this.confirmService.openDialog(
-      'Are you sure to delete this photo?',
-    );
+    const dialogRef = this.confirmService.openDialog('Are you sure to delete this photo?');
 
     dialogRef.afterClosed().subscribe((res: boolean) => {
       if (res) {
         const photoId = +this.galleryImages[index].url;
         this.galleryImages.splice(index, 1);
 
-        this.photoService
-          .deletePhoto(photoId)
-          .subscribe((photo: PhotoForProduct) => {
-            if (photo) {
-              this.snackBar.open('Photo deleted', 'Success');
-            }
-          });
+        this.photoService.deletePhoto(photoId).subscribe((photo: PhotoForProduct) => {
+          if (photo) {
+            this.snackBar.open('Photo deleted', 'Success');
+          }
+        });
       }
     });
   }
@@ -110,16 +104,14 @@ export class ProductPhotoGalleryComponent implements OnInit {
     const photoToUpdate = <PhotoForProduct>{
       photoId: photoId,
       productId: this.photos[0].productId,
-      isMain: true,
+      isMain: true
     };
 
-    this.photoService
-      .setMainPhotoForProduct(photoToUpdate)
-      .subscribe((photo: PhotoForProduct) => {
-        if (photo) {
-          this.newMainPhoto.emit(photo);
-          this.snackBar.open('Photo has set to main', 'Success');
-        }
-      });
+    this.photoService.setMainPhotoForProduct(photoToUpdate).subscribe((photo: PhotoForProduct) => {
+      if (photo) {
+        this.newMainPhoto.emit(photo);
+        this.snackBar.open('Photo has set to main', 'Success');
+      }
+    });
   }
 }

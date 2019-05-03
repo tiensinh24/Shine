@@ -1,20 +1,22 @@
 [mat-dialog-content] {
-    margin: 1em;
-    padding-top: 20px;
+  margin: 1em;
+  padding-top: 20px;
 }
 
 .card-title {
-    background-color: royalblue;    
-    text-align: center;
-    color: white;
-    margin-bottom: 2em;
-    
+  background-color: royalblue;
+  text-align: center;
+  color: white;
+  margin-bottom: 2em;
 }
 
 .fill {
-    flex: 1 1 auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
 }
 
 .gender-group {
-    margin: 0 0 16px 2px;
+  margin: 0 0 16px 2px;
 }
+/*# sourceMappingURL=supplier-edit-dialog.component.css.map */

@@ -1,5 +1,7 @@
 .fill {
-  flex: 1 1 auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
 }
 
 mat-progress-bar {
@@ -7,6 +9,7 @@ mat-progress-bar {
 }
 
 .mat-header-row {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   background-color: honeydew;
@@ -15,6 +18,7 @@ mat-progress-bar {
 
 .mat-paginator-sticky {
   bottom: 0px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
   background-color: whitesmoke;
@@ -45,3 +49,4 @@ table[mat-table] {
 .mat-cell {
   padding: 0 8px;
 }
+/*# sourceMappingURL=products-provided.component.css.map */

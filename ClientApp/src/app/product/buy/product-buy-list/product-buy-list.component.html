@@ -1,5 +1,5 @@
 <!-- Loading progress bar -->
-<mat-progress-bar *ngIf="(dataSource.isLoading | async)" color="accent" aria-label="Progress bar" mode="buffer">
+<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
 </mat-progress-bar>
 
 <!-- Title -->
@@ -59,7 +59,9 @@
   <ng-container matColumnDef="actions" stickyEnd>
     <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
       <button mat-icon-button color="primary" (click)="onCreate()">
-        <mat-icon matTooltip="Create new product" aria-label="Create new product">add_circle</mat-icon>
+        <mat-icon matTooltip="Create new product" aria-label="Create new product" (click)="onCreate()"
+          >add_circle</mat-icon
+        >
       </button>
 
       <button *ngIf="selection.hasValue()" mat-icon-button color="warn" (click)="onDeleteSelected()">
@@ -72,7 +74,7 @@
         <mat-icon aria-label="Detail">list_alt</mat-icon>
       </button>
 
-      <button matTooltip="Edit product" mat-icon-button color="accent" (click)="openDialog(row.productId)">
+      <button matTooltip="Edit product" mat-icon-button color="accent" (click)="onEdit(row)">
         <mat-icon aria-label="Edit">edit</mat-icon>
       </button>
 

@@ -19,7 +19,8 @@
 
 .mat-paginator-sticky {
   bottom: 0.5px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
 }
-
+/*# sourceMappingURL=products-added.component.css.map */

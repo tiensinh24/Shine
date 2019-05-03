@@ -1,19 +1,11 @@
-<div
-  fxLayout="row"
-  fxLayout.xs="column"
-  fxLayout.sm="column"
-  fxLayoutGap="32px"
->
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="32px">
   <!-- Card gallery -->
   <mat-card fxFlex="30" fxFlex.xs fxFlex.sm class="photo-gallery">
     <mat-card-content>
-      <app-product-photo-gallery
-        *ngIf="product.photos"
-        [photos]="product.photos"
-      ></app-product-photo-gallery>
+      <app-product-photo-gallery *ngIf="product.photos" [photos]="photos"></app-product-photo-gallery>
     </mat-card-content>
     <mat-card-actions align="center">
-      <button mat-fab color="accent" (click)="toggleUploadPhoto()">
+      <button mat-fab class="upload-fab-button" (click)="toggleUploadPhoto()">
         <mat-icon matTooltip="Upload photos">cloud</mat-icon>
       </button>
     </mat-card-actions>
@@ -42,26 +34,11 @@
         </table>
       </mat-card-content>
 
-      <mat-card-footer
-        fxLayout="row"
-        class="sticky-bottom"
-        ngClass.gt-sm="desktop"
-        fxFlexAlign="end"
-      >
-        <button
-          mat-icon-button
-          color="primary"
-          matTooltip="Edit product"
-          (click)="onEdit()"
-        >
+      <mat-card-footer fxLayout="row" class="sticky-bottom" ngClass.gt-sm="desktop" fxFlexAlign="end">
+        <button mat-icon-button color="primary" matTooltip="Edit product" (click)="onEdit()">
           <mat-icon>edit</mat-icon>
         </button>
-        <button
-          mat-icon-button
-          color="accent"
-          matTooltip="Products list"
-          (click)="onList()"
-        >
+        <button mat-icon-button color="accent" matTooltip="Products list" (click)="onList()">
           <mat-icon>list</mat-icon>
         </button>
       </mat-card-footer>
@@ -70,6 +47,7 @@
     <app-photo-upload
       *ngIf="isUploadPhoto"
       [uploadUrl]="photoUploadUrl"
+      (newPhoto)="refreshPhotoUpload($event)"
     ></app-photo-upload>
   </mat-card>
 </div>

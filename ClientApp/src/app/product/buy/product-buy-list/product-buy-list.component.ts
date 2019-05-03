@@ -13,8 +13,6 @@ import { ProductBuy } from '../_interfaces/product-buy';
 import { ProductBuyList } from '../_interfaces/product-buy-list';
 import { ProductBuyService } from '../_services/product-buy.service';
 
-
-
 @Component({
   selector: 'app-product-buy-list',
   templateUrl: './product-buy-list.component.html',
@@ -159,12 +157,13 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
       disableClose: true,
       autoFocus: true,
       maxWidth: '100vw',
-      width: '100vw',
-      height: '100vh'
+      maxHeight: '100vh',
+      width: '800px',
+      height: '500px',
+      panelClass: 'custom-dialog'
     };
 
-    // Send data to product edit component
-    if (prodEdit) {
+    if (productId > 0) {
       dialogConfig.data = {
         productId: prodEdit.productId,
         productName: prodEdit.productName,

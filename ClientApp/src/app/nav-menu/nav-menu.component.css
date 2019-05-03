@@ -1,5 +1,7 @@
 .fill {
-  flex: 1 1 auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
 }
 
 mat-toolbar [routerLinkActive] {
@@ -14,12 +16,22 @@ mat-toolbar {
   margin-bottom: 16px;
 }
 
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-image: url(../../assets/default.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
 .side-nav {
   height: calc(100vh - 80px);
 }
 
-.side-nav>mat-sidenav {
-  margin-inline-start: -20px;
+.side-nav > mat-sidenav {
+  -webkit-margin-start: -20px;
+          margin-inline-start: -20px;
   min-width: 250px;
 }
 
@@ -35,7 +47,7 @@ mat-toolbar {
   color: royalblue;
 }
 
-mat-nav-list>div[routerLink] {
+mat-nav-list > div[routerLink] {
   cursor: pointer;
 }
 
@@ -43,3 +55,4 @@ mat-nav-list>div[routerLink] {
   font-size: larger;
   background-color: powderblue;
 }
+/*# sourceMappingURL=nav-menu.component.css.map */

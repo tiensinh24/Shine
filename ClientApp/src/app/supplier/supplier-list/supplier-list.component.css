@@ -1,5 +1,7 @@
 .fill {
-  flex: 1 1 auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
 }
 
 mat-progress-bar {
@@ -8,12 +10,15 @@ mat-progress-bar {
 
 .mat-paginator-sticky {
   bottom: 0px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
 }
 
 button[mat-mini-fab] {
-  align-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .card-title {
@@ -27,7 +32,6 @@ table[mat-table] {
   margin: 1em;
   width: 97.5%;
 }
-
 
 [mat-sort-header] {
   color: royalblue;
@@ -50,8 +54,9 @@ tr.mat-footer-row {
   padding: 0 8px;
 }
 
-.avatar>img {
+.avatar > img {
   width: 30px;
   height: 30px;
   border-radius: 15px;
 }
+/*# sourceMappingURL=supplier-list.component.css.map */

@@ -10,6 +10,7 @@
 
 .mat-paginator-sticky {
   bottom: 0;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
 }
@@ -38,16 +39,27 @@
   padding-left: 1em;
 }
 
-.more-button>button:hover {
-  transform: scale(1.2);
+.more-button > button {
+  -webkit-transition: cubic-bezier(0.075, 0.82, 0.165, 1) 250ms;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 250ms;
+}
+
+.more-button > button:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: 150ms;
   transition: 150ms;
 }
 
-.expand-buttons>button {
-  transition: 100ms linear;  
+.expand-buttons > button {
+  -webkit-transition: 100ms linear;
+  transition: 100ms linear;
 }
 
-.expand-buttons>button:hover {
-  transform: scale(1.2);
+.expand-buttons > button:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: 150ms;
   transition: 150ms;
 }
+/*# sourceMappingURL=supplier-detail.component.css.map */

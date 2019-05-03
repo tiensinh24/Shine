@@ -2,17 +2,10 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
     <button mat-icon-button (click)="drawer.toggle()">
-      <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon"
-        >menu</mat-icon
-      >
+      <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      [routerLink]="['/home']"
-      matTooltip="Home"
-    >
+    <div fxLayout="row" fxLayoutAlign="start center" [routerLink]="['/home']" matTooltip="Home">
       <mat-icon svgIcon="logo" style="width:40px; height:40px"></mat-icon>
       <button class="home-logo" mat-button>Shine</button>
     </div>
@@ -47,9 +40,7 @@
           fxLayoutGap="8px"
           style="height: 100%;"
         >
-          <mat-icon style="font-size: 48px" color="primary"
-            >shopping_cart</mat-icon
-          >
+          <mat-icon style="font-size: 48px" color="primary">shopping_cart</mat-icon>
           <span>Product</span>
         </button>
         <!-- suppliers -->
@@ -61,9 +52,7 @@
           fxLayoutGap="8px"
           style="height: 100%;"
         >
-          <mat-icon style="font-size: 48px" color="primary"
-            >account_circle</mat-icon
-          >
+          <mat-icon style="font-size: 48px" color="primary">account_circle</mat-icon>
           <span>Supplier</span>
         </button>
       </div>
@@ -77,9 +66,7 @@
           fxLayoutGap="8px"
           style="height: 100%;"
         >
-          <mat-icon style="font-size: 48px" color="primary"
-            >supervised_user_circle</mat-icon
-          >
+          <mat-icon style="font-size: 48px" color="primary">supervised_user_circle</mat-icon>
           <span>Customer</span>
         </button>
 
@@ -109,13 +96,7 @@
           <span>Admin</span>
         </button>
 
-        <button
-          mat-menu-item
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
+        <button mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
           <mat-icon style="font-size: 48px" color="primary">store</mat-icon>
           <span>Store</span>
         </button>
@@ -123,14 +104,11 @@
     </mat-menu>
 
     <!-- Account menu -->
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="account"
-      matTooltip="Welcome {{ user }}"
-    >
+    <div [matMenuTriggerFor]="account" matTooltip="Welcome {{ user }}">
       <mat-icon *ngIf="!isLoggedIn()">lock</mat-icon>
-      <mat-icon *ngIf="isLoggedIn()">account_circle</mat-icon>
-    </button>
+
+      <div *ngIf="isLoggedIn()" class="user-avatar"></div>
+    </div>
     <mat-menu #account="matMenu">
       <button *ngIf="!isLoggedIn()" mat-menu-item (click)="login()">
         <mat-icon aria-label="Login">account_circle</mat-icon>
@@ -145,11 +123,7 @@
 </mat-toolbar>
 
 <!-- Progress Bar -->
-<mat-progress-bar
-  *ngIf="loading"
-  color="accent"
-  mode="indeterminate"
-></mat-progress-bar>
+<mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
 
 <!-- Side Nav -->
 <mat-sidenav-container class="side-nav">
@@ -170,10 +144,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-nav-list>
-            <mat-list-item
-              routerLink="/product-buy/list"
-              routerLinkActive="active"
-            >
+            <mat-list-item routerLink="/product-buy/list" routerLinkActive="active">
               Products List
             </mat-list-item>
           </mat-nav-list>
@@ -186,16 +157,10 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-nav-list>
-            <mat-list-item
-              routerLink="/admin/manager-user"
-              routerLinkActive="active"
-            >
+            <mat-list-item routerLink="/admin/manager-user" routerLinkActive="active">
               Manager User
             </mat-list-item>
-            <mat-list-item
-              routerLink="/admin/manager-role"
-              routerLinkActive="active"
-            >
+            <mat-list-item routerLink="/admin/manager-role" routerLinkActive="active">
               Manager Role
             </mat-list-item>
           </mat-nav-list>
@@ -222,11 +187,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <!-- Content router-outlet -->
-  <mat-sidenav-content
-    class="main-container"
-    ngClass.xs="main-container-mobile"
-    ngClass.md="main-container-mobile"
-  >
+  <mat-sidenav-content class="main-container" ngClass.xs="main-container-mobile" ngClass.md="main-container-mobile">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

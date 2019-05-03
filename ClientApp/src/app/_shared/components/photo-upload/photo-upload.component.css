@@ -1,53 +1,52 @@
 .drop-zone mat-icon {
-	font-size: 64px;
+  font-size: 64px;
 }
 
 .drop-zone {
-	padding: 2em;
-	line-height: 32px;
-	display: inline-block;
-	text-align: center;
-	border: dotted 3px lightgray;
+  padding: 2em;
+  line-height: 32px;
+  display: inline-block;
+  text-align: center;
+  border: dotted 3px lightgray;
 }
 
 .drop-zone-icon {
-	font-size: 64px;
-	color: darkslategray;
+  font-size: 64px;
+  color: darkslategray;
 }
 
 .ng-file-over {
-	padding: 2em;
-	border: dotted 3px green;
+  padding: 2em;
+  border: dotted 3px green;
 }
 
-.upload-table {	
-	text-align: center;
-	width: 100%;
+.upload-table {
+  text-align: center;
+  width: 100%;
 }
 
-.upload-table tr>th {	
-	color: royalblue;
-	border-bottom: 1px dotted sandybrown;	
+.upload-table tr > th {
+  color: royalblue;
+  border-bottom: 1px dotted sandybrown;
 }
 
-.upload-table tr>td {
-	border-bottom: 1px dotted sandybrown;
+.upload-table tr > td {
+  border-bottom: 1px dotted sandybrown;
 }
 
 .mat-elevation-z1 {
-	margin: 1px;
+  margin: 1px;
 }
 
 .progress-all {
-	height: 8px;
-	margin: 16px 0;
+  height: 8px;
+  margin: 16px 0;
 }
 
 mat-card-title {
-	text-align: center;
-	font-size: large;
-	color: rebeccapurple;
-	margin-bottom: 1em;
+  text-align: center;
+  font-size: large;
+  color: rebeccapurple;
+  margin-bottom: 1em;
 }
-
-
+/*# sourceMappingURL=photo-upload.component.css.map */

@@ -1,0 +1,12 @@
+h1[mat-dialog-title] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    color: white;
+    background: slateblue;
+}
+
+mat-dialog-content {
+    margin: 1em 1em;    
+}

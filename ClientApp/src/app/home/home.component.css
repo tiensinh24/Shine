@@ -1,0 +1,80 @@
+.circle-container {
+  position: relative;
+  /* 1 */
+  width: 25em;
+  height: 25em;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
+  /* 2 */
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  /* 3 */
+  margin: 5em auto 0;
+  border: solid 5px tomato;
+}
+
+.circle-container > * {
+  /* 4 */
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6em;
+  height: 6em;
+  margin: -3em;
+}
+
+.circle-container > :nth-of-type(1) {
+  -webkit-transform: rotate(0deg) translate(12.5em) rotate(0deg);
+          transform: rotate(0deg) translate(12.5em) rotate(0deg);
+}
+
+.circle-container > :nth-of-type(2) {
+  -webkit-transform: rotate(45deg) translate(12.5em) rotate(-45deg);
+          transform: rotate(45deg) translate(12.5em) rotate(-45deg);
+}
+
+.circle-container > :nth-of-type(3) {
+  -webkit-transform: rotate(90deg) translate(12.5em) rotate(-90deg);
+          transform: rotate(90deg) translate(12.5em) rotate(-90deg);
+}
+
+.circle-container > :nth-of-type(4) {
+  -webkit-transform: rotate(135deg) translate(12.5em) rotate(-135deg);
+          transform: rotate(135deg) translate(12.5em) rotate(-135deg);
+}
+
+.circle-container > :nth-of-type(5) {
+  -webkit-transform: rotate(180deg) translate(12.5em) rotate(-180deg);
+          transform: rotate(180deg) translate(12.5em) rotate(-180deg);
+}
+
+.circle-container > :nth-of-type(6) {
+  -webkit-transform: rotate(225deg) translate(12.5em) rotate(-225deg);
+          transform: rotate(225deg) translate(12.5em) rotate(-225deg);
+}
+
+.circle-container > :nth-of-type(7) {
+  -webkit-transform: rotate(270deg) translate(12.5em) rotate(-270deg);
+          transform: rotate(270deg) translate(12.5em) rotate(-270deg);
+}
+
+.circle-container > :nth-of-type(8) {
+  -webkit-transform: rotate(315deg) translate(12.5em) rotate(-315deg);
+          transform: rotate(315deg) translate(12.5em) rotate(-315deg);
+}
+
+.circle-container img {
+  display: block;
+  width: 100%;
+  border-radius: 50%;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+
+.circle-container img:hover {
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
+}
+/*# sourceMappingURL=home.component.css.map */

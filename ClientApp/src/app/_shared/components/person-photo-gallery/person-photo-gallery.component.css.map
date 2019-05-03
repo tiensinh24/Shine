@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACd,UAAU,EAAE,MAAM;EAClB,aAAa,EAAE,IAAI;EACnB,KAAK,EAAE,SAAS;CAChB",
+    "sources": [
+        "person-photo-gallery.component.scss"
+    ],
+    "names": [],
+    "file": "person-photo-gallery.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "CAAA,AAAA,AAAA,kBAAC,AAAA,EAAoB;EACjB,MAAM,EAAE,GAAG;EACX,WAAW,EAAE,IAAI;CACpB;;AAED,AAAA,WAAW,CAAC;EACR,gBAAgB,EAAE,SAAS;EAC3B,UAAU,EAAE,MAAM;EAClB,KAAK,EAAE,KAAK;EACZ,aAAa,EAAE,GAAG;CAErB;;AAED,AAAA,KAAK,CAAC;EACF,IAAI,EAAE,QAAQ;CACjB;;AAED,AAAA,aAAa,CAAC;EACV,MAAM,EAAE,YAAY;CACvB",
+    "sources": [
+        "supplier-edit-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "supplier-edit-dialog.component.css"
+}

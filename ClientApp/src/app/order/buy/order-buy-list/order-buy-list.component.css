@@ -1,5 +1,7 @@
 .fill {
-  flex: 1 1 auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
 }
 
 mat-progress-bar {
@@ -8,12 +10,15 @@ mat-progress-bar {
 
 .mat-paginator-sticky {
   bottom: 0px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
 }
 
 button[mat-mini-fab] {
-  align-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .card-title {
@@ -48,3 +53,4 @@ tr.mat-footer-row {
 .mat-cell {
   padding: 0 8px;
 }
+/*# sourceMappingURL=order-buy-list.component.css.map */
