@@ -11,11 +11,11 @@ h1[mat-dialog-title] {
   height: 80px;
   color: white;
   background: slateblue;
-  -webkit-box-shadow: 3px 2px 15px 2px darkslategrey;
-          box-shadow: 3px 2px 15px 2px darkslategrey;
+  -webkit-box-shadow: 3px 2px 15px 2px gray;
+          box-shadow: 3px 2px 15px 2px gray;
 }
 
-mat-dialog-content {
-  margin: 1em 1em;
+.edit-form {
+  margin: 1rem 1rem 0 1rem;
 }
 /*# sourceMappingURL=product-buy-edit-dialog.component.css.map */

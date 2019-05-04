@@ -80,4 +80,17 @@
   -webkit-filter: grayscale(0);
           filter: grayscale(0);
 }
+
+.background {
+  position: fixed;
+  top: 63px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 63px);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background: url("../../assets/bg2.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
 /*# sourceMappingURL=home.component.css.map */

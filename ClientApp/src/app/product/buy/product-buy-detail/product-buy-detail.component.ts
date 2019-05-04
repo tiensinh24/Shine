@@ -56,7 +56,7 @@ export class ProductBuyDetailComponent implements OnInit {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '800px',
-      height: '500px',
+      height: '525px',
       panelClass: 'custom-dialog',
       data: {
         productId: this.product.productId,

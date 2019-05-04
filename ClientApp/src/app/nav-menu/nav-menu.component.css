@@ -4,7 +4,12 @@
           flex: 1 1 auto;
 }
 
-mat-toolbar [routerLinkActive] {
+.toolbar {
+  -webkit-box-shadow: 5px 2px 15px 2px grey;
+          box-shadow: 5px 2px 15px 2px grey;
+}
+
+.toolbar [routerLinkActive] {
   cursor: pointer;
 }
 
@@ -12,35 +17,34 @@ mat-toolbar [routerLinkActive] {
   font-size: larger;
 }
 
-mat-toolbar {
-  margin-bottom: 16px;
-}
-
 .user-avatar {
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background-image: url(../../assets/default.jpg);
+  background-image: url("http://lorempixel.com/50/50/people");
   background-position: center;
   background-size: cover;
 }
 
 .side-nav {
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
 }
 
 .side-nav > mat-sidenav {
   -webkit-margin-start: -20px;
           margin-inline-start: -20px;
-  min-width: 250px;
+  min-width: 200px;
 }
 
 .main-container {
-  margin: 0 100px;
+  margin: 0 80px;
+  min-height: calc(100vh - 80px);
+  overflow: hidden;
 }
 
 .main-container-mobile {
-  margin: 0 10px;
+  margin: 0;
+  overflow: hidden;
 }
 
 .active {
@@ -54,5 +58,9 @@ mat-nav-list > div[routerLink] {
 .mat-expansion-panel-header.mat-expanded {
   font-size: larger;
   background-color: powderblue;
+}
+
+.footer {
+  bottom: 0;
 }
 /*# sourceMappingURL=nav-menu.component.css.map */
