@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { SupplierList } from '../_interfaces/supplier-list';
-import { Supplier } from '../_interfaces/supplier';
-import { ProductsBySupplier } from '../_interfaces/supplier-products-list';
-import { SupplierProduct } from '../_interfaces/supplier-product';
-import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { PagedSupplier } from '../_interfaces/paged-supplier';
 import { PagedProductBuy } from 'src/app/product/buy/_interfaces/paged-product-buy';
+import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
+import { environment } from 'src/environments/environment';
+import { PagedSupplier } from '../_interfaces/paged-supplier';
+import { Supplier } from '../_interfaces/supplier';
 import { SupplierDetail } from '../_interfaces/supplier-detail';
+import { SupplierList } from '../_interfaces/supplier-list';
+import { SupplierProduct } from '../_interfaces/supplier-product';
+import { ProductsBySupplier } from '../_interfaces/supplier-products-list';
+import { SupplierSelect } from '../_interfaces/supplier-select';
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class SupplierService {
 
   getSuppliers(): Observable<SupplierList[]> {
     return this.http.get<SupplierList[]>(`${this.baseUrl}api/supplier/`);
+  }
+
+  getSuppliersSelect(): Observable<SupplierSelect[]> {
+    return this.http.get<SupplierSelect[]>(`${this.baseUrl}api/supplier/select`);
   }
 
   getPagedSuppliers(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedSupplier> {

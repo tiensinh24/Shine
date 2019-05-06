@@ -1,17 +1,17 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl, NgForm } from '@angular/forms';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-import { OrderBuyDto } from '../../_interfaces/order-buy-dto';
-import { OrderBuyService } from '../../_services/order-buy.service';
-import { ProductOrderDto } from '../../_interfaces/product-order-dto';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-
-import { ProductOrder } from '../../_interfaces/product-order';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
+import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { OrderBuyList } from '../../_interfaces/order-buy-list';
+import { ProductOrder } from '../../_interfaces/product-order';
+import { ProductOrderDto } from '../../_interfaces/product-order-dto';
+import { OrderBuyService } from '../../_services/order-buy.service';
+
+
 
 @Component({
   selector: 'app-order-buy-product-details',
@@ -20,7 +20,7 @@ import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list
 })
 export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'actions'];
-  orderBuy: OrderBuyDto;
+  orderBuy: OrderBuyList;
   products: ProductBuyList[];
   dataSource = new MatTableDataSource<ProductOrderDto>([]);
   formGroupDetail: FormGroup;
@@ -72,7 +72,7 @@ export class OrderBuyProductDetailsComponent implements OnInit, AfterViewInit, O
   }
 
   getOrderBuy(orderId: number) {
-    this.orderBuySub = this.orderBuyService.getOrder(orderId).subscribe(res => {
+    this.orderBuySub = this.orderBuyService.getOrderDetail(orderId).subscribe(res => {
       this.orderBuy = res;
     });
   }

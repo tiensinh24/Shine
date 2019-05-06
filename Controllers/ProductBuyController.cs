@@ -54,9 +54,11 @@ namespace Shine.Controllers {
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductBuyDetailDto>> GetProduct(int productId) {
             var product = await _repository.GetProductAsync(productId);
+
             if (product == null) {
                 return NotFound();
             }
+
             return product;
         }
 #endregion

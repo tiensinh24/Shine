@@ -21,6 +21,9 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<IEnumerable<SupplierListDto>> GetSuppliersAsync(
             Expression<Func<SupplierListDto, object>> sortColumn, string sortOrder);
 
+        Task<IEnumerable<SupplierSelectDto>> GetSuppliersSelectAsync(
+            Expression<Func<SupplierSelectDto, object>> sortColumn, string sortOrder);
+
         Task<PagedList<SupplierListDto>> GetPagedSuppliersAsync(
             PagingParams pagingParams, SortParams sortParams, string filter);
 

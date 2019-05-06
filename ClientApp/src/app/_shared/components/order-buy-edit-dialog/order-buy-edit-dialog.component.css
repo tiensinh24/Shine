@@ -1,18 +1,4 @@
-[mat-dialog-content] {
-  margin: 1em;
-  padding-top: 20px;
-}
-
-.card-title {
-  background-color: royalblue;
-  text-align: center;
-  color: white;
-  margin: 1em;
-}
-
-.fill {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+.edit-form {
+  margin: 1rem 1rem 0 1rem;
 }
 /*# sourceMappingURL=order-buy-edit-dialog.component.css.map */

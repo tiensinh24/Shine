@@ -3,8 +3,10 @@
 }
 
 .toolbar {  
-  box-shadow: 5px 2px 15px 2px grey;
-  
+  margin-bottom: 20px;
+  box-shadow: 5px 2px 15px 2px grey;  
+  position: sticky;
+  top: 0;
 }
 
 .toolbar [routerLinkActive] {

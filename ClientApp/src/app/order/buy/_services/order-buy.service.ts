@@ -1,13 +1,16 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { environment } from 'src/environments/environment';
-import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { OrderBuy } from '../_interfaces/order-buy';
-import { ProductOrderDto } from '../_interfaces/product-order-dto';
+import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
+import { OrderBuyList } from '../_interfaces/order-buy-list';
 import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
+import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
+import { ProductOrderDto } from '../_interfaces/product-order-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,29 +18,45 @@ import { ProductOrder } from '../_interfaces/product-order';
 export class OrderBuyService {
   baseUrl = environment.URL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getOrders(): Observable<OrderBuyDto[]> {
-    return this.http.get<OrderBuyDto[]>(`${this.baseUrl}api/orderBuy/`);
+  getOrders(): Observable<OrderBuyList[]> {
+    return this.http.get<OrderBuyList[]>(`${this.baseUrl}api/orderBuy/`);
   }
 
-  getOrder(id: number): Observable<OrderBuyDto> {
-    return this.http.get<OrderBuyDto>(`${this.baseUrl}api/orderBuy/${id}`);
+  getOrderDetail(orderId: number): Observable<OrderBuyDetail> {
+    return this.http.get<OrderBuyDetail>(`${this.baseUrl}api/orderBuy/${orderId}`);
   }
 
-  addOrder(orderBuy: OrderBuy): Observable<OrderBuyDto> {
-    return this.http.post<OrderBuyDto>(`${this.baseUrl}api/orderBuy/`, orderBuy);
+  getPagedOrders(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedOrderBuy> {
+    let queryParams = new HttpParams()
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
+
+    if (sortParams !== undefined) {
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }
+
+    return this.http.get<PagedOrderBuy>(`${this.baseUrl}api/orderBuy/paged`, { params: queryParams });
   }
 
-  updateOrder(orderbuy: OrderBuy): Observable<OrderBuyDto> {
-    return this.http.put<OrderBuyDto>(`${this.baseUrl}api/orderBuy/`, orderbuy);
+  addOrder(orderBuy: OrderBuy): Observable<OrderBuyList> {
+    return this.http.post<OrderBuyList>(`${this.baseUrl}api/orderBuy/`, orderBuy);
+  }
+
+  updateOrder(orderbuy: OrderBuy): Observable<OrderBuyList> {
+    return this.http.put<OrderBuyList>(`${this.baseUrl}api/orderBuy/`, orderbuy);
   }
 
   deleteOrder(orderId: number): Observable<number> {
     return this.http.delete<number>(this.baseUrl + 'api/orderBuy/' + orderId);
   }
 
-
+  deleteOrders(idList: string[]): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/delete-all`, { headers: { ids: idList } });
+  }
 
   // *ProductOrder
   getProductDetailByOrder(orderId: number): Observable<ProductOrderDto[]> {

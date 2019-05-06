@@ -1,27 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-  AbstractControl,
-} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-import { OrderBuyService } from '../_services/order-buy.service';
-import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
+import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBuy } from '../_interfaces/order-buy';
-import { ProductOrderDto } from '../_interfaces/product-order-dto';
+import { OrderBuyList } from '../_interfaces/order-buy-list';
 import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
-import { ProductOrder } from '../_interfaces/product-order';
+import { ProductOrderDto } from '../_interfaces/product-order-dto';
+import { OrderBuyService } from '../_services/order-buy.service';
 
 @Component({
   selector: 'app-order-buy-edit',
   templateUrl: './order-buy-edit.component.html',
-  styleUrls: ['./order-buy-edit.component.css'],
+  styleUrls: ['./order-buy-edit.component.css']
 })
 export class OrderBuyEditComponent implements OnInit, OnDestroy {
   orderSub = new Subscription();
@@ -30,8 +23,8 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   title: string;
   editMode = false;
   formGroup: FormGroup;
-  order: OrderBuyDto;
-  suppliers: SupplierList[];
+  order: OrderBuyList;
+  suppliers: SupplierSelect[];
   orderWithDetailsToAdd: OrderBuyWithDetailsToAddDto;
 
   // Input
@@ -45,12 +38,12 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     private supplierService: SupplierService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.createForm();
-    this.getSuppliers();
+    this.getSuppliersSelect();
 
     const id = +this.route.snapshot.params.orderId;
 
@@ -79,7 +72,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       orderNumber: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
-      personId: ['', Validators.required],
+      personId: ['', Validators.required]
     });
   }
 
@@ -92,19 +85,19 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       orderNumber: this.order.orderNumber,
       dateOfIssue: this.order.dateOfIssue,
       timeForPayment: this.order.timeForPayment,
-      personId: this.order.personId,
+      personId: this.order.personId
     });
   }
 
   getOrder(orderId: number) {
-    this.orderSub = this.orderService.getOrder(orderId).subscribe(res => {
+    this.orderSub = this.orderService.getOrderDetail(orderId).subscribe(res => {
       this.order = res;
       this.selectedOrder = res.orderId;
     });
   }
 
-  getSuppliers() {
-    this.suppliersSub = this.supplierService.getSuppliers().subscribe(res => {
+  getSuppliersSelect() {
+    this.suppliersSub = this.supplierService.getSuppliersSelect().subscribe(res => {
       this.suppliers = res;
     });
   }
@@ -122,12 +115,9 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
     this.orderWithDetailsToAdd = {
       orderBuy: this.order,
-      productOrders: this.productsToAdd,
+      productOrders: this.productsToAdd
     };
-    this.orderService
-      .addOrderWithDetails(this.orderWithDetailsToAdd)
-      .subscribe();
-
+    this.orderService.addOrderWithDetails(this.orderWithDetailsToAdd).subscribe();
   }
 
   onCancel() {

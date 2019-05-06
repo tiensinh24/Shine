@@ -1,60 +1,71 @@
 <!-- Dialog title -->
-<mat-card class="card-title mat-headline mat-elevation-z8">{{title}}</mat-card>
+<mat-card class="card-title mat-headline mat-elevation-z8">{{ title }}</mat-card>
 
 <mat-horizontal-stepper class="mat-elevation-z8" [linear]="true" #stepper>
   <!-- Step 1 -->
   <mat-step [stepControl]="formGroup" label="Order" #order>
     <!-- <ng-container *ngIf="stepper.selected == null || stepper.selected == order"> -->
     <ng-container>
-
-        <!-- Formgroup -->
-        <form fxLayout="column" [formGroup]="formGroup">
-          <!-- OrderNumber -->
-          <mat-form-field appearance="outline">
-            <mat-label>Order Number</mat-label>
-            <input matInput placeholder="Order Number" formControlName="orderNumber" required autofocus>
-            <mat-error *ngIf="get('orderNumber').invalid">{{getErrorMessage(get('orderNumber'))}}</mat-error>
-          </mat-form-field>
-          <!-- DateOfIssue -->
-          <mat-form-field appearance="outline">
-            <mat-label>Date of Issue</mat-label>
-            <input matInput [matDatepicker]="issuePicker" placeholder="Choose a date" formControlName="dateOfIssue"
-              required>
-            <mat-datepicker-toggle matSuffix [for]="issuePicker"></mat-datepicker-toggle>
-            <mat-datepicker locale="en-GB" #issuePicker></mat-datepicker>
-            <mat-error *ngIf="get('dateOfIssue').invalid">{{getErrorMessage(get('dateOfIssue'))}}</mat-error>
-          </mat-form-field>
-          <!-- TimeForPayment -->
-          <mat-form-field appearance="outline">
-            <mat-label>Time for Payment</mat-label>
-            <input matInput [matDatepicker]="paymentPicker" placeholder="Choose a date" formControlName="timeForPayment"
-              required>
-            <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
-            <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
-            <mat-error *ngIf="get('timeForPayment').invalid">{{getErrorMessage(get('timeForPayment'))}}</mat-error>
-          </mat-form-field>
-          <!-- PersonId -->
-          <mat-form-field appearance="outline">
-            <mat-label>Supplier</mat-label>
-            <mat-select placeholder="Select a supplier" formControlName="personId" required>
-              <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
-                {{supplier.firstName}} {{supplier.lastName}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="get('personId').invalid">{{getErrorMessage(get('personId'))}}</mat-error>
-          </mat-form-field>
-          <div class="step-button">
-            <button mat-button matStepperNext>Next</button>
-          </div>
-        </form>
-
+      <!-- Formgroup -->
+      <form fxLayout="column" [formGroup]="formGroup">
+        <!-- OrderNumber -->
+        <mat-form-field appearance="outline">
+          <mat-label>Order Number</mat-label>
+          <input matInput placeholder="Order Number" formControlName="orderNumber" required autofocus />
+          <mat-error *ngIf="get('orderNumber').invalid">{{ getErrorMessage(get('orderNumber')) }}</mat-error>
+        </mat-form-field>
+        <!-- DateOfIssue -->
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Issue</mat-label>
+          <input
+            matInput
+            [matDatepicker]="issuePicker"
+            placeholder="Choose a date"
+            formControlName="dateOfIssue"
+            required
+          />
+          <mat-datepicker-toggle matSuffix [for]="issuePicker"></mat-datepicker-toggle>
+          <mat-datepicker locale="en-GB" #issuePicker></mat-datepicker>
+          <mat-error *ngIf="get('dateOfIssue').invalid">{{ getErrorMessage(get('dateOfIssue')) }}</mat-error>
+        </mat-form-field>
+        <!-- TimeForPayment -->
+        <mat-form-field appearance="outline">
+          <mat-label>Time for Payment</mat-label>
+          <input
+            matInput
+            [matDatepicker]="paymentPicker"
+            placeholder="Choose a date"
+            formControlName="timeForPayment"
+            required
+          />
+          <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
+          <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
+          <mat-error *ngIf="get('timeForPayment').invalid">{{ getErrorMessage(get('timeForPayment')) }}</mat-error>
+        </mat-form-field>
+        <!-- PersonId -->
+        <mat-form-field appearance="outline">
+          <mat-label>Supplier</mat-label>
+          <mat-select placeholder="Select a supplier" formControlName="personId" required>
+            <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
+              {{ supplier.fullName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="get('personId').invalid">{{ getErrorMessage(get('personId')) }}</mat-error>
+        </mat-form-field>
+        <div class="step-button">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
     </ng-container>
   </mat-step>
   <!-- Step 2 -->
   <mat-step [completed]="true" label="Details" #details>
     <ng-container *ngIf="stepper.selected == details">
-      <app-order-buy-add-products [orderId]="selectedOrder" [supplierId]="this.formGroup.value.personId"
-        (productOrders)="getProductsToAddFromChild($event)"></app-order-buy-add-products>
+      <app-order-buy-add-products
+        [orderId]="selectedOrder"
+        [supplierId]="this.formGroup.value.personId"
+        (productOrders)="getProductsToAddFromChild($event)"
+      ></app-order-buy-add-products>
       <div class="step-button">
         <button mat-button matStepperNext>Next</button>
         <button mat-button matStepperPrevious>Back</button>

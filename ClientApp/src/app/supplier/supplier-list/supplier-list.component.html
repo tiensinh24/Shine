@@ -1,5 +1,5 @@
 <!-- Loading progress bar -->
-<mat-progress-bar *ngIf="(dataSource.isLoading | async)" color="accent" aria-label="Progress bar" mode="buffer">
+<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
 </mat-progress-bar>
 
 <!-- Title -->
@@ -8,6 +8,7 @@
   <div class="mat-headline">{{ title }}</div>
   <span class="fill"></span>
 </mat-card>
+
 <!-- Table -->
 <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
   <!-- Checkbox Column -->

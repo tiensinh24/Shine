@@ -1,77 +1,94 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatSnackBar } from '@angular/material';
-import { OrderBuyDto } from '../_interfaces/order-buy-dto';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Subscription } from 'rxjs';
-import { OrderBuyService } from '../_services/order-buy.service';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
-import { OrderBuy } from '../_interfaces/order-buy';
-import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { fromEvent, merge, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
+import { OrderBuyDataSource } from '../_data-source/order-buy-data-source';
+import { OrderBuy } from '../_interfaces/order-buy';
+import { OrderBuyList } from '../_interfaces/order-buy-list';
+import { OrderBuyService } from '../_services/order-buy.service';
 
 @Component({
   selector: 'app-order-buy-list',
   templateUrl: './order-buy-list.component.html',
   styleUrls: ['./order-buy-list.component.css']
 })
-export class OrderBuyListComponent implements AfterViewInit, OnDestroy {
-  displayedColumns = [
-    'select',
-    'orderNumber',
-    'dateOfIssue',
-    'timeForPayment',
-    'supplierName',
-    'actions',
-  ];
-  dataSource = new MatTableDataSource<OrderBuyDto>([]);
-  selection = new SelectionModel<OrderBuyDto>(true, []);
-  suppliers: SupplierList[] = [];
-  isLoading = true;
+export class OrderBuyListComponent implements OnInit, AfterViewInit {
+  dataSource: OrderBuyDataSource;
+  displayedColumns = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'actions'];
+  selection = new SelectionModel<OrderBuyList>(true, []);
   title = 'Order List';
-
-  orderSub = new Subscription();
-  suppliersSub = new Subscription();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('input') input: ElementRef;
+
+  pagingParams = <PagingParams>{
+    pageIndex: 0,
+    pageSize: 8
+  };
+
+  sortParams = <SortParams>{
+    sortColumn: '',
+    sortOrder: ''
+  };
 
   constructor(
     private orderBuyService: OrderBuyService,
-    private supplierService: SupplierService,
     private router: Router,
-    private dialog: MatDialog,
     private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
+  ngOnInit() {
+    this.dataSource = new OrderBuyDataSource(this.orderBuyService);
+    this.dataSource.loadData(this.pagingParams, this.sortParams);
+  }
+
   ngAfterViewInit(): void {
-    this.getOrders();
-    this.getSuppliers();
+    // Server-side search
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadOrdersPage();
+        })
+      )
+      .subscribe();
+
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
+    // on sort or paginate events, load a new page
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => {
+          this.loadOrdersPage();
+          setTimeout(() => this.selection.clear(), 50);
+        })
+      )
+      .subscribe();
   }
 
-  ngOnDestroy(): void {
-    this.orderSub.unsubscribe();
-    this.suppliersSub.unsubscribe();
-  }
+  loadOrdersPage() {
+    this.pagingParams.pageIndex = this.paginator.pageIndex;
+    this.pagingParams.pageSize = this.paginator.pageSize;
 
-  getOrders() {
-    this.orderSub = this.orderBuyService.getOrders().subscribe(res => {
-        // Check to loading progress bar
-        this.isLoading = false;
+    this.sortParams.sortColumn = this.sort.active;
+    this.sortParams.sortOrder = this.sort.direction;
 
-        this.dataSource = new MatTableDataSource<OrderBuyDto>(res);
-        setTimeout(() => (this.dataSource.sort = this.sort));
-        setTimeout(() => (this.dataSource.paginator = this.paginator));
-      },
-      () => (this.isLoading = false)
-    );
-  }
+    const filter = this.input.nativeElement.value;
 
-  getSuppliers() {
-    this.suppliersSub = this.supplierService.getSuppliers().subscribe(res => {
-      this.suppliers = res;
-    });
+    this.dataSource.loadData(this.pagingParams, this.sortParams, filter);
   }
 
   onCreate() {
@@ -82,73 +99,112 @@ export class OrderBuyListComponent implements AfterViewInit, OnDestroy {
     this.router.navigate(['order-buy', orderBuy.orderId]);
   }
 
+  onEdit(orderBuy: OrderBuy) {
+    this.openDialog(orderBuy.orderId);
+  }
+
   onDelete(orderBuy: OrderBuy) {
     const dialogRef = this.confirmService.openDialog(`Are you sure to delete order ${orderBuy.orderNumber}?`);
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.orderBuyService.deleteOrder(orderBuy.orderId).subscribe(() => {
-          // Get index of deleted row
-          const index = this.dataSource.data.indexOf(<OrderBuyDto>orderBuy, 0);
-          // Remove row, update dataSource & remove all selection
-          if (index > -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource._updateChangeSubscription();
-            this.selection.clear();
-          }
+          this.loadOrdersPage();
         });
         this.snackBar.open(`Order ${orderBuy.orderNumber} deleted`, 'Success');
+        setTimeout(() => this.selection.clear(), 50);
       }
     });
   }
 
-  // On input focus: setup filterPredicate to only filter by input column
-  setupFilter(column?: string) {
-    // Only filter specify column
-    if (column.length > 0) {
-      this.dataSource.filterPredicate = (
-        data: OrderBuyDto,
-        filter: string,
-      ) => {
-        const textToSearch = (data[column] && data[column].toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    } else {
-      // If column = '', filter on all column
-      this.dataSource.filterPredicate = (
-        data: OrderBuyDto,
-        filter: string,
-      ) => {
-        const textToSearch =
-          (JSON.stringify(data) && JSON.stringify(data).toLowerCase()) || '';
-        return textToSearch.indexOf(filter) !== -1;
-      };
-    }
+  onDeleteSelected() {
+    let orders: OrderBuyList[];
+    const ordersToDelete: string[] = [];
+    this.dataSource.data.subscribe(data => (orders = data));
+
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete those orders?`);
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        orders.forEach(order => {
+          if (this.selection.isSelected(order)) {
+            ordersToDelete.push(order.orderId.toString());
+          }
+        });
+        this.orderBuyService.deleteOrders(ordersToDelete).subscribe((resp: boolean) => {
+          if (resp) {
+            this.loadOrdersPage();
+            this.snackBar.open('Orders deleted', 'Success');
+          } else {
+            this.snackBar.open('Can not delete orders', 'Error');
+          }
+          setTimeout(() => this.selection.clear(), 50);
+        });
+      }
+    });
   }
 
-  applyFilter(filterValue: string) {
-    if (filterValue === undefined) {
-      this.dataSource.filter = '';
-    } else {
-      this.dataSource.filter = filterValue.trim().toLowerCase();
+  // Open order-buy-edit-dialog
+  openDialog(orderId?: number) {
+    // Find order in dataSource
+    let orderEdit: OrderBuyList = null;
+
+    this.dataSource.data.subscribe(res => {
+      orderEdit = res.find(c => c.orderId === orderId);
+    });
+
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '800px',
+      height: '550px',
+      panelClass: 'custom-dialog'
+    };
+
+    if (orderId > 0) {
+      dialogConfig.data = {
+        orderId: orderEdit.orderId,
+        orderNumber: orderEdit.orderNumber,
+        dateOfIssue: orderEdit.dateOfIssue,
+        timeForPayment: orderEdit.timeForPayment,
+        personId: orderEdit.personId,
+        supplierName: orderEdit.supplierName
+      };
     }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    // Open dialog with config & passed data
+    const dialogRef = this.dialog.open(OrderBuyEditDialogComponent, dialogConfig);
+
+    // Pass data from dialog in to main component
+    dialogRef.afterClosed().subscribe((data: OrderBuyList) => {
+      if (data) {
+        this.loadOrdersPage();
+      }
+
+      this.selection.clear();
+    });
   }
 
-  // Whether the number of selected elements matches the total number of rows
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.paginator.pageSize;
+
     return numSelected === numRows;
   }
 
-  //  Selects all rows if they are not all selected; otherwise clear selection
+  selectAll() {
+    this.dataSource.data.subscribe(rows => {
+      rows.forEach(row => this.selection.select(row));
+    });
+  }
+
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.selectAll();
+    }
   }
 }

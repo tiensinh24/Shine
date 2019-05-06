@@ -48,6 +48,13 @@ namespace Shine.Controllers {
             return Ok(query);
         }
 
+        [HttpGet("select")]
+        public async Task<ActionResult<IEnumerable<SupplierSelectDto>>> GetSuppliersSelect() {
+            var query = await _repository.GetSuppliersSelectAsync(s => s.FullName, "asc");
+
+            return Ok(query);
+        }
+
         [HttpGet("paged")]
         public async Task<ActionResult<Paged<SupplierListDto>>> GetPagedSuppliers(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
@@ -172,6 +179,7 @@ namespace Shine.Controllers {
 
             return entity;
         }
+
 #endregion
 
 #endregion

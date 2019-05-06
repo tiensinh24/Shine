@@ -29,8 +29,8 @@ namespace Shine.Data.Infrastructures.Repositories {
         public async Task<IEnumerable<ProductBuyListDto>> GetProductsAsync(
             Expression<Func<ProductBuyListDto, object>> sortColumn = null, string sortOrder = "asc") {
             var query = _context.Set<ProductBuy>()
-                .Include(p => p.Category)
                 .AsNoTracking()
+                .Include(p => p.Category)
                 .ProjectToType<ProductBuyListDto>();
 
             if (sortColumn != null) {
@@ -51,6 +51,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             Expression<Func<ProductBuyListDto, bool>> condition) {
             var source = _context.Set<ProductBuy>()
                 .AsNoTracking()
+                .Include(p => p.Category)
                 .ProjectToType<ProductBuyListDto>();
 
             switch (sortParams.SortOrder) {

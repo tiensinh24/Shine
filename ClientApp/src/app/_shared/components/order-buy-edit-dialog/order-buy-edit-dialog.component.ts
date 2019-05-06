@@ -1,28 +1,21 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import {
-  Validators,
-  FormGroup,
-  FormBuilder,
-  AbstractControl,
-  FormControl,
-} from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
-
-import { environment } from 'src/environments/environment';
-import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
 import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
+import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
+import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
+import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-order-buy-edit-dialog',
   templateUrl: './order-buy-edit-dialog.component.html',
-  styleUrls: ['./order-buy-edit-dialog.component.css'],
+  styleUrls: ['./order-buy-edit-dialog.component.css']
 })
 export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
-  suppliers: SupplierList[];
+  suppliers: SupplierSelect[];
   formGroup: FormGroup;
   title: string;
 
@@ -35,7 +28,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
     private supplierService: SupplierService,
     private dialogRef: MatDialogRef<OrderBuyEditDialogComponent>,
     // Inject data from supplier-list component
-    @Inject(MAT_DIALOG_DATA) public dataFromDetail,
+    @Inject(MAT_DIALOG_DATA) public dataFromDetail
   ) {}
 
   ngOnInit() {
@@ -45,7 +38,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
 
     this.updateForm();
 
-    this.getSuppliers();
+    this.getSuppliersSelect();
   }
 
   ngOnDestroy(): void {
@@ -58,7 +51,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
-      personId: ['', Validators.required],
+      personId: ['', Validators.required]
     });
   }
 
@@ -67,12 +60,12 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: this.dataFromDetail.orderNumber,
       dateOfIssue: this.dataFromDetail.dateOfIssue,
       timeForPayment: this.dataFromDetail.timeForPayment,
-      personId: this.dataFromDetail.personId,
+      personId: this.dataFromDetail.personId
     });
   }
 
-  getSuppliers() {
-    this.suppliersSub = this.supplierService.getSuppliers().subscribe(res => {
+  getSuppliersSelect() {
+    this.suppliersSub = this.supplierService.getSuppliersSelect().subscribe(res => {
       this.suppliers = res;
     });
   }
@@ -83,14 +76,12 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: this.formGroup.value.orderNumber,
       dateOfIssue: this.formGroup.value.dateOfIssue,
       timeForPayment: this.formGroup.value.timeForPayment,
-      personId: this.formGroup.value.personId,
+      personId: this.formGroup.value.personId
     };
 
-    this.orderUpdateSub = this.orderBuyService
-      .updateOrder(tempOrder)
-      .subscribe(res => {
-        this.dialogRef.close(res);
-      });
+    this.orderUpdateSub = this.orderBuyService.updateOrder(tempOrder).subscribe(res => {
+      this.dialogRef.close(res);
+    });
   }
 
   onCancel() {

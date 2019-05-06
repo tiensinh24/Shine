@@ -3,14 +3,6 @@
     padding-top: 20px;
 }
 
-.card-title {
-    background-color: royalblue;    
-    text-align: center;
-    color: white;
-    margin-bottom: 2em;
-    
-}
-
 .fill {
     flex: 1 1 auto;
 }
@@ -18,3 +10,7 @@
 .gender-group {
     margin: 0 0 16px 2px;
 }
+
+.edit-form {
+    margin: 1rem 1rem 0 1rem;
+  }

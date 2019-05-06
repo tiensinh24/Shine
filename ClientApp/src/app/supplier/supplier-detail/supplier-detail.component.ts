@@ -102,8 +102,10 @@ export class SupplierDetailComponent implements OnInit {
       disableClose: true,
       autoFocus: true,
       maxWidth: '100vw',
-      width: '100vw',
-      height: '100vh'
+      maxHeight: '100vh',
+      width: '800px',
+      height: '495px',
+      panelClass: 'custom-dialog'
     };
 
     // Send data to supplier edit dialog component

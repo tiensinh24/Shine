@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using Shine.Controllers.Interfaces;
 using Shine.Data;
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
@@ -21,7 +23,7 @@ namespace Shine.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class OrderBuyController : ControllerBase {
+    public class OrderBuyController : ControllerBase, IOrderBuyController {
 
 #region Private Field
         private readonly IOrderBuyRepository _repository;
@@ -38,19 +40,26 @@ namespace Shine.Controllers {
 
 #endregion
 
-#region CRUD
+#region Get Values
 
-#region Order
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderBuyDto>>> GetOrders() {
-            var orders = await _repository.GetOrdersAsync(o => o.DateOfIssue);
+        public async Task<ActionResult<IEnumerable<OrderBuyListDto>>> GetOrders() {
+            var orders = await _repository.GetOrdersAsync(o => o.DateOfIssue, "asc");
 
             return Ok(orders);
         }
 
+        [HttpGet("paged")]
+        public async Task<ActionResult<Paged<OrderBuyListDto>>> GetPagedOrders(
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
+            var query = await _repository.GetPagedOrdersAsync(pagingParams, sortParams, filter, null);
+
+            return new Paged<OrderBuyListDto>(query);
+        }
+
         [HttpGet("{orderId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrderBuyDto>> GetOrder(int orderId) {
+        public async Task<ActionResult<OrderBuyDetailDto>> GetOrder(int orderId) {
             var order = await _repository.GetOrderAsync(orderId);
 
             if (order == null) {
@@ -60,9 +69,13 @@ namespace Shine.Controllers {
             return Ok(order);
         }
 
+#endregion
+
+#region Actions
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<OrderBuyDto> AddOrder([FromBody] OrderBuy orderBuy) {
+        public async Task<OrderBuyDetailDto> AddOrder([FromBody] OrderBuy orderBuy) {
             try {
                 await _repository.AddAsync(orderBuy);
             } catch (Exception) {
@@ -75,9 +88,9 @@ namespace Shine.Controllers {
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<OrderBuyDto> UpdateOrder([FromBody] OrderBuy orderBuy) {
+        public async Task<OrderBuyDetailDto> UpdateOrder([FromBody] OrderBuy orderBuy) {
             try {
-                _repository.UpdateOrder(orderBuy);
+                await _repository.UpdateOrderAsync(orderBuy);
             } catch (Exception) {
 
                 throw;
@@ -87,13 +100,18 @@ namespace Shine.Controllers {
             return order;
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult<int> DeleteOrder(int id) {
-            _repository.DeleteOrder(id);
-            _repository.Commit();
-            return id;
+        [HttpDelete("{orderId}")]
+        public async Task<ActionResult<OrderBuyDto>> DeleteOrder(int orderId) {
+            var order = await _repository.DeleteOrderAsync(orderId);
+
+            if (order == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return order;
         }
 #endregion
+
 #region ProductOrder
         [HttpGet("{orderId}/details")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -147,7 +165,26 @@ namespace Shine.Controllers {
             await _repository.DeleteProductOrder(orderId, productId);
             await _repository.CommitAsync();
         }
-#endregion
+
+        Task<ActionResult<OrderBuyDetailDto>> IOrderBuyController.GetOrder(int orderId) {
+            throw new NotImplementedException();
+        }
+
+        Task<ActionResult<OrderBuyDto>> IOrderBuyController.AddOrder(OrderBuy orderBuy) {
+            throw new NotImplementedException();
+        }
+
+        Task<ActionResult<OrderBuyDto>> IOrderBuyController.UpdateOrder(OrderBuy orderBuy) {
+            throw new NotImplementedException();
+        }
+
+        Task<ActionResult<OrderBuyDto>> IOrderBuyController.DeleteOrder(int orderId) {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteOrders(string[] ids) {
+            throw new NotImplementedException();
+        }
 #endregion
 
     }

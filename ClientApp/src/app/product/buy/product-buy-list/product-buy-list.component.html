@@ -1,15 +1,16 @@
 <!-- Loading progress bar -->
-<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
-</mat-progress-bar>
+<mat-progress-bar
+  *ngIf="dataSource.isLoading | async"
+  color="accent"
+  aria-label="Progress bar"
+  mode="buffer"
+></mat-progress-bar>
 
 <!-- Title -->
 <mat-card class="mat-elevation-z8 card-title" fxLayout="row">
   <span class="fill"></span>
   <div class="mat-headline">{{ title }}</div>
   <span class="fill"></span>
-  <button mat-mini-fab matTooltip="Go to Sell" [routerLink]="['/product-sell']">
-    Buy
-  </button>
 </mat-card>
 <!-- Table -->
 <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>

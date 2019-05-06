@@ -17,4 +17,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     overflow: hidden;
 }
 
+.custom-dialog h1[mat-dialog-title] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    color: white;
+    background: slateblue;
+    box-shadow: 3px 2px 15px 2px gray;
+  }
 

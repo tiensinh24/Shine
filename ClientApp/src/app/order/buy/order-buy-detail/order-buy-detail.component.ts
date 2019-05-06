@@ -1,50 +1,50 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-
-import { OrderBuyDto } from '../_interfaces/order-buy-dto';
-import { OrderBuyService } from '../_services/order-buy.service';
-import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
 import { Subscription } from 'rxjs';
+import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
+import { OrderBuyService } from '../_services/order-buy.service';
 
 @Component({
   selector: 'app-order-buy-detail',
   templateUrl: './order-buy-detail.component.html',
   styleUrls: ['./order-buy-detail.component.css']
 })
-export class OrderBuyDetailComponent implements AfterViewInit, OnDestroy {
-  orderBuy: OrderBuyDto;
+export class OrderBuyDetailComponent implements OnInit, OnDestroy {
+  orderBuy: OrderBuyDetail;
 
   orderBuySub = new Subscription();
 
-  constructor(private orderService: OrderBuyService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog) { }
+  constructor(private orderService: OrderBuyService, private route: ActivatedRoute, private dialog: MatDialog) {}
 
-  ngAfterViewInit(): void {
-    const id = +this.route.snapshot.params.orderId;
-
-    this.orderBuySub = this.orderService.getOrder(id).subscribe(res => {
-      this.orderBuy = res;
-    });
+  ngOnInit(): void {
+    this.initialOrder();
   }
 
   ngOnDestroy(): void {
     this.orderBuySub.unsubscribe();
   }
 
+  initialOrder() {
+    const orderId = +this.route.snapshot.params.orderId;
+
+    this.orderBuySub = this.orderService.getOrderDetail(orderId).subscribe((order: OrderBuyDetail) => {
+      this.orderBuy = order;
+    });
+  }
+
   // Open order-edit dialog
   openDialog() {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    // Width & height
-    dialogConfig.maxWidth = '100vw';
-    dialogConfig.maxHeight = '100vh';
-    dialogConfig.minWidth = '100%';
-    dialogConfig.height = '100%';
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '800px',
+      height: '550px',
+      panelClass: 'custom-dialog'
+    };
 
     // Send data to order edit dialog component
     if (this.orderBuy) {
@@ -56,18 +56,14 @@ export class OrderBuyDetailComponent implements AfterViewInit, OnDestroy {
         personId: this.orderBuy.personId
       };
 
-      const dialogRef = this.dialog.open(
-        OrderBuyEditDialogComponent,
-        dialogConfig,
-      );
+      const dialogRef = this.dialog.open(OrderBuyEditDialogComponent, dialogConfig);
 
       // Get data returned from order-edit dialog
-      dialogRef.afterClosed().subscribe((res: OrderBuyDto) => {
+      dialogRef.afterClosed().subscribe((res: OrderBuyDetail) => {
         if (res) {
           this.orderBuy = res;
         }
       });
     }
   }
-
 }

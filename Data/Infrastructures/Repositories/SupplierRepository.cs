@@ -56,6 +56,24 @@ namespace Shine.Data.Infrastructures.Repositories {
             return await query.ToListAsync();
         }
 
+        public async Task<IEnumerable<SupplierSelectDto>> GetSuppliersSelectAsync(Expression<Func<SupplierSelectDto, object>> sortColumn, string sortOrder) {
+            var query = _context.Set<Supplier>()
+                .AsNoTracking()
+                .ProjectToType<SupplierSelectDto>();
+
+            if (sortColumn != null) {
+                if (sortOrder == "desc") {
+                    query = query.OrderByDescending(sortColumn);
+                } else {
+                    query = query.OrderBy(sortColumn);
+                }
+            } else {
+                query = query.OrderBy(s => s.FullName);
+            }
+
+            return await query.ToListAsync();
+        }
+
         public async Task<PagedList<SupplierListDto>> GetPagedSuppliersAsync(
             PagingParams pagingParams, SortParams sortParams, string filter) {
             var source = _context.Set<Supplier>()

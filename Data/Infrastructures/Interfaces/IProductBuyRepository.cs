@@ -11,6 +11,7 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces {
     public interface IProductBuyRepository : IRepository {
+
 #region Get Values
         Task<IEnumerable<ProductBuyListDto>> GetProductsAsync(
             Expression<Func<ProductBuyListDto, object>> sortColumn, string sortOrder);

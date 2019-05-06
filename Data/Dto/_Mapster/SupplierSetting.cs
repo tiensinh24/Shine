@@ -40,6 +40,11 @@ namespace Shine.Data.Dto._Mapster {
                     .OrderByDescending(p => p.IsMain)
                 );
 
+            TypeAdapterConfig<Supplier, SupplierSelectDto>.NewConfig()
+                .Map(
+                    dest => dest.FullName, src => src.FirstName + " " + src.LastName
+                );
+
         }
     }
 }
