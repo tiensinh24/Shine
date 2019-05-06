@@ -25,7 +25,11 @@ namespace Shine.Data.Dto._Mapster {
                         p.Product.ProductId,
                             p.Product.ProductName,
                             p.Product.Specification,
-                            p.Product.CategoryId
+                            p.Quantity,
+                            p.Price,
+                            p.Tax,
+                            p.Rate,
+                            p.Unit
                     })
                 )
                 .Map(
