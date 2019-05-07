@@ -172,7 +172,7 @@ namespace Shine.Data.Infrastructures.Repositories {
 #endregion
 
 #region ProductOrder
-        public async Task<IEnumerable<ProductOrderDto>> GetProductDetailByOrder(int id) {
+        public async Task<IEnumerable<ProductOrderDto>> GetProductDetailByOrderAsync(int id) {
             var orderDetails = await _context.Set<ProductOrder>().Include(p => p.Product)
                 .Where(p => p.OrderId == id)
                 .ProjectToType<ProductOrderDto>().ToListAsync();
@@ -190,7 +190,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             await _context.Set<ProductOrder>().AddRangeAsync(productOrders);
         }
 
-        public async Task DeleteProductOrder(int orderId, int productId) {
+        public async Task DeleteProductOrderAsync(int orderId, int productId) {
             var productOrder = await _context.Set<ProductOrder>()
                 .FirstOrDefaultAsync(p => p.OrderId == orderId && p.ProductId == productId);
             if (productOrder != null) {

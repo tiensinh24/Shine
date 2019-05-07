@@ -13,6 +13,7 @@ import { OrderBuyService } from '../_services/order-buy.service';
 })
 export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   orderBuy: OrderBuyDetail;
+  isPayment = false;
 
   orderBuySub = new Subscription();
 
@@ -65,5 +66,9 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  togglePayment() {
+    this.isPayment = !this.isPayment;
   }
 }

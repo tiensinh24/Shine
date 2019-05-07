@@ -9,6 +9,8 @@ export interface OrderBuyDetail {
   personId: number;
 
   supplierName: string;
+  orderTotal: number;
+  paymentTotal: number;
   products: ProductBuy[];
   payments: Payment[];
 }

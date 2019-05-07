@@ -30,7 +30,6 @@ mat-card-header.title {
           align-items: center;
   height: 80px;
   color: white;
-  background: slateblue;
 }
 
 mat-card-content {
@@ -52,7 +51,7 @@ mat-card-content {
 
 .product-table {
   margin: 20px 20px;
-  line-height: 1.5em;
+  line-height: 1.5rem;
 }
 
 .product-table span {

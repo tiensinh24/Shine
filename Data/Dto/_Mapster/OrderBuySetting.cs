@@ -20,23 +20,32 @@ namespace Shine.Data.Dto._Mapster {
                     src => GetFullName(src.Person.FirstName, src.Person.LastName)
                 )
                 .Map(
+                    dest => dest.OrderTotal,
+                    src => src.ProductOrders.Sum(p => p.Price * p.Quantity * (1 + p.Tax))
+                )
+                .Map(
+                    dest => dest.PaymentTotal,
+                    src => src.Payments.Sum(p => p.Amount)
+                )
+                .Map(
                     dest => dest.Products,
-                    src => src.ProductOrders.Select(p => new {
-                        p.Product.ProductId,
-                            p.Product.ProductName,
-                            p.Product.Specification,
-                            p.Quantity,
-                            p.Price,
-                            p.Tax,
-                            p.Rate,
-                            p.Unit
+                    src => src.ProductOrders.Select(p => new OrderBuyProducts {
+
+                        ProductId = p.Product.ProductId,
+                            ProductName = p.Product.ProductName,
+                            Specification = p.Product.Specification,
+                            Quantity = p.Quantity,
+                            Price = p.Price,
+                            Tax = p.Tax,
+                            Rate = p.Rate,
+                            Unit = p.Unit,
+                            Total = p.Price * p.Quantity * (1 + p.Tax) * p.Rate
                     })
                 )
                 .Map(
                     dest => dest.Payments,
                     src => src.Payments.Select(p => new { p.OrderId, p.PaymentDate, p.Amount, p.Currency, p.Rate })
                 );
-
         }
 
         private static string GetFullName(string firstName, string lastName) {

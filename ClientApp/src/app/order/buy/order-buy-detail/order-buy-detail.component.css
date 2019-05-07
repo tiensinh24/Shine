@@ -2,16 +2,81 @@
   margin: 1rem;
 }
 
-.mat-card-header {
-  color: tomato;
+.order-card {
+  margin: 1em 1em 0 0;
+  padding: 0;
+  display: block;
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 2px 20px 2px grey;
+          box-shadow: 2px 2px 20px 2px grey;
 }
 
-.mat-card-content p {
-  color: royalblue;
+.order-card > mat-card-content {
+  margin: 0;
+  padding: 0;
 }
 
-.mat-card-actions button {
-  margin-top: 10px;
+.order-table {
+  margin: 20px 20px;
+  line-height: 1.5rem;
+}
+
+.order-table > tr > td > span {
+  float: right;
+  margin-right: 50px;
+  color: rebeccapurple;
+}
+
+.payment-detail-expand {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  font-size: large;
+}
+
+.payment-detail-title {
+  color: steelblue;
+  text-align: center;
+  font-size: larger;
+}
+
+.latest-payment {
+  margin: 1rem 0;
+  border-bottom: 1px dotted steelblue;
+}
+
+.latest-payment .title {
+  color: white;
+  text-align: center;
+  background: cornflowerblue;
+}
+
+mat-card-header {
+  border-radius: 20px 20px 0 0;
+  background: mediumslateblue;
+}
+
+mat-card-header.title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 80px;
+  color: white;
+  background: slateblue;
+}
+
+mat-card-content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .mat-paginator-sticky {
@@ -32,10 +97,5 @@
 
 .mat-cell {
   padding: 0 8px;
-}
-
-.example-header-image {
-  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
-  background-size: cover;
 }
 /*# sourceMappingURL=order-buy-detail.component.css.map */

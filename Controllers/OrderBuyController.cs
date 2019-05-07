@@ -116,7 +116,7 @@ namespace Shine.Controllers {
         [HttpGet("{orderId}/details")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ProductOrderDto>>> GetProductDetailByOrder(int orderId) {
-            var prodDetails = await _repository.GetProductDetailByOrder(orderId);
+            var prodDetails = await _repository.GetProductDetailByOrderAsync(orderId);
             if (prodDetails == null) {
                 return NotFound();
             }
@@ -162,7 +162,7 @@ namespace Shine.Controllers {
 
         [HttpDelete("{orderId}/delete/{productId}")]
         public async Task DeleteProductOrder(int orderId, int productId) {
-            await _repository.DeleteProductOrder(orderId, productId);
+            await _repository.DeleteProductOrderAsync(orderId, productId);
             await _repository.CommitAsync();
         }
 

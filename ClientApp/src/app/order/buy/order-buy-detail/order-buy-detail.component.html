@@ -1,38 +1,114 @@
-<mat-card fxLayout="row" fxLayoutGap="16px" class="main-container mat-elevation-z8">
-  <mat-card fxFlex="25">
-    <mat-card-header>
-      <div
-        mat-card-avatar
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        class="example-header-image"
-      ></div>
-      <mat-card-title>{{ orderBuy?.orderNumber }}</mat-card-title>
-      <mat-card-subtitle>{{ orderBuy?.dateOfIssue | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+<div fxLayout="row" fxLayoutGap="16px" class="main-container">
+  <mat-card *ngIf="!isPayment" class="order-card" fxFlex="30">
+    <mat-card-header class="title ">
+      <h1 class="mat-h1 title">Order {{ orderBuy?.orderNumber }}</h1>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" />
-    <mat-card-content>
-      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-        <p>Order Number</p>
-        <span>{{ orderBuy?.orderNumber }}</span>
+
+    <mat-card-content class="order-table">
+      <table>
+        <tr>
+          <td><span>Date</span></td>
+          <td>{{ orderBuy?.dateOfIssue | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+          <td><span>Time for Payment</span></td>
+          <td>{{ orderBuy?.timeForPayment | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+          <td><span>Supplier</span></td>
+          <td>{{ orderBuy?.supplierName }}</td>
+        </tr>
+      </table>
+
+      <mat-divider></mat-divider>
+
+      <table>
+        <tr>
+          <td><span>Order Totals</span></td>
+          <td>{{ orderBuy?.orderTotal | number }}</td>
+        </tr>
+        <tr>
+          <td><span>Payment Totals</span></td>
+          <td>{{ orderBuy?.paymentTotal | number }}</td>
+        </tr>
         <mat-divider></mat-divider>
-        <p>Date of Issue</p>
-        <span>{{ orderBuy?.dateOfIssue | date: 'dd/MM/yyyy' }}</span>
-        <p>Time for Payment</p>
-        <span>{{ orderBuy?.timeForPayment | date: 'dd/MM/yyyy' }}</span>
-        <p>Supplier</p>
-        <span>{{ orderBuy?.supplierName }}</span>
+        <tr>
+          <td><span>Remainder</span></td>
+          <td class="payment-detail-expand">
+            {{ orderBuy?.orderTotal - orderBuy?.paymentTotal | number }}
+            <mat-icon matTooltip="Payment details" color="primary" (click)="togglePayment()">expand_more</mat-icon>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Latest payment -->
+      <div class="latest-payment" fxLayout="column" fxLayoutAlign="start stretch">
+        <div><h2 class="mat-h2 title">Latest payment</h2></div>
+        <table>
+          <tr>
+            <td><i>Date</i></td>
+            <td>{{ (orderBuy?.payments)[0].paymentDate | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+          <tr>
+            <td>Amount</td>
+            <td>{{ (orderBuy?.payments)[0].amount | number }}</td>
+          </tr>
+          <tr>
+            <td>Currency</td>
+            <td>{{ (orderBuy?.payments)[0].currency }}</td>
+          </tr>
+          <tr>
+            <td>Rate</td>
+            <td>{{ (orderBuy?.payments)[0].rate | number }}</td>
+          </tr>
+        </table>
       </div>
     </mat-card-content>
 
-    <mat-divider></mat-divider>
-
-    <mat-card-actions fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
-      <button fxFlex="30" mat-raised-button color="warn" (click)="openDialog()">Edit</button>
-      <button fxFlex="30" mat-raised-button color="primary" [routerLink]="['/order-buy/']">Lists</button>
+    <mat-card-actions align="center">
+      <button mat-icon-button color="primary" (click)="openDialog()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="accent" [routerLink]="['/order-buy/']">
+        <mat-icon>list</mat-icon>
+      </button>
     </mat-card-actions>
   </mat-card>
 
+  <!-- Payment details -->
+
+  <mat-card *ngIf="isPayment" class="order-card" fxFlex="30">
+    <mat-card-header class="title ">
+      <p class="mat-h2">Order {{ orderBuy?.orderNumber }}</p>
+    </mat-card-header>
+    <mat-card-content *ngFor="let payment of orderBuy?.payments">
+      <div class="payment-detail-title">{{ payment.paymentDate | date: 'dd/MM/yyyy' }}</div>
+      <table>
+        <tr>
+          <td><span>Amount</span></td>
+          <td>{{ payment.amount }}</td>
+        </tr>
+        <tr>
+          <td><span>Currency</span></td>
+          <td>{{ payment.currency }}</td>
+        </tr>
+        <tr>
+          <td><span>Rate</span></td>
+          <td>{{ payment.rate | number }}</td>
+        </tr>
+
+        <mat-divider></mat-divider>
+      </table>
+    </mat-card-content>
+    <mat-card-actions align="center">
+      <button mat-icon-button matTooltip="Back" (click)="togglePayment()" color="primary">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Product details -->
   <div fxFlex>
     <app-order-buy-product-details></app-order-buy-product-details>
   </div>
-</mat-card>
+</div>

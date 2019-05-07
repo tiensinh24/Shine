@@ -14,6 +14,8 @@ namespace Shine.Data.Dto.Orders.Buy {
         public int PersonId { get; set; }
 
         public string SupplierName { get; set; }
+        public decimal OrderTotal { get; set; }
+        public decimal PaymentTotal { get; set; }
         public IEnumerable<OrderBuyProducts> Products { get; set; }
         public IEnumerable<PaymentDto> Payments { get; set; }
 
@@ -28,6 +30,7 @@ namespace Shine.Data.Dto.Orders.Buy {
         public decimal Tax { get; set; }
         public decimal Rate { get; set; }
         public string Unit { get; set; }
+        public decimal Total { get; set; }
 
     }
 

@@ -1,7 +1,7 @@
 <!-- Dialog title -->
 <mat-card class="card-title mat-headline mat-elevation-z8">{{ title }}</mat-card>
 
-<mat-horizontal-stepper class="mat-elevation-z8" [linear]="true" #stepper>
+<mat-horizontal-stepper class="mat-elevation-z8" [linear]="false" #stepper>
   <!-- Step 1 -->
   <mat-step [stepControl]="formGroup" label="Order" #order>
     <!-- <ng-container *ngIf="stepper.selected == null || stepper.selected == order"> -->
