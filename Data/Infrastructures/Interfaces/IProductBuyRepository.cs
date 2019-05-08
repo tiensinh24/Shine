@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
@@ -21,6 +22,11 @@ namespace Shine.Data.Infrastructures.Interfaces {
             Expression<Func<ProductBuyListDto, bool>> condition);
 
         Task<ProductBuyDetailDto> GetProductAsync(int productId);
+
+        Task<IEnumerable<ProductSelectDto>> GetProductsSelectAsync(
+            Expression<Func<ProductBuy, bool>> condition
+        );
+
 #endregion
 
 #region Actions

@@ -30,8 +30,8 @@ namespace Shine.Data.Dto._Mapster {
                 .Map(
                     dest => dest.Products,
                     src => src.ProductOrders.Select(p => new OrderBuyProducts {
-
-                        ProductId = p.Product.ProductId,
+                        OrderId = p.OrderId,
+                            ProductId = p.Product.ProductId,
                             ProductName = p.Product.ProductName,
                             Specification = p.Product.Specification,
                             Quantity = p.Quantity,
@@ -44,7 +44,14 @@ namespace Shine.Data.Dto._Mapster {
                 )
                 .Map(
                     dest => dest.Payments,
-                    src => src.Payments.Select(p => new { p.OrderId, p.PaymentDate, p.Amount, p.Currency, p.Rate })
+                    src => src.Payments.Select(p => new {
+                        p.PaymentId,
+                            p.OrderId,
+                            p.PaymentDate,
+                            p.Amount,
+                            p.Currency,
+                            p.Rate
+                    }).OrderByDescending(p => p.PaymentDate)
                 );
         }
 

@@ -1,5 +1,5 @@
 import { Payment } from 'src/app/payment/_interfaces/payment';
-import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
+import { OrderBuyProducts } from './order-buy-products';
 
 export interface OrderBuyDetail {
   orderId: number;
@@ -11,6 +11,6 @@ export interface OrderBuyDetail {
   supplierName: string;
   orderTotal: number;
   paymentTotal: number;
-  products: ProductBuy[];
+  products: OrderBuyProducts[];
   payments: Payment[];
 }

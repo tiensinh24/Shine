@@ -7,10 +7,10 @@ import { environment } from 'src/environments/environment';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
 import { OrderBuyList } from '../_interfaces/order-buy-list';
+import { OrderBuyProducts } from '../_interfaces/order-buy-products';
 import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
 import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
-import { ProductOrderDto } from '../_interfaces/product-order-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -59,19 +59,19 @@ export class OrderBuyService {
   }
 
   // *ProductOrder
-  getProductDetailByOrder(orderId: number): Observable<ProductOrderDto[]> {
-    return this.http.get<ProductOrderDto[]>(`${this.baseUrl}api/orderBuy/${orderId}/details`);
+  getProductDetailByOrder(orderId: number): Observable<OrderBuyProducts[]> {
+    return this.http.get<OrderBuyProducts[]>(`${this.baseUrl}api/orderBuy/${orderId}/details`);
   }
 
   addOrderWithDetails(orderWithDetails: OrderBuyWithDetailsToAddDto) {
     return this.http.post(`${this.baseUrl}api/orderBuy/addWithDetails/`, orderWithDetails);
   }
 
-  addProductOrder(productOrder: ProductOrder): Observable<ProductOrderDto> {
-    return this.http.post<ProductOrderDto>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
+  addProductOrder(productOrder: ProductOrder): Observable<OrderBuyProducts> {
+    return this.http.post<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
   }
 
-  addProductsOrder(productsOrder: ProductOrderDto[]): Observable<void> {
+  addProductsOrder(productsOrder: OrderBuyProducts[]): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProducts/`, productsOrder);
   }
 

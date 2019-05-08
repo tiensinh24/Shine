@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxGalleryModule } from 'ngx-gallery';
-
-import { GenderPipe } from './_pipes/gender.pipe';
 import { AgePipe } from './_pipes/age.pipe';
+import { CustomCurrencyPipe } from './_pipes/custom-currency.pipe';
+import { GenderPipe } from './_pipes/gender.pipe';
+
 
 @NgModule({
-  declarations: [GenderPipe, AgePipe],
+  declarations: [GenderPipe, AgePipe, CustomCurrencyPipe],
   imports: [
     CommonModule,
 
@@ -26,6 +27,7 @@ import { AgePipe } from './_pipes/age.pipe';
     // Pipe
     GenderPipe,
     AgePipe,
+    CustomCurrencyPipe,
 
     CommonModule,
 

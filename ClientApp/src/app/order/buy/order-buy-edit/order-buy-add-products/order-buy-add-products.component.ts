@@ -1,47 +1,31 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnDestroy,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-  FormControl,
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-
-import { ProductOrderDto } from '../../_interfaces/product-order-dto';
 import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
+import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { OrderBuyProducts } from '../../_interfaces/product-order-dto';
+
+
 
 @Component({
   selector: 'app-order-buy-add-products',
   templateUrl: './order-buy-add-products.component.html',
-  styleUrls: ['./order-buy-add-products.component.css'],
+  styleUrls: ['./order-buy-add-products.component.css']
 })
 export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   tableTitle = 'Order Details';
   products: ProductBuyList[];
   formGroupDetail: FormGroup;
-  productsToAdd: ProductOrderDto[] = [];
+  productsToAdd: OrderBuyProducts[] = [];
 
-  @Output() productOrders = new EventEmitter<ProductOrderDto[]>();
+  @Output() productOrders = new EventEmitter<OrderBuyProducts[]>();
 
   @Input() orderId: number;
   @Input() supplierId: number;
 
   productsSub = new Subscription();
 
-  constructor(
-    private supplierService: SupplierService,
-    private fb: FormBuilder,
-  ) {}
+  constructor(private supplierService: SupplierService, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.getProductsBySupplier(this.supplierId);
@@ -53,11 +37,9 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   getProductsBySupplier(supplierId: number) {
-    this.productsSub = this.supplierService
-      .getProductsBySupplier(supplierId)
-      .subscribe(res => {
-        this.products = res;
-      });
+    this.productsSub = this.supplierService.getProductsBySupplier(supplierId).subscribe(res => {
+      this.products = res;
+    });
   }
 
   // Output productOrders to main component
@@ -75,7 +57,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
       rate: ['', Validators.required],
       unit: ['', Validators.required],
 
-      productName: [''],
+      productName: ['']
     });
 
     if (this.orderId > 0) {
@@ -89,12 +71,12 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
     if (this.formGroupDetail.valid) {
       this.formGroupDetail.patchValue({
         productId: this.formGroupDetail.value.productId.productId,
-        productName: this.formGroupDetail.value.productId.productName,
+        productName: this.formGroupDetail.value.productId.productName
       });
       this.productsToAdd.push(this.formGroupDetail.value);
       this.refreshProductSelection(this.formGroupDetail.value.productId);
     }
-      this.outProductOrders();
+    this.outProductOrders();
   }
 
   refreshProductSelection(productId: number) {
@@ -105,23 +87,21 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeProduct(productOrder: ProductOrderDto) {
-    const index = +this.productsToAdd.findIndex(
-      p => p.productId === productOrder.productId,
-    );
+  removeProduct(productOrder: OrderBuyProducts) {
+    const index = +this.productsToAdd.findIndex(p => p.productId === productOrder.productId);
 
     if (index > -1) {
       this.productsToAdd.splice(index, 1);
 
       const prod = <ProductBuyList>{
         productId: productOrder.productId,
-        productName: productOrder.productName,
+        productName: productOrder.productName
       };
 
       this.products.push(prod);
       this.products.sort((a, b) => a.productName.localeCompare(b.productName));
     }
-      this.outProductOrders();
+    this.outProductOrders();
   }
 
   get(name: string): AbstractControl {

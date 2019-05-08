@@ -1,11 +1,12 @@
 <div fxLayout="row" fxLayoutGap="16px" class="main-container">
   <mat-card *ngIf="!isPayment" class="order-card" fxFlex="30">
     <mat-card-header class="title ">
-      <h1 class="mat-h1 title">Order {{ orderBuy?.orderNumber }}</h1>
+      <h2>Order {{ orderBuy?.orderNumber }}</h2>
     </mat-card-header>
 
-    <mat-card-content class="order-table">
-      <table>
+    <mat-card-content>
+      <!-- Order table -->
+      <table class="order-table">
         <tr>
           <td><span>Date</span></td>
           <td>{{ orderBuy?.dateOfIssue | date: 'dd/MM/yyyy' }}</td>
@@ -20,56 +21,69 @@
         </tr>
       </table>
 
-      <mat-divider></mat-divider>
+      <!-- Payment remain -->
+      <div class="payment-remain" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="title"><h3>Payment Total</h3></div>
+        <table>
+          <tr>
+            <td><span>Order Totals</span></td>
+            <td>{{ orderBuy?.orderTotal | number }}</td>
+          </tr>
+          <tr>
+            <td><span>Payment Totals</span></td>
+            <td>{{ orderBuy?.paymentTotal ? orderBuy.paymentTotal : (0 | number) }}</td>
+          </tr>
 
-      <table>
-        <tr>
-          <td><span>Order Totals</span></td>
-          <td>{{ orderBuy?.orderTotal | number }}</td>
-        </tr>
-        <tr>
-          <td><span>Payment Totals</span></td>
-          <td>{{ orderBuy?.paymentTotal | number }}</td>
-        </tr>
-        <mat-divider></mat-divider>
-        <tr>
-          <td><span>Remainder</span></td>
-          <td class="payment-detail-expand">
-            {{ orderBuy?.orderTotal - orderBuy?.paymentTotal | number }}
-            <mat-icon matTooltip="Payment details" color="primary" (click)="togglePayment()">expand_more</mat-icon>
-          </td>
-        </tr>
-      </table>
+          <tr class="payment-detail-expand">
+            <td><span>Remaining</span></td>
+            <td>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                <span>{{ orderBuy?.orderTotal - orderBuy?.paymentTotal | number }}</span>
+                <button mat-icon-button matTooltip="Payment details" color="primary" (click)="togglePayment()">
+                  <mat-icon>expand_more</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
 
       <!-- Latest payment -->
       <div class="latest-payment" fxLayout="column" fxLayoutAlign="start stretch">
-        <div><h2 class="mat-h2 title">Latest payment</h2></div>
-        <table>
+        <div class="title"><h3>Latest Payment</h3></div>
+        <table *ngIf="orderBuy?.payments.length > 0; else noPayment">
           <tr>
-            <td><i>Date</i></td>
+            <td><span>Date</span></td>
             <td>{{ (orderBuy?.payments)[0].paymentDate | date: 'dd/MM/yyyy' }}</td>
           </tr>
           <tr>
-            <td>Amount</td>
+            <td><span>Amount</span></td>
             <td>{{ (orderBuy?.payments)[0].amount | number }}</td>
           </tr>
           <tr>
-            <td>Currency</td>
-            <td>{{ (orderBuy?.payments)[0].currency }}</td>
+            <td><span>Currency</span></td>
+            <td>{{ (orderBuy?.payments)[0].currency | customCurrency }}</td>
           </tr>
           <tr>
-            <td>Rate</td>
+            <td><span>Rate</span></td>
             <td>{{ (orderBuy?.payments)[0].rate | number }}</td>
           </tr>
         </table>
+
+        <ng-template #noPayment>
+          <div class="no-payment">
+            <h2 class="mat-h2">No Payment</h2>
+            <button class="new-payment-fab" mat-mini-fab matTooltip="Add new payment"><mat-icon>add</mat-icon></button>
+          </div>
+        </ng-template>
       </div>
     </mat-card-content>
 
     <mat-card-actions align="center">
-      <button mat-icon-button color="primary" (click)="openDialog()">
+      <button mat-icon-button matTooltip="Edit order" color="primary" (click)="openDialog()">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="accent" [routerLink]="['/order-buy/']">
+      <button mat-icon-button matTooltip="Order lists" color="accent" [routerLink]="['/order-buy/']">
         <mat-icon>list</mat-icon>
       </button>
     </mat-card-actions>
@@ -77,30 +91,39 @@
 
   <!-- Payment details -->
 
-  <mat-card *ngIf="isPayment" class="order-card" fxFlex="30">
-    <mat-card-header class="title ">
-      <p class="mat-h2">Order {{ orderBuy?.orderNumber }}</p>
+  <mat-card *ngIf="isPayment" class="order-card payment-detail" fxFlex="30">
+    <mat-card-header class="title">
+      <h2>Payment Details</h2>
     </mat-card-header>
-    <mat-card-content *ngFor="let payment of orderBuy?.payments">
-      <div class="payment-detail-title">{{ payment.paymentDate | date: 'dd/MM/yyyy' }}</div>
-      <table>
-        <tr>
-          <td><span>Amount</span></td>
-          <td>{{ payment.amount }}</td>
-        </tr>
-        <tr>
-          <td><span>Currency</span></td>
-          <td>{{ payment.currency }}</td>
-        </tr>
-        <tr>
-          <td><span>Rate</span></td>
-          <td>{{ payment.rate | number }}</td>
-        </tr>
+    <mat-card-content>
+      <div *ngIf="orderBuy?.payments.length > 0; else noPaymentDetail">
+        <div *ngFor="let payment of orderBuy?.payments">
+          <div class="payment-detail-title">{{ payment.paymentDate | date: 'dd/MM/yyyy' }}</div>
+          <table class="payment-detail-content">
+            <tr>
+              <td><span>Amount</span></td>
+              <td>{{ payment.amount }}</td>
+            </tr>
+            <tr>
+              <td><span>Currency</span></td>
+              <td>{{ payment.currency | customCurrency }}</td>
+            </tr>
+            <tr>
+              <td><span>Rate</span></td>
+              <td>{{ payment.rate | number }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
-        <mat-divider></mat-divider>
-      </table>
+      <ng-template #noPaymentDetail>
+        <div class="no-payment-detail">
+          <h2 class="mat-h2">No Payment</h2>
+          <button class="new-payment-fab" mat-mini-fab matTooltip="Add new payment"><mat-icon>add</mat-icon></button>
+        </div>
+      </ng-template>
     </mat-card-content>
-    <mat-card-actions align="center">
+    <mat-card-actions align="center" class="payment-detail-actions">
       <button mat-icon-button matTooltip="Back" (click)="togglePayment()" color="primary">
         <mat-icon>arrow_back_ios</mat-icon>
       </button>
@@ -109,6 +132,6 @@
 
   <!-- Product details -->
   <div fxFlex>
-    <app-order-buy-product-details></app-order-buy-product-details>
+    <app-order-buy-product-details [orderProducts]="orderBuy?.products"></app-order-buy-product-details>
   </div>
 </div>

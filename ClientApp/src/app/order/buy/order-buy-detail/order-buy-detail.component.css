@@ -3,62 +3,62 @@
 }
 
 .order-card {
-  margin: 1em 1em 0 0;
+  line-height: 1.3rem;
+  margin: 0 1rem 0 0;
   padding: 0;
-  display: block;
   border-radius: 20px;
   -webkit-box-shadow: 2px 2px 20px 2px grey;
           box-shadow: 2px 2px 20px 2px grey;
 }
 
-.order-card > mat-card-content {
-  margin: 0;
-  padding: 0;
-}
-
-.order-table {
-  margin: 20px 20px;
-  line-height: 1.5rem;
-}
-
-.order-table > tr > td > span {
-  float: right;
-  margin-right: 50px;
-  color: rebeccapurple;
-}
-
-.payment-detail-expand {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  font-size: large;
-}
-
-.payment-detail-title {
-  color: steelblue;
-  text-align: center;
-  font-size: larger;
-}
-
-.latest-payment {
-  margin: 1rem 0;
-  border-bottom: 1px dotted steelblue;
-}
-
-.latest-payment .title {
-  color: white;
-  text-align: center;
-  background: cornflowerblue;
-}
-
-mat-card-header {
+.order-card > mat-card-header {
+  margin-bottom: 1rem;
   border-radius: 20px 20px 0 0;
   background: mediumslateblue;
 }
 
-mat-card-header.title {
+.order-card > mat-card-header.title {
+  height: 80px;
+  color: white;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.order-card > mat-card-content {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.order-card > mat-card-content .order-table {
+  width: 100%;
+}
+
+.order-card > mat-card-content .order-table tr > td {
+  width: 50%;
+}
+
+.order-card > mat-card-content .order-table tr > td > span {
+  color: mediumslateblue;
+  padding-left: 1rem;
+}
+
+.order-card > mat-card-content .payment-remain {
+  margin: 2rem 0 1rem 0;
+}
+
+.order-card > mat-card-content .payment-remain .title {
+  margin-bottom: 1rem;
+  height: 60px;
+  color: white;
+  background: mediumorchid;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -68,34 +68,146 @@ mat-card-header.title {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 80px;
+}
+
+.order-card > mat-card-content .payment-remain table tr > td {
+  width: 50%;
+}
+
+.order-card > mat-card-content .payment-remain table tr > td > span {
+  color: mediumorchid;
+  padding-left: 1rem;
+}
+
+.order-card > mat-card-content .payment-remain table tr.payment-detail-expand > td {
+  color: brown;
+}
+
+.order-card > mat-card-content .payment-remain table tr.payment-detail-expand > td button:hover {
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+}
+
+.order-card > mat-card-content .payment-remain table tr.payment-detail-expand > td > span {
+  color: brown;
+}
+
+.order-card > mat-card-content .latest-payment .no-payment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.order-card > mat-card-content .latest-payment .no-payment > h2 {
+  color: plum;
+}
+
+.order-card > mat-card-content .latest-payment .no-payment > .new-payment-fab:hover {
+  -webkit-transition: 200ms;
+  transition: 200ms;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.order-card > mat-card-content .latest-payment .title {
+  margin-bottom: 1rem;
+  height: 60px;
   color: white;
-  background: slateblue;
+  background: violet;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-mat-card-content {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+.order-card > mat-card-content .latest-payment table td {
+  width: 50%;
 }
 
-.mat-paginator-sticky {
-  bottom: 0px;
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 10;
+.order-card > mat-card-content .latest-payment table td > span {
+  color: violet;
+  padding-left: 1rem;
 }
 
-.mat-header-cell {
-  background-color: aliceblue;
-  color: royalblue;
+.order-card > mat-card-actions {
+  margin-bottom: 1rem;
 }
 
-.mat-row {
-  height: auto;
+.payment-detail .no-payment-detail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.mat-cell {
-  padding: 0 8px;
+.payment-detail .no-payment-detail > h2 {
+  color: plum;
+}
+
+.payment-detail .no-payment-detail > .new-payment-fab:hover {
+  -webkit-transition: 200ms;
+  transition: 200ms;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.payment-detail .payment-detail-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: white;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: larger;
+  background: orchid;
+  height: 40px;
+  margin: 1rem 0;
+}
+
+.payment-detail .payment-detail-content {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.payment-detail .payment-detail-content tr > td {
+  width: 50%;
+}
+
+.payment-detail .payment-detail-content tr > td > span {
+  color: orchid;
+  padding-left: 1rem;
+}
+
+.payment-detail .payment-detail-actions > button:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 /*# sourceMappingURL=order-buy-detail.component.css.map */

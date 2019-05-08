@@ -2,13 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
 import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyList } from '../_interfaces/order-buy-list';
+import { OrderBuyProducts } from '../_interfaces/order-buy-products';
 import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
-import { ProductOrderDto } from '../_interfaces/product-order-dto';
 import { OrderBuyService } from '../_services/order-buy.service';
 
 @Component({
@@ -31,7 +30,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   selectedOrder: number;
 
   // Output
-  productsToAdd: ProductOrderDto[] = [];
+  productsToAdd: OrderBuyProducts[] = [];
 
   constructor(
     private orderService: OrderBuyService,
@@ -102,7 +101,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  getProductsToAddFromChild($event: ProductOrderDto[]) {
+  getProductsToAddFromChild($event: OrderBuyProducts[]) {
     this.productsToAdd = $event;
   }
 

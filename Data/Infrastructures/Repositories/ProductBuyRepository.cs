@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -108,6 +109,10 @@ namespace Shine.Data.Infrastructures.Repositories {
             return query.Adapt<ProductBuyDetailDto>();
         }
 
+        public async Task<IEnumerable<ProductSelectDto>> GetProductsSelectAsync(Expression<Func<ProductBuy, bool>> condition) {
+            throw new NotImplementedException();
+        }
+
 #endregion
 
 #region Actions
@@ -151,6 +156,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             }
             return false;
         }
+
 #endregion
     }
 }
