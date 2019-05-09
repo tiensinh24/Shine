@@ -36,6 +36,9 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
       this.updateForm();
       // Create mode
     } else {
+      this.formGroup.patchValue({
+        orderId: this.parentData.orderId
+      });
       this.editMode = false;
       this.title = 'Add new payment';
     }
@@ -47,7 +50,7 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.formGroup = this.fb.group({
-      orderId: [{ value: `${this.parentData}`, disable: true }, Validators.required],
+      orderId: [{ value: '', disabled: true }, Validators.required],
       paymentDate: ['', Validators.required],
       amount: ['', Validators.required],
       currency: ['', Validators.required],
