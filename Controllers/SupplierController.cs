@@ -128,15 +128,8 @@ namespace Shine.Controllers {
 #endregion
 
 #region SupplierProduct
+
 #region Get Values
-
-        [HttpGet]
-        [Route("products")]
-        public async Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsList() {
-            var query = await _repository.GetSupplierProductsListAsync();
-
-            return Ok(query);
-        }
 
         [HttpGet("{supplierId}/products")]
         public async Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProductsBySupplier(int supplierId) {

@@ -90,6 +90,7 @@ namespace Shine {
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<IOrderBuyRepository, OrderBuyRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
 
             services.AddEntityFrameworkSqlServer();

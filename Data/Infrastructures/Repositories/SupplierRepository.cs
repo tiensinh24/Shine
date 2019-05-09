@@ -184,16 +184,6 @@ namespace Shine.Data.Infrastructures.Repositories {
 #region SupplierProduct
 
 #region Get Values
-        public async Task<IEnumerable<SupplierProductListDto>> GetSupplierProductsDto() {
-            var query = await _context.PersonProducts
-                .Include(p => p.Person)
-                .Include(p => p.Product)
-                .AsNoTracking()
-                .ProjectToType<SupplierProductListDto>()
-                .ToListAsync();
-
-            return query;
-        }
 
         public async Task<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplierAsync(int supplierId) {
             var query = await _context.PersonProducts
@@ -288,9 +278,6 @@ namespace Shine.Data.Infrastructures.Repositories {
             return Json(result);
         }
 
-        Task<IEnumerable<SupplierProductListDto>> ISupplierRepository.GetSupplierProductsListAsync() {
-            throw new NotImplementedException();
-        }
 #endregion
 
 #endregion

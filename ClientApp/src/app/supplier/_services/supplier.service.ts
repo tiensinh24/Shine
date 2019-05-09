@@ -14,7 +14,6 @@ import { SupplierProduct } from '../_interfaces/supplier-product';
 import { ProductsBySupplier } from '../_interfaces/supplier-products-list';
 import { SupplierSelect } from '../_interfaces/supplier-select';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -71,9 +70,9 @@ export class SupplierService {
     return this.http.get<ProductBuyList[]>(`${this.baseUrl}api/supplier/${supplierId}/products/`);
   }
 
-  getSupplierProducts(): Observable<ProductsBySupplier[]> {
-    return this.http.get<ProductsBySupplier[]>(`${this.baseUrl}api/supplier/products/`);
-  }
+  // getSupplierProducts(): Observable<ProductsBySupplier[]> {
+  //   return this.http.get<ProductsBySupplier[]>(`${this.baseUrl}api/supplier/products/`);
+  // }
 
   getPagedProductsBySupplier(
     supplierId: number,

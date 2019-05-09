@@ -1,0 +1,52 @@
+<div fxLayout="column" fxLayoutAlign="space-around stretch">
+  <!-- Dialog title -->
+  <h1 mat-dialog-title class="mat-display-1">{{ title }}</h1>
+
+  <mat-dialog-content>
+    <!-- Formgroup -->
+    <form class="edit-form" fxLayout="column" [formGroup]="formGroup">
+      <!-- OrderId -->
+      <mat-form-field appearance="outline">
+        <mat-label>OrderId</mat-label>
+        <input matInput placeholder="OrderId" formControlName="orderId" />
+        <mat-error *ngIf="get('orderId').invalid">{{ getErrorMessage(get('orderId')) }}</mat-error>
+      </mat-form-field>
+      <!-- Payment Date -->
+      <mat-form-field appearance="outline">
+        <mat-label>Payment Date</mat-label>
+        <input matInput placeholder="paymentDate" formControlName="paymentDate" required />
+        <mat-error *ngIf="get('paymentDate').invalid">{{ getErrorMessage(get('paymentDate')) }}</mat-error>
+      </mat-form-field>
+      <!-- Amount -->
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput placeholder="amount" formControlName="amount" required />
+        <mat-error *ngIf="get('amount').invalid">{{ getErrorMessage(get('amount')) }}</mat-error>
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="1rem">
+        <!-- Currency -->
+        <mat-form-field appearance="outline" fxFlex="50">
+          <mat-label>Currency</mat-label>
+          <input matInput placeholder="currency" formControlName="currency" required />
+          <mat-error *ngIf="get('currency').invalid">{{ getErrorMessage(get('currency')) }}</mat-error>
+        </mat-form-field>
+        <!-- Rate -->
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>Rate</mat-label>
+          <input matInput placeholder="rate" formControlName="rate" required />
+          <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage(get('rate')) }}</mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <!-- Action Buttons -->
+  <mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+      Submit
+    </button>
+    <button mat-button (click)="onCancel()">
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</div>

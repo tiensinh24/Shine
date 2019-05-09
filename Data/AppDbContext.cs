@@ -37,6 +37,7 @@ namespace Shine.Data {
         public DbSet<Cost> Costs { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<PersonProduct> PersonProducts { get; set; }

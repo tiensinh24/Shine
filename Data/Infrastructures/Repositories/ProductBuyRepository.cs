@@ -110,7 +110,14 @@ namespace Shine.Data.Infrastructures.Repositories {
         }
 
         public async Task<IEnumerable<ProductSelectDto>> GetProductsSelectAsync(Expression<Func<ProductBuy, bool>> condition) {
-            throw new NotImplementedException();
+            var query = await _context.Set<ProductBuy>()
+                .AsNoTracking()
+                .Include(p => p.PersonProducts)
+                .ThenInclude(p => p.Person)
+
+                .ProjectToType<ProductSelectDto>()
+                .ToListAsync();
+            return query;
         }
 
 #endregion

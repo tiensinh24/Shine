@@ -8,17 +8,6 @@ using Shine.Data.Models;
 namespace Shine.Data.Dto._Mapster {
     public static class SupplierProductSetting {
         public static void Setting() {
-            TypeAdapterConfig<PersonProduct, SupplierProductListDto>.NewConfig()
-                .Map(
-                    dest => dest.FullName, src => GetFullName(src.Person.FirstName, src.Person.LastName)
-                ).Map(
-                    dest => dest.Age, src => GetAge(src.Person.DateOfBirth)
-                ).Map(
-                    dest => dest.ProductName, src => src.Product.ProductName
-                ).Map(
-                    dest => dest.Specification, src => src.Product.Specification
-                );
-
             TypeAdapterConfig<PersonProduct, ProductsBySupplierDto>.NewConfig()
                 .Map(
                     dest => dest.CategoryName, src => src.Product.Category.CategoryName

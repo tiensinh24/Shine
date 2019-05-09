@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { ProductsAddedComponent } from './products-added/products-added.component';
 import { ProductsNotAddedComponent } from './products-not-added/products-not-added.component';
-import { ProductsProvidedComponent } from './products-provided/products-provided.component';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
@@ -15,6 +14,7 @@ import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-e
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SharedModule } from '../_shared/shared.module';
 
+
 @NgModule({
   declarations: [
     SupplierHomeComponent,
@@ -22,7 +22,6 @@ import { SharedModule } from '../_shared/shared.module';
     SupplierEditComponent,
     SupplierListComponent,
     SupplierComponent,
-    ProductsProvidedComponent,
     ProductsNotAddedComponent,
     ProductsAddedComponent
   ],

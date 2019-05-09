@@ -3,7 +3,8 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Subscription } from 'rxjs';
 import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { OrderBuyProducts } from '../../_interfaces/product-order-dto';
+import { OrderBuyProducts } from '../../_interfaces/order-buy-products';
+
 
 
 

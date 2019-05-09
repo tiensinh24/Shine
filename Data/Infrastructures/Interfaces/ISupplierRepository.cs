@@ -46,8 +46,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #region SupplierProduct
 
-#region Get Values
-        Task<IEnumerable<SupplierProductListDto>> GetSupplierProductsListAsync();
+#region Get Values       
 
         Task<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplierAsync(int supplierId);
 

@@ -1,34 +1,25 @@
-.mat-elevation-z2 {
-    margin: 1px;
-  }
-  
-  .mat-header-cell {
-    background-color: aliceblue;
+table.order-detail-table {
+  width: 100%;
+
+  & .mat-header-cell {
+    background-color: lemonchiffon;
     color: royalblue;
+    height: 80px;
+    font-size: medium;
   }
-  
-  .mat-cell {
+
+  & .mat-cell {
     border-bottom: 1px dotted blueviolet;
     padding: 0 8px;
   }
-  
-  .mat-row:hover {
+
+  & .mat-row:hover {
     cursor: pointer;
     background-color: aliceblue;
   }
-  
-  .mat-paginator-sticky {
-    bottom: 0px;
-    position: sticky;
-    z-index: 10;
+
+  & .add-button:hover {
+    transform: rotate(90deg);
+    transition: 150ms;
   }
-
-.product-table {
-  width: 100%;
-  height: calc(100vh - 155px);
-  overflow-y: auto;
-}
-
-.sidenav-form {
-  margin-left: 1em;
 }

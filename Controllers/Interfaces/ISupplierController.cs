@@ -40,7 +40,6 @@ namespace Shine.Controllers.Interfaces {
 #region SupplierProduct
 
 #region Get Values
-        Task<ActionResult<IEnumerable<SupplierProductListDto>>> GetSupplierProductsList();
 
         Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsBySupplier(
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
