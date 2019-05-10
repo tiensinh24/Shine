@@ -14,7 +14,15 @@
       <!-- Payment Date -->
       <mat-form-field appearance="outline">
         <mat-label>Payment Date</mat-label>
-        <input matInput placeholder="paymentDate" formControlName="paymentDate" required />
+        <input
+          matInput
+          [matDatepicker]="paymentPicker"
+          placeholder="Choose a date"
+          formControlName="paymentDate"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
+        <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
         <mat-error *ngIf="get('paymentDate').invalid">{{ getErrorMessage(get('paymentDate')) }}</mat-error>
       </mat-form-field>
       <!-- Amount -->
@@ -23,19 +31,22 @@
         <input matInput placeholder="amount" formControlName="amount" required />
         <mat-error *ngIf="get('amount').invalid">{{ getErrorMessage(get('amount')) }}</mat-error>
       </mat-form-field>
-      <div fxLayout="row" fxLayoutGap="1rem">
-        <!-- Currency -->
-        <mat-form-field appearance="outline" fxFlex="50">
-          <mat-label>Currency</mat-label>
-          <input matInput placeholder="currency" formControlName="currency" required />
-          <mat-error *ngIf="get('currency').invalid">{{ getErrorMessage(get('currency')) }}</mat-error>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
         <!-- Rate -->
         <mat-form-field appearance="outline" fxFlex>
           <mat-label>Rate</mat-label>
           <input matInput placeholder="rate" formControlName="rate" required />
           <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage(get('rate')) }}</mat-error>
         </mat-form-field>
+        <!-- Currency -->
+        <div class="gender-group" fxLayout="row" fxLayoutGap="32px" fxFlex="50">
+          <mat-label>Currency</mat-label>
+          <mat-radio-group fxLayoutGap="32px" formControlName="currency">
+            <mat-radio-button [value]="true">USD</mat-radio-button>
+            <mat-radio-button [value]="false">VND</mat-radio-button>
+          </mat-radio-group>
+          <mat-error *ngIf="get('currency').invalid">{{ getErrorMessage(get('currency')) }}</mat-error>
+        </div>
       </div>
     </form>
   </mat-dialog-content>

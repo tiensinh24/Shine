@@ -18,11 +18,4 @@ table.order-detail-table .mat-row:hover {
   cursor: pointer;
   background-color: aliceblue;
 }
-
-table.order-detail-table .add-button:hover {
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-  -webkit-transition: 150ms;
-  transition: 150ms;
-}
 /*# sourceMappingURL=order-buy-product-details.component.css.map */

@@ -36,14 +36,15 @@
   </ng-container>
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>
-      <!-- Add Button -->
-      <button mat-icon-button color="primary" fxFlexAlign="center" class="add-button">
-        <mat-icon matTooltip="Add products" aria-label="Add products">add_box</mat-icon>
-      </button>
-    </th>
+    <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let row">
-      <button matTooltip="Remove product" aria-label="Add products" mat-icon-button color="warn">
+      <button
+        matTooltip="Remove product"
+        aria-label="Add products"
+        mat-icon-button
+        color="warn"
+        (click)="deleteProductFromOrder(row)"
+      >
         <mat-icon aria-label="Delete">remove_circle</mat-icon>
       </button>
     </td>

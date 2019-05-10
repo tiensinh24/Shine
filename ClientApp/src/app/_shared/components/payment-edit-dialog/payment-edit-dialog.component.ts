@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -32,7 +33,7 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
     // Check if data isn't null (edit mode)
     if (this.parentData.paymentId > 0) {
       this.editMode = true;
-      this.title = 'Edit payment on' + this.parentData.paymentDate;
+      this.title = 'Edit payment on ' + formatDate(this.parentData.paymentDate, 'dd/MM/yyyy', 'en-GB');
       this.updateForm();
       // Create mode
     } else {
@@ -53,7 +54,7 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
       orderId: [{ value: '', disabled: true }, Validators.required],
       paymentDate: ['', Validators.required],
       amount: ['', Validators.required],
-      currency: ['', Validators.required],
+      currency: [true, Validators.required],
       rate: ['', Validators.required]
     });
   }
@@ -72,17 +73,18 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
     let paymentReturn = <Payment>{};
     const tempPayment = <Payment>{};
 
-    tempPayment.orderId = this.formGroup.value.orderId;
+    tempPayment.orderId = this.parentData.orderId;
     tempPayment.paymentDate = this.formGroup.value.paymentDate;
     tempPayment.amount = this.formGroup.value.amount;
     tempPayment.currency = this.formGroup.value.currency;
     tempPayment.rate = this.formGroup.value.rate;
 
     // Add new payment
-    this.subscription = this.paymentService.addPayment(tempPayment).subscribe((payment: Payment) => {
-      paymentReturn = payment;
-    });
-
+    if (!this.editMode) {
+      this.subscription = this.paymentService.addPayment(tempPayment).subscribe((payment: Payment) => {
+        paymentReturn = payment;
+      });
+    }
     if (this.editMode) {
       tempPayment.paymentId = this.parentData.paymentId;
 

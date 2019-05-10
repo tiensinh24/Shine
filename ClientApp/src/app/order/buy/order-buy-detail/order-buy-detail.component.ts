@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
 import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
 import { Payment } from 'src/app/payment/_interfaces/payment';
+import { PaymentService } from 'src/app/payment/_services/payment.service';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
 import { OrderBuyProducts } from '../_interfaces/order-buy-products';
 import { OrderBuyService } from '../_services/order-buy.service';
@@ -20,7 +22,14 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
 
   orderSub = new Subscription();
 
-  constructor(private orderService: OrderBuyService, private route: ActivatedRoute, private dialog: MatDialog) {}
+  constructor(
+    private orderService: OrderBuyService,
+    private paymentService: PaymentService,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.initialOrder();
@@ -100,7 +109,20 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(PaymentEditDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(res => {
-      // TODO do something
+      this.initialOrder();
+    });
+  }
+
+  deletePayment(payment: Payment) {
+    const dialogRef = this.confirmService.openDialog(`Do you want to delete this payment?`);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.paymentService.deletePayment(payment.paymentId).subscribe(() => {
+          this.initialOrder();
+        });
+        this.snackBar.open('Payment deleted', 'Success');
+      }
     });
   }
 

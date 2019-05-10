@@ -31,16 +31,23 @@
           </tr>
           <tr>
             <td><span>Payment Totals</span></td>
-            <td>{{ order?.paymentTotal ? order.paymentTotal : (0 | number) }}</td>
+            <td>{{ order?.paymentTotal | number }}</td>
           </tr>
 
           <tr class="payment-detail-expand">
             <td><span>Remaining</span></td>
             <td>
               <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                <span>{{ order?.orderTotal - order?.paymentTotal | number }}</span>
+                <span>{{
+                  order?.orderTotal - order?.paymentTotal > -0.5 && order?.orderTotal - order?.paymentTotal < 0.5
+                    ? 0
+                    : (order?.orderTotal - order?.paymentTotal | number)
+                }}</span>
                 <button mat-icon-button matTooltip="Payment details" color="primary" (click)="togglePayment()">
                   <mat-icon>expand_more</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="New payment" color="primary" (click)="openPaymentDialog(null)">
+                  <mat-icon>add</mat-icon>
                 </button>
               </div>
             </td>
@@ -92,7 +99,6 @@
   </mat-card>
 
   <!-- Payment details -->
-
   <mat-card *ngIf="isPayment" class="order-card payment-detail" fxFlex="30">
     <mat-card-header class="title">
       <h2>Payment Details</h2>
@@ -115,6 +121,15 @@
               <td>{{ payment.rate | number }}</td>
             </tr>
           </table>
+
+          <div fxLayout="row" fxLayoutAlign="center">
+            <button mat-icon-button color="primary" matTooltip="Edit payment" (click)="openPaymentDialog(payment)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" matTooltip="Remove payment" (click)="deletePayment(payment)">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -135,5 +150,7 @@
   <!-- Product details -->
   <mat-card class="order-products-detail" fxFlex *ngIf="order?.products?.length > 0">
     <app-order-buy-product-details [products]="order.products"></app-order-buy-product-details>
+
+    <button mat-mini-fab class="add-product-sticky"><mat-icon>add</mat-icon></button>
   </mat-card>
 </div>

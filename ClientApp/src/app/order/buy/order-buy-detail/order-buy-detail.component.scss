@@ -4,6 +4,8 @@
 
 .order-card {
   height: calc(100vh - 155px);
+  overflow-x: hidden;
+  overflow-y: auto;
   line-height: 1.3rem;
   margin: 0 1rem 0 0;
   padding: 0;
@@ -71,7 +73,8 @@
           color: brown;
 
           & button:hover {
-            transform: scale(1.5);
+            transform: scale(1.2) rotate(-90deg);
+            transition: 200ms;
           }
 
           & > span {
@@ -181,4 +184,15 @@ mat-card.order-products-detail {
   box-shadow: 2px 2px 10px 2px grey;
   margin: 0;
   padding: 0;
+
+  & > button.add-product-sticky {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+
+    &:hover {
+      transform: rotate(-180deg);
+      transition: 250ms;
+    }
+  }
 }

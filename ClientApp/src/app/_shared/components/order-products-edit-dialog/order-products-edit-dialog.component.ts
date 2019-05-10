@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-import { OrderBuyProducts } from 'src/app/order/buy/_interfaces/order-buy-products';
-import { ConfirmDialogService } from '../../_services/confirm-dialog.service';
 
 @Component({
   selector: 'app-order-products-edit-dialog',
@@ -12,7 +9,7 @@ import { ConfirmDialogService } from '../../_services/confirm-dialog.service';
 export class OrderProductsEditDialogComponent implements OnInit {
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private confirmService: ConfirmDialogService, private snackBar: MatSnackBar) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.createForm();

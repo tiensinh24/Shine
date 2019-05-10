@@ -17,9 +17,4 @@ table.order-detail-table {
     cursor: pointer;
     background-color: aliceblue;
   }
-
-  & .add-button:hover {
-    transform: rotate(90deg);
-    transition: 150ms;
-  }
 }
