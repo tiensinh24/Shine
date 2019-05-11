@@ -14,6 +14,8 @@ using Shine.Controllers.Interfaces;
 using Shine.Data;
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Products;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
@@ -113,15 +115,6 @@ namespace Shine.Controllers {
 #endregion
 
 #region ProductOrder
-        [HttpGet("{orderId}/details")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<ProductOrderDto>>> GetProductDetailByOrder(int orderId) {
-            var prodDetails = await _repository.GetProductDetailByOrderAsync(orderId);
-            if (prodDetails == null) {
-                return NotFound();
-            }
-            return Ok(prodDetails);
-        }
 
         [HttpPost("addProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -186,6 +179,16 @@ namespace Shine.Controllers {
             throw new NotImplementedException();
         }
 #endregion
+
+        // TODO: test - remove when done
+        [HttpGet("{orderId}/{supplierId}/test")]
+        public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetTest(int orderId, int supplierId) {
+            var query = _repository.GetProductsNotAddedToOrderBySupplier(orderId, supplierId);
+
+            var rs = await query.ProjectToType<ProductSelectDto>().ToListAsync();
+
+            return Ok(rs);
+        }
 
     }
 }

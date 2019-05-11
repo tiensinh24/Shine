@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { ProductSelect } from 'src/app/product/_interfaces/product-select';
 import { environment } from 'src/environments/environment';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
@@ -59,23 +60,30 @@ export class OrderBuyService {
   }
 
   // *ProductOrder
-  getProductDetailByOrder(orderId: number): Observable<OrderBuyProducts[]> {
-    return this.http.get<OrderBuyProducts[]>(`${this.baseUrl}api/orderBuy/${orderId}/details`);
+
+  getProductsNotAddedToOrderBySupplierSelect(orderId: number, supplierId: number): Observable<ProductSelect[]> {
+    return this.http.get<ProductSelect[]>(
+      `${this.baseUrl}api/orderBuy/${orderId}/products-not-added-by-${supplierId}/select`
+    );
   }
 
   addOrderWithDetails(orderWithDetails: OrderBuyWithDetailsToAddDto) {
-    return this.http.post(`${this.baseUrl}api/orderBuy/addWithDetails/`, orderWithDetails);
+    return this.http.post(`${this.baseUrl}api/orderBuy/add-with-details/`, orderWithDetails);
   }
 
-  addProductOrder(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.post<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/addProduct/`, productOrder);
+  addOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
+    return this.http.post<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/add-product/`, productOrder);
   }
 
-  addProductsOrder(productsOrder: OrderBuyProducts[]): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}api/orderBuy/addProducts/`, productsOrder);
+  addOrderProducts(productsOrder: OrderBuyProducts[]): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}api/orderBuy/add-products/`, productsOrder);
   }
 
-  deleteProductOrder(orderId: number, productId: number): Observable<boolean> {
+  updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
+    return this.http.put<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/update-product`, productOrder);
+  }
+
+  deleteOrderProduct(orderId: number, productId: number): Observable<boolean> {
     return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/${orderId}/delete/${productId}`);
   }
 }

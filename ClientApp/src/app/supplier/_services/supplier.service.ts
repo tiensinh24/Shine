@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { ProductSelect } from 'src/app/product/_interfaces/product-select';
 import { PagedProductBuy } from 'src/app/product/buy/_interfaces/paged-product-buy';
 import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 import { environment } from 'src/environments/environment';
@@ -69,10 +70,6 @@ export class SupplierService {
   getProductsBySupplier(supplierId: number): Observable<ProductBuyList[]> {
     return this.http.get<ProductBuyList[]>(`${this.baseUrl}api/supplier/${supplierId}/products/`);
   }
-
-  // getSupplierProducts(): Observable<ProductsBySupplier[]> {
-  //   return this.http.get<ProductsBySupplier[]>(`${this.baseUrl}api/supplier/products/`);
-  // }
 
   getPagedProductsBySupplier(
     supplierId: number,

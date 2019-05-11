@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Products;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
@@ -172,6 +174,8 @@ namespace Shine.Data.Infrastructures.Repositories {
 #endregion
 
 #region ProductOrder
+#region Get Values
+
         public async Task<IEnumerable<ProductOrderDto>> GetProductDetailByOrderAsync(int id) {
             var orderDetails = await _context.Set<ProductOrder>().Include(p => p.Product)
                 .Where(p => p.OrderId == id)
@@ -180,6 +184,20 @@ namespace Shine.Data.Infrastructures.Repositories {
             return orderDetails;
         }
 
+        public IQueryable<ProductBuyDto> GetProductsNotAddedToOrderBySupplier(int orderId, int supplierId) {
+            var products = _context.Set<ProductBuy>()
+                .Where(p => p.PersonProducts.Any(pp => pp.PersonId == supplierId)
+                    && !(_context.ProductOrders
+                        .Where(po => po.OrderId == orderId)
+                        .Select(po => po.ProductId)).Contains(p.ProductId))
+                .ProjectToType<ProductBuyDto>();
+
+            return products;
+        }
+
+#endregion
+
+#region Actions
         public async Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder) {
             var added = await _context.Set<ProductOrder>().AddAsync(productOrder);
 
@@ -197,6 +215,8 @@ namespace Shine.Data.Infrastructures.Repositories {
                 _context.Set<ProductOrder>().Remove(productOrder);
             }
         }
+
+#endregion		
 
 #endregion
 

@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,KAAK,AAAA,mBAAmB,CAAC;EACvB,KAAK,EAAE,IAAI;CAkBZ;;AAnBD,AAGE,KAHG,AAAA,mBAAmB,CAGpB,gBAAgB,CAAC;EACjB,gBAAgB,EAAE,YAAY;EAC9B,KAAK,EAAE,SAAS;EAChB,MAAM,EAAE,IAAI;EACZ,SAAS,EAAE,MAAM;CAClB;;AARH,AAUE,KAVG,AAAA,mBAAmB,CAUpB,SAAS,CAAC;EACV,aAAa,EAAE,qBAAqB;EACpC,OAAO,EAAE,KAAK;CACf;;AAbH,AAeE,KAfG,AAAA,mBAAmB,CAepB,QAAQ,AAAA,MAAM,CAAC;EACf,MAAM,EAAE,OAAO;EACf,gBAAgB,EAAE,SAAS;CAC5B",
-    "sources": [
-        "order-buy-product-details.component.scss"
-    ],
-    "names": [],
-    "file": "order-buy-product-details.component.css"
-}

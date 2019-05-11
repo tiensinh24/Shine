@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Products;
+using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces {
@@ -33,14 +36,22 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #endregion
 
-#region ProductsOrder
-        Task<IEnumerable<ProductOrderDto>> GetProductDetailByOrderAsync(int id);
+#region ProductsOrder       
 
+#region Get Values
+
+        IQueryable<ProductBuyDto> GetProductsNotAddedToOrderBySupplier(int orderId, int supplierId);
+
+#endregion
+
+#region Actions
         Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder);
 
         Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders);
 
         Task DeleteProductOrderAsync(int orderId, int productId);
+
+#endregion
 
 #endregion
 

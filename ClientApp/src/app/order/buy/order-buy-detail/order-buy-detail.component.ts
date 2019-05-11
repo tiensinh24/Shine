@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import { OrderProductsEditDialogComponent } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
 import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
 import { Payment } from 'src/app/payment/_interfaces/payment';
 import { PaymentService } from 'src/app/payment/_services/payment.service';
@@ -19,6 +20,10 @@ import { OrderBuyService } from '../_services/order-buy.service';
 export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   order = <OrderBuyDetail>{};
   isPayment = false;
+
+  // Products table
+  displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];
+  dataSource = new MatTableDataSource<OrderBuyProducts>([]);
 
   orderSub = new Subscription();
 
@@ -44,6 +49,7 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
 
     this.orderSub = this.orderService.getOrderDetail(orderId).subscribe((order: OrderBuyDetail) => {
       this.order = order;
+      this.dataSource = new MatTableDataSource<OrderBuyProducts>(order.products);
     });
   }
 
@@ -109,7 +115,49 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(PaymentEditDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(res => {
-      this.initialOrder();
+      if (res) {
+        this.initialOrder();
+      }
+    });
+  }
+
+  openOrderProductDialog(product?: OrderBuyProducts) {
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '800px',
+      height: '565px',
+      panelClass: 'custom-dialog'
+    };
+
+    if (product !== null) {
+      dialogConfig.data = {
+        orderId: product.orderId,
+        supplierId: this.order.personId,
+        productId: product.productId,
+        quantity: product.quantity,
+        price: product.price,
+        tax: product.tax,
+        rate: product.rate,
+        unit: product.unit,
+        edit: true
+      };
+    } else {
+      dialogConfig.data = {
+        orderId: this.order.orderId,
+        supplierId: this.order.personId,
+        edit: false
+      };
+    }
+
+    const dialogRef = this.dialog.open(OrderProductsEditDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.initialOrder();
+      }
     });
   }
 
@@ -128,5 +176,20 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
 
   togglePayment() {
     this.isPayment = !this.isPayment;
+  }
+
+  // * Products
+
+  deleteOrderProduct(productOrder: OrderBuyProducts) {
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${productOrder.productName}?`);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.orderService.deleteOrderProduct(this.order.orderId, productOrder.productId).subscribe(() => {
+          this.initialOrder();
+          this.snackBar.open(`${productOrder.productName} deleted`, 'Success');
+        });
+      }
+    });
   }
 }

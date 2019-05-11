@@ -226,16 +226,58 @@ mat-card.order-products-detail {
   padding: 0;
 }
 
-mat-card.order-products-detail > button.add-product-sticky {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+mat-card.order-products-detail table.order-detail-table {
+  width: 100%;
 }
 
-mat-card.order-products-detail > button.add-product-sticky:hover {
+mat-card.order-products-detail table.order-detail-table .mat-header-cell {
+  background-color: lemonchiffon;
+  color: royalblue;
+  height: 80px;
+  font-size: medium;
+}
+
+mat-card.order-products-detail table.order-detail-table .mat-cell {
+  border-bottom: 1px dotted blueviolet;
+  padding: 0 8px;
+}
+
+mat-card.order-products-detail table.order-detail-table .mat-row:hover {
+  cursor: pointer;
+  background-color: aliceblue;
+}
+
+mat-card.order-products-detail button.add-product-sticky:hover {
   -webkit-transform: rotate(-180deg);
           transform: rotate(-180deg);
   -webkit-transition: 250ms;
   transition: 250ms;
+}
+
+mat-card.order-products-detail .no-products {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+mat-card.order-products-detail .no-products > h2 {
+  color: plum;
+}
+
+mat-card.order-products-detail .no-products > .new-product-fab:hover {
+  -webkit-transition: 200ms;
+  transition: 200ms;
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
 }
 /*# sourceMappingURL=order-buy-detail.component.css.map */

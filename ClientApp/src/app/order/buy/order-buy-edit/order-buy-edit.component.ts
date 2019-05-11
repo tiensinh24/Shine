@@ -106,7 +106,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   }
 
   onAddOrderWithDetails() {
-    this.orderService.addProductsOrder(this.productsToAdd).subscribe();
+    this.orderService.addOrderProducts(this.productsToAdd).subscribe();
   }
 
   onSubmit() {
