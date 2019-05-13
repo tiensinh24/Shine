@@ -157,6 +157,10 @@
       [dataSource]="dataSource"
       class="order-detail-table"
     >
+      <ng-container matColumnDef="productId">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row"></td>
+      </ng-container>
       <ng-container matColumnDef="productName">
         <th mat-header-cell *matHeaderCellDef>Product Name</th>
         <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
@@ -227,7 +231,14 @@
     <ng-template #noProducts>
       <div class="no-products">
         <h2 class="mat-h2">No Product</h2>
-        <button class="new-product-fab" mat-mini-fab matTooltip="Add new product"><mat-icon>add</mat-icon></button>
+        <button
+          class="new-product-fab"
+          mat-mini-fab
+          matTooltip="Add new product"
+          (click)="openOrderProductDialog(null)"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
     </ng-template>
   </mat-card>

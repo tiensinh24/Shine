@@ -26,7 +26,7 @@ export class OrderBuyService {
   }
 
   getOrderDetail(orderId: number): Observable<OrderBuyDetail> {
-    return this.http.get<OrderBuyDetail>(`${this.baseUrl}api/orderBuy/${orderId}`);
+    return this.http.get<OrderBuyDetail>(`${this.baseUrl}api/orderBuy/${orderId}/detail`);
   }
 
   getPagedOrders(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedOrderBuy> {
@@ -63,7 +63,7 @@ export class OrderBuyService {
 
   getProductsNotAddedToOrderBySupplierSelect(orderId: number, supplierId: number): Observable<ProductSelect[]> {
     return this.http.get<ProductSelect[]>(
-      `${this.baseUrl}api/orderBuy/${orderId}/products-not-added-by-${supplierId}/select`
+      `${this.baseUrl}api/orderBuy/${orderId}/products-not-added-by-supplier-${supplierId}/select`
     );
   }
 
@@ -72,15 +72,21 @@ export class OrderBuyService {
   }
 
   addOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.post<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/add-product/`, productOrder);
+    return this.http.post<OrderBuyProducts>(
+      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/add-item/`,
+      productOrder
+    );
   }
 
-  addOrderProducts(productsOrder: OrderBuyProducts[]): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}api/orderBuy/add-products/`, productsOrder);
+  addOrderProducts(productsOrder: ProductOrder[]): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}api/orderBuy/${productsOrder[0].orderId}/add-items/`, productsOrder);
   }
 
   updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.put<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/update-product`, productOrder);
+    return this.http.put<OrderBuyProducts>(
+      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/update-item`,
+      productOrder
+    );
   }
 
   deleteOrderProduct(orderId: number, productId: number): Observable<boolean> {

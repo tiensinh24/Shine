@@ -22,7 +22,7 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   isPayment = false;
 
   // Products table
-  displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];
+  displayedcolumn = ['productId', 'productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];
   dataSource = new MatTableDataSource<OrderBuyProducts>([]);
 
   orderSub = new Subscription();
@@ -137,6 +137,7 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
         orderId: product.orderId,
         supplierId: this.order.personId,
         productId: product.productId,
+        productName: product.productName,
         quantity: product.quantity,
         price: product.price,
         tax: product.tax,

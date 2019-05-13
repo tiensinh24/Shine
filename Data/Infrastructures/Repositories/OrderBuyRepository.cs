@@ -112,7 +112,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             return await PagedList<OrderBuyListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public async Task<OrderBuyDetailDto> GetOrderAsync(int id) {
+        public async Task<OrderBuyDetailDto> GetOrderDetailAsync(int id) {
             var order = await _repository
                 .AsNoTracking()
                 .Include(o => o.Person)

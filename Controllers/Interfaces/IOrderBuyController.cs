@@ -15,7 +15,7 @@ namespace Shine.Controllers.Interfaces {
         Task<ActionResult<Paged<OrderBuyListDto>>> GetPagedOrders(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-        Task<ActionResult<OrderBuyDetailDto>> GetOrder(int orderId);
+        Task<ActionResult<OrderBuyDetailDto>> GetOrderDetail(int orderId);
 #endregion
 
 #region Actions

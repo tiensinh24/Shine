@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { ProductOrder } from 'src/app/order/buy/_interfaces/product-order';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 import { ProductSelect } from 'src/app/product/_interfaces/product-select';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 
 @Component({
   selector: 'app-order-products-edit-dialog',
@@ -15,14 +14,13 @@ import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
   title = 'Add new product';
   formGroup: FormGroup;
-  productsNotAddedSelect: ProductSelect[];
+  productsNotAddedSelect: ProductSelect[] = [];
 
   subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private orderService: OrderBuyService,
-    private supplierService: SupplierService,
     private dialogRef: MatDialogRef<OrderProductsEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public parentData
   ) {}
@@ -31,7 +29,7 @@ export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
     this.getProductsNotAdded(this.parentData.supplierId);
     this.createForm();
 
-    if (this.parentData) {
+    if (this.parentData.edit) {
       this.title = `Edit product for order ${this.parentData.orderId}`;
       this.updateForm();
     }
@@ -46,6 +44,16 @@ export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
       .getProductsNotAddedToOrderBySupplierSelect(this.parentData.orderId, supplierId)
       .subscribe((products: ProductSelect[]) => {
         this.productsNotAddedSelect = products;
+
+        if (this.parentData.edit) {
+          // In edit mode we add product from parent to productsNotAdded
+          const parentProduct = <ProductSelect>{
+            productId: this.parentData.productId,
+            productName: this.parentData.productName
+          };
+
+          this.productsNotAddedSelect.push(parentProduct);
+        }
       });
   }
 
@@ -84,9 +92,15 @@ export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
       unit: this.formGroup.value.unit
     };
 
-    this.subscription = this.orderService.updateOrderProduct(productOrder).subscribe(res => {
-      this.dialogRef.close(res);
-    });
+    if (this.parentData.edit) {
+      this.subscription = this.orderService.updateOrderProduct(productOrder).subscribe(res => {
+        this.dialogRef.close(res);
+      });
+    } else {
+      this.subscription = this.orderService.addOrderProduct(productOrder).subscribe(res => {
+        this.dialogRef.close(res);
+      });
+    }
   }
 
   onCancel() {

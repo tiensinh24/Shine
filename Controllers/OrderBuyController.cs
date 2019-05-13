@@ -59,10 +59,10 @@ namespace Shine.Controllers {
             return new Paged<OrderBuyListDto>(query);
         }
 
-        [HttpGet("{orderId}")]
+        [HttpGet("{orderId}/detail")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrderBuyDetailDto>> GetOrder(int orderId) {
-            var order = await _repository.GetOrderAsync(orderId);
+        public async Task<ActionResult<OrderBuyDetailDto>> GetOrderDetail(int orderId) {
+            var order = await _repository.GetOrderDetailAsync(orderId);
 
             if (order == null) {
                 return NotFound();
@@ -77,14 +77,14 @@ namespace Shine.Controllers {
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<OrderBuyDetailDto> AddOrder([FromBody] OrderBuy orderBuy) {
+        public async Task<OrderBuyDto> AddOrder([FromBody] OrderBuy orderBuy) {
             try {
                 await _repository.AddAsync(orderBuy);
             } catch (Exception) {
                 throw;
             }
             await _repository.CommitAsync();
-            var order = await _repository.GetOrderAsync(orderBuy.OrderId);
+            var order = await _repository.GetOrderDetailAsync(orderBuy.OrderId);
             return order;
         }
 
@@ -98,7 +98,7 @@ namespace Shine.Controllers {
                 throw;
             }
             _repository.Commit();
-            var order = await _repository.GetOrderAsync(orderBuy.OrderId);
+            var order = await _repository.GetOrderDetailAsync(orderBuy.OrderId);
             return order;
         }
 
@@ -116,9 +116,9 @@ namespace Shine.Controllers {
 
 #region ProductOrder
 
-        [HttpPost("addProduct")]
+        [HttpPost("{orderId}/add-item")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ProductOrderDto>> AddProductOrder([FromBody] ProductOrder productOrder) {
+        public async Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder) {
             var prodOrderAdded = await _repository.AddProductOrderAsync(productOrder);
             await _repository.CommitAsync();
 
@@ -128,14 +128,14 @@ namespace Shine.Controllers {
                     && p.ProductId == prodOrderAdded.ProductId);
         }
 
-        [HttpPost("addProducts")]
+        [HttpPost("{orderId}/add-items")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task AddProductsOrder([FromBody] IEnumerable<ProductOrder> productOrders) {
+        public async Task AddProductsOrder(int orderId, [FromBody] IEnumerable<ProductOrder> productOrders) {
             await _repository.AddProductOrderRangeAsync(productOrders);
             await _repository.CommitAsync();
         }
 
-        [HttpPost("addWithDetails")]
+        [HttpPost("{orderId}/addWithDetails")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<bool> AddOrderWithDetails([FromBody] OrderBuyWithDetailsToAddDto orderBuyWithDetailsToAdd) {
             var orderBuyToAdd = orderBuyWithDetailsToAdd.OrderBuy;
@@ -159,29 +159,10 @@ namespace Shine.Controllers {
             await _repository.CommitAsync();
         }
 
-        Task<ActionResult<OrderBuyDetailDto>> IOrderBuyController.GetOrder(int orderId) {
-            throw new NotImplementedException();
-        }
-
-        Task<ActionResult<OrderBuyDto>> IOrderBuyController.AddOrder(OrderBuy orderBuy) {
-            throw new NotImplementedException();
-        }
-
-        Task<ActionResult<OrderBuyDto>> IOrderBuyController.UpdateOrder(OrderBuy orderBuy) {
-            throw new NotImplementedException();
-        }
-
-        Task<ActionResult<OrderBuyDto>> IOrderBuyController.DeleteOrder(int orderId) {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteOrders(string[] ids) {
-            throw new NotImplementedException();
-        }
 #endregion
 
         // TODO: test - remove when done
-        [HttpGet("{orderId}/{supplierId}/test")]
+        [HttpGet("{orderId}/products-not-added-by-supplier-{supplierId}/select")]
         public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetTest(int orderId, int supplierId) {
             var query = _repository.GetProductsNotAddedToOrderBySupplier(orderId, supplierId);
 

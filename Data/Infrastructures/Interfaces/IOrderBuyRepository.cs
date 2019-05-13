@@ -21,7 +21,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
             PagingParams pagingParams, SortParams sortParams, string filter,
             Expression<Func<OrderBuyListDto, bool>> condition);
 
-        Task<OrderBuyDetailDto> GetOrderAsync(int orderId);
+        Task<OrderBuyDetailDto> GetOrderDetailAsync(int orderId);
 
 #endregion
 
