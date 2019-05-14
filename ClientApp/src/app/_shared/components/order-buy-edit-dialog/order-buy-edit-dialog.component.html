@@ -55,11 +55,14 @@
 </mat-dialog-content>
 
 <!-- Action Buttons -->
-<mat-dialog-actions fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex></div>
   <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
     Submit
   </button>
   <button mat-button (click)="onCancel()">
     Cancel
   </button>
+  <div fxFlex></div>
+  <button mat-icon-button matTooltip="More detail" (click)="goToDetail()"><mat-icon>more</mat-icon></button>
 </mat-dialog-actions>

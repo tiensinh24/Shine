@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
@@ -24,6 +25,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private orderBuyService: OrderBuyService,
     private supplierService: SupplierService,
     private dialogRef: MatDialogRef<OrderBuyEditDialogComponent>,
@@ -86,6 +88,11 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.dialogRef.close();
+  }
+
+  goToDetail() {
+    this.dialogRef.close();
+    this.router.navigate([`order-buy/${this.dataFromDetail.orderId}`]);
   }
 
   get(name: string): AbstractControl {
