@@ -9,6 +9,9 @@ using Shine.Data.Models;
 
 namespace Shine.Controllers.Interfaces {
     public interface IOrderBuyController {
+
+#region Order
+
 #region Get Values
         Task<ActionResult<IEnumerable<OrderBuyListDto>>> GetOrders();
 
@@ -25,7 +28,20 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<OrderBuyDto>> DeleteOrder(int orderId);
 
-        Task<bool> DeleteOrders(string[] ids);
+#endregion
+
+#endregion
+
+#region LineItems
+
+        Task<bool> AddOrderWithDetails([FromBody] OrderBuyWithDetailsToAddDto orderBuyWithDetailsToAdd);
+
+        Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder);
+
+        Task<ActionResult<ProductOrderDto>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder);
+
+        Task DeleteProductOrder(int orderId, int productId);
+
 #endregion
 
     }

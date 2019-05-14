@@ -39,6 +39,7 @@ namespace Shine.Controllers {
 #endregion
 
 #region Supplier
+
 #region Get Values
 
         [HttpGet]
@@ -131,9 +132,10 @@ namespace Shine.Controllers {
 
 #region Get Values
 
-        [HttpGet("{supplierId}/products")]
-        public async Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProductsBySupplier(int supplierId) {
+        [HttpGet("{supplierId}/products/select")]
+        public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsBySupplierForSelect(int supplierId) {
             var products = await _repository.GetProductsBySupplierAsync(supplierId);
+
             return Ok(products);
         }
 

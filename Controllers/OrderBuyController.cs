@@ -42,6 +42,8 @@ namespace Shine.Controllers {
 
 #endregion
 
+#region Order
+
 #region Get Values
 
         [HttpGet]
@@ -77,29 +79,28 @@ namespace Shine.Controllers {
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<OrderBuyDto> AddOrder([FromBody] OrderBuy orderBuy) {
+        public async Task<ActionResult<OrderBuyDto>> AddOrder([FromBody] OrderBuy orderBuy) {
             try {
                 await _repository.AddAsync(orderBuy);
             } catch (Exception) {
                 throw;
             }
             await _repository.CommitAsync();
-            var order = await _repository.GetOrderDetailAsync(orderBuy.OrderId);
+            var order = await _repository.GetOrderAsync(orderBuy.OrderId);
             return order;
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<OrderBuyDetailDto> UpdateOrder([FromBody] OrderBuy orderBuy) {
-            try {
-                await _repository.UpdateOrderAsync(orderBuy);
-            } catch (Exception) {
+        public async Task<ActionResult<OrderBuyDto>> UpdateOrder([FromBody] OrderBuy orderBuy) {
 
-                throw;
-            }
-            _repository.Commit();
-            var order = await _repository.GetOrderDetailAsync(orderBuy.OrderId);
-            return order;
+            var query = await _repository.UpdateOrderAsync(orderBuy);
+
+            if (query == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return query;
         }
 
         [HttpDelete("{orderId}")]
@@ -114,28 +115,25 @@ namespace Shine.Controllers {
         }
 #endregion
 
-#region ProductOrder
+#endregion
 
-        [HttpPost("{orderId}/add-item")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder) {
-            var prodOrderAdded = await _repository.AddProductOrderAsync(productOrder);
-            await _repository.CommitAsync();
+#region LineItems
 
-            return await _context.ProductOrders.Include(p => p.Product)
-                .ProjectToType<ProductOrderDto>()
-                .FirstOrDefaultAsync(p => p.OrderId == prodOrderAdded.OrderId
-                    && p.ProductId == prodOrderAdded.ProductId);
+#region Get Values
+
+        [HttpGet("{orderId}/products-not-added-by-supplier-{supplierId}/select")]
+        public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetTest(int orderId, int supplierId) {
+            var query = await _repository.GetProductsNotAddedToOrderBySupplierForSelect(orderId, supplierId);
+
+            return Ok(query);
         }
 
-        [HttpPost("{orderId}/add-items")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task AddProductsOrder(int orderId, [FromBody] IEnumerable<ProductOrder> productOrders) {
-            await _repository.AddProductOrderRangeAsync(productOrders);
-            await _repository.CommitAsync();
-        }
+#endregion
 
-        [HttpPost("{orderId}/addWithDetails")]
+#region Actions
+
+        // Add new order with items
+        [HttpPost("add-with-items")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<bool> AddOrderWithDetails([FromBody] OrderBuyWithDetailsToAddDto orderBuyWithDetailsToAdd) {
             var orderBuyToAdd = orderBuyWithDetailsToAdd.OrderBuy;
@@ -153,6 +151,29 @@ namespace Shine.Controllers {
             return true;
         }
 
+        [HttpPost("{orderId}/add-item")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder) {
+            var lineItem = await _repository.AddProductOrderAsync(productOrder);
+
+            if (lineItem != null) {
+                await _repository.CommitAsync();
+            }
+
+            return lineItem.Adapt<ProductOrderDto>();
+        }
+
+        [HttpPut("{orderId}/products/{productId}")]
+        public async Task<ActionResult<ProductOrderDto>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder) {
+            var lineItem = await _repository.UpdateProductOrderAsync(productOrder);
+
+            if (lineItem == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return lineItem;
+        }
+
         [HttpDelete("{orderId}/delete/{productId}")]
         public async Task DeleteProductOrder(int orderId, int productId) {
             await _repository.DeleteProductOrderAsync(orderId, productId);
@@ -161,15 +182,7 @@ namespace Shine.Controllers {
 
 #endregion
 
-        // TODO: test - remove when done
-        [HttpGet("{orderId}/products-not-added-by-supplier-{supplierId}/select")]
-        public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetTest(int orderId, int supplierId) {
-            var query = _repository.GetProductsNotAddedToOrderBySupplier(orderId, supplierId);
-
-            var rs = await query.ProjectToType<ProductSelectDto>().ToListAsync();
-
-            return Ok(rs);
-        }
+#endregion
 
     }
 }

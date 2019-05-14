@@ -13,6 +13,8 @@ using Shine.Data.Models;
 namespace Shine.Data.Infrastructures.Interfaces {
     public interface IOrderBuyRepository : IRepository {
 
+#region Order
+
 #region Get Values
         Task<IEnumerable<OrderBuyListDto>> GetOrdersAsync(
             Expression<Func<OrderBuyListDto, object>> sortColumn, string sortOrder);
@@ -20,6 +22,8 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<PagedList<OrderBuyListDto>> GetPagedOrdersAsync(
             PagingParams pagingParams, SortParams sortParams, string filter,
             Expression<Func<OrderBuyListDto, bool>> condition);
+
+        Task<OrderBuyDto> GetOrderAsync(int orderId);
 
         Task<OrderBuyDetailDto> GetOrderDetailAsync(int orderId);
 
@@ -36,11 +40,13 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #endregion
 
-#region ProductsOrder       
+#endregion
+
+#region LineItems        
 
 #region Get Values
 
-        IQueryable<ProductBuyDto> GetProductsNotAddedToOrderBySupplier(int orderId, int supplierId);
+        Task<IEnumerable<ProductSelectDto>> GetProductsNotAddedToOrderBySupplierForSelect(int orderId, int supplierId);
 
 #endregion
 
@@ -48,6 +54,8 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder);
 
         Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders);
+
+        Task<ProductOrderDto> UpdateProductOrderAsync(ProductOrder productOrder);
 
         Task DeleteProductOrderAsync(int orderId, int productId);
 

@@ -112,7 +112,16 @@ namespace Shine.Data.Infrastructures.Repositories {
             return await PagedList<OrderBuyListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public async Task<OrderBuyDetailDto> GetOrderDetailAsync(int id) {
+        public async Task<OrderBuyDto> GetOrderAsync(int orderId) {
+            var order = await _repository
+                .AsNoTracking()
+                .ProjectToType<OrderBuyDto>()
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            return order;
+        }
+
+        public async Task<OrderBuyDetailDto> GetOrderDetailAsync(int orderId) {
             var order = await _repository
                 .AsNoTracking()
                 .Include(o => o.Person)
@@ -120,7 +129,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                 .Include(o => o.ProductOrders)
                 .ThenInclude(p => p.Product)
                 .ProjectToType<OrderBuyDetailDto>()
-                .FirstOrDefaultAsync(o => o.OrderId == id);
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
             return order;
         }
@@ -173,24 +182,19 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #endregion
 
-#region ProductOrder
+#region LineItems
+
 #region Get Values
 
-        public async Task<IEnumerable<ProductOrderDto>> GetProductDetailByOrderAsync(int id) {
-            var orderDetails = await _context.Set<ProductOrder>().Include(p => p.Product)
-                .Where(p => p.OrderId == id)
-                .ProjectToType<ProductOrderDto>().ToListAsync();
-
-            return orderDetails;
-        }
-
-        public IQueryable<ProductBuyDto> GetProductsNotAddedToOrderBySupplier(int orderId, int supplierId) {
-            var products = _context.Set<ProductBuy>()
+        public async Task<IEnumerable<ProductSelectDto>> GetProductsNotAddedToOrderBySupplierForSelect(int orderId, int supplierId) {
+            var products = await _context.Set<ProductBuy>()
+                .AsNoTracking()
                 .Where(p => p.PersonProducts.Any(pp => pp.PersonId == supplierId)
                     && !(_context.ProductOrders
                         .Where(po => po.OrderId == orderId)
                         .Select(po => po.ProductId)).Contains(p.ProductId))
-                .ProjectToType<ProductBuyDto>();
+                .ProjectToType<ProductSelectDto>()
+                .ToListAsync();
 
             return products;
         }
@@ -199,13 +203,31 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #region Actions
         public async Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder) {
-            var added = await _context.Set<ProductOrder>().AddAsync(productOrder);
+            var lineItem = await _context.Set<ProductOrder>()
+                .AddAsync(productOrder);
 
-            return added.Entity;
+            return lineItem.Entity;
         }
 
         public async Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders) {
             await _context.Set<ProductOrder>().AddRangeAsync(productOrders);
+        }
+
+        public async Task<ProductOrderDto> UpdateProductOrderAsync(ProductOrder productOrder) {
+            var dbItem = await _context.ProductOrders
+                .FirstOrDefaultAsync(p => p.ProductId == productOrder.ProductId
+                    && p.OrderId == productOrder.OrderId);
+
+            if (dbItem != null) {
+                dbItem.ProductId = productOrder.ProductId;
+                dbItem.Quantity = productOrder.Quantity;
+                dbItem.Price = productOrder.Price;
+                dbItem.Tax = productOrder.Tax;
+                dbItem.Rate = productOrder.Rate;
+                dbItem.Unit = productOrder.Unit;
+            }
+
+            return dbItem.Adapt<ProductOrderDto>();
         }
 
         public async Task DeleteProductOrderAsync(int orderId, int productId) {

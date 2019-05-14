@@ -8,6 +8,7 @@ import { OrderProductsEditDialogComponent } from 'src/app/_shared/components/ord
 import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
 import { Payment } from 'src/app/payment/_interfaces/payment';
 import { PaymentService } from 'src/app/payment/_services/payment.service';
+import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
 import { OrderBuyProducts } from '../_interfaces/order-buy-products';
 import { OrderBuyService } from '../_services/order-buy.service';
@@ -22,7 +23,7 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   isPayment = false;
 
   // Products table
-  displayedcolumn = ['productId', 'productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];
+  displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];
   dataSource = new MatTableDataSource<OrderBuyProducts>([]);
 
   orderSub = new Subscription();
@@ -78,9 +79,9 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(OrderBuyEditDialogComponent, dialogConfig);
 
       // Get data returned from order-edit dialog
-      dialogRef.afterClosed().subscribe((res: OrderBuyDetail) => {
+      dialogRef.afterClosed().subscribe((res: OrderBuy) => {
         if (res) {
-          this.order = res;
+          this.initialOrder();
         }
       });
     }

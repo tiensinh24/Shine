@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { OrderBuyComponent } from './order-buy.component';
-import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
-import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
-import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
+import { RouterModule, Routes } from '@angular/router';
 import { OrderBuyDetailComponent } from './order-buy-detail/order-buy-detail.component';
-import { CanDeactivateGuard } from 'src/app/_shared/_guards/can-deactivate.guard';
+import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
+import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
+import { OrderBuyComponent } from './order-buy.component';
+
+
 
 const routes: Routes = [
   {
@@ -15,20 +14,14 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/order-buy/home', pathMatch: 'full' },
       { path: 'home', component: OrderBuyHomeComponent },
-      { path: 'create', component: OrderBuyEditComponent },
-      // {
-      //   path: ':orderId/edit',
-      //   component: OrderBuyEditComponent,
-      //   canDeactivate: [CanDeactivateGuard],
-      // },
       { path: 'list', component: OrderBuyListComponent },
-      { path: ':orderId', component: OrderBuyDetailComponent },
-    ],
-  },
+      { path: ':orderId', component: OrderBuyDetailComponent }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class OrderBuyRoutingModule {}

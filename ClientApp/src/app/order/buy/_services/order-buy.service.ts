@@ -59,7 +59,7 @@ export class OrderBuyService {
     return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/delete-all`, { headers: { ids: idList } });
   }
 
-  // *ProductOrder
+  // *LineItems
 
   getProductsNotAddedToOrderBySupplierSelect(orderId: number, supplierId: number): Observable<ProductSelect[]> {
     return this.http.get<ProductSelect[]>(
@@ -68,7 +68,7 @@ export class OrderBuyService {
   }
 
   addOrderWithDetails(orderWithDetails: OrderBuyWithDetailsToAddDto) {
-    return this.http.post(`${this.baseUrl}api/orderBuy/add-with-details/`, orderWithDetails);
+    return this.http.post(`${this.baseUrl}api/orderBuy/add-with-items/`, orderWithDetails);
   }
 
   addOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
@@ -84,7 +84,7 @@ export class OrderBuyService {
 
   updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
     return this.http.put<OrderBuyProducts>(
-      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/update-item`,
+      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`,
       productOrder
     );
   }
