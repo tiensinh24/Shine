@@ -4,14 +4,25 @@ import { OrderProductsEditDialogSharedModule } from 'src/app/_shared/components/
 import { PaymentEditDialogSharedModule } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog-shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';
+import { OrderBuyCreateComponent } from './order-buy-create/order-buy-create.component';
 import { OrderBuyDetailComponent } from './order-buy-detail/order-buy-detail.component';
+import { OrderBuyAddProductsComponent } from './order-buy-edit/order-buy-add-products/order-buy-add-products.component';
+import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
 import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
 import { OrderBuyRoutingModule } from './order-buy-routing.module';
 import { OrderBuyComponent } from './order-buy.component';
 
 @NgModule({
-  declarations: [OrderBuyComponent, OrderBuyDetailComponent, OrderBuyHomeComponent, OrderBuyListComponent],
+  declarations: [
+    OrderBuyComponent,
+    OrderBuyDetailComponent,
+    OrderBuyHomeComponent,
+    OrderBuyListComponent,
+    OrderBuyEditComponent,
+    OrderBuyAddProductsComponent,
+    OrderBuyCreateComponent
+  ],
   imports: [
     // Shared
     SharedModule,

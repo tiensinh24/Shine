@@ -3,7 +3,7 @@
 }
 
 .order-card {
-  height: calc(100vh - 155px);
+  min-height: calc(100vh - 155px);
   overflow-x: hidden;
   overflow-y: auto;
   line-height: 1.3rem;
@@ -217,7 +217,7 @@
 }
 
 mat-card.order-products-detail {
-  height: calc(100vh - 155px);
+  min-height: calc(100vh - 155px);
   overflow-y: auto;
   border-radius: 20px;
   -webkit-box-shadow: 2px 2px 10px 2px grey;

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -43,6 +44,8 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsBySupplier(
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
+
+        Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsBySupplierForSelect(int supplierId);
 #endregion
 
 #region Actions

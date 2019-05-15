@@ -137,7 +137,9 @@
       <ng-template #noPaymentDetail>
         <div class="no-payment-detail">
           <h2 class="mat-h2">No Payment</h2>
-          <button class="new-payment-fab" mat-mini-fab matTooltip="Add new payment"><mat-icon>add</mat-icon></button>
+          <button class="new-payment-fab" mat-mini-fab matTooltip="Add new payment" (click)="openPaymentDialog(null)">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
       </ng-template>
     </mat-card-content>

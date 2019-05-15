@@ -1,0 +1,137 @@
+<!-- Dialog title -->
+<mat-card class="card-title mat-headline mat-elevation-z8">{{ title }}</mat-card>
+
+<mat-horizontal-stepper class="mat-elevation-z8" [linear]="false" #stepper>
+  <!-- Step 1 -->
+  <mat-step [stepControl]="formGroup" label="Order" #order>
+    <!-- <ng-container *ngIf="stepper.selected == null || stepper.selected == order"> -->
+    <ng-container>
+      <!-- Formgroup -->
+      <form fxLayout="column" [formGroup]="formGroup">
+        <!-- OrderNumber -->
+        <mat-form-field appearance="outline">
+          <mat-label>Order Number</mat-label>
+          <input matInput placeholder="Order Number" formControlName="orderNumber" required autofocus />
+          <mat-error *ngIf="get('orderNumber').invalid">{{ getErrorMessage(get('orderNumber')) }}</mat-error>
+        </mat-form-field>
+        <!-- DateOfIssue -->
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Issue</mat-label>
+          <input
+            matInput
+            [matDatepicker]="issuePicker"
+            placeholder="Choose a date"
+            formControlName="dateOfIssue"
+            required
+          />
+          <mat-datepicker-toggle matSuffix [for]="issuePicker"></mat-datepicker-toggle>
+          <mat-datepicker locale="en-GB" #issuePicker></mat-datepicker>
+          <mat-error *ngIf="get('dateOfIssue').invalid">{{ getErrorMessage(get('dateOfIssue')) }}</mat-error>
+        </mat-form-field>
+        <!-- TimeForPayment -->
+        <mat-form-field appearance="outline">
+          <mat-label>Time for Payment</mat-label>
+          <input
+            matInput
+            [matDatepicker]="paymentPicker"
+            placeholder="Choose a date"
+            formControlName="timeForPayment"
+            required
+          />
+          <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
+          <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
+          <mat-error *ngIf="get('timeForPayment').invalid">{{ getErrorMessage(get('timeForPayment')) }}</mat-error>
+        </mat-form-field>
+        <!-- PersonId -->
+        <mat-form-field appearance="outline">
+          <mat-label>Supplier</mat-label>
+          <mat-select placeholder="Select a supplier" formControlName="personId" required>
+            <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
+              {{ supplier.fullName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="get('personId').invalid">{{ getErrorMessage(get('personId')) }}</mat-error>
+        </mat-form-field>
+        <div class="step-button">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </ng-container>
+  </mat-step>
+  <!-- Step 2 -->
+  <mat-step [completed]="true" label="Details" #details>
+    <ng-container *ngIf="stepper.selected == details">
+      <app-order-buy-add-products
+        [supplierId]="this.formGroup.value.personId"
+        (productOrders)="getProductsToAddFromChild($event)"
+      ></app-order-buy-add-products>
+      <div class="step-button">
+        <button mat-button matStepperNext (click)="getSupplierName()">Next</button>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onSubmit()">Submit</button>
+      </div>
+    </ng-container>
+  </mat-step>
+  <!-- Step 3 -->
+  <mat-step label="Reviews" #reviews>
+    <ng-container *ngIf="stepper.selected == reviews">
+      <div class="order-review">
+        <table class="order">
+          <tr>
+            <td>Order number:</td>
+            <td>{{ formGroup.value.orderNumber }}</td>
+          </tr>
+          <tr>
+            <td>Date of issue:</td>
+            <td>{{ formGroup.value.dateOfIssue | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+
+          <tr>
+            <td>Payment's time:</td>
+            <td>{{ formGroup.value.timeForPayment | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+          <tr>
+            <td>Supplier:</td>
+            <td>{{ supplierName }}</td>
+          </tr>
+        </table>
+
+        <table class="line-items">
+          <tr>
+            <th colspan="6">
+              <mat-card class="table-title">
+                <h2 class="mat-h2">Order items</h2>
+              </mat-card>
+            </th>
+          </tr>
+          <tr class="header">
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Tax</th>
+            <th>Rate</th>
+            <th>Unit</th>
+          </tr>
+
+          <tr class="row-content" *ngFor="let product of productsToAdd">
+            <td>{{ product?.productName }}</td>
+            <td>{{ product?.quantity }}</td>
+            <td>{{ product?.price | currency }}</td>
+            <td>{{ product?.tax | percent }}</td>
+            <td>{{ product?.rate }}</td>
+            <td>{{ product?.unit }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="step-button">
+        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button matStepperPrevious>Back</button>
+      </div>
+    </ng-container>
+  </mat-step>
+</mat-horizontal-stepper>
+
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px">
+  <button fxFlex="20" color="primary" mat-raised-button (click)="onSubmit()">Submit</button>
+  <button fxFlex="20" mat-raised-button (click)="onCancel()">Cancel</button>
+</div>

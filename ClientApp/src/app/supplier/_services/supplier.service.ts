@@ -68,7 +68,7 @@ export class SupplierService {
   // *SupplierProduct
 
   getProductsBySupplierForSelect(supplierId: number): Observable<ProductSelect[]> {
-    return this.http.get<ProductSelect[]>(`${this.baseUrl}api/supplier/${supplierId}/products/select`);
+    return this.http.get<ProductSelect[]>(`${this.baseUrl}api/supplier/${supplierId}/products-for-select`);
   }
 
   getPagedProductsBySupplier(

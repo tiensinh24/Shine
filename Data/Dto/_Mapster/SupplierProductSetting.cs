@@ -2,23 +2,16 @@ using System;
 
 using Mapster;
 
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster {
     public static class SupplierProductSetting {
         public static void Setting() {
-            TypeAdapterConfig<PersonProduct, ProductsBySupplierDto>.NewConfig()
+            TypeAdapterConfig<PersonProduct, ProductSelectDto>.NewConfig()
                 .Map(
-                    dest => dest.CategoryName, src => src.Product.Category.CategoryName
-                ).Map(
-                    dest => dest.PersonId, src => src.PersonId
-                ).Map(
                     dest => dest.ProductName, src => src.Product.ProductName
-                ).Map(
-                    dest => dest.Specification, src => src.Product.Specification
-                ).Map(
-                    dest => dest.CategoryId, src => src.Product.CategoryId
                 );
         }
 

@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Photos;
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -185,14 +186,14 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #region Get Values
 
-        public async Task<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplierAsync(int supplierId) {
+        public async Task<IEnumerable<ProductSelectDto>> GetProductsBySupplierForSelectAsync(int supplierId) {
             var query = await _context.PersonProducts
-                .Include(p => p.Product)
-                .ThenInclude(p => p.Category)
-                .Include(p => p.Person)
                 .AsNoTracking()
-                .ProjectToType<ProductsBySupplierDto>()
+                .Include(p => p.Product)
+                // .ThenInclude(p => p.Category)
+                // .Include(p => p.Person)
                 .Where(p => p.PersonId == supplierId)
+                .ProjectToType<ProductSelectDto>()
                 .ToListAsync();
 
             return query;

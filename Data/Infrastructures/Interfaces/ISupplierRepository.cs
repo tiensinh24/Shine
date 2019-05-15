@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Photos;
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
@@ -48,7 +49,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #region Get Values
 
-        Task<IEnumerable<ProductsBySupplierDto>> GetProductsBySupplierAsync(int supplierId);
+        Task<IEnumerable<ProductSelectDto>> GetProductsBySupplierForSelectAsync(int supplierId);
 
         Task<PagedList<ProductsBySupplierDto>> GetPagedProductsBySupplierAsync(
             PagingParams pagingParams, SortParams sortParams, string filter,

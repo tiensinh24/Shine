@@ -132,9 +132,9 @@ namespace Shine.Controllers {
 
 #region Get Values
 
-        [HttpGet("{supplierId}/products/select")]
+        [HttpGet("{supplierId}/products-for-select")]
         public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsBySupplierForSelect(int supplierId) {
-            var products = await _repository.GetProductsBySupplierAsync(supplierId);
+            var products = await _repository.GetProductsBySupplierForSelectAsync(supplierId);
 
             return Ok(products);
         }
