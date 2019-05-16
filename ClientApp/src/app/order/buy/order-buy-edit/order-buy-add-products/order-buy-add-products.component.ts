@@ -14,7 +14,7 @@ import { OrderBuyProducts } from '../../_interfaces/order-buy-products';
 export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   tableTitle = 'Order Details';
   products: ProductSelect[];
-  formGroupDetail: FormGroup;
+  formDetails: FormGroup;
   productsToAdd: OrderBuyProducts[] = [];
 
   @Output() productOrders = new EventEmitter<OrderBuyProducts[]>();
@@ -31,6 +31,8 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.outProductOrders();
+
     this.productsSub.unsubscribe();
   }
 
@@ -48,7 +50,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   createForm() {
-    this.formGroupDetail = this.fb.group({
+    this.formDetails = this.fb.group({
       orderId: ['0'],
       productId: ['', Validators.required],
       quantity: ['', Validators.required],
@@ -62,15 +64,14 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   addProduct() {
-    if (this.formGroupDetail.valid) {
-      this.formGroupDetail.patchValue({
-        productId: this.formGroupDetail.value.productId.productId,
-        productName: this.formGroupDetail.value.productId.productName
+    if (this.formDetails.valid) {
+      this.formDetails.patchValue({
+        productId: this.formDetails.value.productId.productId,
+        productName: this.formDetails.value.productId.productName
       });
-      this.productsToAdd.push(this.formGroupDetail.value);
-      this.refreshProductSelection(this.formGroupDetail.value.productId);
+      this.productsToAdd.push(this.formDetails.value);
+      this.refreshProductSelection(this.formDetails.value.productId);
     }
-    this.outProductOrders();
   }
 
   refreshProductSelection(productId: number) {
@@ -95,11 +96,10 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
       this.products.push(prod);
       this.products.sort((a, b) => a.productName.localeCompare(b.productName));
     }
-    this.outProductOrders();
   }
 
   get(name: string): AbstractControl {
-    return this.formGroupDetail.get(name);
+    return this.formDetails.get(name);
   }
 
   getErrorMessage(formControl: FormControl) {

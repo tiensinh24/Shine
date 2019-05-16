@@ -6,7 +6,7 @@ import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.s
 import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
 import { OrderProductsEditDialogComponent } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
 import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
-import { Payment } from 'src/app/payment/_interfaces/payment';
+import { Payment } from 'src/app/order/_interfaces/payment';
 import { PaymentService } from 'src/app/payment/_services/payment.service';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
@@ -128,8 +128,8 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
       autoFocus: true,
       maxWidth: '100vw',
       maxHeight: '100vh',
-      width: '800px',
-      height: '565px',
+      minWidth: '800px',
+      minHeight: '565px',
       panelClass: 'custom-dialog'
     };
 

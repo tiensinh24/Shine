@@ -1,12 +1,12 @@
 .mat-elevation-z8 {
-  margin: 1em;
+  margin: 1rem;
 }
 
 .card-title {
   background-color: royalblue;
   text-align: center;
   color: white;
-  margin: 1em;
+  margin: 1rem;
 }
 
 .fill {
@@ -16,6 +16,7 @@
 }
 
 .step-button > button {
+  margin-top: 1rem;
   float: right;
 }
 
@@ -29,8 +30,15 @@
   margin: 1rem 0 2rem 0;
 }
 
+.order-review table.order td > span {
+  color: royalblue;
+  line-height: 1.5rem;
+  margin-right: 2rem;
+}
+
 .order-review table.line-items {
   width: 100%;
+  border-collapse: collapse;
 }
 
 .order-review table.line-items .table-title {
@@ -46,9 +54,9 @@
   color: steelblue;
   text-align: left;
   height: auto;
-  margin: 0;
   padding: 1rem;
-  border-bottom: 1px solid orange;
+  border-collapse: collapse;
+  border-bottom: 1px solid lightsalmon;
 }
 
 .order-review table.line-items tr.row-content:hover {
@@ -58,8 +66,8 @@
 
 .order-review table.line-items tr.row-content td {
   height: auto;
-  margin: 0;
   padding: 1rem;
-  border-bottom: 1px dotted orange;
+  border-collapse: collapse;
+  border-bottom: 1px dotted lightsalmon;
 }
 /*# sourceMappingURL=order-buy-edit.component.css.map */

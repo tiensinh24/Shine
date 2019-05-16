@@ -3,11 +3,11 @@
 
 <mat-horizontal-stepper class="mat-elevation-z8" [linear]="false" #stepper>
   <!-- Step 1 -->
-  <mat-step [stepControl]="formGroup" label="Order" #order>
+  <mat-step [stepControl]="orderForms" label="Order" #order>
     <!-- <ng-container *ngIf="stepper.selected == null || stepper.selected == order"> -->
     <ng-container>
-      <!-- Formgroup -->
-      <form fxLayout="column" [formGroup]="formGroup">
+      <!-- orderForms -->
+      <form fxLayout="column" [formGroup]="orderForms">
         <!-- OrderNumber -->
         <mat-form-field appearance="outline">
           <mat-label>Order Number</mat-label>
@@ -54,44 +54,65 @@
         </mat-form-field>
         <div class="step-button">
           <button mat-button matStepperNext>Next</button>
+          <button mat-button [routerLink]="['/order-buy']">Cancel</button>
         </div>
       </form>
     </ng-container>
   </mat-step>
   <!-- Step 2 -->
-  <mat-step [completed]="true" label="Details" #details>
+  <mat-step label="Details" #details>
     <ng-container *ngIf="stepper.selected == details">
       <app-order-buy-add-products
-        [supplierId]="this.formGroup.value.personId"
+        [supplierId]="this.orderForms.value.personId"
         (productOrders)="getProductsToAddFromChild($event)"
       ></app-order-buy-add-products>
+
       <div class="step-button">
         <button mat-button matStepperNext (click)="getSupplierName()">Next</button>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onSubmit()">Submit</button>
       </div>
     </ng-container>
   </mat-step>
   <!-- Step 3 -->
+  <mat-step label="Payments" #payments optional>
+    <ng-container *ngIf="stepper.selected == payments">
+      <app-order-buy-add-payments (payments)="getPaymentsToAddFromChild($event)"></app-order-buy-add-payments>
+      <div class="step-button">
+        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Back</button>
+      </div>
+    </ng-container>
+  </mat-step>
+  <!-- Step 4 -->
+  <mat-step label="Costs" #costs optional>
+    <ng-container *ngIf="stepper.selected == costs">
+      <app-order-buy-add-costs (costs)="getCostsToAddFromChild($event)"></app-order-buy-add-costs>
+      <div class="step-button">
+        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Back</button>
+      </div>
+    </ng-container>
+  </mat-step>
+  <!-- Step 5 -->
   <mat-step label="Reviews" #reviews>
     <ng-container *ngIf="stepper.selected == reviews">
       <div class="order-review">
         <table class="order">
           <tr>
-            <td>Order number:</td>
-            <td>{{ formGroup.value.orderNumber }}</td>
+            <td><span>Order number</span></td>
+            <td>{{ orderForms.value.orderNumber }}</td>
           </tr>
           <tr>
-            <td>Date of issue:</td>
-            <td>{{ formGroup.value.dateOfIssue | date: 'dd/MM/yyyy' }}</td>
+            <td><span>Date of issue</span></td>
+            <td>{{ orderForms.value.dateOfIssue | date: 'dd/MM/yyyy' }}</td>
           </tr>
 
           <tr>
-            <td>Payment's time:</td>
-            <td>{{ formGroup.value.timeForPayment | date: 'dd/MM/yyyy' }}</td>
+            <td><span>Payment's time</span></td>
+            <td>{{ orderForms.value.timeForPayment | date: 'dd/MM/yyyy' }}</td>
           </tr>
           <tr>
-            <td>Supplier:</td>
+            <td><span>Supplier</span></td>
             <td>{{ supplierName }}</td>
           </tr>
         </table>
@@ -126,12 +147,8 @@
       <div class="step-button">
         <button mat-button (click)="stepper.reset()">Reset</button>
         <button mat-button matStepperPrevious>Back</button>
+        <button mat-button color="primary" (click)="onSubmit()">Submit</button>
       </div>
     </ng-container>
   </mat-step>
 </mat-horizontal-stepper>
-
-<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px">
-  <button fxFlex="20" color="primary" mat-raised-button (click)="onSubmit()">Submit</button>
-  <button fxFlex="20" mat-raised-button (click)="onCancel()">Cancel</button>
-</div>

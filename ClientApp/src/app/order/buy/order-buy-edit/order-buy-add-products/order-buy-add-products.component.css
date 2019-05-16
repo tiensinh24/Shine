@@ -3,27 +3,28 @@ table {
   width: 100%;
 }
 
-.table-title {
+table .table-title {
   font: xx-large bolder;
   color: yellowgreen;
   background-color: cornsilk;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
-th {
+table th {
   font: 400 bolder;
   color: steelblue;
   text-align: left;
+  padding: 1rem 0;
+  border-bottom: 1px solid lightsalmon;
 }
 
-th,
-td {
+table td {
   height: auto;
-  border-bottom: 1px solid orange;
-  padding: 8px;
+  border-bottom: 1px dotted lightsalmon;
 }
 
-tr.row-content:hover {
+table tr.row-content:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }

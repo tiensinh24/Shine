@@ -1,0 +1,64 @@
+<div id="main" fxLayoutGap="32px">
+  <div id="form" fxFlex="25">
+    <form [formGroup]="paymentForms" fxLayout="column">
+      <!-- paymentDate -->
+      <mat-form-field appearance="outline">
+        <mat-label>Payment Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="paymentPicker"
+          placeholder="Choose a date"
+          formControlName="paymentDate"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
+        <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
+      </mat-form-field>
+      <!-- amount -->
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" formControlName="amount" required />
+      </mat-form-field>
+      <!-- rate -->
+      <mat-form-field appearance="outline">
+        <mat-label>Rate</mat-label>
+        <input matInput type="number" formControlName="rate" required />
+      </mat-form-field>
+      <!-- currency -->
+      <div fxLayout="column" fxLayoutGap="1rem">
+        <mat-label>Pick a currency</mat-label>
+        <mat-radio-group formControlName="currency" fxLayoutGap="1rem">
+          <mat-radio-button [value]="true">USD</mat-radio-button>
+          <mat-radio-button [value]="false">VND</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <!-- Add payment button -->
+      <button mat-mini-fab matTooltip="Add payment" fxFlexAlign="center" (click)="addPayment()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </form>
+  </div>
+  <div id="table" fxFlex>
+    <table *ngIf="paymentsToAdd?.length > 0">
+      <tr>
+        <th>Payment Date</th>
+        <th>Amount</th>
+        <th>Rate</th>
+        <th>Currency</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let payment of paymentsToAdd">
+        <td>{{ payment?.paymentDate | date: 'dd/MM/yyyy ' }}</td>
+        <td>{{ payment?.amount | number }}</td>
+        <td>{{ payment?.rate | number }}</td>
+        <td>{{ payment?.currency | customCurrency }}</td>
+        <td>
+          <button mat-icon-button matTooltip="Remove payment" color="warn" (click)="removePayment(payment)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

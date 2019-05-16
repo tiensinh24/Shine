@@ -12,6 +12,8 @@ import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
 import { OrderBuyRoutingModule } from './order-buy-routing.module';
 import { OrderBuyComponent } from './order-buy.component';
+import { OrderBuyAddPaymentsComponent } from './order-buy-edit/order-buy-add-payments/order-buy-add-payments.component';
+import { OrderBuyAddCostsComponent } from './order-buy-edit/order-buy-add-costs/order-buy-add-costs.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { OrderBuyComponent } from './order-buy.component';
     OrderBuyListComponent,
     OrderBuyEditComponent,
     OrderBuyAddProductsComponent,
-    OrderBuyCreateComponent
+    OrderBuyCreateComponent,
+    OrderBuyAddPaymentsComponent,
+    OrderBuyAddCostsComponent
   ],
   imports: [
     // Shared

@@ -1,4 +1,4 @@
-import { Payment } from 'src/app/payment/_interfaces/payment';
+import { Payment } from 'src/app/order/_interfaces/payment';
 import { OrderBuyProducts } from './order-buy-products';
 
 export interface OrderBuyDetail {

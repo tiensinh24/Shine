@@ -1,14 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Payment } from 'src/app/order/_interfaces/payment';
 import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBuy } from '../_interfaces/order-buy';
-import { OrderBuyList } from '../_interfaces/order-buy-list';
 import { OrderBuyProducts } from '../_interfaces/order-buy-products';
 import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
 import { OrderBuyService } from '../_services/order-buy.service';
+import { Cost } from '../../_interfaces/cost';
 
 @Component({
   selector: 'app-order-buy-edit',
@@ -20,21 +22,24 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   suppliersSub = new Subscription();
 
   title = 'Add new order';
-  formGroup: FormGroup;
+  orderForms: FormGroup;
   order: OrderBuy;
   suppliers: SupplierSelect[];
   supplierName: string;
   orderWithDetailsToAdd: OrderBuyWithDetailsToAddDto;
 
-  // Output
+  // Get from child component
   productsToAdd: OrderBuyProducts[] = [];
+  paymentsToAdd: Payment[] = [];
+  costsToAdd: Cost[] = [];
 
   constructor(
     private orderService: OrderBuyService,
     private supplierService: SupplierService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -48,7 +53,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   }
 
   createForm() {
-    this.formGroup = this.fb.group({
+    this.orderForms = this.fb.group({
       orderNumber: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
@@ -63,7 +68,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   }
 
   getSupplierName() {
-    const supplier = this.suppliers.find(p => p.personId === this.formGroup.value.personId);
+    const supplier = this.suppliers.find(p => p.personId === this.orderForms.value.personId);
 
     this.supplierName = supplier.fullName;
   }
@@ -72,14 +77,29 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     this.productsToAdd = $event;
   }
 
+  getPaymentsToAddFromChild($event: Payment[]) {
+    this.paymentsToAdd = $event;
+  }
+
+  getCostsToAddFromChild($event: Cost[]) {
+    this.costsToAdd = $event;
+  }
+
   onSubmit() {
-    this.order = this.formGroup.value;
+    this.order = this.orderForms.value;
 
     this.orderWithDetailsToAdd = {
       orderBuy: this.order,
-      productOrders: this.productsToAdd
+      productOrders: this.productsToAdd,
+      payments: this.paymentsToAdd,
+      costs: this.costsToAdd
     };
-    this.orderService.addOrderWithDetails(this.orderWithDetailsToAdd).subscribe();
+    this.orderService.addOrderWithDetails(this.orderWithDetailsToAdd).subscribe((res: boolean) => {
+      if (res) {
+        this.snackBar.open(`Order ${this.order.orderNumber} added`, 'Success');
+        this.router.navigate(['/order-buy']);
+      }
+    });
   }
 
   onCancel() {
@@ -87,7 +107,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   }
 
   get(name: string): AbstractControl {
-    return this.formGroup.get(name);
+    return this.orderForms.get(name);
   }
 
   getErrorMessage(formControl: FormControl) {
