@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderBuyCreateComponent } from './order-buy-create/order-buy-create.component';
 import { OrderBuyDetailComponent } from './order-buy-detail/order-buy-detail.component';
-import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
 import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
 import { OrderBuyComponent } from './order-buy.component';
@@ -15,7 +14,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/order-buy/home', pathMatch: 'full' },
       { path: 'home', component: OrderBuyHomeComponent },
       { path: 'list', component: OrderBuyListComponent },
-      { path: 'create', component: OrderBuyEditComponent },
+      { path: 'create', component: OrderBuyCreateComponent },
       { path: ':orderId', component: OrderBuyDetailComponent }
     ]
   }

@@ -78,16 +78,19 @@ namespace Shine.Controllers {
 #region Actions
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<OrderBuyDto>> AddOrder([FromBody] OrderBuy orderBuy) {
-            try {
-                await _repository.AddAsync(orderBuy);
-            } catch (Exception) {
-                throw;
+        public async Task<ActionResult<OrderBuy>> AddOrder([FromBody] OrderBuy orderBuy) {
+            var query = await _repository.GetByIdAsync<OrderBuy>(o => o.OrderNumber == orderBuy.OrderNumber);
+
+            if (query == null) {
+                var order = await _repository.AddOrderAsync(orderBuy);
+
+                if (order != null) {
+                    await _repository.CommitAsync();
+                }
+
+                return order;
             }
-            await _repository.CommitAsync();
-            var order = await _repository.GetOrderAsync(orderBuy.OrderId);
-            return order;
+            return Conflict("Order number already exist");
         }
 
         [HttpPut]
@@ -130,26 +133,7 @@ namespace Shine.Controllers {
 
 #endregion
 
-#region Actions
-
-        // Add new order with items
-        [HttpPost("add-with-items")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<bool> AddOrderWithDetails([FromBody] OrderBuyWithDetailsToAddDto orderBuyWithDetailsToAdd) {
-            var orderBuyToAdd = orderBuyWithDetailsToAdd.OrderBuy;
-            var prodDetailsToAdd = orderBuyWithDetailsToAdd.ProductOrders.ToList();
-
-            try {
-                var orderAdded = await _repository.AddOrderAsync(orderBuyToAdd);
-                prodDetailsToAdd.ForEach(p => p.OrderId = orderAdded.OrderId);
-                await _repository.AddProductOrderRangeAsync(prodDetailsToAdd);
-            } catch (System.Exception) {
-                return false;
-                throw;
-            }
-            await _repository.CommitAsync();
-            return true;
-        }
+#region Actions        
 
         [HttpPost("{orderId}/add-item")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

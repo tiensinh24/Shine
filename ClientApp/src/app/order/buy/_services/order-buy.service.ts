@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
@@ -9,7 +9,7 @@ import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
 import { OrderBuyList } from '../_interfaces/order-buy-list';
 import { OrderBuyProducts } from '../_interfaces/order-buy-products';
-import { OrderBuyWithDetailsToAddDto } from '../_interfaces/order-buy-with-details-to-add-dto';
+import { OrderBuyWithNavigations } from '../_interfaces/order-buy-with-details-to-add-dto';
 import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
 
@@ -43,8 +43,8 @@ export class OrderBuyService {
     return this.http.get<PagedOrderBuy>(`${this.baseUrl}api/orderBuy/paged`, { params: queryParams });
   }
 
-  addOrder(orderBuy: OrderBuy): Observable<OrderBuyList> {
-    return this.http.post<OrderBuyList>(`${this.baseUrl}api/orderBuy/`, orderBuy);
+  addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {
+    return this.http.post<HttpResponse<OrderBuyWithNavigations>>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
   }
 
   updateOrder(orderbuy: OrderBuy): Observable<OrderBuyList> {
@@ -65,10 +65,6 @@ export class OrderBuyService {
     return this.http.get<ProductSelect[]>(
       `${this.baseUrl}api/orderBuy/${orderId}/products-not-added-by-supplier-${supplierId}/select`
     );
-  }
-
-  addOrderWithDetails(orderWithDetails: OrderBuyWithDetailsToAddDto) {
-    return this.http.post(`${this.baseUrl}api/orderBuy/add-with-items/`, orderWithDetails);
   }
 
   addOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {

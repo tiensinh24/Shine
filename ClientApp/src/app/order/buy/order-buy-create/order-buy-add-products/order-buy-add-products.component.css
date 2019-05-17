@@ -1,9 +1,16 @@
-table {
+#main #form button[mat-mini-fab]:hover {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  -webkit-transition: 150ms;
+  transition: 150ms;
+}
+
+#main table#table {
   border-collapse: collapse;
   width: 100%;
 }
 
-table .table-title {
+#main table#table .table-title {
   font: xx-large bolder;
   color: yellowgreen;
   background-color: cornsilk;
@@ -11,7 +18,7 @@ table .table-title {
   margin-bottom: 1rem;
 }
 
-table th {
+#main table#table th {
   font: 400 bolder;
   color: steelblue;
   text-align: left;
@@ -19,12 +26,12 @@ table th {
   border-bottom: 1px solid lightsalmon;
 }
 
-table td {
+#main table#table td {
   height: auto;
   border-bottom: 1px dotted lightsalmon;
 }
 
-table tr.row-content:hover {
+#main table#table tr.row-content:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }

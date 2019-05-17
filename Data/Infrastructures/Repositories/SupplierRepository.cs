@@ -204,10 +204,10 @@ namespace Shine.Data.Infrastructures.Repositories {
             Expression<Func<ProductsBySupplierDto, bool>> condition) {
 
             var source = _context.PersonProducts
+                .AsNoTracking()
                 .Include(p => p.Product)
                 .ThenInclude(p => p.Category)
                 .Include(p => p.Person)
-                .AsNoTracking()
                 .ProjectToType<ProductsBySupplierDto>();
 
             switch (sortParams.SortOrder) {

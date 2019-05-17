@@ -4,16 +4,15 @@ import { OrderProductsEditDialogSharedModule } from 'src/app/_shared/components/
 import { PaymentEditDialogSharedModule } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog-shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';
+import { OrderBuyAddCostsComponent } from './order-buy-create/order-buy-add-costs/order-buy-add-costs.component';
+import { OrderBuyAddPaymentsComponent } from './order-buy-create/order-buy-add-payments/order-buy-add-payments.component';
+import { OrderBuyAddProductsComponent } from './order-buy-create/order-buy-add-products/order-buy-add-products.component';
 import { OrderBuyCreateComponent } from './order-buy-create/order-buy-create.component';
 import { OrderBuyDetailComponent } from './order-buy-detail/order-buy-detail.component';
-import { OrderBuyAddProductsComponent } from './order-buy-edit/order-buy-add-products/order-buy-add-products.component';
-import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
 import { OrderBuyHomeComponent } from './order-buy-home/order-buy-home.component';
 import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component';
 import { OrderBuyRoutingModule } from './order-buy-routing.module';
 import { OrderBuyComponent } from './order-buy.component';
-import { OrderBuyAddPaymentsComponent } from './order-buy-edit/order-buy-add-payments/order-buy-add-payments.component';
-import { OrderBuyAddCostsComponent } from './order-buy-edit/order-buy-add-costs/order-buy-add-costs.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +20,8 @@ import { OrderBuyAddCostsComponent } from './order-buy-edit/order-buy-add-costs/
     OrderBuyDetailComponent,
     OrderBuyHomeComponent,
     OrderBuyListComponent,
-    OrderBuyEditComponent,
-    OrderBuyAddProductsComponent,
     OrderBuyCreateComponent,
+    OrderBuyAddProductsComponent,
     OrderBuyAddPaymentsComponent,
     OrderBuyAddCostsComponent
   ],

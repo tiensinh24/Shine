@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Payment } from 'src/app/order/_interfaces/payment';
 
@@ -7,7 +7,7 @@ import { Payment } from 'src/app/order/_interfaces/payment';
   templateUrl: './order-buy-add-payments.component.html',
   styleUrls: ['./order-buy-add-payments.component.scss']
 })
-export class OrderBuyAddPaymentsComponent implements OnInit, OnDestroy {
+export class OrderBuyAddPaymentsComponent implements OnInit, AfterViewInit, OnDestroy {
   paymentForms: FormGroup;
   paymentsToAdd: Payment[] = [];
 
@@ -17,6 +17,11 @@ export class OrderBuyAddPaymentsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
+  }
+
+  ngAfterViewInit() {
+    this.paymentForms.markAsPristine();
+    this.paymentForms.markAsUntouched();
   }
 
   ngOnDestroy() {

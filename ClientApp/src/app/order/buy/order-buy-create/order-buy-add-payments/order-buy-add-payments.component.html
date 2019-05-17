@@ -40,7 +40,7 @@
     </form>
   </div>
   <div id="table" fxFlex>
-    <table *ngIf="paymentsToAdd?.length > 0">
+    <table *ngIf="paymentsToAdd?.length > 0; else noPayments">
       <tr>
         <th>Payment Date</th>
         <th>Amount</th>
@@ -60,5 +60,13 @@
         </td>
       </tr>
     </table>
+
+    <!-- Only show if no payment on table -->
+    <ng-template #noPayments>
+      <div>
+        <h1 class="mat-h1">No payments!</h1>
+        <p>Enter values on the left then click Add button to add new payment</p>
+      </div>
+    </ng-template>
   </div>
 </div>

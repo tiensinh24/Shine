@@ -21,8 +21,9 @@ namespace Shine.Controllers.Interfaces {
         Task<ActionResult<OrderBuyDetailDto>> GetOrderDetail(int orderId);
 #endregion
 
-#region Actions
-        Task<ActionResult<OrderBuyDto>> AddOrder([FromBody] OrderBuy orderBuy);
+#region Actions       
+
+        Task<ActionResult<OrderBuy>> AddOrder([FromBody] OrderBuy orderBuy);
 
         Task<ActionResult<OrderBuyDto>> UpdateOrder([FromBody] OrderBuy orderBuy);
 
@@ -33,8 +34,6 @@ namespace Shine.Controllers.Interfaces {
 #endregion
 
 #region LineItems
-
-        Task<bool> AddOrderWithDetails([FromBody] OrderBuyWithDetailsToAddDto orderBuyWithDetailsToAdd);
 
         Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder);
 

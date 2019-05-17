@@ -1,0 +1,114 @@
+.mat-elevation-z8 {
+  margin: 1rem;
+}
+
+.card-title {
+  background-color: royalblue;
+  text-align: center;
+  color: white;
+  margin: 1rem;
+}
+
+.fill {
+  flex: 1 1 auto;
+}
+
+.step-button > button {
+  margin-top: 1rem;
+  float: right;
+}
+
+.prod-detail {
+  flex: 1 1 auto;
+}
+
+.order-review {
+  & table.order {
+    margin: 1rem 0 2rem 0;
+
+    & td > span {
+      color: royalblue;
+      line-height: 1.5rem;
+      margin-right: 2rem;
+    }
+  }
+
+  & table.line-items {
+    width: 100%;
+    border-collapse: collapse;
+
+    & .table-title {
+      font: xx-large bolder;
+      color: yellowgreen;
+      background-color: cornsilk;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    & tr.header {
+      & > th {
+        font: 400 bolder;
+        color: steelblue;
+        text-align: left;
+        height: auto;
+        padding: 1rem;
+        border-collapse: collapse;
+        border-bottom: 1px solid lightsalmon;
+      }
+    }
+
+    & tr.row-content {
+      &:hover {
+        cursor: pointer;
+        background-color: whitesmoke;
+      }
+
+      & td {
+        height: auto;
+        padding: 1rem;
+        border-collapse: collapse;
+        border-bottom: 1px dotted lightsalmon;
+      }
+    }
+  }
+
+  & table.payments {
+    margin-top: 3rem;
+    border-collapse: collapse;
+    width: 100%;
+
+    & .table-title {
+      font: xx-large bolder;
+      color: yellowgreen;
+      background-color: cornsilk;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    & tr.header {
+      & > th {
+        font: 400 bolder;
+        color: steelblue;
+        text-align: left;
+        height: auto;
+        padding: 1rem;
+        border-collapse: collapse;
+        border-bottom: 1px solid lightsalmon;
+      }
+    }
+
+    & tr.row-content {
+      &:hover {
+        cursor: pointer;
+        background-color: whitesmoke;
+      }
+
+      & td {
+        height: auto;
+        padding: 1rem;
+        border-collapse: collapse;
+        border-bottom: 1px dotted lightsalmon;
+      }
+    }
+  }
+}
