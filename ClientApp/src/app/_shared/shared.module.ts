@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StarRatingModule } from 'angular-star-rating';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { AgePipe } from './_pipes/age.pipe';
 import { CustomCurrencyPipe } from './_pipes/custom-currency.pipe';
 import { GenderPipe } from './_pipes/gender.pipe';
-
 
 @NgModule({
   declarations: [GenderPipe, AgePipe, CustomCurrencyPipe],
@@ -21,7 +21,10 @@ import { GenderPipe } from './_pipes/gender.pipe';
     FlexLayoutModule,
 
     // Ngx-gallery
-    NgxGalleryModule
+    NgxGalleryModule,
+
+    // Rating
+    StarRatingModule.forRoot()
   ],
   exports: [
     // Pipe
@@ -39,7 +42,10 @@ import { GenderPipe } from './_pipes/gender.pipe';
     FlexLayoutModule,
 
     // Ngx-gallery
-    NgxGalleryModule
+    NgxGalleryModule,
+
+    // Rating
+    StarRatingModule
   ]
 })
 export class SharedModule {}

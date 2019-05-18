@@ -27,6 +27,7 @@ export class SupplierDetailComponent implements OnInit {
   isAdd = false;
   isNoPhoto = false;
   photoUploadUrl: string;
+  rate = 4;
 
   // Ngx-Gallery
   galleryOptions: NgxGalleryOptions[] = [];
@@ -36,6 +37,7 @@ export class SupplierDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSupplier();
+    this.rate = 4;
   }
 
   getImagesForGallery(photos: PhotoForPerson[]) {

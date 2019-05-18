@@ -38,6 +38,8 @@ namespace Shine.Data.Dto._Mapster {
                     dest => dest.Photos,
                     src => src.Photos.Select(p => new { p.PersonId, p.PhotoId, p.PhotoUrl, p.IsMain })
                     .OrderByDescending(p => p.IsMain)
+                ).Map(
+                    dest => dest.Rating, src => src.Orders.Average(o => o.Rating)
                 );
 
             TypeAdapterConfig<Supplier, SupplierSelectDto>.NewConfig()

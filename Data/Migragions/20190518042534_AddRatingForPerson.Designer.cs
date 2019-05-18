@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shine.Data;
 using Shine.Data.Models;
@@ -10,9 +11,10 @@ using Shine.Data.Models;
 namespace Shine.Data.Migragions
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190518042534_AddRatingForPerson")]
+    partial class AddRatingForPerson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -339,7 +341,7 @@ namespace Shine.Data.Migragions
 
                     b.Property<int>("PersonId");
 
-                    b.Property<decimal>("Rating");
+                    b.Property<int>("Rating");
 
                     b.Property<DateTime>("TimeForPayment")
                         .HasColumnType("date");
@@ -811,7 +813,7 @@ namespace Shine.Data.Migragions
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Person", "Person")
-                        .WithMany("Orders")
+                        .WithMany("Invoices")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

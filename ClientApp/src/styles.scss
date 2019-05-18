@@ -1,29 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "~css-star-rating/scss/star-rating";
 
-
-html, body { height: 100%; box-sizing: border-box}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Require for ngx-gallery */
-.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
-    transform: none !important;
+.mat-sidenav-container,
+.mat-sidenav-content,
+.mat-tab-body-content {
+  transform: none !important;
 }
 
 /* Custom dialog */
 .custom-dialog mat-dialog-container {
-    padding: 0;
-    border-radius: 10px;
-    overflow: hidden;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .custom-dialog h1[mat-dialog-title] {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-    color: white;
-    background: slateblue;
-    box-shadow: 3px 2px 15px 2px gray;
-  }
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  color: white;
+  background: slateblue;
+  box-shadow: 3px 2px 15px 2px gray;
+}

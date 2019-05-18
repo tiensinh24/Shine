@@ -3,20 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using Shine.Data.Models.Interfaces;
 
-namespace Shine.Data.Models
-{
-    public abstract class Order : IAuditedEntityBase, ISoftDelete
-    {
+namespace Shine.Data.Models {
+    public abstract class Order : IAuditedEntityBase, ISoftDelete {
 #region Properties
         public int OrderId { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string OrderNumber { get; set; }
+
         [Required]
         public DateTime DateOfIssue { get; set; }
         public DateTime TimeForPayment { get; set; }
+        public decimal Rating { get; set; }
         public bool OrderType { get; set; }
 #endregion
 
@@ -32,11 +34,7 @@ namespace Shine.Data.Models
 #endregion
     }
 
-    public class OrderBuy : Order, INotRoot
-    {
-    }
+    public class OrderBuy : Order, INotRoot { }
 
-    public class OrderSell : Order, INotRoot
-    {
-    }
+    public class OrderSell : Order, INotRoot { }
 }
