@@ -1,11 +1,17 @@
+import {
+    NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions
+} from 'ngx-gallery';
+import {
+    SupplierEditDialogComponent
+} from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+import { environment } from 'src/environments/environment';
+
 import { formatNumber } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
-import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
-import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
-import { environment } from 'src/environments/environment';
+
 import { SupplierDetail } from '../_interfaces/supplier-detail';
 import { SupplierService } from '../_services/supplier.service';
 
@@ -167,6 +173,11 @@ export class SupplierDetailComponent implements OnInit {
   // Get from @Output
   refreshSetMainPhoto(photo: PhotoForPerson) {
     this.mainPhotoUrl = photo.photoUrl;
+  }
+
+  // Get from @Ouput
+  refreshRating(rating: number) {
+    this.rating = rating;
   }
 
   toggleMultiButton() {

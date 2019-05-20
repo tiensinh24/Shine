@@ -116,7 +116,7 @@
       <app-products-not-added [title]="title"></app-products-not-added>
     </div>
     <div *ngIf="isOrder">
-      <app-supplier-orders></app-supplier-orders>
+      <app-supplier-orders (avgRating)="refreshRating($event)"></app-supplier-orders>
     </div>
   </div>
 </mat-card>

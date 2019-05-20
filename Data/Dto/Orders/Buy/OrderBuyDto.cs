@@ -7,5 +7,6 @@ namespace Shine.Data.Dto.Orders.Buy {
         public DateTime DateOfIssue { get; set; }
         public DateTime TimeForPayment { get; set; }
         public int PersonId { get; set; }
+        public decimal Rating { get; set; }
     }
 }

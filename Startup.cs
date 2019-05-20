@@ -64,10 +64,10 @@ namespace Shine {
                 cfg.SaveToken = true;
                 cfg.TokenValidationParameters = new TokenValidationParameters() {
                     // Standard configuration
-                    ValidIssuer = Configuration["Auth:Jwt:Issuer"],
-                    ValidAudience = Configuration["Auth:Jwt:Audience"],
+                    ValidIssuer = Configuration ["Auth:Jwt:Issuer"],
+                    ValidAudience = Configuration ["Auth:Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"])
+                    Encoding.UTF8.GetBytes(Configuration ["Auth:Jwt:Key"])
                     ),
                     ClockSkew = TimeSpan.Zero,
 
@@ -96,7 +96,7 @@ namespace Shine {
             services.AddEntityFrameworkSqlServer();
 
             services.AddDbContextPool<AppDbContext>((serviceProvider, optionsBuilder) => {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_dk"));
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_w"));
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
 
@@ -156,7 +156,7 @@ namespace Shine {
             // Load MapsterConfig
             MapsterSetting.Load();
 
-#region Seeder
+            #region Seeder
             // Create a service scope to get an AppDbContext instance using DI
             using(var serviceScope =
                 app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
@@ -170,7 +170,7 @@ namespace Shine {
                 // Seed the Db
                 DbSeeder.Seed(dbContext, roleManager, userManager);
             }
-#endregion
+            #endregion
         }
     }
 }
