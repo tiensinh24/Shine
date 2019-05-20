@@ -188,7 +188,7 @@ namespace Shine.Data.Infrastructures.Repositories {
 
 #region Get Values
 
-        public async Task<IEnumerable<ProductSelectDto>> GetProductsBySupplierForSelectAsync(int supplierId) {
+        public async Task<IEnumerable<ProductSelectDto>> GetProductsForSelectAsync(int supplierId) {
             var query = await _context.PersonProducts
                 .AsNoTracking()
                 .Include(p => p.Product)
@@ -201,7 +201,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             return query;
         }
 
-        public async Task<PagedList<ProductsBySupplierDto>> GetPagedProductsBySupplierAsync(
+        public async Task<PagedList<ProductsBySupplierDto>> GetPagedProductsAsync(
             PagingParams pagingParams, SortParams sortParams, string filter,
             Expression<Func<ProductsBySupplierDto, bool>> condition) {
 
@@ -300,6 +300,71 @@ namespace Shine.Data.Infrastructures.Repositories {
             }
 
             return entity.Adapt<PersonProductDto>();
+
+        }
+
+#endregion
+
+#region Orders
+
+        public async Task<IEnumerable<SupplierOrdersDto>> GetOrdersAsync(int supplierId) {
+            var orders = await _context.Set<OrderBuy>()
+                .AsNoTracking()
+                .Where(o => o.PersonId == supplierId)
+                .ProjectToType<SupplierOrdersDto>()
+                .ToListAsync();
+
+            return orders;
+        }
+
+        public async Task<PagedList<SupplierOrdersDto>> GetPagedOrdersAsync(PagingParams pagingParams, SortParams sortParams, string filter, Expression<Func<SupplierOrdersDto, bool>> condition) {
+            var source = _context.Set<OrderBuy>()
+                .AsNoTracking()
+                .ProjectToType<SupplierOrdersDto>();
+
+            switch (sortParams.SortOrder) {
+                case "asc":
+                    switch (sortParams.SortColumn) {
+                        case "orderNumber":
+                            source = source.OrderBy(p => p.OrderNumber);
+                            break;
+                        case "dateOfIssue":
+                            source = source.OrderBy(p => p.DateOfIssue);
+                            break;
+                        case "rating":
+                            source = source.OrderBy(p => p.Rating);
+                            break;
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn) {
+                        case "orderNumber":
+                            source = source.OrderByDescending(p => p.OrderNumber);
+                            break;
+                        case "dateOfIssue":
+                            source = source.OrderByDescending(p => p.DateOfIssue);
+                            break;
+                        case "rating":
+                            source = source.OrderByDescending(p => p.Rating);
+                            break;
+                    }
+                    break;
+
+                default:
+                    source = source.OrderByDescending(c => c.DateOfIssue);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(filter)) {
+                source = source.Where(p => (p.OrderNumber + p.DateOfIssue).ToLower().Contains(filter.ToLower()));
+            }
+
+            if (condition != null) {
+                source = source.Where(condition);
+            }
+
+            return await PagedList<SupplierOrdersDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
 
         }
 

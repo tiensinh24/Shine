@@ -1,3 +1,4 @@
+import { formatNumber } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
@@ -25,9 +26,15 @@ export class SupplierDetailComponent implements OnInit {
   isUpload = false;
   isList = true;
   isAdd = false;
+  isOrder = false;
   isNoPhoto = false;
   photoUploadUrl: string;
-  rate = 4;
+  rating: number;
+  dataSet = {
+    showLabels: false, // hide the label
+    labels: ['Bad', 'Not Bad', 'Average', 'Good', 'Best'],
+    starSize: '16px' // Set the five Labels
+  };
 
   // Ngx-Gallery
   galleryOptions: NgxGalleryOptions[] = [];
@@ -37,7 +44,6 @@ export class SupplierDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSupplier();
-    this.rate = 4;
   }
 
   getImagesForGallery(photos: PhotoForPerson[]) {
@@ -86,6 +92,7 @@ export class SupplierDetailComponent implements OnInit {
     this.supplierService.getSupplier(this.supplierId).subscribe(res => {
       if (res) {
         this.photoUploadUrl = `${this.baseUrl}api/photo/person/${res.personId}`;
+        this.rating = +formatNumber(res.rating, 'en-GB', '1.1-1');
 
         this.supplier = res;
         if (res.photos.length > 0) {
@@ -171,6 +178,7 @@ export class SupplierDetailComponent implements OnInit {
     this.isList = false;
     this.isAdd = false;
     this.isUpload = false;
+    this.isOrder = false;
   }
 
   toggleUpload() {
@@ -178,6 +186,7 @@ export class SupplierDetailComponent implements OnInit {
     this.isGallery = false;
     this.isList = false;
     this.isAdd = false;
+    this.isOrder = false;
   }
 
   toggleList() {
@@ -185,10 +194,20 @@ export class SupplierDetailComponent implements OnInit {
     this.isGallery = false;
     this.isAdd = false;
     this.isUpload = false;
+    this.isOrder = false;
   }
 
   toggleAdd() {
     this.isAdd = !this.isAdd;
+    this.isGallery = false;
+    this.isUpload = false;
+    this.isList = false;
+    this.isOrder = false;
+  }
+
+  toggleOrder() {
+    this.isOrder = !this.isOrder;
+    this.isAdd = false;
     this.isGallery = false;
     this.isUpload = false;
     this.isList = false;

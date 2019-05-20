@@ -42,10 +42,10 @@ namespace Shine.Controllers.Interfaces {
 
 #region Get Values
 
-        Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsBySupplier(
+        Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProducts(
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-        Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsBySupplierForSelect(int supplierId);
+        Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsForSelect(int supplierId);
 #endregion
 
 #region Actions
@@ -53,6 +53,15 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<PersonProductDto>> DeleteSupplierProduct(PersonProduct model);
 #endregion
+
+#endregion
+
+#region Orders
+
+        Task<ActionResult<IEnumerable<SupplierOrdersDto>>> GetOrders(int supplierId);
+
+        Task<ActionResult<Paged<SupplierOrdersDto>>> GetPagedOrders(
+            int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
 #endregion
 

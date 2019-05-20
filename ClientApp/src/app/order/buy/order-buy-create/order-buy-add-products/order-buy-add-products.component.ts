@@ -38,7 +38,7 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
 
   getProductsBySupplier(supplierId: number) {
     this.productsSub = this.supplierService
-      .getProductsBySupplierForSelect(supplierId)
+      .getProductsForSelect(supplierId)
       .subscribe((products: ProductSelect[]) => {
         this.products = products;
       });

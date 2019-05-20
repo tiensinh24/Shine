@@ -3,8 +3,8 @@ import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
-import { SupplierProduct } from '../_interfaces/supplier-product';
-import { SupplierService } from '../_services/supplier.service';
+import { SupplierProduct } from '../../_interfaces/supplier-product';
+import { SupplierService } from '../../_services/supplier.service';
 
 interface ProductsNotAdded {
   category: string;

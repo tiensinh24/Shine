@@ -1,6 +1,6 @@
-mat-card-title {
+h1.mat-h1 {
   text-align: center;
-  margin-bottom: 16px;
+  margin: 1rem 0;
   color: royalblue;
 }
 /*# sourceMappingURL=person-photo-gallery.component.css.map */

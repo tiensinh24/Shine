@@ -16,7 +16,7 @@ export class ProductsBySupplierDataSource extends TableSource<ProductBuyList> {
     this.loadingSubject.next(true);
 
     this.supplierService
-      .getPagedProductsBySupplier(supplierId, pagingParams, sortParams, filter)
+      .getPagedProducts(supplierId, pagingParams, sortParams, filter)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))

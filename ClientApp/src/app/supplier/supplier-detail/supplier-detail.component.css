@@ -2,7 +2,21 @@
   margin: 1em;
 }
 
+#main-container {
+  padding: 0;
+}
+
+#main-container mat-card-header,
+#main-container mat-card-content {
+  padding: 1rem 1rem 0 1rem;
+}
+
+#supplier-container {
+  background: lightyellow;
+}
+
 .product-table {
+  margin: 0;
   width: 100%;
   height: calc(100vh - 155px);
   overflow-y: auto;

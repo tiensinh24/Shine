@@ -39,7 +39,8 @@ namespace Shine.Data.Dto._Mapster {
                     src => src.Photos.Select(p => new { p.PersonId, p.PhotoId, p.PhotoUrl, p.IsMain })
                     .OrderByDescending(p => p.IsMain)
                 ).Map(
-                    dest => dest.Rating, src => src.Orders.Average(o => o.Rating)
+                    dest => dest.Rating,
+                    src => src.Orders.Count() > 0 ? src.Orders.Average(o => o.Rating) : 0
                 );
 
             TypeAdapterConfig<Supplier, SupplierSelectDto>.NewConfig()

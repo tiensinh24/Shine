@@ -49,9 +49,9 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
 #region Get Values
 
-        Task<IEnumerable<ProductSelectDto>> GetProductsBySupplierForSelectAsync(int supplierId);
+        Task<IEnumerable<ProductSelectDto>> GetProductsForSelectAsync(int supplierId);
 
-        Task<PagedList<ProductsBySupplierDto>> GetPagedProductsBySupplierAsync(
+        Task<PagedList<ProductsBySupplierDto>> GetPagedProductsAsync(
             PagingParams pagingParams, SortParams sortParams, string filter,
             Expression<Func<ProductsBySupplierDto, bool>> condition);
 
@@ -64,6 +64,16 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<PersonProductDto> DeleteSupplierProductAsync(PersonProduct model);
 
 #endregion
+
+#endregion
+
+#region Orders
+
+        Task<IEnumerable<SupplierOrdersDto>> GetOrdersAsync(int supplierId);
+
+        Task<PagedList<SupplierOrdersDto>> GetPagedOrdersAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter,
+            Expression<Func<SupplierOrdersDto, bool>> condition);
 
 #endregion
 

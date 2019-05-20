@@ -9,5 +9,6 @@ namespace Shine.Data.Dto.Orders.Buy {
         public int PersonId { get; set; }
 
         public string SupplierName { get; set; }
+
     }
 }

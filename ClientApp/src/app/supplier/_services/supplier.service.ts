@@ -5,15 +5,17 @@ import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ProductSelect } from 'src/app/product/_interfaces/product-select';
 import { PagedProductBuy } from 'src/app/product/buy/_interfaces/paged-product-buy';
-import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 import { environment } from 'src/environments/environment';
 import { PagedSupplier } from '../_interfaces/paged-supplier';
+import { PagedSupplierOrders } from '../_interfaces/paged-supplier-orders';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierDetail } from '../_interfaces/supplier-detail';
 import { SupplierList } from '../_interfaces/supplier-list';
+import { SupplierOrders } from '../_interfaces/supplier-orders';
 import { SupplierProduct } from '../_interfaces/supplier-product';
 import { ProductsBySupplier } from '../_interfaces/supplier-products-list';
 import { SupplierSelect } from '../_interfaces/supplier-select';
+
 
 @Injectable({
   providedIn: 'root'
@@ -67,18 +69,18 @@ export class SupplierService {
 
   // *SupplierProduct
 
-  getProductsBySupplierForSelect(supplierId: number): Observable<ProductSelect[]> {
+  getProductsForSelect(supplierId: number): Observable<ProductSelect[]> {
     return this.http.get<ProductSelect[]>(`${this.baseUrl}api/supplier/${supplierId}/products-for-select`);
   }
 
-  getPagedProductsBySupplier(
+  getPagedProducts(
     supplierId: number,
     pagingParams: PagingParams,
     sortParams?: SortParams,
     filter = ''
   ): Observable<PagedProductBuy> {
     let queryParams = new HttpParams()
-      .set('supplierId', `${supplierId}`)
+
       .set('pageIndex', `${pagingParams.pageIndex}`)
       .set('pageSize', `${pagingParams.pageSize}`)
       .set('filter', `${filter}`);
@@ -103,5 +105,32 @@ export class SupplierService {
 
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {
     return this.http.request<SupplierProduct>('delete', `${this.baseUrl}api/supplier/product/`, { body: supprod });
+  }
+
+  // * Orders
+
+  getOrders(supplierId: number): Observable<SupplierOrders[]> {
+    return this.http.get<SupplierOrders[]>(`${this.baseUrl}api/supplier/${supplierId}/orders`);
+  }
+
+  getPagedOrders(
+    supplierId: number,
+    pagingParams: PagingParams,
+    sortParams?: SortParams,
+    filter = ''
+  ): Observable<PagedSupplierOrders> {
+    let queryParams = new HttpParams()
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
+
+    if (sortParams !== undefined) {
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }
+
+    return this.http.get<PagedSupplierOrders>(`${this.baseUrl}api/supplier/${supplierId}/paged-orders`, {
+      params: queryParams
+    });
   }
 }

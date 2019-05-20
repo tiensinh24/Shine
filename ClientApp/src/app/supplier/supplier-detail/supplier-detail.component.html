@@ -1,11 +1,24 @@
-<mat-card fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" class="mat-elevation-z8">
+<mat-card id="main-container" fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" class="mat-elevation-z8">
   <!-- Card detail -->
-  <mat-card fxFlex="25" fxFlex.xs="100">
+  <div id="supplier-container" fxFlex="30" fxFlex.xs="100">
     <mat-card-header>
       <img mat-card-avatar src="{{ mainPhotoUrl }}" />
 
       <mat-card-title>{{ supplier.fullName }}</mat-card-title>
-      <mat-card-subtitle>{{ supplier.gender | gender }}</mat-card-subtitle>
+      <mat-card-subtitle
+        ><div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+          <div>{{ supplier.gender | gender }}</div>
+
+          <div>
+            <app-star-rating
+              *ngIf="rating >= 0"
+              [rating]="rating"
+              [isEditable]="false"
+              [dataSet]="dataSet"
+            ></app-star-rating>
+          </div>
+        </div>
+      </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content fxLayout="column" fxLayoutGap="16px">
@@ -38,15 +51,15 @@
         </tr>
       </table>
     </mat-card-content>
-    <mat-card-actions fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
-      <button fxFlex="30" mat-raised-button color="warn" (click)="openDialog()">
-        Edit
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+      <button mat-icon-button color="warn" (click)="openDialog()">
+        <mat-icon>edit</mat-icon>
       </button>
-      <button fxFlex="30" mat-raised-button color="primary" [routerLink]="['/supplier/list']">
-        Lists
+      <button mat-icon-button color="primary" [routerLink]="['/supplier/list']">
+        <mat-icon>list</mat-icon>
       </button>
     </mat-card-actions>
-  </mat-card>
+  </div>
 
   <!-- Button Group -->
   <div class="more-button" fxLayout.xs="row" fxLayout="column" fxLayoutGap="64px">
@@ -79,6 +92,9 @@
       <button *ngIf="!isUpload" mat-mini-fab (click)="toggleUpload()">
         <mat-icon matTooltip="Upload photos" aria-label="Upload photos">cloud_upload</mat-icon>
       </button>
+      <button *ngIf="!isOrder" mat-mini-fab (click)="toggleOrder()">
+        <mat-icon matTooltip="Orders list" aria-label="Orders list">shopping_cart</mat-icon>
+      </button>
     </div>
   </div>
 
@@ -99,7 +115,8 @@
     <div *ngIf="isAdd">
       <app-products-not-added [title]="title"></app-products-not-added>
     </div>
+    <div *ngIf="isOrder">
+      <app-supplier-orders></app-supplier-orders>
+    </div>
   </div>
 </mat-card>
-
-<star-rating size="small" [starType]="'svg'" [rating]="4"></star-rating>

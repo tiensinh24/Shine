@@ -133,16 +133,16 @@ namespace Shine.Controllers {
 #region Get Values
 
         [HttpGet("{supplierId}/products-for-select")]
-        public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsBySupplierForSelect(int supplierId) {
-            var products = await _repository.GetProductsBySupplierForSelectAsync(supplierId);
+        public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsForSelect(int supplierId) {
+            var products = await _repository.GetProductsForSelectAsync(supplierId);
 
             return Ok(products);
         }
 
         [HttpGet("{supplierId}/paged-products")]
-        public async Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsBySupplier(
-            [FromQuery] int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
-            var query = await _repository.GetPagedProductsBySupplierAsync(
+        public async Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProducts(
+            int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
+            var query = await _repository.GetPagedProductsAsync(
                 pagingParams, sortParams, filter, p => p.PersonId == supplierId);
 
             return new Paged<ProductsBySupplierDto>(query);
@@ -176,6 +176,25 @@ namespace Shine.Controllers {
         }
 
 #endregion
+
+#endregion
+
+#region Orders
+
+        [HttpGet("{supplierId}/orders")]
+        public async Task<ActionResult<IEnumerable<SupplierOrdersDto>>> GetOrders(int supplierId) {
+            var orders = await _repository.GetOrdersAsync(supplierId);
+
+            return Ok(orders);
+        }
+
+        [HttpGet("{supplierId}/paged-orders")]
+        public async Task<ActionResult<Paged<SupplierOrdersDto>>> GetPagedOrders(int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
+            var query = await _repository.GetPagedOrdersAsync(
+                pagingParams, sortParams, filter, p => p.PersonId == supplierId);
+
+            return new Paged<SupplierOrdersDto>(query);
+        }
 
 #endregion
 
