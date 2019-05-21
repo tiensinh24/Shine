@@ -1,17 +1,11 @@
-import {
-    NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions
-} from 'ngx-gallery';
-import {
-    SupplierEditDialogComponent
-} from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
-import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
-import { environment } from 'src/environments/environment';
-
 import { formatNumber } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-
+import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
+import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
+import { environment } from 'src/environments/environment';
 import { SupplierDetail } from '../_interfaces/supplier-detail';
 import { SupplierService } from '../_services/supplier.service';
 
@@ -35,12 +29,9 @@ export class SupplierDetailComponent implements OnInit {
   isOrder = false;
   isNoPhoto = false;
   photoUploadUrl: string;
+
+  // Star rating
   rating: number;
-  dataSet = {
-    showLabels: false, // hide the label
-    labels: ['Bad', 'Not Bad', 'Average', 'Good', 'Best'],
-    starSize: '16px' // Set the five Labels
-  };
 
   // Ngx-Gallery
   galleryOptions: NgxGalleryOptions[] = [];

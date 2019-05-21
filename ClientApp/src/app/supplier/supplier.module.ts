@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { StarRatingModule } from 'angular-rating-star';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { ProductsAddedComponent } from './supplier-detail/products-added/products-added.component';
 import { ProductsNotAddedComponent } from './supplier-detail/products-not-added/products-not-added.component';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
+import { SupplierOrdersComponent } from './supplier-detail/supplier-orders/supplier-orders.component';
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
@@ -14,7 +14,7 @@ import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/phot
 import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SharedModule } from '../_shared/shared.module';
-import { SupplierOrdersComponent } from './supplier-detail/supplier-orders/supplier-orders.component';
+
 
 @NgModule({
   declarations: [
@@ -45,8 +45,6 @@ import { SupplierOrdersComponent } from './supplier-detail/supplier-orders/suppl
 
     // Ngx-Gallery
     NgxGalleryModule,
-
-    StarRatingModule,
 
     // Routing
     SupplierRoutingModule

@@ -54,6 +54,7 @@
 }
 
 .more-button > button {
+  margin-top: 1rem;
   -webkit-transition: cubic-bezier(0.075, 0.82, 0.165, 1) 250ms;
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 250ms;
 }

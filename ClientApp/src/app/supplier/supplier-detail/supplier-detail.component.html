@@ -10,12 +10,7 @@
           <div>{{ supplier.gender | gender }}</div>
 
           <div>
-            <app-star-rating
-              *ngIf="rating >= 0"
-              [rating]="rating"
-              [isEditable]="false"
-              [dataSet]="dataSet"
-            ></app-star-rating>
+            <star-rating [starType]="'svg'" [rating]="rating" [showHalfStars]="true" [readOnly]="true"></star-rating>
           </div>
         </div>
       </mat-card-subtitle>

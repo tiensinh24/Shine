@@ -7,6 +7,7 @@ export interface OrderBuyDetail {
   dateOfIssue: Date;
   timeForPayment: Date;
   personId: number;
+  rating: number;
 
   supplierName: string;
   orderTotal: number;

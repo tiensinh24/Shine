@@ -1,3 +1,7 @@
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
@@ -5,14 +9,6 @@ import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
-
-import { SelectionModel } from '@angular/cdk/collections';
-import {
-    AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild
-} from '@angular/core';
-import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
-
 import { SupplierOrdersDataSource } from '../../_data-source/supplier-orders-data-source';
 import { SupplierOrders } from '../../_interfaces/supplier-orders';
 import { SupplierService } from '../../_services/supplier.service';
@@ -27,14 +23,10 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
   displayedColumns = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'rating', 'actions'];
   selection = new SelectionModel<SupplierOrders>(true, [], false);
   supplierId: number;
-  dataSet = {
-    showLabels: false,
-    showNumber: false
-  };
 
   @Output() avgRating = new EventEmitter<number>();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator = <MatPaginator>{};
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
@@ -63,30 +55,33 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Server-side search
-    fromEvent(this.input.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(250),
-        distinctUntilChanged(),
-        tap(() => {
-          this.paginator.pageIndex = 0;
-          this.loadOrdersPage();
-        })
-      )
-      .subscribe();
+    if (!this.dataSource.isNull) {
+      // Server-side search
+      fromEvent(this.input.nativeElement, 'keyup')
+        .pipe(
+          debounceTime(250),
+          distinctUntilChanged(),
+          tap(() => {
+            this.paginator.pageIndex = 0;
+            this.paginator.pageSize = 8;
+            this.loadOrdersPage();
+          })
+        )
+        .subscribe();
 
-    // reset the paginator after sorting
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+      // reset the paginator after sorting
+      this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    // on sort or paginate events, load a new page
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => {
-          this.loadOrdersPage();
-          setTimeout(() => this.selection.clear(), 50);
-        })
-      )
-      .subscribe();
+      // on sort or paginate events, load a new page
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(
+          tap(() => {
+            this.loadOrdersPage();
+            setTimeout(() => this.selection.clear(), 50);
+          })
+        )
+        .subscribe();
+    }
   }
 
   loadOrdersPage() {

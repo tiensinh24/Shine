@@ -1,4 +1,4 @@
-<div fxFlex fxLayout="column">
+<div *ngIf="!dataSource.isNull; else noOrders" fxFlex fxLayout="column">
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
@@ -35,16 +35,18 @@
     </ng-container>
     <!-- rating Column -->
     <ng-container matColumnDef="rating">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></th>
       <td mat-cell *matCellDef="let row">
-        <app-star-rating [rating]="row.rating" [isEditable]="false" [dataSet]="dataSet"></app-star-rating>
+        <star-rating [starType]="'svg'" [rating]="row.rating" [readOnly]="true"></star-rating>
       </td>
     </ng-container>
-
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef class="actions"></th>
       <td mat-cell *matCellDef="let row">
+        <button mat-icon-button matTooltip="Order detail" color="primary" [routerLink]="['/order-buy', row.orderId]">
+          <mat-icon>list_alt</mat-icon>
+        </button>
         <button matTooltip="Delete order" mat-icon-button color="warn" (click)="deleteOrder(row)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
@@ -70,3 +72,10 @@
     </mat-form-field>
   </div>
 </div>
+
+<ng-template #noOrders>
+  <div id="no-orders">
+    <h2 class="mat-h2">No orders!</h2>
+    <span>This supplier has no order placed.</span>
+  </div>
+</ng-template>

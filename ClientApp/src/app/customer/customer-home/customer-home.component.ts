@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customer-home.component.css']
 })
 export class CustomerHomeComponent implements OnInit {
+  rating = 3;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onClickChange($event: any) {
+    this.rating = $event.rating;
   }
-
 }

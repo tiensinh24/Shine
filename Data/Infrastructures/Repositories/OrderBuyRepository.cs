@@ -76,6 +76,9 @@ namespace Shine.Data.Infrastructures.Repositories {
                         case "supplierName":
                             source = source.OrderBy(p => p.SupplierName);
                             break;
+                        case "rating":
+                            source = source.OrderBy(p => p.Rating);
+                            break;
                     }
                     break;
 
@@ -92,6 +95,9 @@ namespace Shine.Data.Infrastructures.Repositories {
                             break;
                         case "supplierName":
                             source = source.OrderByDescending(p => p.SupplierName);
+                            break;
+                        case "rating":
+                            source = source.OrderByDescending(p => p.Rating);
                             break;
                     }
                     break;
@@ -151,6 +157,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                 order.DateOfIssue = orderBuy.DateOfIssue;
                 order.TimeForPayment = orderBuy.TimeForPayment;
                 order.PersonId = orderBuy.PersonId;
+                order.Rating = orderBuy.Rating;
             }
 
             return order.Adapt<OrderBuyDto>();

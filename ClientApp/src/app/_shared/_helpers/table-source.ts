@@ -1,8 +1,8 @@
-import { DataSource } from '@angular/cdk/table';
 import { CollectionViewer } from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-
 import { Paging } from '../_intefaces/paging';
+
 
 export class TableSource<T> implements DataSource<T> {
   protected dataSubject = new BehaviorSubject<T[]>([]);
@@ -12,6 +12,7 @@ export class TableSource<T> implements DataSource<T> {
   public data = this.dataSubject.asObservable();
   public paging = this.pagingSubject.asObservable();
   public isLoading = this.loadingSubject.asObservable();
+  public isNull = false;
 
   constructor() {}
 

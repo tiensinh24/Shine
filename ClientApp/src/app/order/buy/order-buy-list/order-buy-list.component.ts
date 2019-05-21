@@ -21,9 +21,15 @@ import { OrderBuyService } from '../_services/order-buy.service';
 })
 export class OrderBuyListComponent implements OnInit, AfterViewInit {
   dataSource: OrderBuyDataSource;
-  displayedColumns = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'actions'];
+  displayedColumns = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'rating', 'actions'];
   selection = new SelectionModel<OrderBuyList>(true, []);
   title = 'Order List';
+
+  // Star rating
+  dataSet = {
+    showLabels: false,
+    showNumber: false
+  };
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -159,12 +165,13 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '800px',
-      height: '550px',
+      height: '585px',
       panelClass: 'custom-dialog'
     };
 
     if (orderId > 0) {
       dialogConfig.data = {
+        rating: orderEdit.rating,
         orderId: orderEdit.orderId,
         orderNumber: orderEdit.orderNumber,
         dateOfIssue: orderEdit.dateOfIssue,
@@ -181,6 +188,7 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((data: OrderBuyList) => {
       if (data) {
         this.loadOrdersPage();
+        this.snackBar.open(`Order ${data.orderNumber} updated`, 'Success');
       }
 
       this.selection.clear();

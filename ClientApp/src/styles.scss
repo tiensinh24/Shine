@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+// @import "~css-star-rating/scss/star-rating";
+@import "../node_modules/css-star-rating/scss/star-rating.scss";
+
 html,
 body {
   height: 100%;

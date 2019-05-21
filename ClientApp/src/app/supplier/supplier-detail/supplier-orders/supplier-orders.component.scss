@@ -17,3 +17,9 @@
   background: white;
   z-index: 1;
 }
+
+#no-orders {
+  & h2.mat-h2 {
+    margin: 1rem 0;
+  }
+}

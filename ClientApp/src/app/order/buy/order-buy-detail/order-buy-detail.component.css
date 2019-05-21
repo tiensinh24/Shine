@@ -18,6 +18,11 @@
   margin-bottom: 1rem;
   border-radius: 20px 20px 0 0;
   background: mediumslateblue;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  justify-items: center;
 }
 
 .order-card > mat-card-header.title {

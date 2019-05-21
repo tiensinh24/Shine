@@ -22,6 +22,13 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   order = <OrderBuyDetail>{};
   isPayment = false;
 
+  // Star rating
+  dataSet = {
+    showLabels: false,
+    showNumber: false,
+    colors: ['red', 'orange', 'greenyellow', 'gold', 'yellow']
+  };
+
   // Products table
   displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];
   dataSource = new MatTableDataSource<OrderBuyProducts>([]);
@@ -62,7 +69,7 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '800px',
-      height: '550px',
+      height: '585px',
       panelClass: 'custom-dialog'
     };
 
@@ -73,7 +80,8 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
         orderNumber: this.order.orderNumber,
         dateOfIssue: this.order.dateOfIssue,
         timeForPayment: this.order.timeForPayment,
-        personId: this.order.personId
+        personId: this.order.personId,
+        rating: this.order.rating
       };
 
       const dialogRef = this.dialog.open(OrderBuyEditDialogComponent, dialogConfig);

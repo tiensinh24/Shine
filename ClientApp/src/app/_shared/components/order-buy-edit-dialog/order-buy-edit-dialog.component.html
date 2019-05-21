@@ -4,6 +4,9 @@
 <mat-dialog-content>
   <!-- Formgroup -->
   <form class="edit-form" fxLayout="column" [formGroup]="formGroup">
+    <!-- Rating -->
+    <star-rating-control formControlName="rating" [starType]="'svg'" labelText="Rating"></star-rating-control>
+
     <!-- OrderNumber -->
     <mat-form-field appearance="outline">
       <mat-label>Order Number</mat-label>

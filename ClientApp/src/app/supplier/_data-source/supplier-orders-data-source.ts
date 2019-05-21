@@ -3,10 +3,10 @@ import { catchError, finalize } from 'rxjs/operators';
 import { TableSource } from 'src/app/_shared/_helpers/table-source';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-
 import { PagedSupplierOrders } from '../_interfaces/paged-supplier-orders';
 import { SupplierOrders } from '../_interfaces/supplier-orders';
 import { SupplierService } from '../_services/supplier.service';
+
 
 export class SupplierOrdersDataSource extends TableSource<SupplierOrders> {
   constructor(private supplierService: SupplierService) {
@@ -25,6 +25,10 @@ export class SupplierOrdersDataSource extends TableSource<SupplierOrders> {
       .subscribe((res: PagedSupplierOrders) => {
         this.dataSubject.next(res.items);
         this.pagingSubject.next(res.paging);
+
+        if (res.items.length === 0) {
+          this.isNull = true;
+        }
       });
   }
 }

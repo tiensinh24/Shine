@@ -4,6 +4,7 @@ export interface OrderBuyList {
   dateOfIssue: Date;
   timeForPayment: Date;
   personId: number;
+  rating: number;
 
   supplierName: string;
 }

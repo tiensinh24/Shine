@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
+import { ClickEvent } from 'angular-star-rating';
 import { Subscription } from 'rxjs';
 import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
@@ -19,6 +20,9 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   suppliers: SupplierSelect[];
   formGroup: FormGroup;
   title: string;
+
+  // Star rating
+  rating: number;
 
   suppliersSub = new Subscription();
   orderUpdateSub = new Subscription();
@@ -53,16 +57,20 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
-      personId: ['', Validators.required]
+      personId: ['', Validators.required],
+      rating: ['']
     });
   }
 
   updateForm() {
+    this.rating = this.dataFromDetail.rating;
+
     this.formGroup.setValue({
       orderNumber: this.dataFromDetail.orderNumber,
       dateOfIssue: this.dataFromDetail.dateOfIssue,
       timeForPayment: this.dataFromDetail.timeForPayment,
-      personId: this.dataFromDetail.personId
+      personId: this.dataFromDetail.personId,
+      rating: this.dataFromDetail.rating
     });
   }
 
@@ -78,7 +86,8 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: this.formGroup.value.orderNumber,
       dateOfIssue: this.formGroup.value.dateOfIssue,
       timeForPayment: this.formGroup.value.timeForPayment,
-      personId: this.formGroup.value.personId
+      personId: this.formGroup.value.personId,
+      rating: this.formGroup.value.rating
     };
 
     this.orderUpdateSub = this.orderBuyService.updateOrder(tempOrder).subscribe(res => {
