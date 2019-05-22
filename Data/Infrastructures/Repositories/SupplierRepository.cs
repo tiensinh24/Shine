@@ -81,6 +81,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                 .AsNoTracking()
                 .Include(s => s.Country)
                 .Include(s => s.Photos)
+                .Include(s => s.Orders)
                 .ProjectToType<SupplierListDto>();
 
             switch (sortParams.SortOrder) {
@@ -91,6 +92,15 @@ namespace Shine.Data.Infrastructures.Repositories {
                             break;
                         case "dateOfBirth":
                             source = source.OrderBy(s => s.DateOfBirth);
+                            break;
+                        case "countryName":
+                            source = source.OrderBy(s => s.CountryName);
+                            break;
+                        case "continentName":
+                            source = source.OrderBy(s => s.ContinentName);
+                            break;
+                        case "rating":
+                            source = source.OrderBy(s => s.Rating);
                             break;
                     }
                     break;
@@ -103,6 +113,15 @@ namespace Shine.Data.Infrastructures.Repositories {
                         case "dateOfBirth":
                             source = source.OrderByDescending(s => s.DateOfBirth);
                             break;
+                        case "countryName":
+                            source = source.OrderByDescending(s => s.CountryName);
+                            break;
+                        case "continentName":
+                            source = source.OrderByDescending(s => s.ContinentName);
+                            break;
+                        case "rating":
+                            source = source.OrderByDescending(s => s.Rating);
+                            break;
                     }
                     break;
 
@@ -112,7 +131,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             }
 
             if (!string.IsNullOrEmpty(filter)) {
-                source = source.Where(s => s.FullName.ToLower().Contains(filter.ToLower()));
+                source = source.Where(s => (s.FullName + s.PersonNumber).ToLower().Contains(filter.ToLower()));
             }
 
             return await PagedList<SupplierListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
@@ -192,8 +211,6 @@ namespace Shine.Data.Infrastructures.Repositories {
             var query = await _context.PersonProducts
                 .AsNoTracking()
                 .Include(p => p.Product)
-                // .ThenInclude(p => p.Category)
-                // .Include(p => p.Person)
                 .Where(p => p.PersonId == supplierId)
                 .ProjectToType<ProductSelectDto>()
                 .ToListAsync();

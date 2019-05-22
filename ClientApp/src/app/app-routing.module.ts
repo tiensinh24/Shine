@@ -20,6 +20,7 @@ const routes: Routes = [
     { path: 'product-sell', canActivate: [AuthGuard], loadChildren: './product/sell/product-sell.module#ProductSellModule' },
     { path: 'category-buy', canActivate: [AuthGuard], loadChildren: './category/buy/category-buy.module#CategoryBuyModule' },
     { path: 'category-sell', canActivate: [AuthGuard], loadChildren: './category/sell/category-sell.module#CategorySellModule' },
+    { path: 'storage', canActivate: [AuthGuard], loadChildren: './storage/storage.module#StorageModule' },
     // manager parent
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },

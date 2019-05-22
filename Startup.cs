@@ -92,6 +92,7 @@ namespace Shine {
             services.AddScoped<IOrderBuyRepository, OrderBuyRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<IStorageRepository, StorageRepository>();
 
             services.AddEntityFrameworkSqlServer();
 

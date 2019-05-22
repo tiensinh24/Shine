@@ -43,6 +43,8 @@ namespace Shine.Data {
         public DbSet<PersonProduct> PersonProducts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductOrder> ProductOrders { get; set; }
+        public DbSet<Storage> Storages { get; set; }
+        public DbSet<StorageProduct> StorageProducts { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -57,6 +59,7 @@ namespace Shine.Data {
             modelBuilder.ApplyConfiguration(new ProductConfig());
             modelBuilder.ApplyConfiguration(new ProductOrderConfig());
             modelBuilder.ApplyConfiguration(new PhotoConfig());
+            modelBuilder.ApplyConfiguration(new StorageProductConfig());
 
             modelBuilder.ShadowProperties();
             SetGlobalQueryFilters(modelBuilder);

@@ -103,7 +103,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                     break;
 
                 default:
-                    source = source.OrderBy(c => c.DateOfIssue);
+                    source = source.OrderByDescending(c => c.DateOfIssue);
                     break;
             }
 

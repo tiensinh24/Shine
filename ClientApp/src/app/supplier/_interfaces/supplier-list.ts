@@ -11,6 +11,7 @@ export interface SupplierList {
   telephone: string;
   fax: string;
   countryId: number;
+  rating: number;
 
   countryName: string;
   continentName: string;

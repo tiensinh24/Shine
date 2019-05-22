@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,iBAAiB,CAAC;EAChB,MAAM,EAAE,IAAI;CACb",
+    "sources": [
+        "storage-list.component.scss"
+    ],
+    "names": [],
+    "file": "storage-list.component.css"
+}

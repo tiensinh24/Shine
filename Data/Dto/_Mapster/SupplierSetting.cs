@@ -22,6 +22,10 @@ namespace Shine.Data.Dto._Mapster {
                 .Map(
                     dest => dest.PhotoUrl,
                     src => src.Photos.FirstOrDefault(p => p.IsMain).PhotoUrl
+                ).Map(
+                    dest => dest.Rating,
+                    src => src.Orders.Count() > 0
+                    ? (src.Orders.Sum(o => o.Rating) / src.Orders.Count()) : 0
                 );
 
             TypeAdapterConfig<Supplier, SupplierDetailDto>.NewConfig()

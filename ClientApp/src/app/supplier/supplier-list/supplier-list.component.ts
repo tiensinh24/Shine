@@ -31,6 +31,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     'fax',
     'countryName',
     'continentName',
+    'rating',
     'actions'
   ];
   selection = new SelectionModel<SupplierList>(true, [], false);

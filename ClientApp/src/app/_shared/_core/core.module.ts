@@ -14,6 +14,7 @@ import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.ser
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ConfirmDialogService } from '../_services/confirm-dialog.service';
 import { ValidateService } from '../_services/validate.service';
+import { StorageService } from 'src/app/storage/_services/storage.service';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ export class CoreModule {
         SupplierService,
         OrderBuyService,
         PhotoService,
+        StorageService,
 
         AuthService,
         AuthGuard,

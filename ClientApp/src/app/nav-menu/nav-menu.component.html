@@ -58,6 +58,7 @@
       </div>
       <!-- Row 2 -->
       <div fxLayout="row">
+        <!-- Customer -->
         <button
           [routerLink]="['/customer']"
           mat-menu-item
@@ -70,6 +71,20 @@
           <span>Customer</span>
         </button>
 
+        <!-- Storage -->
+        <button
+          [routerLink]="['/storage']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">storage</mat-icon>
+          <span>Storage</span>
+        </button>
+
+        <!-- Order -->
         <button
           [routerLink]="['/order-buy']"
           mat-menu-item
