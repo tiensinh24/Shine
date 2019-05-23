@@ -6,9 +6,10 @@ import { StorageRoutingModule } from './storage-routing.module';
 import { StorageComponent } from './storage.component';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SharedModule } from '../_shared/shared.module';
+import { StorageProductEditDialogComponent } from './_dialogs/storage-product-edit-dialog/storage-product-edit-dialog.component';
 
 @NgModule({
-  declarations: [StorageComponent, StorageListComponent, StorageDetailComponent],
+  declarations: [StorageComponent, StorageListComponent, StorageDetailComponent, StorageProductEditDialogComponent],
   imports: [
     // Shared Module
     SharedModule,
@@ -18,6 +19,7 @@ import { SharedModule } from '../_shared/shared.module';
 
     // Routing
     StorageRoutingModule
-  ]
+  ],
+  entryComponents: [StorageProductEditDialogComponent]
 })
 export class StorageModule {}

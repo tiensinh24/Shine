@@ -43,7 +43,6 @@ namespace Shine.Data.Infrastructures.Repositories {
             } else {
                 query = query.OrderBy(p => p.ProductName);
             }
-
             return await query.ToListAsync();
         }
 

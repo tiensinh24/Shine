@@ -10,12 +10,12 @@ import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.
 import { CountryService } from 'src/app/country/_services/country.service';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 import { PhotoService } from 'src/app/photo/_services/photo.service';
+import { ProductService } from 'src/app/product/_services/product.service';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
+import { StorageService } from 'src/app/storage/_services/storage.service';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { ConfirmDialogService } from '../_services/confirm-dialog.service';
 import { ValidateService } from '../_services/validate.service';
-import { StorageService } from 'src/app/storage/_services/storage.service';
-
 
 @NgModule({
   declarations: [],
@@ -29,6 +29,7 @@ export class CoreModule {
         // Core services
         CategoryBuyService,
         ProductBuyService,
+        ProductService,
         CountryService,
         SupplierService,
         OrderBuyService,

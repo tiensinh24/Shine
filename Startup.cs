@@ -83,6 +83,7 @@ namespace Shine {
 
             services.AddScoped(typeof(IRepository), typeof(Repository));
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductBuyRepository, ProductBuyRepository>();
             services.AddScoped<IProductSellRepository, ProductSellRepository>();
             services.AddScoped<ICategoryBuyRepository, CategoryBuyRepository>();

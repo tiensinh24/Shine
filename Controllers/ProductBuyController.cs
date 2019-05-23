@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Shine.Controllers.Interfaces;
 using Shine.Data;
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Infrastructures.Repositories;
@@ -26,10 +27,11 @@ namespace Shine.Controllers {
     public class ProductBuyController : ControllerBase, IProductBuyController {
 #region Private Field
         private readonly IProductBuyRepository _repository;
-#endregion
+#endregion        
 
 #region Constructor
         public ProductBuyController(IProductBuyRepository repository) {
+
             this._repository = repository;
         }
 #endregion
@@ -110,5 +112,6 @@ namespace Shine.Controllers {
         }
 
 #endregion
+
     }
 }
