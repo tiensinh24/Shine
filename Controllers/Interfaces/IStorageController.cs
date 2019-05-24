@@ -36,6 +36,7 @@ namespace Shine.Controllers.Interfaces {
 #region Actions
 
         Task<ActionResult<StorageProduct>> AddStorageProduct(StorageProduct model);
+        Task AddStorageProducts(IEnumerable<StorageProduct> models);
 
 #endregion
 

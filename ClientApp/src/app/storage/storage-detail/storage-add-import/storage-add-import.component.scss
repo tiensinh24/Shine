@@ -1,0 +1,21 @@
+section#form-group {
+  & form {
+    & div.type-slide-toggle {
+      margin-bottom: 1rem;
+
+      & > mat-hint {
+        font-size: smaller;
+      }
+    }
+  }
+}
+
+section#table-review {
+  & table.import-table {
+    width: 100%;
+
+    & th {
+      color: royalblue;
+    }
+  }
+}

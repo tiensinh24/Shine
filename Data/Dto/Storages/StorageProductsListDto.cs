@@ -6,6 +6,7 @@ namespace Shine.Data.Dto.Storages {
         public int ProductId { get; set; }
         public DateTime Date { get; set; }
         public decimal Quantity { get; set; }
+        public Boolean Type { get; set; }
 
         public string ProductName { get; set; }
 

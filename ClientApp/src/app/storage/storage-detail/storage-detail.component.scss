@@ -1,0 +1,39 @@
+// section#add-import {
+
+// }
+
+section#latest {
+  & > mat-card.latest-import,
+  > mat-card.latest-export {
+    padding: 0;
+    background-image: linear-gradient(to bottom, mediumslateblue, white);
+
+    & > mat-card-header {
+      padding: 1rem 0 0 1rem;
+      color: antiquewhite;
+    }
+
+    > mat-card-actions {
+      padding: 0 1.5rem 1.5rem 0;
+
+      & > button.more {
+        border-radius: 20px;
+      }
+    }
+
+    & table {
+      width: 100%;
+
+      & th {
+        color: royalblue;
+      }
+    }
+  }
+}
+
+button.fixed-add-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+}

@@ -88,6 +88,13 @@ namespace Shine.Controllers {
             return query;
         }
 
+        [HttpPost("{storageId}/products")]
+        public async Task AddStorageProducts(IEnumerable<StorageProduct> models) {
+            await _repository.AddStorageProductsAsync(models);
+
+            await _repository.CommitAsync();
+        }
+
 #endregion
 
 #endregion

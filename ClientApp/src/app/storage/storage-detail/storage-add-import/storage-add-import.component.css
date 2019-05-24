@@ -1,0 +1,16 @@
+section#form-group form div.type-slide-toggle {
+  margin-bottom: 1rem;
+}
+
+section#form-group form div.type-slide-toggle > mat-hint {
+  font-size: smaller;
+}
+
+section#table-review table.import-table {
+  width: 100%;
+}
+
+section#table-review table.import-table th {
+  color: royalblue;
+}
+/*# sourceMappingURL=storage-add-import.component.css.map */

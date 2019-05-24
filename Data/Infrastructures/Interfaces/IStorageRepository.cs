@@ -34,6 +34,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
 #region Actions
 
         Task<StorageProduct> AddStorageProductAsync(StorageProduct model);
+        Task AddStorageProductsAsync(IEnumerable<StorageProduct> models);
 
 #endregion
 

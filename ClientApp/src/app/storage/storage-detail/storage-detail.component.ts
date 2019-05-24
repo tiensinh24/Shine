@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StorageProductsList } from '../_interfaces/storage-products-list';
+import { Storages } from '../_interfaces/storages';
 import { StorageService } from '../_services/storage.service';
 
 @Component({
@@ -12,6 +13,10 @@ import { StorageService } from '../_services/storage.service';
 export class StorageDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   storageId = +this.route.snapshot.params.storageId;
+  storage = <Storages>{};
+
+  // Toggle
+  isAdd = false;
 
   latestImportProducts: StorageProductsList[] = [];
   latestExportProducts: StorageProductsList[] = [];
@@ -27,8 +32,15 @@ export class StorageDetailComponent implements OnInit, OnDestroy {
   }
 
   initialize() {
+    this.getStorage(this.storageId);
     this.getLatestImportProducts(this.storageId);
     this.getLatestExportProducts(this.storageId);
+  }
+
+  getStorage(storageId: number) {
+    this.subscription = this.storageService.getStorage(storageId).subscribe((storage: Storages) => {
+      this.storage = storage;
+    });
   }
 
   getLatestImportProducts(storageId: number) {
@@ -45,5 +57,9 @@ export class StorageDetailComponent implements OnInit, OnDestroy {
       .subscribe((products: StorageProductsList[]) => {
         this.latestExportProducts = products;
       });
+  }
+
+  toggleAddImport() {
+    this.isAdd = !this.isAdd;
   }
 }

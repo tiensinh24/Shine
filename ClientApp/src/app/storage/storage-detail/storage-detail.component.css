@@ -1,1 +1,40 @@
-/* No CSS *//*# sourceMappingURL=storage-detail.component.css.map */
+section#latest > mat-card.latest-import,
+section#latest > mat-card.latest-export {
+  padding: 0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(mediumslateblue), to(white));
+  background-image: linear-gradient(to bottom, mediumslateblue, white);
+}
+
+section#latest > mat-card.latest-import > mat-card-header,
+section#latest > mat-card.latest-export > mat-card-header {
+  padding: 1rem 0 0 1rem;
+  color: antiquewhite;
+}
+
+section#latest > mat-card.latest-import > mat-card-actions,
+section#latest > mat-card.latest-export > mat-card-actions {
+  padding: 0 1.5rem 1.5rem 0;
+}
+
+section#latest > mat-card.latest-import > mat-card-actions > button.more,
+section#latest > mat-card.latest-export > mat-card-actions > button.more {
+  border-radius: 20px;
+}
+
+section#latest > mat-card.latest-import table,
+section#latest > mat-card.latest-export table {
+  width: 100%;
+}
+
+section#latest > mat-card.latest-import table th,
+section#latest > mat-card.latest-export table th {
+  color: royalblue;
+}
+
+button.fixed-add-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+/*# sourceMappingURL=storage-detail.component.css.map */

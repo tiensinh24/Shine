@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "storage-product-edit-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "storage-product-edit-dialog.component.css"
+}

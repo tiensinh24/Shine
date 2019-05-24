@@ -7,9 +7,10 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { AgePipe } from './_pipes/age.pipe';
 import { CustomCurrencyPipe } from './_pipes/custom-currency.pipe';
 import { GenderPipe } from './_pipes/gender.pipe';
+import { ImportPipe } from './_pipes/import.pipe';
 
 @NgModule({
-  declarations: [GenderPipe, AgePipe, CustomCurrencyPipe],
+  declarations: [GenderPipe, AgePipe, CustomCurrencyPipe, ImportPipe],
   imports: [
     CommonModule,
 
@@ -31,6 +32,7 @@ import { GenderPipe } from './_pipes/gender.pipe';
     GenderPipe,
     AgePipe,
     CustomCurrencyPipe,
+    ImportPipe,
 
     CommonModule,
 

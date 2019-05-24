@@ -67,10 +67,10 @@ namespace Shine.Data.Infrastructures.Repositories {
             var products = await _context.StorageProducts
                 .AsNoTracking()
                 .Include(s => s.Product)
-                .Where(s => s.Quantity > 0 && s.StorageId == storageId)
+                .Where(s => s.Type == true && s.StorageId == storageId)
                 .OrderByDescending(s => s.Date)
                 .ProjectToType<StorageProductsListDto>()
-                .Take(10)
+                .Take(5)
                 .ToListAsync();
 
             return products;
@@ -80,10 +80,10 @@ namespace Shine.Data.Infrastructures.Repositories {
             var products = await _context.StorageProducts
                 .AsNoTracking()
                 .Include(s => s.Product)
-                .Where(s => s.Quantity < 0 && s.StorageId == storageId)
+                .Where(s => s.Type == false && s.StorageId == storageId)
                 .OrderByDescending(s => s.Date)
                 .ProjectToType<StorageProductsListDto>()
-                .Take(10)
+                .Take(5)
                 .ToListAsync();
 
             return products;
@@ -98,6 +98,11 @@ namespace Shine.Data.Infrastructures.Repositories {
                 .AddAsync(model);
 
             return query.Entity;
+        }
+
+        public async Task AddStorageProductsAsync(IEnumerable<StorageProduct> models) {
+            await _context.StorageProducts
+                .AddRangeAsync(models);
         }
 
 #endregion
