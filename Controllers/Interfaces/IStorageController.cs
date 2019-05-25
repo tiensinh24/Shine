@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace Shine.Controllers.Interfaces {
 #region Actions
 
         Task<ActionResult<StorageProduct>> AddStorageProduct(StorageProduct model);
-        Task AddStorageProducts(IEnumerable<StorageProduct> models);
+        Task<bool> DeleteStorageProduct(int storageId, string id);
 
 #endregion
 

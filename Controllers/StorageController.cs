@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -77,7 +78,7 @@ namespace Shine.Controllers {
 
 #region Actions
 
-        [HttpPost("{storageId}/product")]
+        [HttpPost("{storageId}/add-import")]
         public async Task<ActionResult<StorageProduct>> AddStorageProduct(StorageProduct model) {
             var query = await _repository.AddStorageProductAsync(model);
 
@@ -88,11 +89,13 @@ namespace Shine.Controllers {
             return query;
         }
 
-        [HttpPost("{storageId}/products")]
-        public async Task AddStorageProducts(IEnumerable<StorageProduct> models) {
-            await _repository.AddStorageProductsAsync(models);
-
-            await _repository.CommitAsync();
+        [HttpDelete("{storageId}/storage-products/{id}")]
+        public async Task<bool> DeleteStorageProduct(int storageId, [FromRoute] string id) {
+            var query = await _repository.DeleteStorageProductAsync(storageId, id);
+            if (query) {
+                await _repository.CommitAsync();
+            }
+            return query;
         }
 
 #endregion

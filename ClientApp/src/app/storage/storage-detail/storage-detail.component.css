@@ -31,7 +31,7 @@ section#latest > mat-card.latest-export table th {
   color: royalblue;
 }
 
-button.fixed-add-button {
+.fixed-buttons {
   position: fixed;
   bottom: 1rem;
   right: 1rem;

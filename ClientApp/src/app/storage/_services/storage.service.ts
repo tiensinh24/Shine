@@ -34,15 +34,12 @@ export class StorageService {
 
   addStorageProduct(storageProduct: StorageProduct): Observable<StorageProduct> {
     return this.http.post<StorageProduct>(
-      `${this.baseUrl}api/storage/${storageProduct.storageId}/product`,
+      `${this.baseUrl}api/storage/${storageProduct.storageId}/add-import`,
       storageProduct
     );
   }
 
-  addStorageProducts(storageProducts: StorageProduct[]): Observable<HttpResponse<any>> {
-    return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}api/storage/${storageProducts[0].storageId}/products`,
-      storageProducts
-    );
+  deleteStorageProduct(storageId: number, id: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}api/storage/${storageId}/storage-products/${id}`);
   }
 }

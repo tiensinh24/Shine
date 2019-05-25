@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shine.Data;
 using Shine.Data.Models;
@@ -10,9 +11,10 @@ using Shine.Data.Models;
 namespace Shine.Data.Migragions
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190525004126_ConfigStorageProductsTypes")]
+    partial class ConfigStorageProductsTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -639,20 +641,20 @@ namespace Shine.Data.Migragions
 
             modelBuilder.Entity("Shine.Data.Models.StorageProduct", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("NEWID()");
+                    b.Property<int>("StorageId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("Type");
 
                     b.Property<string>("CreatedById");
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<string>("FromTo");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -664,23 +666,15 @@ namespace Shine.Data.Migragions
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<int>("ProductId");
-
                     b.Property<decimal>("Quantity");
 
-                    b.Property<int>("StorageId");
-
-                    b.Property<bool>("Type");
-
-                    b.HasKey("Id");
+                    b.HasKey("StorageId", "ProductId", "Date", "Type");
 
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("ModifiedById");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("StorageId");
 
                     b.ToTable("StorageProducts");
                 });

@@ -1,0 +1,69 @@
+section#title {
+  margin-bottom: 2rem;
+  color: royalblue;
+}
+
+section#form-group {
+  mat-card {
+    padding: 0;
+
+    > mat-card-title {
+      height: 70px;
+      padding-top: 0.8rem;
+      background: mediumslateblue;
+      color: white;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+
+    > mat-card-content {
+      padding: 1rem 1rem 0 1rem;
+
+      form {
+        div.type-slide-toggle {
+          > mat-hint {
+            font-size: smaller;
+          }
+        }
+      }
+    }
+
+    > mat-card-actions {
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+section#table-review {
+  mat-card {
+    padding: 0;
+
+    > mat-card-title {
+      height: 70px;
+      padding-top: 0.8rem;
+      background: mediumslateblue;
+      color: white;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+
+    mat-card-content {
+      & table.import-table {
+        width: 100%;
+
+        & th {
+          color: royalblue;
+        }
+      }
+    }
+  }
+}
+
+button.fixed-back-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+}

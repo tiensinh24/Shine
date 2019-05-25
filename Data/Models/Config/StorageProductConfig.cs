@@ -5,13 +5,13 @@ namespace Shine.Data.Models.Config {
 
     public class StorageProductConfig : IEntityTypeConfiguration<StorageProduct> {
         public void Configure(EntityTypeBuilder<StorageProduct> builder) {
-            builder.HasKey(sp => new { sp.StorageId, sp.ProductId, sp.Date, sp.Type });
+            builder.HasKey(sp => sp.Id);
 
             builder.Property(sp => sp.Date)
                 .HasColumnType("date");
 
-            builder.Property(sp => sp.Type)
-                .HasDefaultValueSql("0");
+            builder.Property(sp => sp.Id)
+                .HasDefaultValueSql("NEWID()");
         }
     }
 

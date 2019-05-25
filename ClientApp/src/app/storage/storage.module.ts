@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { StorageProductEditDialogComponent } from './_dialogs/storage-product-edit-dialog/storage-product-edit-dialog.component';
-import { StorageAddImportComponent } from './storage-detail/storage-add-import/storage-add-import.component';
+import { StorageAddImportComponent } from './storage-add-import/storage-add-import.component';
 import { StorageDetailComponent } from './storage-detail/storage-detail.component';
 import { StorageListComponent } from './storage-list/storage-list.component';
 import { StorageRoutingModule } from './storage-routing.module';

@@ -1,0 +1,72 @@
+section#title {
+  margin-bottom: 2rem;
+  color: royalblue;
+}
+
+section#form-group mat-card {
+  padding: 0;
+}
+
+section#form-group mat-card > mat-card-title {
+  height: 70px;
+  padding-top: 0.8rem;
+  background: mediumslateblue;
+  color: white;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+section#form-group mat-card > mat-card-content {
+  padding: 1rem 1rem 0 1rem;
+}
+
+section#form-group mat-card > mat-card-content form div.type-slide-toggle > mat-hint {
+  font-size: smaller;
+}
+
+section#form-group mat-card > mat-card-actions {
+  padding-bottom: 2rem;
+}
+
+section#table-review mat-card {
+  padding: 0;
+}
+
+section#table-review mat-card > mat-card-title {
+  height: 70px;
+  padding-top: 0.8rem;
+  background: mediumslateblue;
+  color: white;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+section#table-review mat-card mat-card-content table.import-table {
+  width: 100%;
+}
+
+section#table-review mat-card mat-card-content table.import-table th {
+  color: royalblue;
+}
+
+button.fixed-back-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+/*# sourceMappingURL=storage-add-import.component.css.map */

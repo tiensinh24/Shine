@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -100,9 +101,15 @@ namespace Shine.Data.Infrastructures.Repositories {
             return query.Entity;
         }
 
-        public async Task AddStorageProductsAsync(IEnumerable<StorageProduct> models) {
-            await _context.StorageProducts
-                .AddRangeAsync(models);
+        public async Task<bool> DeleteStorageProductAsync(int storageId, string id) {
+            var query = await _context.StorageProducts
+                .FirstOrDefaultAsync(sp => sp.Id.ToString() == id);
+
+            if (query != null) {
+                _context.StorageProducts.Remove(query);
+                return true;
+            }
+            return false;
         }
 
 #endregion

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StorageProductsList } from '../_interfaces/storage-products-list';
 import { Storages } from '../_interfaces/storages';
@@ -15,13 +15,10 @@ export class StorageDetailComponent implements OnInit, OnDestroy {
   storageId = +this.route.snapshot.params.storageId;
   storage = <Storages>{};
 
-  // Toggle
-  isAdd = false;
-
   latestImportProducts: StorageProductsList[] = [];
   latestExportProducts: StorageProductsList[] = [];
 
-  constructor(private storageService: StorageService, private route: ActivatedRoute) {}
+  constructor(private storageService: StorageService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.initialize();
@@ -59,7 +56,7 @@ export class StorageDetailComponent implements OnInit, OnDestroy {
       });
   }
 
-  toggleAddImport() {
-    this.isAdd = !this.isAdd;
+  goToAddImport() {
+    this.router.navigate([`/storage/${this.storageId}/add-import`]);
   }
 }

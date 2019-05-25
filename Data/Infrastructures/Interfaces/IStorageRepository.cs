@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -34,7 +35,7 @@ namespace Shine.Data.Infrastructures.Interfaces {
 #region Actions
 
         Task<StorageProduct> AddStorageProductAsync(StorageProduct model);
-        Task AddStorageProductsAsync(IEnumerable<StorageProduct> models);
+        Task<bool> DeleteStorageProductAsync(int storageId, string id);
 
 #endregion
 

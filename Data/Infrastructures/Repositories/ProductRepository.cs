@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Mapster;
@@ -18,6 +19,7 @@ namespace Shine.Data.Infrastructures.Repositories {
         public async Task<IEnumerable<ProductSelectDto>> GetProductsSelectAsync() {
             var products = await _context.Products
                 .AsNoTracking()
+                .OrderBy(p => p.ProductName)
                 .ProjectToType<ProductSelectDto>()
                 .ToListAsync();
 

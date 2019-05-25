@@ -1,6 +1,7 @@
-// section#add-import {
-
-// }
+section#title {
+  margin-bottom: 2rem;
+  color: royalblue;
+}
 
 section#latest {
   & > mat-card.latest-import,
@@ -31,7 +32,7 @@ section#latest {
   }
 }
 
-button.fixed-add-button {
+div.fixed-buttons {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
