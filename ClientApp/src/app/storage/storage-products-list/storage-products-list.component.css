@@ -1,0 +1,50 @@
+mat-card#main {
+  padding: 0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(mediumslateblue), to(white));
+  background-image: linear-gradient(mediumslateblue, white);
+}
+
+mat-card#main > mat-card-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  height: 50px;
+  margin: 1rem 0 1rem 1rem;
+}
+
+mat-card#main > mat-card-title h2.mat-h2 {
+  padding-top: 2rem;
+}
+
+mat-card#main > mat-card-content > table {
+  width: 100%;
+}
+
+mat-card#main > mat-card-content > table th {
+  color: royalblue;
+}
+
+mat-card#main > mat-card-footer {
+  height: 50px;
+  margin: 0;
+  padding: 0 0 0 1rem;
+}
+
+mat-card#main > mat-card-footer * {
+  background: transparent;
+}
+
+div.fixed-buttons {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+/*# sourceMappingURL=storage-products-list.component.css.map */

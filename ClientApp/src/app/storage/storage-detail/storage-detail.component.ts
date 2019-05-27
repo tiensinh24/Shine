@@ -59,4 +59,8 @@ export class StorageDetailComponent implements OnInit, OnDestroy {
   goToAddImport() {
     this.router.navigate([`/storage/${this.storageId}/add-import`]);
   }
+
+  goToStorageProductsList() {
+    this.router.navigate([`storage/${this.storageId}/storage-products`]);
+  }
 }

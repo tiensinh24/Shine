@@ -1,9 +1,12 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { ProductSelect } from 'src/app/product/_interfaces/product-select';
 import { ProductService } from 'src/app/product/_services/product.service';
+import { StorageProduct } from '../../_interfaces/storage-product';
+import { StorageProductsList } from '../../_interfaces/storage-products-list';
+import { StorageService } from '../../_services/storage.service';
 
 @Component({
   selector: 'app-storage-product-edit-dialog',
@@ -13,46 +16,40 @@ import { ProductService } from 'src/app/product/_services/product.service';
 export class StorageProductEditDialogComponent implements OnInit, OnDestroy {
   products: ProductSelect[];
   formGroup: FormGroup;
-  title = 'Import product';
+  title = 'Edit Information';
 
   subscription: Subscription;
 
   constructor(
     private productService: ProductService,
+    private storageService: StorageService,
+    private snackBar: MatSnackBar,
     private fb: FormBuilder,
-
-    // parentData has edit property(boolean)
-    @Inject(MAT_DIALOG_DATA) public parentData: any
+    private dialogRef: MatDialogRef<StorageProductEditDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public parentData: StorageProductsList
   ) {}
 
   ngOnInit() {
     this.getProductsSelect();
     this.createForm();
-
-    if (this.parentData.edit) {
-      this.updateForm();
-    }
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  createForm() {
-    this.formGroup = this.fb.group({
-      storageId: [this.parentData.storageId, Validators.required],
-      productId: ['', Validators.required],
-      date: ['', Validators.required],
-      quantity: ['', Validators.required]
-    });
+  initialize() {
+    this.getProductsSelect();
+    this.createForm();
   }
 
-  updateForm() {
-    this.formGroup.setValue({
-      storageId: this.parentData.storageId,
-      productId: this.parentData.productId,
-      date: this.parentData.date,
-      quantity: this.parentData.quantity
+  createForm() {
+    this.formGroup = this.fb.group({
+      productId: [this.parentData.productId, Validators.required],
+      date: [this.parentData.date, Validators.required],
+      quantity: [this.parentData.quantity, Validators.required],
+      type: [this.parentData.type, Validators.required],
+      fromTo: [this.parentData.fromTo]
     });
   }
 
@@ -60,5 +57,46 @@ export class StorageProductEditDialogComponent implements OnInit, OnDestroy {
     this.subscription = this.productService.getProductsSelect().subscribe((products: ProductSelect[]) => {
       this.products = products;
     });
+  }
+
+  onSubmit() {
+    const updateItem = <StorageProduct>{
+      id: this.parentData.id,
+      productId: this.formGroup.value.productId,
+      date: this.formGroup.value.date,
+      quantity: this.formGroup.value.quantity,
+      type: this.formGroup.value.type,
+      fromTo: this.formGroup.value.fromTo
+    };
+
+    this.subscription = this.storageService.updateStorageProduct(updateItem).subscribe(
+      (res: StorageProduct) => {
+        if (res) {
+          this.dialogRef.close(res);
+          this.snackBar.open('Information has been updated', 'Success');
+        }
+      },
+      () => {
+        this.snackBar.open('Cannot update information', 'Error');
+      }
+    );
+  }
+
+  onCancel() {
+    this.dialogRef.close();
+  }
+
+  get(name: string): AbstractControl {
+    return this.formGroup.get(name);
+  }
+
+  getErrorMessage(formControl: FormControl) {
+    return formControl.hasError('required')
+      ? 'You must enter a value'
+      : formControl.hasError('email')
+      ? 'Not a valid email'
+      : formControl.hasError('pattern')
+      ? 'Please enter a number!'
+      : '';
   }
 }

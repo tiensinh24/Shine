@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Controllers.Interfaces;
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Storages;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -72,6 +73,15 @@ namespace Shine.Controllers {
             var products = await _repository.GetLatestExportProductsAsync(storageId);
 
             return Ok(products);
+
+        }
+
+        [HttpGet("{storageId}/storage-products/paged")]
+        public async Task<ActionResult<Paged<StorageProductsListDto>>> GetPagedStorageProducts(int storageId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
+            var query = await _repository.GetPagedStorageProductsAsync(
+                storageId, pagingParams, sortParams, filter);
+
+            return new Paged<StorageProductsListDto>(query);
         }
 
 #endregion
@@ -89,12 +99,34 @@ namespace Shine.Controllers {
             return query;
         }
 
+        [HttpPut("{storageId}/storage-products/{id}")]
+        public async Task<ActionResult<StorageProduct>> UpdateStorageProduct(StorageProduct model) {
+            var query = await _repository.UpdateStorageProductAsync(model);
+
+            if (query == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return query;
+        }
+
         [HttpDelete("{storageId}/storage-products/{id}")]
         public async Task<bool> DeleteStorageProduct(int storageId, [FromRoute] string id) {
             var query = await _repository.DeleteStorageProductAsync(storageId, id);
             if (query) {
                 await _repository.CommitAsync();
             }
+            return query;
+        }
+
+        [HttpDelete("{storageId}/storage-products/list")]
+        public async Task<bool> DeleteStorageProducts([FromHeader] string[] ids) {
+            var query = await _repository.DeleteStorageProductsAsync(ids);
+
+            if (query) {
+                await _repository.CommitAsync();
+            }
+
             return query;
         }
 

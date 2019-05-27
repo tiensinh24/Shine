@@ -1,0 +1,44 @@
+mat-card#main {
+  padding: 0;
+  background-image: linear-gradient(mediumslateblue, white);
+
+  > mat-card-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 50px;
+    margin: 1rem 0 1rem 1rem;
+
+    h2.mat-h2 {
+      padding-top: 2rem;
+    }
+  }
+
+  > mat-card-content {
+    > table {
+      width: 100%;
+
+      th {
+        color: royalblue;
+      }
+    }
+  }
+
+  > mat-card-footer {
+    height: 50px;
+    margin: 0;
+    padding: 0 0 0 1rem;
+
+    * {
+      background: transparent;
+    }
+  }
+}
+
+div.fixed-buttons {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+}

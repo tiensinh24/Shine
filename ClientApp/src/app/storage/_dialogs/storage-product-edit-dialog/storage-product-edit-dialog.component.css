@@ -1,1 +1,4 @@
-/* No CSS *//*# sourceMappingURL=storage-product-edit-dialog.component.css.map */
+mat-dialog-content form {
+  padding: 1rem;
+}
+/*# sourceMappingURL=storage-product-edit-dialog.component.css.map */

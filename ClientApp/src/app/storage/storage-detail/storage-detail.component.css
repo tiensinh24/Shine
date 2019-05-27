@@ -1,3 +1,8 @@
+section#title {
+  margin-bottom: 2rem;
+  color: royalblue;
+}
+
 section#latest > mat-card.latest-import,
 section#latest > mat-card.latest-export {
   padding: 0;
@@ -31,7 +36,7 @@ section#latest > mat-card.latest-export table th {
   color: royalblue;
 }
 
-.fixed-buttons {
+div.fixed-buttons {
   position: fixed;
   bottom: 1rem;
   right: 1rem;

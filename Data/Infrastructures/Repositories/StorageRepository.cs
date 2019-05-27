@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using Mapster;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Storages;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -90,6 +92,60 @@ namespace Shine.Data.Infrastructures.Repositories {
             return products;
         }
 
+        public async Task<PagedList<StorageProductsListDto>> GetPagedStorageProductsAsync(int storageId, PagingParams pagingParams, SortParams sortParams, string filter) {
+            var source = _context.StorageProducts
+                .AsNoTracking()
+                .Include(s => s.Product)
+                .Where(s => s.StorageId == storageId)
+                .ProjectToType<StorageProductsListDto>();
+
+            switch (sortParams.SortOrder) {
+                case "asc":
+                    switch (sortParams.SortColumn) {
+                        case "productName":
+                            source = source.OrderBy(s => s.ProductName);
+                            break;
+                        case "date":
+                            source = source.OrderBy(s => s.Date);
+                            break;
+                        case "type":
+                            source = source.OrderBy(s => s.Type);
+                            break;
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn) {
+                        case "productName":
+                            source = source.OrderByDescending(s => s.ProductName);
+                            break;
+                        case "date":
+                            source = source.OrderByDescending(s => s.Date);
+                            break;
+                        case "type":
+                            source = source.OrderByDescending(s => s.Type);
+                            break;
+                    }
+                    break;
+
+                default:
+                    source = source.OrderByDescending(s => s.Date);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(filter)) {
+                source = source.Where(s =>
+                    (s.Date.Day.ToString("00") + s.Date.Month.ToString("00") + s.Date.Year.ToString() + s.ProductName + s.Type)
+                    .ToLower().Contains(filter.ToLower())
+                    || (s.Date.Year.ToString() + s.Date.Month.ToString("00") + s.Date.Day.ToString("00") + s.ProductName + s.Type)
+                    .ToLower().Contains(filter.ToLower())
+                );
+            }
+
+            return await PagedList<StorageProductsListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
+
+        }
+
 #endregion
 
 #region Actions
@@ -101,12 +157,40 @@ namespace Shine.Data.Infrastructures.Repositories {
             return query.Entity;
         }
 
+        public async Task<StorageProduct> UpdateStorageProductAsync(StorageProduct model) {
+            var query = await _context.StorageProducts
+                .FirstOrDefaultAsync(s => s.Id == model.Id);
+
+            if (query != null) {
+                query.ProductId = model.ProductId;
+                query.Date = model.Date;
+                query.Quantity = model.Quantity;
+                query.Type = model.Type;
+                query.FromTo = model.FromTo;
+            }
+
+            return query;
+        }
+
         public async Task<bool> DeleteStorageProductAsync(int storageId, string id) {
             var query = await _context.StorageProducts
                 .FirstOrDefaultAsync(sp => sp.Id.ToString() == id);
 
             if (query != null) {
                 _context.StorageProducts.Remove(query);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteStorageProductsAsync(string[] ids) {
+            var items = await _context.StorageProducts
+                .Where(s => ids.Contains(s.Id.ToString()))
+                .ToListAsync();
+
+            if (items != null) {
+                _context.StorageProducts.RemoveRange(items);
+
                 return true;
             }
             return false;
