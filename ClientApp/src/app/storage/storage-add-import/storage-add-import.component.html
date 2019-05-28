@@ -59,8 +59,8 @@
   </section>
 
   <!-- Recent Table-->
-  <section id="table-review" *ngIf="importTable.length > 0; else noRecent" fxFlex fxLayout="column">
-    <mat-card>
+  <section id="table-review" fxFlex>
+    <mat-card *ngIf="importTable.length > 0; else noRecent" fxLayout="column">
       <mat-card-title>
         <h2 class="mat-h2" fxFlexAlign="center">Recently Import/Export</h2>
       </mat-card-title>
@@ -99,7 +99,10 @@
               </button>
             </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="['date', 'productName', 'quantity', 'type', 'fromTo', 'actions']"></tr>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="['date', 'productName', 'quantity', 'type', 'fromTo', 'actions']; sticky: true"
+          ></tr>
           <tr
             mat-row
             *matRowDef="let row; columns: ['date', 'productName', 'quantity', 'type', 'fromTo', 'actions']"
@@ -107,20 +110,21 @@
         </table>
       </mat-card-content>
     </mat-card>
-  </section>
 
-  <!-- If table has no data show this -->
-  <ng-template #noRecent>
-    <div>
-      <h2 class="mat-h2">Note!</h2>
-      <p>
-        Please fill in the form on the left then click
-        <button mat-icon-button color="primary"><mat-icon>add_circle</mat-icon></button> button to import/export product
-        for storage
-        {{ storage?.name }}
-      </p>
-    </div>
-  </ng-template>
+    <!-- If table has no data show this -->
+    <ng-template #noRecent>
+      <div>
+        <h2 class="mat-h2">Note!</h2>
+        <p>
+          Please fill in the form on the left then click
+          <button mat-icon-button color="primary"><mat-icon>add_circle</mat-icon></button> button to import/export
+          product for storage
+          {{ storage?.name }}
+        </p>
+      </div>
+      <img class="storage-bg" src="../../../assets/images/storage-bg.png" />
+    </ng-template>
+  </section>
 </div>
 
 <!-- Back button -->

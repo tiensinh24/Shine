@@ -8,7 +8,7 @@ section#form-group mat-card {
 }
 
 section#form-group mat-card > mat-card-title {
-  height: 70px;
+  height: 50px;
   padding-top: 0.8rem;
   background: mediumslateblue;
   color: white;
@@ -35,12 +35,23 @@ section#form-group mat-card > mat-card-actions {
   padding-bottom: 2rem;
 }
 
-section#table-review mat-card {
+section#table-review {
+  position: relative;
+  height: 600px;
+  max-height: calc(100vh - 250px);
+  overflow: hidden;
+}
+
+section#table-review:hover {
+  overflow: auto;
+}
+
+section#table-review > mat-card {
   padding: 0;
 }
 
-section#table-review mat-card > mat-card-title {
-  height: 70px;
+section#table-review > mat-card > mat-card-title {
+  height: 50px;
   padding-top: 0.8rem;
   background: mediumslateblue;
   color: white;
@@ -55,12 +66,21 @@ section#table-review mat-card > mat-card-title {
   display: flex;
 }
 
-section#table-review mat-card mat-card-content table.import-table {
+section#table-review > mat-card mat-card-content table.import-table {
   width: 100%;
 }
 
-section#table-review mat-card mat-card-content table.import-table th {
+section#table-review > mat-card mat-card-content table.import-table th {
   color: royalblue;
+}
+
+section#table-review img.storage-bg {
+  max-width: 60%;
+  height: auto;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  opacity: 0.5;
 }
 
 button.fixed-back-button {

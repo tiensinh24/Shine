@@ -96,7 +96,7 @@ export class StorageAddImportComponent implements OnInit, OnDestroy {
           productName: this.formGroup.value.product.productName
         };
 
-        this.importTable.push(newAdded);
+        this.importTable.unshift(newAdded);
         this.tableSource = new MatTableDataSource(this.importTable);
 
         if (res.type) {

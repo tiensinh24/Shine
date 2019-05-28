@@ -8,7 +8,7 @@ section#form-group {
     padding: 0;
 
     > mat-card-title {
-      height: 70px;
+      height: 50px;
       padding-top: 0.8rem;
       background: mediumslateblue;
       color: white;
@@ -36,11 +36,19 @@ section#form-group {
 }
 
 section#table-review {
-  mat-card {
+  position: relative;
+  height: 600px;
+  max-height: calc(100vh - 250px);
+  overflow: hidden;
+  &:hover {
+    overflow: auto;
+  }
+
+  > mat-card {
     padding: 0;
 
     > mat-card-title {
-      height: 70px;
+      height: 50px;
       padding-top: 0.8rem;
       background: mediumslateblue;
       color: white;
@@ -50,7 +58,7 @@ section#table-review {
     }
 
     mat-card-content {
-      & table.import-table {
+      table.import-table {
         width: 100%;
 
         & th {
@@ -58,6 +66,15 @@ section#table-review {
         }
       }
     }
+  }
+
+  img.storage-bg {
+    max-width: 60%;
+    height: auto;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    opacity: 0.5;
   }
 }
 
