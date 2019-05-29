@@ -12,6 +12,7 @@ using Shine.Data.Models;
 
 namespace Shine.Data.Infrastructures.Interfaces {
     public interface IProductBuyRepository : IRepository {
+#region Product
 
 #region Get Values
         Task<IEnumerable<ProductBuyListDto>> GetProductsAsync(
@@ -39,5 +40,17 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<bool> DeleteProductsAsync(string[] ids);
 
 #endregion
+
+#endregion
+
+#region StorageProduct
+
+        Task<PagedList<ProductRemainDto>> GetPagedProductRemainsAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter);
+
+        Task<IEnumerable<ProductStorageRemainDto>> GetProductRemainPerStoragesAsync(int productId);
+
+#endregion
+
     }
 }

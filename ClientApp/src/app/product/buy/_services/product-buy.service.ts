@@ -5,11 +5,11 @@ import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { environment } from 'src/environments/environment';
 import { PagedProductBuy } from '../_interfaces/paged-product-buy';
+import { PagedProductBuyRemain } from '../_interfaces/paged-product-buy-remain';
 import { ProductBuy } from '../_interfaces/product-buy';
 import { ProductBuyDetail } from '../_interfaces/product-buy-detail';
 import { ProductBuyList } from '../_interfaces/product-buy-list';
-
-
+import { ProductStorageRemain } from '../../_interfaces/product-storage-remain';
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +55,29 @@ export class ProductBuyService {
 
   deleteProducts(idList: string[]): Observable<boolean> {
     return this.http.delete<boolean>(`${this.baseUrl}api/productBuy/delete-all`, { headers: { ids: idList } });
+  }
+
+  // *ProductStorage
+
+  getPagedProductRemains(
+    pagingParams: PagingParams,
+    sortParams?: SortParams,
+    filter = ''
+  ): Observable<PagedProductBuyRemain> {
+    let queryParams = new HttpParams()
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
+
+    if (sortParams !== undefined) {
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }
+
+    return this.http.get<PagedProductBuyRemain>(`${this.baseUrl}api/productBuy/remain/paged`, { params: queryParams });
+  }
+
+  getProductRemainPerStorages(productId: number): Observable<ProductStorageRemain[]> {
+    return this.http.get<ProductStorageRemain[]>(`${this.baseUrl}api/productBuy/${productId}/storage/remain`);
   }
 }

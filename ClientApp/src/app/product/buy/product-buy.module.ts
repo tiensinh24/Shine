@@ -11,6 +11,7 @@ import { ProductBuyHomeComponent } from './product-buy-home/product-buy-home.com
 import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
 import { ProductBuyRoutingModule } from './product-buy-routing.module';
 import { ProductBuyComponent } from './product-buy.component';
+import { ProductBuyRemainComponent } from './product-buy-remain/product-buy-remain.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ProductBuyComponent } from './product-buy.component';
     ProductBuyHomeComponent,
     ProductBuyDetailComponent,
     ProductBuyEditComponent,
-    ProductBuyListComponent
+    ProductBuyListComponent,
+    ProductBuyRemainComponent
   ],
   imports: [
     // Shared

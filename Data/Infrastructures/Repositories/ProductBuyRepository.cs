@@ -26,6 +26,8 @@ namespace Shine.Data.Infrastructures.Repositories {
         ) : base(context, roleManager, userManager, configuration) { }
 #endregion
 
+#region Product
+
 #region Get Values
         public async Task<IEnumerable<ProductBuyListDto>> GetProductsAsync(
             Expression<Func<ProductBuyListDto, object>> sortColumn = null, string sortOrder = "asc") {
@@ -164,5 +166,85 @@ namespace Shine.Data.Infrastructures.Repositories {
         }
 
 #endregion
+
+#endregion
+
+#region StorageProduct
+
+        public async Task<PagedList<ProductRemainDto>> GetPagedProductRemainsAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter) {
+            var source = _context.Set<ProductBuy>()
+                .AsNoTracking()
+                .Include(p => p.StorageProducts)
+                .ProjectToType<ProductRemainDto>();
+
+            switch (sortParams.SortOrder) {
+                case "asc":
+                    switch (sortParams.SortColumn) {
+                        case "productName":
+                            source = source.OrderBy(p => p.ProductName);
+                            break;
+                        case "specification":
+                            source = source.OrderBy(p => p.Specification);
+                            break;
+                        case "remain":
+                            source = source.OrderBy(p => p.Remain);
+                            break;
+
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn) {
+                        case "productName":
+                            source = source.OrderByDescending(p => p.ProductName);
+                            break;
+                        case "specification":
+                            source = source.OrderByDescending(p => p.Specification);
+                            break;
+                        case "remain":
+                            source = source.OrderBy(p => p.Remain);
+                            break;
+                    }
+                    break;
+
+                default:
+                    source = source.OrderBy(c => c.ProductName);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(filter)) {
+                source = source.Where(p => p.ProductName.ToLower().Contains(filter.ToLower()));
+            }
+
+            return await PagedList<ProductRemainDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
+
+        }
+
+        public async Task<IEnumerable<ProductStorageRemainDto>> GetProductRemainPerStoragesAsync(int productId) {
+            var products = await _context.StorageProducts
+                .AsNoTracking()
+                .Include(sp => sp.Storage)
+                .Include(sp => sp.Product)
+                .Where(sp => sp.Product.ProductType == true && sp.ProductId == productId)
+                .GroupBy(sp => new { sp.ProductId, sp.StorageId, sp.Product.ProductName, sp.Storage.Name },
+                    sp => sp.Quantity,
+                    (key, element) => new ProductStorageRemainDto {
+                        ProductId = key.ProductId,
+                            StorageId = key.StorageId,
+                            ProductName = key.ProductName,
+                            StorageName = key.Name,
+                            Remain = element.Sum()
+                    })
+                .OrderBy(p => p.ProductId)
+                .ThenBy(p => p.StorageId)
+                .ToListAsync();
+
+            return products;
+
+        }
+
+#endregion
+
     }
 }

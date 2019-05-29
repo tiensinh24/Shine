@@ -33,19 +33,7 @@ namespace Shine.Data.Dto._Mapster {
             TypeAdapterConfig<ProductBuy, ProductRemainDto>.NewConfig()
                 .Map(
                     dest => dest.Remain,
-                    src => src.StorageProducts.Where(sp => sp.Type == true).Sum(sp => sp.Quantity)
-                    - src.StorageProducts.Where(sp => sp.Type == false).Sum(sp => sp.Quantity)
-                );
-
-            TypeAdapterConfig<ProductBuy, ProductStorageRemainDto>.NewConfig()
-                .Map(
-                    dest => dest.StorageName,
-                    src => src.StorageProducts.FirstOrDefault().Storage.Name
-                ).Map(
-                    dest => dest.Remain,
-                    src => src.StorageProducts.GroupBy(sp => new { sp.ProductId, sp.StorageId })
-                    .Select(sp => )
-
+                    src => src.StorageProducts.Sum(sp => sp.Quantity)
                 );
         }
     }

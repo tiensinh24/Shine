@@ -36,6 +36,8 @@ namespace Shine.Controllers {
         }
 #endregion
 
+#region Product
+
 #region Get Values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProducts() {
@@ -109,6 +111,27 @@ namespace Shine.Controllers {
             }
 
             return query;
+        }
+
+#endregion
+
+#endregion
+
+#region StorageProduct
+
+        [HttpGet("remain/paged")]
+        public async Task<ActionResult<Paged<ProductRemainDto>>> GetPagedProductRemains(
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
+            var query = await _repository.GetPagedProductRemainsAsync(pagingParams, sortParams, filter);
+
+            return new Paged<ProductRemainDto>(query);
+        }
+
+        [HttpGet("{productId}/storage/remain")]
+        public async Task<IEnumerable<ProductStorageRemainDto>> GetProductRemainPerStorages(int productId) {
+            var products = await _repository.GetProductRemainPerStoragesAsync(productId);
+
+            return products;
         }
 
 #endregion
