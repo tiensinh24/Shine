@@ -5,7 +5,6 @@
 }
 
 .toolbar {
-  margin-bottom: 20px;
   -webkit-box-shadow: 5px 2px 15px 2px grey;
           box-shadow: 5px 2px 15px 2px grey;
   position: -webkit-sticky;
@@ -34,12 +33,6 @@
   min-height: calc(100vh - 80px);
 }
 
-.side-nav > mat-sidenav {
-  -webkit-margin-start: -20px;
-          margin-inline-start: -20px;
-  min-width: 200px;
-}
-
 .main-container {
   margin: 0 80px;
   min-height: calc(100vh - 80px);
@@ -66,5 +59,11 @@ mat-nav-list > div[routerLink] {
 
 .footer {
   bottom: 0;
+}
+
+.right-nav {
+  background: transparent;
+  border: none;
+  padding: 1rem;
 }
 /*# sourceMappingURL=nav-menu.component.css.map */

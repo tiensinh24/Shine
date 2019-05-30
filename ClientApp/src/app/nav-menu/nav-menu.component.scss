@@ -2,9 +2,8 @@
   flex: 1 1 auto;
 }
 
-.toolbar {  
-  margin-bottom: 20px;
-  box-shadow: 5px 2px 15px 2px grey;  
+.toolbar {
+  box-shadow: 5px 2px 15px 2px grey;
   position: sticky;
   top: 0;
 }
@@ -30,20 +29,11 @@
   min-height: calc(100vh - 80px);
 }
 
-.side-nav>mat-sidenav {
-  margin-inline-start: -20px;
-  min-width: 200px;
-}
-
 .main-container {
   margin: 0 80px;
   min-height: calc(100vh - 80px);
-  
-  overflow: hidden;
-  
-  
 
-  
+  overflow: hidden;
 }
 
 .main-container-mobile {
@@ -55,7 +45,7 @@
   color: royalblue;
 }
 
-mat-nav-list>div[routerLink] {
+mat-nav-list > div[routerLink] {
   cursor: pointer;
 }
 
@@ -65,9 +55,11 @@ mat-nav-list>div[routerLink] {
 }
 
 .footer {
-  
   bottom: 0;
-  
 }
 
-
+.right-nav {
+  background: transparent;
+  border: none;
+  padding: 1rem;
+}

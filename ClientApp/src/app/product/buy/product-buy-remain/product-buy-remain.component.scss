@@ -23,13 +23,16 @@ mat-card#main {
         color: royalblue;
       }
 
-      tr.expand-detail-row {
-        height: 0;
+      td {
+        padding: 0;
+
+        > p {
+          padding-left: 1rem;
+        }
       }
 
-      tr.expand-element-row:active {
-        cursor: pointer;
-        background: aliceblue;
+      tr.expand-detail-row {
+        height: 0;
       }
 
       tr.expand-element-row:hover {
@@ -44,14 +47,17 @@ mat-card#main {
       .expand-element-detail {
         overflow: hidden;
         display: flex;
-        width: 100%;
 
-        > table {
+        background-image: linear-gradient(to top, mediumslateblue, aliceblue);
+
+        table {
           width: 100%;
-
+          min-height: 60px;
           th,
           td {
-            height: 2.5rem;
+            text-align: right;
+            height: 2rem;
+            padding: 0 1rem;
           }
         }
       }
@@ -74,4 +80,9 @@ div.fixed-buttons {
   bottom: 1rem;
   right: 1rem;
   z-index: 1;
+}
+
+// *If section
+.expand {
+  background: aliceblue;
 }

@@ -31,13 +31,16 @@ mat-card#main > mat-card-content > table th {
   color: royalblue;
 }
 
-mat-card#main > mat-card-content > table tr.expand-detail-row {
-  height: 0;
+mat-card#main > mat-card-content > table td {
+  padding: 0;
 }
 
-mat-card#main > mat-card-content > table tr.expand-element-row:active {
-  cursor: pointer;
-  background: aliceblue;
+mat-card#main > mat-card-content > table td > p {
+  padding-left: 1rem;
+}
+
+mat-card#main > mat-card-content > table tr.expand-detail-row {
+  height: 0;
 }
 
 mat-card#main > mat-card-content > table tr.expand-element-row:hover {
@@ -54,16 +57,20 @@ mat-card#main > mat-card-content > table .expand-element-detail {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(mediumslateblue), to(aliceblue));
+  background-image: linear-gradient(to top, mediumslateblue, aliceblue);
 }
 
-mat-card#main > mat-card-content > table .expand-element-detail > table {
+mat-card#main > mat-card-content > table .expand-element-detail table {
   width: 100%;
+  min-height: 60px;
 }
 
-mat-card#main > mat-card-content > table .expand-element-detail > table th,
-mat-card#main > mat-card-content > table .expand-element-detail > table td {
-  height: 2.5rem;
+mat-card#main > mat-card-content > table .expand-element-detail table th,
+mat-card#main > mat-card-content > table .expand-element-detail table td {
+  text-align: right;
+  height: 2rem;
+  padding: 0 1rem;
 }
 
 mat-card#main > mat-card-footer {
@@ -81,5 +88,9 @@ div.fixed-buttons {
   bottom: 1rem;
   right: 1rem;
   z-index: 1;
+}
+
+.expand {
+  background: aliceblue;
 }
 /*# sourceMappingURL=product-buy-remain.component.css.map */

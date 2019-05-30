@@ -1,7 +1,7 @@
 <!-- Toolbar -->
 <mat-toolbar color="primary" class="toolbar">
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="drawer.toggle()">
+    <button mat-icon-button (click)="leftnav.toggle()">
       <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
@@ -140,9 +140,9 @@
 <!-- Progress Bar -->
 <mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
 
-<!-- Side Nav -->
+<!-- Left Side Nav -->
 <mat-sidenav-container class="side-nav">
-  <mat-sidenav #drawer mode="side" opened="false" role="navigation">
+  <mat-sidenav #leftnav mode="side" opened="false" role="navigation">
     <mat-nav-list>
       <mat-accordion multi="false">
         <!-- Account group -->
@@ -200,6 +200,15 @@
         </mat-expansion-panel>
       </mat-accordion>
     </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav class="right-nav" position="end" mode="side" role="navigation" opened="true">
+    <div fxLayout="column" fxLayoutGap="16px">
+      <button mat-mini-fab><mat-icon>list</mat-icon></button>
+      <button mat-mini-fab><mat-icon>add</mat-icon></button>
+      <button mat-mini-fab><mat-icon>remove</mat-icon></button>
+      <button mat-mini-fab><mat-icon>details</mat-icon></button>
+    </div>
   </mat-sidenav>
   <!-- Content router-outlet -->
   <mat-sidenav-content class="main-container" ngClass.xs="main-container-mobile" ngClass.md="main-container-mobile">
