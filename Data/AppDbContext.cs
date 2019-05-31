@@ -39,6 +39,8 @@ namespace Shine.Data {
         public DbSet<Order> Orders { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<PersonProduct> PersonProducts { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -55,6 +57,7 @@ namespace Shine.Data {
             modelBuilder.ApplyConfiguration(new OrderBuyConfig());
             modelBuilder.ApplyConfiguration(new OrderSellConfig());
             modelBuilder.ApplyConfiguration(new PersonConfig());
+            modelBuilder.ApplyConfiguration(new EmployeeConfig());
             modelBuilder.ApplyConfiguration(new PersonProductConfig());
             modelBuilder.ApplyConfiguration(new ProductConfig());
             modelBuilder.ApplyConfiguration(new ProductOrderConfig());
@@ -122,12 +125,12 @@ namespace Shine.Data {
 
 #region Automatic Auditing
         public override int SaveChanges(bool acceptAllChangesOnSuccess) {
-            OnBeforeSaving();
+            // OnBeforeSaving();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken)) {
-            OnBeforeSaving();
+            // OnBeforeSaving();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 

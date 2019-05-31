@@ -142,7 +142,7 @@
 
 <!-- Left Side Nav -->
 <mat-sidenav-container class="side-nav">
-  <mat-sidenav #leftnav mode="side" opened="false" role="navigation">
+  <mat-sidenav #leftnav mode="side" role="navigation">
     <mat-nav-list>
       <mat-accordion multi="false">
         <!-- Account group -->
@@ -202,20 +202,13 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav class="right-nav" position="end" mode="side" role="navigation" opened="true">
-    <div fxLayout="column" fxLayoutGap="16px">
-      <button mat-mini-fab><mat-icon>list</mat-icon></button>
-      <button mat-mini-fab><mat-icon>add</mat-icon></button>
-      <button mat-mini-fab><mat-icon>remove</mat-icon></button>
-      <button mat-mini-fab><mat-icon>details</mat-icon></button>
-    </div>
-  </mat-sidenav>
+  
+  
   <!-- Content router-outlet -->
-  <mat-sidenav-content class="main-container" ngClass.xs="main-container-mobile" ngClass.md="main-container-mobile">
+  <mat-sidenav-content role="main">
     <router-outlet></router-outlet>
+    <section class="footer">
+      Place holder for footer
+    </section>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<section class="footer">
-  Place holder for footer
-</section>

@@ -3,18 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shine.Data;
-using Shine.Data.Models;
 
-namespace Shine.Data.Migragions
+namespace Shine.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190525031035_addFromTo")]
-    partial class addFromTo
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,6 +305,89 @@ namespace Shine.Data.Migragions
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("Shine.Data.Models.Department", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedById");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetUtcDate()");
+
+                    b.Property<string>("DepartmentName");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("ModifiedById");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetUtcDate()");
+
+                    b.HasKey("DepartmentId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("Shine.Data.Models.Employee", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CountryId");
+
+                    b.Property<string>("CreatedById");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetUtcDate()");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("DepartmentId");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<bool>("Gender");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("ModifiedById");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetUtcDate()");
+
+                    b.Property<string>("Telephone");
+
+                    b.HasKey("EmployeeId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.ToTable("Employees");
+                });
+
             modelBuilder.Entity("Shine.Data.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -322,6 +402,8 @@ namespace Shine.Data.Migragions
 
                     b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("date");
+
+                    b.Property<int>("EmployeeId");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -349,6 +431,8 @@ namespace Shine.Data.Migragions
                     b.HasKey("OrderId");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("ModifiedById");
 
@@ -446,7 +530,7 @@ namespace Shine.Data.Migragions
 
                     b.Property<string>("PersonNumber");
 
-                    b.Property<int>("PersonType");
+                    b.Property<bool>("PersonType");
 
                     b.Property<string>("Telephone");
 
@@ -460,7 +544,7 @@ namespace Shine.Data.Migragions
 
                     b.ToTable("Persons");
 
-                    b.HasDiscriminator<int>("PersonType");
+                    b.HasDiscriminator<bool>("PersonType");
                 });
 
             modelBuilder.Entity("Shine.Data.Models.PersonProduct", b =>
@@ -506,6 +590,8 @@ namespace Shine.Data.Migragions
 
                     b.Property<string>("Description");
 
+                    b.Property<int?>("EmployeeId");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("0");
@@ -529,6 +615,8 @@ namespace Shine.Data.Migragions
                     b.HasKey("PhotoId");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("ModifiedById");
 
@@ -745,21 +833,14 @@ namespace Shine.Data.Migragions
                 {
                     b.HasBaseType("Shine.Data.Models.Person");
 
-                    b.HasDiscriminator().HasValue(1);
-                });
-
-            modelBuilder.Entity("Shine.Data.Models.Employee", b =>
-                {
-                    b.HasBaseType("Shine.Data.Models.Person");
-
-                    b.HasDiscriminator().HasValue(0);
+                    b.HasDiscriminator().HasValue(false);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.Supplier", b =>
                 {
                     b.HasBaseType("Shine.Data.Models.Person");
 
-                    b.HasDiscriminator().HasValue(2);
+                    b.HasDiscriminator().HasValue(true);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.ProductBuy", b =>
@@ -865,7 +946,7 @@ namespace Shine.Data.Migragions
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Shine.Data.Models.Order", b =>
+            modelBuilder.Entity("Shine.Data.Models.Department", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
@@ -876,11 +957,51 @@ namespace Shine.Data.Migragions
                         .WithMany()
                         .HasForeignKey("ModifiedById")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Shine.Data.Models.Employee", b =>
+                {
+                    b.HasOne("Shine.Data.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Shine.Data.Models.Department", "Department")
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Shine.Data.Models.Order", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Shine.Data.Models.Employee", "Employee")
+                        .WithMany("Orders")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Shine.Data.Models.Person", "Person")
                         .WithMany("Orders")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Shine.Data.Models.Payment", b =>
@@ -948,6 +1069,10 @@ namespace Shine.Data.Migragions
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Shine.Data.Models.Employee")
+                        .WithMany("Photos")
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()

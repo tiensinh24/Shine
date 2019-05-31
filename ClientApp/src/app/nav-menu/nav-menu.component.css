@@ -10,17 +10,19 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  left: 0;
+  right: 0;
 }
 
 .toolbar [routerLinkActive] {
   cursor: pointer;
 }
 
-.home-logo {
+.toolbar .home-logo {
   font-size: larger;
 }
 
-.user-avatar {
+.toolbar .user-avatar {
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -30,40 +32,30 @@
 }
 
 .side-nav {
-  min-height: calc(100vh - 80px);
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.main-container {
-  margin: 0 80px;
-  min-height: calc(100vh - 80px);
-  overflow: hidden;
-}
-
-.main-container-mobile {
-  margin: 0;
-  overflow: hidden;
-}
-
-.active {
+.side-nav .active {
   color: royalblue;
 }
 
-mat-nav-list > div[routerLink] {
+.side-nav mat-nav-list > div[routerLink] {
   cursor: pointer;
 }
 
-.mat-expansion-panel-header.mat-expanded {
+.side-nav .mat-expansion-panel-header.mat-expanded {
   font-size: larger;
   background-color: powderblue;
 }
 
 .footer {
+  position: fixed;
   bottom: 0;
-}
-
-.right-nav {
-  background: transparent;
-  border: none;
-  padding: 1rem;
+  left: 0;
+  right: 0;
 }
 /*# sourceMappingURL=nav-menu.component.css.map */

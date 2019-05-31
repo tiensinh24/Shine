@@ -1,1 +1,21 @@
-<router-outlet></router-outlet>
+<mat-drawer-container>
+  <mat-drawer position="end" mode="side" opened="true">
+    <mat-nav-list>
+      <mat-list-item>
+        <button mat-icon-button>
+          <mat-icon>info</mat-icon>
+        </button>
+        <a [routerLink]="['/product-buy']">Products list</a>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-icon-button>
+          <mat-icon>add</mat-icon>
+        </button>
+        <a [routerLink]="['/product-buy/remain']">Products remaining</a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -7,13 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models {
-    public enum PersonType {
-        Employee = 0, Customer = 1, Supplier = 2
-    }
+
     public abstract class Person : IAuditedEntityBase, ISoftDelete {
 #region Properties
         public int PersonId { get; set; }
-        public PersonType PersonType { get; set; }
+        public bool PersonType { get; set; }
         public string PersonNumber { get; set; }
         public bool Gender { get; set; }
 
@@ -40,10 +38,6 @@ namespace Shine.Data.Models {
         public IEnumerable<Photo> Photos { get; set; }
 
 #endregion
-    }
-
-    public class Employee : Person, INotRoot {
-
     }
 
     public class Customer : Person, INotRoot {

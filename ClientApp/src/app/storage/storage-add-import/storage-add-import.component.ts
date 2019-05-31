@@ -74,11 +74,16 @@ export class StorageAddImportComponent implements OnInit, OnDestroy {
   }
 
   addIxport() {
+    // Export will be insert with negative values
+    const quantity = this.formGroup.value.type
+      ? this.formGroup.value.quantity
+      : this.formGroup.value.quantity - 2 * this.formGroup.value.quantity;
+
     const ixport = <StorageProduct>{
       storageId: this.storageId,
       productId: this.formGroup.value.product.productId,
       date: this.formGroup.value.date,
-      quantity: this.formGroup.value.quantity,
+      quantity: quantity,
       type: this.formGroup.value.type,
       fromTo: this.formGroup.value.fromTo
     };

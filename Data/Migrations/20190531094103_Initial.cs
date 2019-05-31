@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Shine.Data.Migragions
+namespace Shine.Data.Migrations
 {
     public partial class Initial : Migration
     {
@@ -45,6 +45,20 @@ namespace Shine.Data.Migragions
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Storages",
+                columns: table => new
+                {
+                    StorageId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Storages", x => x.StorageId);
                 });
 
             migrationBuilder.CreateTable(
@@ -220,6 +234,36 @@ namespace Shine.Data.Migragions
                 });
 
             migrationBuilder.CreateTable(
+                name: "Departments",
+                columns: table => new
+                {
+                    DepartmentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DepartmentName = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<string>(nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.DepartmentId);
+                    table.ForeignKey(
+                        name: "FK_Departments_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Departments_AspNetUsers_ModifiedById",
+                        column: x => x.ModifiedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tokens",
                 columns: table => new
                 {
@@ -287,7 +331,7 @@ namespace Shine.Data.Migragions
                 {
                     PersonId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PersonType = table.Column<int>(nullable: false),
+                    PersonType = table.Column<bool>(nullable: false),
                     PersonNumber = table.Column<string>(nullable: true),
                     Gender = table.Column<bool>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
@@ -326,16 +370,18 @@ namespace Shine.Data.Migragions
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Employees",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(nullable: false)
+                    EmployeeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    OrderNumber = table.Column<string>(maxLength: 50, nullable: false),
-                    DateOfIssue = table.Column<DateTime>(type: "date", nullable: false),
-                    TimeForPayment = table.Column<DateTime>(type: "date", nullable: false),
-                    OrderType = table.Column<bool>(nullable: false),
-                    PersonId = table.Column<int>(nullable: false),
+                    Gender = table.Column<bool>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
+                    Telephone = table.Column<string>(nullable: true),
+                    CountryId = table.Column<int>(nullable: false),
+                    DepartmentId = table.Column<int>(nullable: true),
                     CreatedById = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
@@ -344,24 +390,76 @@ namespace Shine.Data.Migragions
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_CreatedById",
+                        name: "FK_Employees_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "CountryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_ModifiedById",
+                        name: "FK_Employees_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_ModifiedById",
+                        column: x => x.ModifiedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StorageProducts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "NEWID()"),
+                    StorageId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
+                    Type = table.Column<bool>(nullable: false),
+                    Quantity = table.Column<decimal>(nullable: false),
+                    FromTo = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<string>(nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StorageProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StorageProducts_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StorageProducts_AspNetUsers_ModifiedById",
                         column: x => x.ModifiedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Orders_Persons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Persons",
-                        principalColumn: "PersonId",
+                        name: "FK_StorageProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StorageProducts_Storages_StorageId",
+                        column: x => x.StorageId,
+                        principalTable: "Storages",
+                        principalColumn: "StorageId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -406,15 +504,68 @@ namespace Shine.Data.Migragions
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OrderNumber = table.Column<string>(maxLength: 50, nullable: false),
+                    DateOfIssue = table.Column<DateTime>(type: "date", nullable: false),
+                    TimeForPayment = table.Column<DateTime>(type: "date", nullable: false),
+                    Rating = table.Column<decimal>(nullable: false),
+                    OrderType = table.Column<bool>(nullable: false),
+                    PersonId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
+                    ModifiedById = table.Column<string>(nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_ModifiedById",
+                        column: x => x.ModifiedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Photos",
                 columns: table => new
                 {
                     PhotoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Url = table.Column<string>(nullable: true),
-                    PersonId = table.Column<int>(nullable: false),
+                    PublicId = table.Column<string>(nullable: true),
+                    PhotoUrl = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    IsMain = table.Column<bool>(nullable: false),
+                    PersonId = table.Column<int>(nullable: true),
+                    ProductId = table.Column<int>(nullable: true),
                     CreatedById = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()"),
+                    EmployeeId = table.Column<int>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValueSql: "0"),
                     ModifiedById = table.Column<string>(nullable: true),
                     ModifiedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetUtcDate()")
@@ -429,6 +580,12 @@ namespace Shine.Data.Migragions
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Photos_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Photos_AspNetUsers_ModifiedById",
                         column: x => x.ModifiedById,
                         principalTable: "AspNetUsers",
@@ -439,7 +596,13 @@ namespace Shine.Data.Migragions
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Photos_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -482,7 +645,7 @@ namespace Shine.Data.Migragions
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payment",
+                name: "Payments",
                 columns: table => new
                 {
                     PaymentId = table.Column<int>(nullable: false)
@@ -500,21 +663,21 @@ namespace Shine.Data.Migragions
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
+                    table.PrimaryKey("PK_Payments", x => x.PaymentId);
                     table.ForeignKey(
-                        name: "FK_Payment_AspNetUsers_CreatedById",
+                        name: "FK_Payments_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Payment_AspNetUsers_ModifiedById",
+                        name: "FK_Payments_AspNetUsers_ModifiedById",
                         column: x => x.ModifiedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Payment_Orders_OrderId",
+                        name: "FK_Payments_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
@@ -641,9 +804,44 @@ namespace Shine.Data.Migragions
                 column: "ModifiedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Departments_CreatedById",
+                table: "Departments",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Departments_ModifiedById",
+                table: "Departments",
+                column: "ModifiedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_CountryId",
+                table: "Employees",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_CreatedById",
+                table: "Employees",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_DepartmentId",
+                table: "Employees",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_ModifiedById",
+                table: "Employees",
+                column: "ModifiedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CreatedById",
                 table: "Orders",
                 column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_EmployeeId",
+                table: "Orders",
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_ModifiedById",
@@ -662,18 +860,18 @@ namespace Shine.Data.Migragions
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_CreatedById",
-                table: "Payment",
+                name: "IX_Payments_CreatedById",
+                table: "Payments",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_ModifiedById",
-                table: "Payment",
+                name: "IX_Payments_ModifiedById",
+                table: "Payments",
                 column: "ModifiedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_OrderId",
-                table: "Payment",
+                name: "IX_Payments_OrderId",
+                table: "Payments",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
@@ -712,6 +910,11 @@ namespace Shine.Data.Migragions
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Photos_EmployeeId",
+                table: "Photos",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Photos_ModifiedById",
                 table: "Photos",
                 column: "ModifiedById");
@@ -720,6 +923,11 @@ namespace Shine.Data.Migragions
                 name: "IX_Photos_PersonId",
                 table: "Photos",
                 column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_ProductId",
+                table: "Photos",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductOrders_CreatedById",
@@ -752,6 +960,26 @@ namespace Shine.Data.Migragions
                 column: "ModifiedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StorageProducts_CreatedById",
+                table: "StorageProducts",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageProducts_ModifiedById",
+                table: "StorageProducts",
+                column: "ModifiedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageProducts_ProductId",
+                table: "StorageProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageProducts_StorageId",
+                table: "StorageProducts",
+                column: "StorageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tokens_UserId",
                 table: "Tokens",
                 column: "UserId");
@@ -778,7 +1006,7 @@ namespace Shine.Data.Migragions
                 name: "Costs");
 
             migrationBuilder.DropTable(
-                name: "Payment");
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "PersonProducts");
@@ -788,6 +1016,9 @@ namespace Shine.Data.Migragions
 
             migrationBuilder.DropTable(
                 name: "ProductOrders");
+
+            migrationBuilder.DropTable(
+                name: "StorageProducts");
 
             migrationBuilder.DropTable(
                 name: "Tokens");
@@ -802,10 +1033,19 @@ namespace Shine.Data.Migragions
                 name: "Products");
 
             migrationBuilder.DropTable(
+                name: "Storages");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
                 name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Countries");

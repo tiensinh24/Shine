@@ -24,10 +24,13 @@ namespace Shine.Data.Models {
 
 #region FK
         public int PersonId { get; set; }
+        public int EmployeeId { get; set; }
+
 #endregion
 
 #region Navigation Properties
         public Person Person { get; set; }
+        public Employee Employee { get; set; }
         public IEnumerable<ProductOrder> ProductOrders { get; set; }
         public IEnumerable<Payment> Payments { get; set; }
         public IEnumerable<Cost> Costs { get; set; }
