@@ -1,214 +1,192 @@
-<!-- Toolbar -->
-<mat-toolbar color="primary" class="toolbar">
-  <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="leftnav.toggle()">
-      <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
-    </button>
-
-    <div fxLayout="row" fxLayoutAlign="start center" [routerLink]="['/home']" matTooltip="Home">
-      <mat-icon svgIcon="logo" style="width:40px; height:40px"></mat-icon>
-      <button class="home-logo" mat-button>Shine</button>
-    </div>
-
-    <span class="fill"></span>
-
-    <!-- Apps menu -->
-    <button mat-icon-button [matMenuTriggerFor]="apps" matTooltip="Apps">
-      <mat-icon>apps</mat-icon>
-    </button>
-    <mat-menu #apps="matMenu">
-      <!-- Row 1 -->
-      <div fxLayout="row">
-        <!-- Category -->
-        <button
-          [routerLink]="['/category-buy']"
-          mat-menu-item
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
-          <mat-icon style="font-size: 48px" color="primary">category</mat-icon>
-          <span>Category</span>
-        </button>
-        <!-- Product -->
-        <button
-          [routerLink]="['/product-buy']"
-          mat-menu-item
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
-          <mat-icon style="font-size: 48px" color="primary">shopping_cart</mat-icon>
-          <span>Product</span>
-        </button>
-        <!-- suppliers -->
-        <button
-          mat-menu-item
-          [routerLink]="['/supplier']"
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
-          <mat-icon style="font-size: 48px" color="primary">account_circle</mat-icon>
-          <span>Supplier</span>
-        </button>
-      </div>
-      <!-- Row 2 -->
-      <div fxLayout="row">
-        <!-- Customer -->
-        <button
-          [routerLink]="['/customer']"
-          mat-menu-item
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
-          <mat-icon style="font-size: 48px" color="primary">supervised_user_circle</mat-icon>
-          <span>Customer</span>
-        </button>
-
-        <!-- Storage -->
-        <button
-          [routerLink]="['/storage']"
-          mat-menu-item
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
-          <mat-icon style="font-size: 48px" color="primary">storage</mat-icon>
-          <span>Storage</span>
-        </button>
-
-        <!-- Order -->
-        <button
-          [routerLink]="['/order-buy']"
-          mat-menu-item
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
-          <mat-icon style="font-size: 48px" color="primary">receipt</mat-icon>
-          <span>Order</span>
-        </button>
-      </div>
-      <!-- Row 3 -->
-      <div fxLayout="row">
-        <button
-          [routerLink]="['/admin']"
-          mat-menu-item
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="8px"
-          style="height: 100%;"
-        >
-          <mat-icon style="font-size: 48px" color="primary">dashboard</mat-icon>
-          <span>Admin</span>
-        </button>
-
-        <button mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-          <mat-icon style="font-size: 48px" color="primary">store</mat-icon>
-          <span>Store</span>
-        </button>
-      </div>
-    </mat-menu>
-
-    <!-- Account menu -->
-    <div [matMenuTriggerFor]="account" matTooltip="Welcome {{ user }}">
-      <mat-icon *ngIf="!isLoggedIn()">lock</mat-icon>
-
-      <div *ngIf="isLoggedIn()" class="user-avatar"></div>
-    </div>
-    <mat-menu #account="matMenu">
-      <button *ngIf="!isLoggedIn()" mat-menu-item (click)="login()">
-        <mat-icon aria-label="Login">account_circle</mat-icon>
-        Login
+<main class="mat-typography">
+  <!-- Toolbar -->
+  <mat-toolbar color="primary" class="toolbar">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
+      <button mat-icon-button (click)="leftnav.toggle()">
+        <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <button *ngIf="isLoggedIn()" mat-menu-item (click)="logout()">
-        <mat-icon aria-label="Login">exit_to_app</mat-icon>
-        Logout
+
+      <div fxLayout="row" fxLayoutAlign="start center" [routerLink]="['/home']" matTooltip="Home">
+        <mat-icon svgIcon="logo" style="width:40px; height:40px"></mat-icon>
+        <button class="home-logo" mat-button>Shine</button>
+      </div>
+
+      <span class="fill"></span>
+
+      <!-- Apps menu -->
+      <button mat-icon-button [matMenuTriggerFor]="apps" matTooltip="Apps">
+        <mat-icon>apps</mat-icon>
       </button>
-    </mat-menu>
-  </mat-toolbar-row>
-</mat-toolbar>
+      <mat-menu #apps="matMenu">
+        <!-- Row 1 -->
+        <div fxLayout="row">
+          <!-- Category -->
+          <button
+            [routerLink]="['/category-buy']"
+            mat-menu-item
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="8px"
+            style="height: 100%;"
+          >
+            <mat-icon style="font-size: 48px" color="primary">category</mat-icon>
+            <span>Category</span>
+          </button>
+          <!-- Product -->
+          <button
+            [routerLink]="['/product-buy']"
+            mat-menu-item
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="8px"
+            style="height: 100%;"
+          >
+            <mat-icon style="font-size: 48px" color="primary">shopping_cart</mat-icon>
+            <span>Product</span>
+          </button>
+          <!-- suppliers -->
+          <button
+            mat-menu-item
+            [routerLink]="['/supplier']"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="8px"
+            style="height: 100%;"
+          >
+            <mat-icon style="font-size: 48px" color="primary">account_circle</mat-icon>
+            <span>Supplier</span>
+          </button>
+        </div>
+        <!-- Row 2 -->
+        <div fxLayout="row">
+          <!-- Customer -->
+          <button
+            [routerLink]="['/customer']"
+            mat-menu-item
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="8px"
+            style="height: 100%;"
+          >
+            <mat-icon style="font-size: 48px" color="primary">supervised_user_circle</mat-icon>
+            <span>Customer</span>
+          </button>
 
-<!-- Progress Bar -->
-<mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
+          <!-- Storage -->
+          <button
+            [routerLink]="['/storage']"
+            mat-menu-item
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="8px"
+            style="height: 100%;"
+          >
+            <mat-icon style="font-size: 48px" color="primary">storage</mat-icon>
+            <span>Storage</span>
+          </button>
 
-<!-- Left Side Nav -->
-<mat-sidenav-container class="side-nav">
-  <mat-sidenav #leftnav mode="side" role="navigation">
-    <mat-nav-list>
-      <mat-accordion multi="false">
-        <!-- Account group -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Welcome {{ user }} </mat-panel-title>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
-        <!-- Product group -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Products
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-nav-list>
-            <mat-list-item routerLink="/product-buy/list" routerLinkActive="active">
-              Products List
-            </mat-list-item>
-          </mat-nav-list>
-        </mat-expansion-panel>
-        <!-- Admin group -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Admin
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-nav-list>
-            <mat-list-item routerLink="/admin/manager-user" routerLinkActive="active">
-              Manager User
-            </mat-list-item>
-            <mat-list-item routerLink="/admin/manager-role" routerLinkActive="active">
-              Manager Role
-            </mat-list-item>
-          </mat-nav-list>
-        </mat-expansion-panel>
-        <!-- Login group -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Logins
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-nav-list>
-            <mat-list-item routerLink="/login" routerLinkActive="active">
-              <mat-icon>account_circle_outlined</mat-icon>Login
-            </mat-list-item>
-          </mat-nav-list>
-          <mat-nav-list>
-            <mat-list-item routerLinkActive="active" (click)="logout()">
-              <mat-icon>power_settings_new</mat-icon>Logout
-            </mat-list-item>
-          </mat-nav-list>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </mat-nav-list>
-  </mat-sidenav>
+          <!-- Order -->
+          <button
+            [routerLink]="['/order-buy']"
+            mat-menu-item
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="8px"
+            style="height: 100%;"
+          >
+            <mat-icon style="font-size: 48px" color="primary">receipt</mat-icon>
+            <span>Order</span>
+          </button>
+        </div>
+        <!-- Row 3 -->
+        <div fxLayout="row">
+          <button
+            [routerLink]="['/admin']"
+            mat-menu-item
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="8px"
+            style="height: 100%;"
+          >
+            <mat-icon style="font-size: 48px" color="primary">dashboard</mat-icon>
+            <span>Admin</span>
+          </button>
 
-  
-  
-  <!-- Content router-outlet -->
-  <mat-sidenav-content role="main">
-    <router-outlet></router-outlet>
-    <section class="footer">
-      Place holder for footer
-    </section>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+          <button mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
+            <mat-icon style="font-size: 48px" color="primary">store</mat-icon>
+            <span>Store</span>
+          </button>
+        </div>
+      </mat-menu>
+
+      <!-- Account menu -->
+      <div [matMenuTriggerFor]="account" matTooltip="Welcome {{ user }}">
+        <mat-icon *ngIf="!isLoggedIn()">lock</mat-icon>
+
+        <div *ngIf="isLoggedIn()" class="user-avatar"></div>
+      </div>
+      <mat-menu #account="matMenu">
+        <button *ngIf="!isLoggedIn()" mat-menu-item (click)="login()">
+          <mat-icon aria-label="Login">account_circle</mat-icon>
+          Login
+        </button>
+        <button *ngIf="isLoggedIn()" mat-menu-item (click)="logout()">
+          <mat-icon aria-label="Login">exit_to_app</mat-icon>
+          Logout
+        </button>
+      </mat-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <!-- Progress Bar -->
+  <mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
+
+  <!-- Left Side Nav -->
+  <mat-sidenav-container class="side-nav">
+    <mat-sidenav #leftnav opened mode="side" role="navigation">
+      <!-- Avatar + Welcome -->
+      <mat-card class="avatar" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
+        <div fxFlexAlign="end" matTooltip="Switch to buy/sell mode">
+          <mat-slide-toggle #navToggle checked labelPosition="before">{{
+            navToggle.checked ? 'Buy' : 'Sell'
+          }}</mat-slide-toggle>
+        </div>
+
+        <h3>Welcome {{ user }}</h3>
+
+        <div class="user-avatar"></div>
+      </mat-card>
+
+      <!-- Expansion nav -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-nav-list>
+            <mat-list-item>
+              <mat-icon color="primary" class="fas fa-cookie-bite"></mat-icon>
+              <a matLine>Products</a>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item>
+            <mat-icon color="primary" class="fas fa-cookie-bite"></mat-icon>
+            <a matLine [routerLink]="['/product-buy']">Products list</a>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon color="primary" class="fas fa-cookie-bite"></mat-icon>
+            <a matLine [routerLink]="['/product-buy/remain']">Products remaining</a>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-sidenav>
+
+    <!-- Content router-outlet -->
+    <mat-sidenav-content role="main">
+      <router-outlet></router-outlet>
+      <section class="footer">
+        Place holder for footer
+      </section>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</main>

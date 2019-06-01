@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule, MatToolbarModule, MatTooltipModule, MatButtonToggleModule } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
@@ -13,6 +13,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatToolbarModule,
     MatTooltipModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatSidenavModule,
     MatIconModule,
     MatSelectModule,
@@ -43,6 +44,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatToolbarModule,
     MatTooltipModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatSidenavModule,
     MatIconModule,
     MatSelectModule,

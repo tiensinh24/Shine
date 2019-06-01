@@ -125,12 +125,12 @@ namespace Shine.Data {
 
 #region Automatic Auditing
         public override int SaveChanges(bool acceptAllChangesOnSuccess) {
-            // OnBeforeSaving();
+            OnBeforeSaving();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken)) {
-            // OnBeforeSaving();
+            OnBeforeSaving();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 

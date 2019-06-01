@@ -1,96 +1,69 @@
-.circle-container {
-  position: relative;
-  /* 1 */
-  width: 25em;
-  height: 25em;
-  padding: 0;
-  border-radius: 50%;
-  list-style: none;
-  /* 2 */
-  -webkit-box-sizing: content-box;
-          box-sizing: content-box;
-  /* 3 */
-  margin: 5em auto 0;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-  border: solid 5px tomato;
+main {
+  margin: 1rem;
 }
 
-.circle-container > * {
-  /* 4 */
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6em;
-  height: 6em;
-  margin: -3em;
-}
-
-.circle-container > :nth-of-type(1) {
-  -webkit-transform: rotate(0deg) translate(12.5em) rotate(0deg);
-          transform: rotate(0deg) translate(12.5em) rotate(0deg);
-}
-
-.circle-container > :nth-of-type(2) {
-  -webkit-transform: rotate(45deg) translate(12.5em) rotate(-45deg);
-          transform: rotate(45deg) translate(12.5em) rotate(-45deg);
-}
-
-.circle-container > :nth-of-type(3) {
-  -webkit-transform: rotate(90deg) translate(12.5em) rotate(-90deg);
-          transform: rotate(90deg) translate(12.5em) rotate(-90deg);
-}
-
-.circle-container > :nth-of-type(4) {
-  -webkit-transform: rotate(135deg) translate(12.5em) rotate(-135deg);
-          transform: rotate(135deg) translate(12.5em) rotate(-135deg);
-}
-
-.circle-container > :nth-of-type(5) {
-  -webkit-transform: rotate(180deg) translate(12.5em) rotate(-180deg);
-          transform: rotate(180deg) translate(12.5em) rotate(-180deg);
-}
-
-.circle-container > :nth-of-type(6) {
-  -webkit-transform: rotate(225deg) translate(12.5em) rotate(-225deg);
-          transform: rotate(225deg) translate(12.5em) rotate(-225deg);
-}
-
-.circle-container > :nth-of-type(7) {
-  -webkit-transform: rotate(270deg) translate(12.5em) rotate(-270deg);
-          transform: rotate(270deg) translate(12.5em) rotate(-270deg);
-}
-
-.circle-container > :nth-of-type(8) {
-  -webkit-transform: rotate(315deg) translate(12.5em) rotate(-315deg);
-          transform: rotate(315deg) translate(12.5em) rotate(-315deg);
-}
-
-.circle-container img {
-  display: block;
+main .card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   width: 100%;
-  border-radius: 50%;
-  -webkit-filter: grayscale(100%);
-          filter: grayscale(100%);
+  padding: 1rem;
+  text-align: center;
 }
 
-.circle-container img:hover {
-  -webkit-filter: grayscale(0);
-          filter: grayscale(0);
+main .card > div {
+  min-width: 200px;
+  min-height: 200px;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-transition: 250ms ease-out;
+  transition: 250ms ease-out;
 }
 
-.background {
-  position: fixed;
-  top: 63px;
-  left: 0;
-  width: 100vw;
-  height: calc(100vh - 63px);
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background: url("../../assets/bg2.jpg") no-repeat center center fixed;
-  background-size: cover;
+main .card > div:hover {
+  cursor: pointer;
+  background: floralwhite;
+  -webkit-transform: translateY(-2rem);
+          transform: translateY(-2rem);
+  -webkit-transition: 250ms ease-in;
+  transition: 250ms ease-in;
+}
+
+main .card > div.product {
+  color: coral;
+}
+
+main .card > div.supplier {
+  color: royalblue;
+}
+
+main .card > div.customer {
+  color: cornflowerblue;
+}
+
+main .card > div.order {
+  color: mediumseagreen;
+}
+
+main .card > div.storage {
+  color: mediumpurple;
+}
+
+main .card > div.report {
+  color: mediumslateblue;
+}
+
+main .card i {
+  font-size: 48px;
+}
+
+img.page-bg {
+  max-width: 75%;
+  height: auto;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  opacity: 0.1;
+  z-index: -1;
 }
 /*# sourceMappingURL=home.component.css.map */

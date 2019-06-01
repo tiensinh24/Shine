@@ -1,5 +1,8 @@
+import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
@@ -18,6 +21,25 @@ import { SharedModule } from '../_shared/shared.module';
     CustomerListComponent,
     CustomerComponent
   ],
-  imports: [CommonModule, CustomerRoutingModule, PhotoUploadSharedModule, SharedModule, MaterialSharedModule]
+  imports: [
+    CommonModule,
+    CustomerRoutingModule,
+    PhotoUploadSharedModule,
+    SharedModule,
+    MaterialSharedModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatMenuModule
+  ]
 })
 export class CustomerModule {}

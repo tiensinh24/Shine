@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/_services/auth.service';
 import { IconService } from '../_shared/_services/icon.service';
-
-
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css'],
+  styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent implements OnInit, AfterContentChecked {
   user: string;
@@ -24,13 +25,10 @@ export class NavMenuComponent implements OnInit, AfterContentChecked {
     this.isExpanded = !this.isExpanded;
   }
 
-  constructor(private auth: AuthService,
-    private router: Router,
-    private iconService: IconService) {
-
-      // Get svgIcon from IconService
-      this.iconService.logo();
-    }
+  constructor(private auth: AuthService, private router: Router, private iconService: IconService) {
+    // Get svgIcon from IconService
+    this.iconService.logo();
+  }
 
   ngOnInit(): void {
     if (localStorage.length > 0) {

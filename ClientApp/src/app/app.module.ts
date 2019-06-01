@@ -14,6 +14,7 @@ import { LogInComponent } from './log-in/log-in.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+
 @NgModule({
   declarations: [AppComponent, NavMenuComponent, HomeComponent, PageNotFoundComponent, LogInComponent],
   imports: [

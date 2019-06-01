@@ -1,5 +1,6 @@
 mat-card#main {
   padding: 0;
+  margin: 1rem;
   background-image: -webkit-gradient(linear, left top, left bottom, from(mediumslateblue), to(white));
   background-image: linear-gradient(mediumslateblue, white);
 }

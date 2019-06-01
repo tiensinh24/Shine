@@ -176,7 +176,8 @@ namespace Shine.Data.Infrastructures.Repositories {
             var source = _context.Set<ProductBuy>()
                 .AsNoTracking()
                 .Include(p => p.StorageProducts)
-                .ProjectToType<ProductRemainDto>();
+                .ProjectToType<ProductRemainDto>()
+                .Where(p => p.Remain != 0);
 
             switch (sortParams.SortOrder) {
                 case "asc":

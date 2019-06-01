@@ -27,24 +27,34 @@
   }
 }
 
-.side-nav {
+mat-sidenav-container.side-nav {
   position: absolute;
   top: 60px;
   bottom: 0;
   left: 0;
   right: 0;
 
-  .active {
-    color: royalblue;
-  }
+  > mat-sidenav {
+    min-width: 250px;
 
-  mat-nav-list > div[routerLink] {
-    cursor: pointer;
-  }
+    mat-card.avatar {
+      background-image: url("../../assets/images/sidenav-avatar-bg.jpg");
+      background-size: cover;
 
-  .mat-expansion-panel-header.mat-expanded {
-    font-size: larger;
-    background-color: powderblue;
+      .user-avatar {
+        text-align: center;
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        background-image: url("http://lorempixel.com/100/100/people");
+        background-position: center;
+        background-size: cover;
+      }
+
+      h3 {
+        color: mediumslateblue;
+      }
+    }
   }
 }
 
