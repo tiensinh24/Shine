@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,IAAI,CAAC;EACH,OAAO,EAAE,IAAI;CAqBd;;AAtBD,AAOI,IAPA,GAMA,QAAQ,CACR,QAAQ,AAAA,KAAK,CAAC;EACZ,MAAM,EAAE,MAAM;EACd,KAAK,EAAE,KAAK;CAWb;;AApBL,AAaU,IAbN,GAMA,QAAQ,CACR,QAAQ,AAAA,KAAK,CAIX,gBAAgB,CACd,KAAK,CACH,EAAE,CAAC;EACD,KAAK,EAAE,SAAS;EAChB,UAAU,EAAE,IAAI;EAChB,aAAa,EAAE,IAAI;CACpB",
+    "sources": [
+        "supplier-card.component.scss"
+    ],
+    "names": [],
+    "file": "supplier-card.component.css"
+}

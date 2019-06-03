@@ -14,6 +14,7 @@ import { PhotoUploadSharedModule } from '../_shared/components/photo-upload/phot
 import { SupplierEditDialogSharedModule } from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SharedModule } from '../_shared/shared.module';
+import { SupplierCardComponent } from './supplier-list/supplier-card/supplier-card.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { SharedModule } from '../_shared/shared.module';
     SupplierComponent,
     ProductsNotAddedComponent,
     ProductsAddedComponent,
-    SupplierOrdersComponent
+    SupplierOrdersComponent,
+    SupplierCardComponent
   ],
   imports: [
     // Shared module

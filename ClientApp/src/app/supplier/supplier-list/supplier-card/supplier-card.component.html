@@ -1,0 +1,90 @@
+<main class="mat-typography">
+  <div class="title" fxLayout="row">
+    <h1>Suppliers</h1>
+    <div fxFlex></div>
+    <button mat-icon-button matTooltip="list" [routerLink]="['/supplier']"><mat-icon>list</mat-icon></button>
+    <button mat-icon-button matTooltip="card" color="primary"><mat-icon>layers</mat-icon></button>
+  </div>
+
+  <div class="content" fxLayout="row wrap" fxLayoutAlign="center start">
+    <mat-card *ngFor="let supplier of dataSource.data | async" class="card mat-elevation-z8">
+      <mat-card-header>
+        <img mat-card-avatar src="{{ mainPhotoUrl }}" />
+
+        <mat-card-title>{{ supplier.fullName }}</mat-card-title>
+        <mat-card-subtitle
+          ><div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <div>{{ supplier.gender | gender }}</div>
+
+            <div>
+              <star-rating
+                [starType]="'svg'"
+                [rating]="supplier.rating"
+                [showHalfStars]="true"
+                [readOnly]="true"
+              ></star-rating>
+            </div>
+          </div>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div>
+          <button mat-icon-button color="accent"><mat-icon>cake</mat-icon></button>
+
+          {{ supplier.dateOfBirth | date: 'shortDate' }}
+        </div>
+
+        <table>
+          <tr>
+            <th>Telephone</th>
+            <td>{{ supplier.telephone }}</td>
+          </tr>
+          <tr>
+            <th>Fax</th>
+            <td>{{ supplier.fax }}</td>
+          </tr>
+          <tr>
+            <th>Country</th>
+            <td>{{ supplier.countryName }}</td>
+          </tr>
+          <tr>
+            <th>Continent</th>
+            <td>{{ supplier.continentName }}</td>
+          </tr>
+        </table>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+        <button mat-icon-button matTooltip="Edit supplier" color="warn" (click)="openDialog()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          matTooltip="Supplier detail"
+          color="primary"
+          [routerLink]="['/supplier', supplier.personId]"
+        >
+          <mat-icon>details</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Paginator & filter -->
+  <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
+    <mat-paginator
+      fxFlex="70"
+      [length]="(dataSource.paging | async)?.totalItems"
+      [pageSize]="8"
+      [pageSizeOptions]="[8, 16, 25, 100]"
+      showFirstLastButtons
+      (page)="pageEvent = OnPageChange($event)"
+    >
+      ></mat-paginator
+    >
+
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Search suppliers" #input />
+    </mat-form-field>
+  </mat-card>
+</main>

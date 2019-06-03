@@ -64,3 +64,18 @@ mat-sidenav-container.side-nav {
   left: 0;
   right: 0;
 }
+
+mat-expansion-panel-header {
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    padding-right: 1rem;
+  }
+}
+
+.router-link-active {
+  mat-icon {
+    color: royalblue;
+  }
+}

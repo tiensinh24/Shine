@@ -158,27 +158,64 @@
       </mat-card>
 
       <!-- Expansion nav -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
+      <mat-nav-list>
+        <mat-list-item>
+          <mat-icon>home</mat-icon>
+          <a matLine [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a>
+        </mat-list-item>
+      </mat-nav-list>
+
+      <mat-accordion class="main-accordion" multi="false" displayMode="flat">
+        <!-- Products group -->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-icon class="fas fa-cookie-bite"></mat-icon>
+            <span>Products</span>
+          </mat-expansion-panel-header>
+          <!-- Expand list -->
           <mat-nav-list>
             <mat-list-item>
-              <mat-icon color="primary" class="fas fa-cookie-bite"></mat-icon>
-              <a matLine>Products</a>
+              <mat-icon>list</mat-icon>
+              <a matLine [routerLink]="['/product-buy']">Product lists</a>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon>line_style</mat-icon>
+              <a matLine [routerLink]="['/product-buy/remain']">Products remaining</a>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
+              <a matLine [routerLink]="['/supplier/reports']">Reports</a>
             </mat-list-item>
           </mat-nav-list>
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <mat-list-item>
-            <mat-icon color="primary" class="fas fa-cookie-bite"></mat-icon>
-            <a matLine [routerLink]="['/product-buy']">Products list</a>
-          </mat-list-item>
+        </mat-expansion-panel>
 
-          <mat-list-item>
-            <mat-icon color="primary" class="fas fa-cookie-bite"></mat-icon>
-            <a matLine [routerLink]="['/product-buy/remain']">Products remaining</a>
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-expansion-panel>
+        <!-- Suppliers group -->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-icon class="fas fa-diagnoses"></mat-icon>
+            <span>Suppliers</span>
+          </mat-expansion-panel-header>
+          <!-- Expand list -->
+          <mat-nav-list>
+            <mat-list-item>
+              <mat-icon>list</mat-icon>
+              <a matLine [routerLink]="['/supplier']">Supplier lists</a>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
+              <a matLine [routerLink]="['/supplier/reports']">Reports</a>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+        <!-- Orders group -->
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-icon class="fas fa-donate"></mat-icon>
+            <span>Orders</span>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-sidenav>
 
     <!-- Content router-outlet -->

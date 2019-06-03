@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
+import { SupplierCardComponent } from './supplier-list/supplier-card/supplier-card.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { SupplierComponent } from './supplier.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'detail', component: SupplierDetailComponent },
       { path: 'edit', component: SupplierEditComponent },
       { path: 'list', component: SupplierListComponent },
+      { path: 'card', component: SupplierCardComponent },
       { path: ':supplierId', component: SupplierDetailComponent }
     ]
   }

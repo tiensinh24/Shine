@@ -1,62 +1,35 @@
-.fill {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+main {
+  padding: 1rem;
 }
 
-mat-progress-bar {
+main mat-progress-bar {
   margin-bottom: 8px;
 }
 
-.mat-paginator-sticky {
-  bottom: 0px;
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 10;
+main .content {
+  padding: 0;
 }
 
-button[mat-mini-fab] {
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+main .content table.main-table {
+  width: 100%;
 }
 
-.card-title {
-  background-color: royalblue;
-  margin-bottom: -15px;
-  color: white;
-  height: 60px;
-}
-
-table[mat-table] {
-  margin: 1em;
-  width: 97.5%;
-}
-
-[mat-sort-header] {
+main .content table.main-table th {
   color: royalblue;
 }
 
-tr.mat-footer-row {
-  font-weight: bold;
-}
-
-.mat-row {
-  height: auto;
-}
-
-.mat-row:hover {
+main .content table.main-table .mat-row:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }
 
-.mat-cell {
-  padding: 0 8px;
-}
-
-.avatar > img {
+main .content table.main-table .mat-row .avatar > img {
   width: 30px;
   height: 30px;
   border-radius: 15px;
+}
+
+main .content .mat-paginator-sticky {
+  background: white;
 }
 /*# sourceMappingURL=supplier-list.component.css.map */

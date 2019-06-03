@@ -1,0 +1,23 @@
+main {
+  padding: 1rem;
+
+  div.title {
+  }
+
+  > .content {
+    mat-card.card {
+      margin: 0.5rem;
+      width: 220px;
+
+      mat-card-content {
+        table {
+          th {
+            color: royalblue;
+            text-align: left;
+            padding-right: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

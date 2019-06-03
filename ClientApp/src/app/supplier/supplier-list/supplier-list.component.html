@@ -1,128 +1,137 @@
-<!-- Loading progress bar -->
-<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
-</mat-progress-bar>
+<main class="mat-typography">
+  <!-- Loading progress bar -->
+  <mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
+  </mat-progress-bar>
 
-<!-- Title -->
-<mat-card class="mat-elevation-z8 card-title" fxLayout="row">
-  <span class="fill"></span>
-  <div class="mat-headline">{{ title }}</div>
-  <span class="fill"></span>
-</mat-card>
+  <div class="title" fxLayout="row">
+    <h1>Suppliers</h1>
+    <div fxFlex></div>
+    <button mat-icon-button matTooltip="list" color="primary"><mat-icon>list</mat-icon></button>
+    <button mat-icon-button matTooltip="card" [routerLink]="['/supplier/card']"><mat-icon>layers</mat-icon></button>
+  </div>
 
-<!-- Table -->
-<table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox
-        (change)="masterToggle()"
-        [checked]="isAllSelected()"
-        [indeterminate]="!isAllSelected() && selection.hasValue()"
-      >
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)"> </mat-checkbox>
-    </td>
-  </ng-container>
-  <!-- Photo Column -->
-  <ng-container matColumnDef="photo">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-    <td mat-cell *matCellDef="let row" class="avatar">
-      <img *ngIf="!row.photoUrl" src="assets/default.jpg" />
-      <img *ngIf="row.photoUrl" src="{{ row.photoUrl }}" />
-    </td>
-  </ng-container>
-  <!-- fullName Column -->
-  <ng-container matColumnDef="fullName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>FullName</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
-  </ng-container>
-  <!-- Gender Column -->
-  <ng-container matColumnDef="gender">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Gender</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.gender | gender }}</td>
-  </ng-container>
-  <!-- dateOfBirth Column -->
-  <ng-container matColumnDef="dateOfBirth">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>DateOfBirth</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
-  </ng-container>
-  <!-- personNumber Column -->
-  <ng-container matColumnDef="personNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>PersonNumber</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.personNumber }}</td>
-  </ng-container>
-  <!-- telephone Column -->
-  <ng-container matColumnDef="telephone">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Telephone</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.telephone }}</td>
-  </ng-container>
-  <!-- fax Column -->
-  <ng-container matColumnDef="fax">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Fax</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.fax }}</td>
-  </ng-container>
-  <!-- countryName Column -->
-  <ng-container matColumnDef="countryName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Country</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.countryName }}</td>
-  </ng-container>
-  <!-- continentName Column -->
-  <ng-container matColumnDef="continentName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Continent</b></th>
-    <td mat-cell *matCellDef="let row">{{ row.continentName }}</td>
-  </ng-container>
-  <!-- rating Collumn -->
-  <ng-container matColumnDef="rating">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></th>
-    <td mat-cell *matCellDef="let row">
-      <star-rating [rating]="row.rating" [showHalfStars]="true" [readOnly]="true"></star-rating>
-    </td>
-  </ng-container>
+  <mat-card class="content">
+    <!-- Table -->
+    <table mat-table class="main-table" [dataSource]="dataSource" matSort>
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="masterToggle()"
+            [checked]="isAllSelected()"
+            [indeterminate]="!isAllSelected() && selection.hasValue()"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)"> </mat-checkbox>
+        </td>
+      </ng-container>
+      <!-- Photo Column -->
+      <ng-container matColumnDef="photo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let row" class="avatar">
+          <img *ngIf="!row.photoUrl" src="assets/default.jpg" />
+          <img *ngIf="row.photoUrl" src="{{ row.photoUrl }}" />
+        </td>
+      </ng-container>
+      <!-- fullName Column -->
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>FullName</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
+      </ng-container>
+      <!-- Gender Column -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Gender</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.gender | gender }}</td>
+      </ng-container>
+      <!-- dateOfBirth Column -->
+      <ng-container matColumnDef="dateOfBirth">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>DateOfBirth</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+      </ng-container>
+      <!-- personNumber Column -->
+      <ng-container matColumnDef="personNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>PersonNumber</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.personNumber }}</td>
+      </ng-container>
+      <!-- telephone Column -->
+      <ng-container matColumnDef="telephone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Telephone</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.telephone }}</td>
+      </ng-container>
+      <!-- fax Column -->
+      <ng-container matColumnDef="fax">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Fax</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.fax }}</td>
+      </ng-container>
+      <!-- countryName Column -->
+      <ng-container matColumnDef="countryName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Country</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.countryName }}</td>
+      </ng-container>
+      <!-- continentName Column -->
+      <ng-container matColumnDef="continentName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Continent</b></th>
+        <td mat-cell *matCellDef="let row">{{ row.continentName }}</td>
+      </ng-container>
+      <!-- rating Collumn -->
+      <ng-container matColumnDef="rating">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></th>
+        <td mat-cell *matCellDef="let row">
+          <star-rating [rating]="row.rating" [showHalfStars]="true" [readOnly]="true"></star-rating>
+        </td>
+      </ng-container>
 
-  <!-- Actions Column -->
-  <ng-container matColumnDef="actions">
-    <mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
-      <button mat-icon-button color="primary" (click)="onCreate()">
-        <mat-icon matTooltip="Create new supplier" aria-label="Create new supplier">add_circle</mat-icon>
-      </button>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
+          <div fxLayout="row" fxLayoutAlign="flex-end center">
+            <button mat-icon-button color="primary" (click)="onCreate()">
+              <mat-icon matTooltip="Create new supplier" aria-label="Create new supplier">add_circle</mat-icon>
+            </button>
 
-      <button *ngIf="selection.hasValue()" mat-icon-button color="warn" (click)="onDeleteSelected()">
-        <mat-icon matTooltip="Delete selected suppliers" aria-label="Delete selected suppliers">delete_sweep</mat-icon>
-      </button>
-    </mat-header-cell>
+            <button *ngIf="selection.hasValue()" mat-icon-button color="warn" (click)="onDeleteSelected()">
+              <mat-icon matTooltip="Delete selected suppliers" aria-label="Delete selected suppliers">
+                delete_sweep
+              </mat-icon>
+            </button>
+          </div>
+        </th>
 
-    <mat-cell *matCellDef="let row">
-      <button matTooltip="Supplier detail" mat-icon-button color="primary" (click)="onDetail(row)">
-        <mat-icon aria-label="Detail">list_alt</mat-icon>
-      </button>
+        <td mat-cell *matCellDef="let row">
+          <div fxLayout="row" fxLayoutAlign="flex-end center">
+            <button matTooltip="Supplier detail" mat-icon-button color="primary" (click)="onDetail(row)">
+              <mat-icon aria-label="Detail">list_alt</mat-icon>
+            </button>
 
-      <button matTooltip="Edit supplier" mat-icon-button color="accent" (click)="onEdit(row)">
-        <mat-icon aria-label="Edit">edit</mat-icon>
-      </button>
+            <button matTooltip="Edit supplier" mat-icon-button color="accent" (click)="onEdit(row)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
 
-      <button matTooltip="Delete supplier" mat-icon-button color="warn" (click)="onDelete(row)">
-        <mat-icon aria-label="Delete">delete</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
+            <button matTooltip="Delete supplier" mat-icon-button color="warn" (click)="onDelete(row)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
-</table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+    </table>
 
-<!-- Paginator & filter -->
-<mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
-  <mat-paginator
-    fxFlex="70"
-    [length]="(dataSource.paging | async)?.totalItems"
-    [pageSize]="8"
-    [pageSizeOptions]="[8, 16, 25, 100]"
-    showFirstLastButtons
-  ></mat-paginator>
+    <!-- Paginator & filter -->
+    <div fxLayout="row-reverse" class="mat-paginator-sticky">
+      <mat-paginator
+        [length]="(dataSource.paging | async)?.totalItems"
+        [pageSize]="8"
+        [pageSizeOptions]="[8, 16, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
 
-  <mat-form-field fxFlex>
-    <input matInput placeholder="Search suppliers" #input />
-  </mat-form-field>
-</mat-card>
+      <mat-form-field>
+        <input matInput placeholder="Search suppliers" #input />
+      </mat-form-field>
+    </div>
+  </mat-card>
+</main>

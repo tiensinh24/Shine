@@ -68,4 +68,21 @@ mat-sidenav-container.side-nav > mat-sidenav mat-card.avatar h3 {
   left: 0;
   right: 0;
 }
+
+mat-expansion-panel-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+mat-expansion-panel-header mat-icon {
+  padding-right: 1rem;
+}
+
+.router-link-active mat-icon {
+  color: royalblue;
+}
 /*# sourceMappingURL=nav-menu.component.css.map */

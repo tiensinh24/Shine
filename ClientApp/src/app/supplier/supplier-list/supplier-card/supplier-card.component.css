@@ -1,0 +1,15 @@
+main {
+  padding: 1rem;
+}
+
+main > .content mat-card.card {
+  margin: 0.5rem;
+  width: 220px;
+}
+
+main > .content mat-card.card mat-card-content table th {
+  color: royalblue;
+  text-align: left;
+  padding-right: 1rem;
+}
+/*# sourceMappingURL=supplier-card.component.css.map */
