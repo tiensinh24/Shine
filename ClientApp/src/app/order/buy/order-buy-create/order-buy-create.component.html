@@ -52,6 +52,16 @@
           </mat-select>
           <mat-error *ngIf="get('personId').invalid">{{ getErrorMessage(get('personId')) }}</mat-error>
         </mat-form-field>
+        <!-- EmployeeId -->
+        <mat-form-field appearance="outline">
+          <mat-label>Employee</mat-label>
+          <mat-select placeholder="Select an employee" formControlName="employeeId" required>
+            <mat-option *ngFor="let employee of employees" [value]="employee.employeeId">
+              {{ employee.fullName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="get('personId').invalid">{{ getErrorMessage(get('personId')) }}</mat-error>
+        </mat-form-field>
         <div class="step-button">
           <button mat-button matStepperNext>Next</button>
           <button mat-button [routerLink]="['/order-buy']">Cancel</button>

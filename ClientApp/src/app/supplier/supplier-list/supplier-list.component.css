@@ -6,30 +6,38 @@ main mat-progress-bar {
   margin-bottom: 8px;
 }
 
-main .content {
-  padding: 0;
-}
-
-main .content table.main-table {
-  width: 100%;
-}
-
-main .content table.main-table th {
+main > .title > h1 {
   color: royalblue;
 }
 
-main .content table.main-table .mat-row:hover {
+main > .content {
+  padding: 0;
+}
+
+main > .content table.main-table {
+  width: 100%;
+}
+
+main > .content table.main-table th {
+  color: royalblue;
+}
+
+main > .content table.main-table .mat-row:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }
 
-main .content table.main-table .mat-row .avatar > img {
+main > .content table.main-table .mat-row .avatar > img {
   width: 30px;
   height: 30px;
   border-radius: 15px;
 }
 
-main .content .mat-paginator-sticky {
+main > .content .mat-paginator-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
   background: white;
 }
 /*# sourceMappingURL=supplier-list.component.css.map */

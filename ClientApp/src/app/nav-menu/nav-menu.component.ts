@@ -14,17 +14,9 @@ import { Breakpoints } from '@angular/cdk/layout';
 })
 export class NavMenuComponent implements OnInit, AfterContentChecked {
   user: string;
-  isExpanded = false;
+  
   @Input() loading: boolean;
-
-  collapse() {
-    this.isExpanded = false;
-  }
-
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
-
+  
   constructor(private auth: AuthService, private router: Router, private iconService: IconService) {
     // Get svgIcon from IconService
     this.iconService.logo();

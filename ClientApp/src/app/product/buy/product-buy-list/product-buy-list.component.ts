@@ -23,8 +23,6 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   displayedColumns = ['select', 'photo', 'productName', 'specification', 'categoryName', 'actions'];
   selection = new SelectionModel<ProductBuyList>(true, [], false);
 
-  title = 'Products List';
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;

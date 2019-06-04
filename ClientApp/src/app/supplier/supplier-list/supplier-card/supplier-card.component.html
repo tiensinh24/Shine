@@ -1,13 +1,34 @@
-<main class="mat-typography">
-  <div class="title" fxLayout="row">
-    <h1>Suppliers</h1>
-    <div fxFlex></div>
+<!-- Paginator & filter -->
+<div class="title mat-paginator-sticky" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="64px">
+  <h1>Suppliers</h1>
+
+  <div fxFlex fxLayout="row-reverse">
+    <mat-paginator
+      [length]="(dataSource.paging | async)?.totalItems"
+      [pageSize]="8"
+      [pageSizeOptions]="[8, 12, 24, 100]"
+      showFirstLastButtons
+    ></mat-paginator>
+
+    <mat-form-field style="padding: 0 1rem;" fxFlex>
+      <span matPrefix><mat-icon>search</mat-icon></span>
+      <input matInput type="search" placeholder="Search suppliers" #input />
+    </mat-form-field>
+  </div>
+  <div>
     <button mat-icon-button matTooltip="list" [routerLink]="['/supplier']"><mat-icon>list</mat-icon></button>
     <button mat-icon-button matTooltip="card" color="primary"><mat-icon>layers</mat-icon></button>
   </div>
+</div>
 
-  <div class="content" fxLayout="row wrap" fxLayoutAlign="center start">
-    <mat-card *ngFor="let supplier of dataSource.data | async" class="card mat-elevation-z8">
+<main class="mat-typography">
+  <div #mainSection class="content" fxLayout="row wrap" fxLayoutAlign="center stretch">
+    <mat-card
+      fxFlex="22"
+      *ngFor="let supplier of dataSource.data | async"
+      class="card mat-elevation-z8"
+      [routerLink]="['/supplier', supplier.personId]"
+    >
       <mat-card-header>
         <img mat-card-avatar src="{{ mainPhotoUrl }}" />
 
@@ -29,32 +50,34 @@
       </mat-card-header>
 
       <mat-card-content>
-        <div>
-          <button mat-icon-button color="accent"><mat-icon>cake</mat-icon></button>
-
-          {{ supplier.dateOfBirth | date: 'shortDate' }}
-        </div>
-
         <table>
           <tr>
-            <th>Telephone</th>
+            <td>
+              <span><mat-icon>cake</mat-icon></span>
+            </td>
+            <td>{{ supplier.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+          <tr>
+            <td>
+              <span><mat-icon>phone</mat-icon></span>
+            </td>
             <td>{{ supplier.telephone }}</td>
           </tr>
           <tr>
-            <th>Fax</th>
+            <td>
+              <span><mat-icon>linear_scale</mat-icon></span>
+            </td>
             <td>{{ supplier.fax }}</td>
           </tr>
           <tr>
-            <th>Country</th>
-            <td>{{ supplier.countryName }}</td>
-          </tr>
-          <tr>
-            <th>Continent</th>
-            <td>{{ supplier.continentName }}</td>
+            <td>
+              <span><mat-icon>language</mat-icon></span>
+            </td>
+            <td>{{ supplier.countryName }} - {{ supplier.continentName }}</td>
           </tr>
         </table>
       </mat-card-content>
-      <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+      <!-- <mat-card-actions fxLayout="row" fxLayoutAlign="center">
         <button mat-icon-button matTooltip="Edit supplier" color="warn" (click)="openDialog()">
           <mat-icon>edit</mat-icon>
         </button>
@@ -66,25 +89,7 @@
         >
           <mat-icon>details</mat-icon>
         </button>
-      </mat-card-actions>
+      </mat-card-actions> -->
     </mat-card>
   </div>
-
-  <!-- Paginator & filter -->
-  <mat-card fxLayout="row-reverse" class="mat-paginator-sticky">
-    <mat-paginator
-      fxFlex="70"
-      [length]="(dataSource.paging | async)?.totalItems"
-      [pageSize]="8"
-      [pageSizeOptions]="[8, 16, 25, 100]"
-      showFirstLastButtons
-      (page)="pageEvent = OnPageChange($event)"
-    >
-      ></mat-paginator
-    >
-
-    <mat-form-field fxFlex>
-      <input matInput placeholder="Search suppliers" #input />
-    </mat-form-field>
-  </mat-card>
 </main>

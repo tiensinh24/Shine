@@ -12,6 +12,12 @@ namespace Shine.Data.Dto._Mapster {
                 .Map(
                     dest => dest.SupplierName,
                     src => GetFullName(src.Person.FirstName, src.Person.LastName)
+                ).Map(
+                    dest => dest.Value,
+                    src => src.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+                ).Map(
+                    dest => dest.Cost,
+                    src => src.Costs.Sum(c => c.Amount)
                 );
 
             TypeAdapterConfig<OrderBuy, OrderBuyDetailDto>.NewConfig()

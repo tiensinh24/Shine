@@ -20,6 +20,7 @@ namespace Shine.Data.Models {
 #region FK
 
         public int CountryId { get; set; }
+        public int DepartmentId { get; set; }
 
 #endregion
 

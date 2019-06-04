@@ -3,6 +3,7 @@
   <mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
   </mat-progress-bar>
 
+  <!-- title -->
   <div class="title" fxLayout="row">
     <h1>Suppliers</h1>
     <div fxFlex></div>
@@ -10,6 +11,7 @@
     <button mat-icon-button matTooltip="card" [routerLink]="['/supplier/card']"><mat-icon>layers</mat-icon></button>
   </div>
 
+  <!-- content -->
   <mat-card class="content">
     <!-- Table -->
     <table mat-table class="main-table" [dataSource]="dataSource" matSort>
@@ -129,8 +131,9 @@
         showFirstLastButtons
       ></mat-paginator>
 
-      <mat-form-field>
-        <input matInput placeholder="Search suppliers" #input />
+      <mat-form-field style="padding: 0 1rem;" fxFlex>
+        <span matPrefix><mat-icon>search</mat-icon></span>
+        <input matInput type="search" placeholder="Search suppliers" #input />
       </mat-form-field>
     </div>
   </mat-card>

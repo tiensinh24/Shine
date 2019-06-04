@@ -21,7 +21,17 @@ import { OrderBuyService } from '../_services/order-buy.service';
 })
 export class OrderBuyListComponent implements OnInit, AfterViewInit {
   dataSource: OrderBuyDataSource;
-  displayedColumns = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'rating', 'actions'];
+  displayedColumns = [
+    'select',
+    'orderNumber',
+    'dateOfIssue',
+    'timeForPayment',
+    'supplierName',
+    'value',
+    'cost',
+    'rating',
+    'actions'
+  ];
   selection = new SelectionModel<OrderBuyList>(true, []);
   title = 'Order List';
 

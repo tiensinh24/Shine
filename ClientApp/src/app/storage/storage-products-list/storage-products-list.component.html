@@ -1,105 +1,107 @@
-<!-- Loading progress bar -->
-<mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
-</mat-progress-bar>
+<main>
+  <!-- Loading progress bar -->
+  <mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
+  </mat-progress-bar>
 
-<mat-card id="main">
-  <mat-card-title>
-    <h2 class="mat-h2">{{ title }}</h2>
-  </mat-card-title>
+  <mat-card id="main">
+    <mat-card-title>
+      <h2 class="mat-h2">{{ title }}</h2>
+    </mat-card-title>
 
-  <mat-card-content>
-    <table mat-table [dataSource]="dataSource" matSort>
-      <!-- Checkbox Column -->
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox
-            (change)="masterToggle()"
-            [checked]="isAllSelected()"
-            [indeterminate]="!isAllSelected() && selection.hasValue()"
-          >
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)"> </mat-checkbox>
-        </td>
-      </ng-container>
-      <!-- date Column -->
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Date</b></th>
-        <td mat-cell *matCellDef="let row">{{ row.date | date: 'dd/MM/yyyy' }}</td>
-      </ng-container>
-      <!-- productName Column -->
-      <ng-container matColumnDef="productName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Product Name</b></th>
-        <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
-      </ng-container>
-      <!-- quantity Column -->
-      <ng-container matColumnDef="quantity">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Quantity</b></th>
-        <td mat-cell *matCellDef="let row">{{ row.quantity | number }}</td>
-      </ng-container>
-      <!-- type Column -->
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Type</b></th>
-        <td mat-cell *matCellDef="let row">{{ row.type | import }}</td>
-      </ng-container>
-      <!-- fromTo Column -->
-      <ng-container matColumnDef="fromTo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>From/To</b></th>
-        <td mat-cell *matCellDef="let row">{{ row.fromTo }}</td>
-      </ng-container>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="masterToggle()"
+              [checked]="isAllSelected()"
+              [indeterminate]="!isAllSelected() && selection.hasValue()"
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)"> </mat-checkbox>
+          </td>
+        </ng-container>
+        <!-- date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Date</b></th>
+          <td mat-cell *matCellDef="let row">{{ row.date | date: 'dd/MM/yyyy' }}</td>
+        </ng-container>
+        <!-- productName Column -->
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Product Name</b></th>
+          <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
+        </ng-container>
+        <!-- quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Quantity</b></th>
+          <td mat-cell *matCellDef="let row">{{ row.quantity | number }}</td>
+        </ng-container>
+        <!-- type Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Type</b></th>
+          <td mat-cell *matCellDef="let row">{{ row.type | import }}</td>
+        </ng-container>
+        <!-- fromTo Column -->
+        <ng-container matColumnDef="fromTo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>From/To</b></th>
+          <td mat-cell *matCellDef="let row">{{ row.fromTo }}</td>
+        </ng-container>
 
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="actions">
-          <p></p>
-          <button *ngIf="selection.hasValue()" mat-icon-button color="warn" (click)="onDeleteSelected()">
-            <mat-icon matTooltip="Delete selected rows" aria-label="Delete selected rows">delete_sweep</mat-icon>
-          </button>
-        </th>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions">
+            <p></p>
+            <button *ngIf="selection.hasValue()" mat-icon-button color="warn" (click)="onDeleteSelected()">
+              <mat-icon matTooltip="Delete selected rows" aria-label="Delete selected rows">delete_sweep</mat-icon>
+            </button>
+          </th>
 
-        <td mat-cell *matCellDef="let row">
-          <button matTooltip="Edit supplier" mat-icon-button color="accent" (click)="onEdit(row)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-          <button matTooltip="Delete supplier" mat-icon-button color="warn" (click)="onDelete(row)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+          <td mat-cell *matCellDef="let row">
+            <button matTooltip="Edit supplier" mat-icon-button color="accent" (click)="onEdit(row)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+            <button matTooltip="Delete supplier" mat-icon-button color="warn" (click)="onDelete(row)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
-    </table>
-  </mat-card-content>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+      </table>
+    </mat-card-content>
 
-  <mat-card-footer fxLayout="row" fxLayoutAlign="end center">
-    <mat-form-field fxFlex>
-      <mat-icon matPrefix>search</mat-icon>
-      <input matInput placeholder="Search" #input />
-    </mat-form-field>
-    <mat-paginator
-      [length]="(dataSource.paging | async)?.totalItems"
-      [pageSize]="8"
-      [pageSizeOptions]="[8, 16, 25, 100]"
-      showFirstLastButtons
-    ></mat-paginator>
-  </mat-card-footer>
-</mat-card>
+    <mat-card-footer fxLayout="row" fxLayoutAlign="end center">
+      <mat-form-field fxFlex>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Search" #input />
+      </mat-form-field>
+      <mat-paginator
+        [length]="(dataSource.paging | async)?.totalItems"
+        [pageSize]="8"
+        [pageSizeOptions]="[8, 16, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-card-footer>
+  </mat-card>
 
-<mat-hint *ngIf="input.value">
-  <p>Hint: Search by order "Date(ddMMyyyy or yyyyMMdd)" -> "Product Name"-> "Type(true: import; false: export")</p>
-  <p>Example: 03052019smartphonetrue</p>
-</mat-hint>
+  <mat-hint *ngIf="input.value">
+    <p>Hint: Search by order "Date(ddMMyyyy or yyyyMMdd)" -> "Product Name"-> "Type(true: import; false: export")</p>
+    <p>Example: 03052019smartphonetrue</p>
+  </mat-hint>
 
-<!-- Fixed button group -->
-<div class="fixed-buttons" fxLayout="row" fxLayoutGap="1rem">
-  <!-- Back button -->
-  <button mat-mini-fab matTooltip="Go Back" [routerLink]="['/storage', storageId]">
-    <mat-icon>undo</mat-icon>
-  </button>
-  <!-- Add import button -->
-  <button mat-mini-fab color="primary" matTooltip="add new import/export" (click)="goToAddImport()">
-    <mat-icon>add</mat-icon>
-  </button>
-</div>
+  <!-- Fixed button group -->
+  <div class="fixed-buttons" fxLayout="row" fxLayoutGap="1rem">
+    <!-- Back button -->
+    <button mat-mini-fab matTooltip="Go Back" [routerLink]="['/storage', storageId]">
+      <mat-icon>undo</mat-icon>
+    </button>
+    <!-- Add import button -->
+    <button mat-mini-fab color="primary" matTooltip="add new import/export" (click)="goToAddImport()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</main>

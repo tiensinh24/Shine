@@ -1,22 +1,43 @@
+.mat-paginator-sticky {
+  box-shadow: 0 2px 8px grey;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+
+  > h1 {
+    padding: 1rem 0 0 1rem;
+    color: royalblue;
+  }
+}
+
 main {
   padding: 1rem;
 
-  div.title {
-  }
-
   > .content {
     mat-card.card {
-      margin: 0.5rem;
-      width: 220px;
+      margin: 1rem;
+      min-width: 230px;
+      transform: translateY(0);
+      transition: 250ms ease-out;
 
       mat-card-content {
         table {
-          th {
-            color: royalblue;
-            text-align: left;
-            padding-right: 1rem;
+          td {
+            > span {
+              color: royalblue;
+              text-align: left;
+              padding-right: 1rem;
+            }
           }
         }
+      }
+
+      &:hover {
+        cursor: pointer;
+        transform: translateY(-1.5rem);
+        transition: 250ms ease-in;
+        background: honeydew;
       }
     }
   }

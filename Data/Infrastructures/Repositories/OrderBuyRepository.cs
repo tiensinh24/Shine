@@ -59,6 +59,8 @@ namespace Shine.Data.Infrastructures.Repositories {
             var source = _context.Set<OrderBuy>()
                 .AsNoTracking()
                 .Include(o => o.Person)
+                .Include(o => o.ProductOrders)
+                .Include(o => o.Costs)
                 .ProjectToType<OrderBuyListDto>();
 
             switch (sortParams.SortOrder) {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSnackBar, MatSort, PageEvent } from '@angular/material';
 import { Router } from '@angular/router';
 import { fromEvent, merge } from 'rxjs';
@@ -21,6 +21,8 @@ export class SupplierCardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
+
+  @ViewChild('mainSection') mainSection: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -89,5 +91,7 @@ export class SupplierCardComponent implements OnInit, AfterViewInit {
     this.pagingParams.pageSize = event.pageSize;
     const filter = this.input.nativeElement.value;
     this.dataSource.loadData(this.pagingParams, this.sortParams, filter);
+
+    this.mainSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

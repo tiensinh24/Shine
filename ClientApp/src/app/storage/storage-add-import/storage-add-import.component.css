@@ -1,13 +1,17 @@
-section#title {
+main {
+  margin: 1rem;
+}
+
+main section#title {
   margin-bottom: 2rem;
   color: royalblue;
 }
 
-section#form-group mat-card {
+main section#form-group mat-card {
   padding: 0;
 }
 
-section#form-group mat-card > mat-card-title {
+main section#form-group mat-card > mat-card-title {
   height: 50px;
   padding-top: 0.8rem;
   background: mediumslateblue;
@@ -23,34 +27,34 @@ section#form-group mat-card > mat-card-title {
   display: flex;
 }
 
-section#form-group mat-card > mat-card-content {
+main section#form-group mat-card > mat-card-content {
   padding: 1rem 1rem 0 1rem;
 }
 
-section#form-group mat-card > mat-card-content form div.type-slide-toggle > mat-hint {
+main section#form-group mat-card > mat-card-content form div.type-slide-toggle > mat-hint {
   font-size: smaller;
 }
 
-section#form-group mat-card > mat-card-actions {
+main section#form-group mat-card > mat-card-actions {
   padding-bottom: 2rem;
 }
 
-section#table-review {
+main section#table-review {
   position: relative;
   height: 600px;
   max-height: calc(100vh - 250px);
   overflow: hidden;
 }
 
-section#table-review:hover {
+main section#table-review:hover {
   overflow: auto;
 }
 
-section#table-review > mat-card {
+main section#table-review > mat-card {
   padding: 0;
 }
 
-section#table-review > mat-card > mat-card-title {
+main section#table-review > mat-card > mat-card-title {
   height: 50px;
   padding-top: 0.8rem;
   background: mediumslateblue;
@@ -66,15 +70,15 @@ section#table-review > mat-card > mat-card-title {
   display: flex;
 }
 
-section#table-review > mat-card mat-card-content table.import-table {
+main section#table-review > mat-card mat-card-content table.import-table {
   width: 100%;
 }
 
-section#table-review > mat-card mat-card-content table.import-table th {
+main section#table-review > mat-card mat-card-content table.import-table th {
   color: royalblue;
 }
 
-section#table-review img.storage-bg {
+main section#table-review img.storage-bg {
   max-width: 60%;
   height: auto;
   position: absolute;
@@ -83,7 +87,7 @@ section#table-review img.storage-bg {
   opacity: 0.5;
 }
 
-button.fixed-back-button {
+main button.fixed-back-button {
   position: fixed;
   bottom: 1rem;
   right: 1rem;

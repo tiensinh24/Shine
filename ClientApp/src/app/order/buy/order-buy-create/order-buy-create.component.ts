@@ -57,7 +57,8 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
       orderNumber: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
-      personId: ['', Validators.required]
+      personId: ['', Validators.required],
+      employeeId: ['', Validators.required]
     });
   }
 
