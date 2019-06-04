@@ -5,6 +5,8 @@ import { Response } from '@angular/http';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EmployeeSelect } from 'src/app/employee/_interfaces/employee-select';
+import { EmployeeService } from 'src/app/employee/_services/employee.service';
 import { Payment } from 'src/app/order/_interfaces/payment';
 import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
@@ -26,6 +28,7 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
   orderForms: FormGroup;
   order: OrderBuy;
   suppliers: SupplierSelect[];
+  employees: EmployeeSelect[];
   supplierName: string;
   orderToAdd: OrderBuyWithNavigations;
 
@@ -37,6 +40,7 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: OrderBuyService,
     private supplierService: SupplierService,
+    private employeeService: EmployeeService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -46,6 +50,7 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createForm();
     this.getSuppliersSelect();
+    this.getEmployeesSelect();
   }
 
   ngOnDestroy(): void {
@@ -65,6 +70,12 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
   getSuppliersSelect() {
     this.subscription = this.supplierService.getSuppliersSelect().subscribe((suppliers: SupplierSelect[]) => {
       this.suppliers = suppliers;
+    });
+  }
+
+  getEmployeesSelect() {
+    this.subscription = this.employeeService.getEmployeesSelect().subscribe((employees: EmployeeSelect[]) => {
+      this.employees = employees;
     });
   }
 

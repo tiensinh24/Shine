@@ -8,6 +8,7 @@ import { AuthResponseInterceptor } from 'src/app/auth/_services/auth.response.in
 import { AuthService } from 'src/app/auth/_services/auth.service';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
 import { CountryService } from 'src/app/country/_services/country.service';
+import { EmployeeService } from 'src/app/employee/_services/employee.service';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 import { PhotoService } from 'src/app/photo/_services/photo.service';
 import { ProductService } from 'src/app/product/_services/product.service';
@@ -35,6 +36,7 @@ export class CoreModule {
         OrderBuyService,
         PhotoService,
         StorageService,
+        EmployeeService,
 
         AuthService,
         AuthGuard,
