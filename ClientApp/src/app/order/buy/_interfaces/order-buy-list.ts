@@ -7,6 +7,7 @@ export interface OrderBuyList {
   rating: number;
 
   supplierName: string;
+  employeeName: string;
 
   value: number;
   cost: number;

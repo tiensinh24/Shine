@@ -15,6 +15,7 @@ namespace Shine.Data.Dto.Orders.Buy {
         public decimal Rating { get; set; }
 
         public string SupplierName { get; set; }
+        public string EmployeeName { get; set; }
         public decimal OrderTotal { get; set; }
         public decimal PaymentTotal { get; set; }
         public IEnumerable<OrderBuyProducts> Products { get; set; }

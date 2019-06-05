@@ -13,6 +13,9 @@ namespace Shine.Data.Dto._Mapster {
                     dest => dest.SupplierName,
                     src => GetFullName(src.Person.FirstName, src.Person.LastName)
                 ).Map(
+                    dest => dest.EmployeeName,
+                    src => src.Employee.FirstName + " " + src.Employee.LastName
+                ).Map(
                     dest => dest.Value,
                     src => src.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
                 ).Map(
@@ -24,6 +27,10 @@ namespace Shine.Data.Dto._Mapster {
                 .Map(
                     dest => dest.SupplierName,
                     src => GetFullName(src.Person.FirstName, src.Person.LastName)
+                )
+                .Map(
+                    dest => dest.EmployeeName,
+                    src => src.Employee.FirstName + " " + src.Employee.LastName
                 )
                 .Map(
                     dest => dest.OrderTotal,

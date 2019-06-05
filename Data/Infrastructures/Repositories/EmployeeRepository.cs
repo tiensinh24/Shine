@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Mapster;
@@ -36,6 +37,7 @@ namespace Shine.Data.Infrastructures.Repositories {
         public async Task<IEnumerable<EmployeeSelectDto>> GetEmployeesSelectAsync() {
             var employees = await _repository
                 .ProjectToType<EmployeeSelectDto>()
+                .OrderBy(e => e.FullName)
                 .ToListAsync();
 
             return employees;

@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { share } from 'rxjs/operators';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from '../_interfaces/category-buy';
 import { PagedCategoryBuy } from '../_interfaces/paged-category-buy';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,9 @@ export class CategoryBuyService {
     // if (this.categoriesObs) {
     //   return this.categoriesObs;
     // } else {
-    // this.categoriesObs = this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy/`).pipe(share());
+    //   this.categoriesObs = this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy/`).pipe(share());
     // }
+    // return this.categoriesObs;
     return this.http.get<CategoryBuy[]>(`${this.baseUrl}api/categoryBuy`);
   }
 

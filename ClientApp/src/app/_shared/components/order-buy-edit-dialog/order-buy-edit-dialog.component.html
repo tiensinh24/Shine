@@ -10,7 +10,7 @@
     <!-- OrderNumber -->
     <mat-form-field appearance="outline">
       <mat-label>Order Number</mat-label>
-      <input matInput placeholder="Order Number" formControlName="orderNumber" required autofocus />
+      <input matInput placeholder="Order Number" formControlName="orderNumber" autofocus required />
       <mat-error *ngIf="get('orderNumber').invalid">{{ getErrorMessage(get('orderNumber')) }}</mat-error>
     </mat-form-field>
 

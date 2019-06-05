@@ -145,7 +145,7 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
   // Open product-buy-edit-dialog
   openDialog(productId?: number) {
     // Find product in dataSource
-    let prodEdit: ProductBuyList = null;
+    let prodEdit = <ProductBuyList>{};
 
     this.dataSource.data.subscribe(res => {
       prodEdit = res.find(c => c.productId === productId);
@@ -166,7 +166,8 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
         productId: prodEdit.productId,
         productName: prodEdit.productName,
         specification: prodEdit.specification,
-        categoryId: prodEdit.categoryId
+        categoryId: prodEdit.categoryId,
+        categoryName: prodEdit.categoryName
       };
     }
 
@@ -174,11 +175,10 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(ProductBuyEditDialogComponent, dialogConfig);
 
     // Pass data from dialog in to main component
-    dialogRef.afterClosed().subscribe((data: ProductBuyList) => {
+    dialogRef.afterClosed().subscribe((data: ProductBuy) => {
       if (data) {
         this.loadProductsPage();
       }
-
       this.selection.clear();
     });
   }

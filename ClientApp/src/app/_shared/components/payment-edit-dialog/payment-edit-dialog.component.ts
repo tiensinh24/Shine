@@ -70,7 +70,6 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    let paymentReturn = <Payment>{};
     const tempPayment = <Payment>{};
 
     tempPayment.orderId = this.parentData.orderId;
@@ -82,7 +81,7 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
     // Add new payment
     if (!this.editMode) {
       this.subscription = this.paymentService.addPayment(tempPayment).subscribe((payment: Payment) => {
-        paymentReturn = payment;
+        this.dialogRef.close(payment);
       });
     }
     if (this.editMode) {
@@ -90,11 +89,9 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
 
       // Update payment
       this.subscription = this.paymentService.updatePayment(tempPayment).subscribe((payment: Payment) => {
-        paymentReturn = payment;
+        this.dialogRef.close(payment);
       });
     }
-
-    this.dialogRef.close(paymentReturn);
   }
 
   onCancel() {
@@ -113,9 +110,5 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
       : formControl.hasError('pattern')
       ? 'Please enter a number!'
       : '';
-  }
-
-  getFormError(formGroup: FormGroup) {
-    return formGroup.getError('auth');
   }
 }

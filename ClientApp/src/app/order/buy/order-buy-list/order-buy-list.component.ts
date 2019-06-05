@@ -27,6 +27,7 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     'dateOfIssue',
     'timeForPayment',
     'supplierName',
+    'employeeName',
     'value',
     'cost',
     'rating',
@@ -171,7 +172,7 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
 
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
-      autoFocus: true,
+      autoFocus: false,
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '800px',

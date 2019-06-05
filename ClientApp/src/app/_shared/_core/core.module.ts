@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MAT_DATE_LOCALE, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
+import { MAT_AUTOCOMPLETE_DEFAULT_OPTIONS, MAT_AUTOCOMPLETE_SCROLL_STRATEGY, MAT_DATE_LOCALE, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { AuthGuard } from 'src/app/auth/_guards/auth.guard';
 import { AuthResponseInterceptor } from 'src/app/auth/_services/auth.response.interceptor';
@@ -55,6 +55,10 @@ export class CoreModule {
             horizontalPosition: 'end',
             duration: 2500
           }
+        },
+        {
+          provide: MAT_AUTOCOMPLETE_DEFAULT_OPTIONS,
+          useValue: { autoActiveFirstOption: true }
         }
       ]
     };

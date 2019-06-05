@@ -17,6 +17,11 @@ main {
     table.main-table {
       width: 100%;
 
+      th,
+      td {
+        padding: 0 0.5rem;
+      }
+
       th {
         color: royalblue;
       }

@@ -59,6 +59,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             var source = _context.Set<OrderBuy>()
                 .AsNoTracking()
                 .Include(o => o.Person)
+                .Include(o => o.Employee)
                 .Include(o => o.ProductOrders)
                 .Include(o => o.Costs)
                 .ProjectToType<OrderBuyListDto>();
@@ -77,6 +78,9 @@ namespace Shine.Data.Infrastructures.Repositories {
                             break;
                         case "supplierName":
                             source = source.OrderBy(p => p.SupplierName);
+                            break;
+                        case "employeeName":
+                            source = source.OrderBy(p => p.EmployeeName);
                             break;
                         case "rating":
                             source = source.OrderBy(p => p.Rating);
@@ -97,6 +101,9 @@ namespace Shine.Data.Infrastructures.Repositories {
                             break;
                         case "supplierName":
                             source = source.OrderByDescending(p => p.SupplierName);
+                            break;
+                        case "employeeName":
+                            source = source.OrderByDescending(p => p.EmployeeName);
                             break;
                         case "rating":
                             source = source.OrderByDescending(p => p.Rating);
@@ -133,6 +140,7 @@ namespace Shine.Data.Infrastructures.Repositories {
             var order = await _repository
                 .AsNoTracking()
                 .Include(o => o.Person)
+                .Include(o => o.Employee)
                 .Include(o => o.Payments)
                 .Include(o => o.ProductOrders)
                 .ThenInclude(p => p.Product)
