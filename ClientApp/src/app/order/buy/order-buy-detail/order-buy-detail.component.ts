@@ -1,13 +1,21 @@
+import { Subscription } from 'rxjs';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import {
+    OrderBuyEditDialogComponent
+} from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import {
+    OrderProductsEditDialogComponent
+} from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
+import {
+    PaymentEditDialogComponent
+} from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
+import { Payment } from 'src/app/order/_interfaces/payment';
+import { PaymentService } from 'src/app/payment/_services/payment.service';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
-import { OrderProductsEditDialogComponent } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
-import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
-import { Payment } from 'src/app/order/_interfaces/payment';
-import { PaymentService } from 'src/app/payment/_services/payment.service';
+
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
 import { OrderBuyProducts } from '../_interfaces/order-buy-products';
@@ -21,13 +29,6 @@ import { OrderBuyService } from '../_services/order-buy.service';
 export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   order = <OrderBuyDetail>{};
   isPayment = false;
-
-  // Star rating
-  dataSet = {
-    showLabels: false,
-    showNumber: false,
-    colors: ['red', 'orange', 'greenyellow', 'gold', 'yellow']
-  };
 
   // Products table
   displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];

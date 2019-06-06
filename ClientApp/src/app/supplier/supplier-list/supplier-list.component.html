@@ -11,25 +11,24 @@
     <button mat-icon-button matTooltip="card" [routerLink]="['/supplier/card']"><mat-icon>layers</mat-icon></button>
 
     <!-- Dynamic columns menu -->
-    <button mat-icon-button matTooltip="more settings" [matMenuTriggerFor]="dynamicCols" (click)="openMenu()">
+    <button mat-icon-button matTooltip="more settings" [matMenuTriggerFor]="dynamicCols">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <mat-menu #dynamicCols="matMenu">
+    <mat-menu class="dynamic-cols-menu" [overlapTrigger]="false" #dynamicCols="matMenu">
       <div>
-        <mat-selection-list #columnsSelected (click)="$event.stopPropagation()">
+        <mat-selection-list [(ngModel)]="columnsToDisplay" (click)="$event.stopPropagation()">
           <h3 class="mat-h3" matSubHeader>Select columns to display</h3>
 
           <mat-divider></mat-divider>
 
-          <mat-list-option selected *ngFor="let column of displayedColumns" [value]="column">
+          <mat-list-option selected *ngFor="let column of displayedColumns" [value]="column.key">
             {{ column.value }}
           </mat-list-option>
         </mat-selection-list>
 
         <mat-divider></mat-divider>
 
-        <button mat-button color="primary" (click)="selectMenu()">Select</button>
-        <button mat-button (click)="closeMenu()">Cancel</button>
+        <button mat-button color="primary" (click)="(dynamicCols.close)">Close</button>
       </div>
     </mat-menu>
   </div>

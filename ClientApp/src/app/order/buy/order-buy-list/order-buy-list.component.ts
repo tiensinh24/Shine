@@ -1,15 +1,28 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatMenuTrigger, MatPaginator, MatSelectionList, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
 import { equal, strictEqual } from 'assert';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import {
+    OrderBuyEditDialogComponent
+} from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
 import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
+
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+    MatDialog,
+    MatDialogConfig,
+    MatMenuTrigger,
+    MatPaginator,
+    MatSelectionList,
+    MatSnackBar,
+    MatSort,
+    MatTableDataSource
+} from '@angular/material';
+import { Router } from '@angular/router';
+
 import { OrderBuyDataSource } from '../_data-source/order-buy-data-source';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyList } from '../_interfaces/order-buy-list';
@@ -23,16 +36,16 @@ import { OrderBuyService } from '../_services/order-buy.service';
 export class OrderBuyListComponent implements OnInit, AfterViewInit {
   dataSource: OrderBuyDataSource;
   displayedColumns = [
-    { index: 0, key: 'select', value: 'Select' },
-    { index: 1, key: 'orderNumber', value: 'Order Number' },
-    { index: 2, key: 'dateOfIssue', value: 'Order Date' },
-    { index: 3, key: 'timeForPayment', value: `Payment's Time` },
-    { index: 4, key: 'supplierName', value: 'Supplier' },
-    { index: 5, key: 'employeeName', value: 'Employee' },
-    { index: 6, key: 'value', value: 'Values' },
-    { index: 7, key: 'cost', value: 'Cost' },
-    { index: 8, key: 'rating', value: 'Rating' },
-    { index: 9, key: 'actions', value: 'Actions' }
+    { key: 'select', value: 'Select' },
+    { key: 'orderNumber', value: 'Order Number' },
+    { key: 'dateOfIssue', value: 'Order Date' },
+    { key: 'timeForPayment', value: `Payment's Time` },
+    { key: 'supplierName', value: 'Supplier' },
+    { key: 'employeeName', value: 'Employee' },
+    { key: 'value', value: 'Values' },
+    { key: 'cost', value: 'Cost' },
+    { key: 'rating', value: 'Rating' },
+    { key: 'actions', value: 'Actions' }
   ];
   columnsToDisplay = [
     'select',
@@ -50,18 +63,9 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<OrderBuyList>(true, []);
   title = 'Order List';
 
-  // Star rating
-  dataSet = {
-    showLabels: false,
-    showNumber: false
-  };
-
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('input') private input: ElementRef;
-
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  @ViewChild('columnsSelected') private columnsSelected: MatSelectionList;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -242,16 +246,5 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     } else {
       this.selectAll();
     }
-  }
-
-  closeMenu() {
-    this.trigger.closeMenu();
-    this.columnsToDisplay = [];
-
-    this.columnsSelected.selectedOptions.selected
-      .sort((a, b) => (a.value.index < b.value.index ? -1 : 1))
-      .forEach(c => {
-        this.columnsToDisplay.push(c.value.key);
-      });
   }
 }

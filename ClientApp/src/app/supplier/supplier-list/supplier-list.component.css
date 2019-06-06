@@ -10,6 +10,10 @@ main > .title > h1 {
   color: royalblue;
 }
 
+main > .title .dynamic-cols-menu * {
+  padding: 1rem;
+}
+
 main > .content {
   padding: 0;
 }

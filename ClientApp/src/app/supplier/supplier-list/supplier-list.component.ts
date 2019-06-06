@@ -1,13 +1,19 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatMenuTrigger, MatPaginator, MatSelectionList, MatSnackBar, MatSort } from '@angular/material';
-import { Router } from '@angular/router';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+import {
+    SupplierEditDialogComponent
+} from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+    MatDialog, MatDialogConfig, MatMenuTrigger, MatPaginator, MatSelectionList, MatSnackBar, MatSort
+} from '@angular/material';
+import { Router } from '@angular/router';
+
 import { SupplierDataSource } from '../_data-source/supplier-data-source';
 import { Supplier } from '../_interfaces/supplier';
 import { SupplierList } from '../_interfaces/supplier-list';
@@ -20,20 +26,19 @@ import { SupplierService } from '../_services/supplier.service';
 })
 export class SupplierListComponent implements OnInit, AfterViewInit {
   dataSource: SupplierDataSource;
-  previousDisplayedColumns = [];
   displayedColumns = [
-    { index: 0, key: 'select', value: 'Select' },
-    { index: 1, key: 'photo', value: 'Photo' },
-    { index: 2, key: 'personNumber', value: 'Person Number' },
-    { index: 3, key: 'gender', value: 'Gender' },
-    { index: 4, key: 'fullName', value: 'Full Name' },
-    { index: 5, key: 'dateOfBirth', value: 'Birthday' },
-    { index: 6, key: 'telephone', value: 'Telephone' },
-    { index: 7, key: 'fax', value: 'Fax' },
-    { index: 8, key: 'countryName', value: 'Country' },
-    { index: 9, key: 'continentName', value: 'Continent' },
-    { index: 10, key: 'rating', value: 'Rating' },
-    { index: 11, key: 'actions', value: 'Actions' }
+    { key: 'select', value: 'Select' },
+    { key: 'photo', value: 'Photo' },
+    { key: 'personNumber', value: 'Person Number' },
+    { key: 'gender', value: 'Gender' },
+    { key: 'fullName', value: 'Full Name' },
+    { key: 'dateOfBirth', value: 'Birthday' },
+    { key: 'telephone', value: 'Telephone' },
+    { key: 'fax', value: 'Fax' },
+    { key: 'countryName', value: 'Country' },
+    { key: 'continentName', value: 'Continent' },
+    { key: 'rating', value: 'Rating' },
+    { key: 'actions', value: 'Actions' }
   ];
   columnsToDisplay = [
     'select',
@@ -57,9 +62,6 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
-
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  @ViewChild('columnsSelected') private columnsSelected: MatSelectionList;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -245,26 +247,5 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     } else {
       this.selectAll();
     }
-  }
-
-  openMenu() {
-    this.trigger.openMenu();
-    this.previousDisplayedColumns = Object.assign(this.previousDisplayedColumns, this.displayedColumns);
-  }
-
-  selectMenu() {
-    this.trigger.closeMenu();
-    this.columnsToDisplay = [];
-
-    this.columnsSelected.selectedOptions.selected
-      .sort((a, b) => (a.value.index < b.value.index ? -1 : 1))
-      .forEach(c => {
-        this.columnsToDisplay.push(c.value.key);
-      });
-  }
-
-  closeMenu() {
-    this.trigger.closeMenu();
-    this.displayedColumns = Object.assign(this.displayedColumns, this.previousDisplayedColumns);
   }
 }

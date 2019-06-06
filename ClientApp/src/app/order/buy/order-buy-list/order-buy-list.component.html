@@ -18,22 +18,21 @@
     <button mat-icon-button [matMenuTriggerFor]="dynamicCols" matTooltip="more settings">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <mat-menu #dynamicCols="matMenu">
+    <mat-menu class="dynamic-cols-menu" #dynamicCols="matMenu" [overlapTrigger]="false">
       <div>
-        <mat-selection-list #columnsSelected (click)="$event.stopPropagation()">
+        <mat-selection-list [(ngModel)]="columnsToDisplay" (click)="$event.stopPropagation()">
           <h3 class="mat-h3" matSubHeader>Select columns to display</h3>
 
           <mat-divider></mat-divider>
 
-          <mat-list-option selected *ngFor="let column of displayedColumns" [value]="column">
+          <mat-list-option selected *ngFor="let column of displayedColumns" [value]="column.key">
             {{ column.value }}
           </mat-list-option>
         </mat-selection-list>
 
         <mat-divider></mat-divider>
 
-        <button mat-button color="primary" (click)="closeMenu()">Select</button>
-        <button mat-button (click)="(dynamicCols.close)">Cancel</button>
+        <button mat-button color="primary" (click)="(dynamicCols.close)">Close</button>
       </div>
     </mat-menu>
   </div>
