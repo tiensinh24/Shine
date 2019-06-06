@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatMenuTrigger, MatPaginator, MatSelectionList, MatSnackBar, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -20,7 +20,22 @@ import { SupplierService } from '../_services/supplier.service';
 })
 export class SupplierListComponent implements OnInit, AfterViewInit {
   dataSource: SupplierDataSource;
+  previousDisplayedColumns = [];
   displayedColumns = [
+    { index: 0, key: 'select', value: 'Select' },
+    { index: 1, key: 'photo', value: 'Photo' },
+    { index: 2, key: 'personNumber', value: 'Person Number' },
+    { index: 3, key: 'gender', value: 'Gender' },
+    { index: 4, key: 'fullName', value: 'Full Name' },
+    { index: 5, key: 'dateOfBirth', value: 'Birthday' },
+    { index: 6, key: 'telephone', value: 'Telephone' },
+    { index: 7, key: 'fax', value: 'Fax' },
+    { index: 8, key: 'countryName', value: 'Country' },
+    { index: 9, key: 'continentName', value: 'Continent' },
+    { index: 10, key: 'rating', value: 'Rating' },
+    { index: 11, key: 'actions', value: 'Actions' }
+  ];
+  columnsToDisplay = [
     'select',
     'photo',
     'personNumber',
@@ -42,6 +57,9 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
+
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+  @ViewChild('columnsSelected') private columnsSelected: MatSelectionList;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -227,5 +245,26 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     } else {
       this.selectAll();
     }
+  }
+
+  openMenu() {
+    this.trigger.openMenu();
+    this.previousDisplayedColumns = Object.assign(this.previousDisplayedColumns, this.displayedColumns);
+  }
+
+  selectMenu() {
+    this.trigger.closeMenu();
+    this.columnsToDisplay = [];
+
+    this.columnsSelected.selectedOptions.selected
+      .sort((a, b) => (a.value.index < b.value.index ? -1 : 1))
+      .forEach(c => {
+        this.columnsToDisplay.push(c.value.key);
+      });
+  }
+
+  closeMenu() {
+    this.trigger.closeMenu();
+    this.displayedColumns = Object.assign(this.displayedColumns, this.previousDisplayedColumns);
   }
 }

@@ -175,15 +175,15 @@
           <!-- Expand list -->
           <mat-nav-list>
             <mat-list-item [routerLink]="['/product-buy']">
-              <mat-icon>list</mat-icon>
+              <mat-icon matListIcon>list</mat-icon>
               <a matLine>Product lists</a>
             </mat-list-item>
             <mat-list-item [routerLink]="['/product-buy/remain']">
-              <mat-icon>line_style</mat-icon>
+              <mat-icon matListIcon>line_style</mat-icon>
               <a matLine>Products remaining</a>
             </mat-list-item>
             <mat-list-item>
-              <mat-icon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
+              <mat-icon matListIcon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
               <a matLine [routerLink]="['/supplier/reports']">Reports</a>
             </mat-list-item>
           </mat-nav-list>
@@ -198,11 +198,11 @@
           <!-- Expand list -->
           <mat-nav-list>
             <mat-list-item [routerLink]="['/supplier']">
-              <mat-icon>list</mat-icon>
+              <mat-icon matListIcon>list</mat-icon>
               <a matLine>Supplier lists</a>
             </mat-list-item>
             <mat-list-item [routerLink]="['/supplier/reports']">
-              <mat-icon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
+              <mat-icon matListIcon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
               <a matLine>Reports</a>
             </mat-list-item>
           </mat-nav-list>
