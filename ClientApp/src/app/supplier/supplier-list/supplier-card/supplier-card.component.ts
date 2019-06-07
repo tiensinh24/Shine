@@ -1,11 +1,16 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSnackBar, MatSort, PageEvent } from '@angular/material';
-import { Router } from '@angular/router';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
+
 import { SupplierDataSource } from '../../_data-source/supplier-data-source';
 import { SupplierService } from '../../_services/supplier.service';
 
@@ -18,11 +23,11 @@ export class SupplierCardComponent implements OnInit, AfterViewInit {
   dataSource: SupplierDataSource;
   mainPhotoUrl = 'assets/default.jpg';
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
-  @ViewChild('mainSection') mainSection: ElementRef;
+  @ViewChild('mainSection', { static: true }) mainSection: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,

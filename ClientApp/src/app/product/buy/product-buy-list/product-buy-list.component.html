@@ -65,9 +65,7 @@
         <th mat-header-cell mat-header-cell *matHeaderCellDef class="actions">
           <div fxLayout="row" fxLayoutAlign="end">
             <button mat-icon-button color="primary" (click)="onCreate()">
-              <mat-icon matTooltip="Create new product" aria-label="Create new product"
-                >add_circle</mat-icon
-              >
+              <mat-icon matTooltip="Create new product" aria-label="Create new product">add_circle</mat-icon>
             </button>
 
             <button *ngIf="selection.hasValue()" mat-icon-button color="warn" (click)="onDeleteSelected()">

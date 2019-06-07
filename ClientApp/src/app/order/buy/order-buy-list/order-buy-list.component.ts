@@ -1,16 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatMenuTrigger,
-  MatPaginator,
-  MatSelectionList,
-  MatSnackBar,
-  MatSort,
-  MatTableDataSource
-} from '@angular/material';
-import { Router } from '@angular/router';
 import { equal, strictEqual } from 'assert';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -18,9 +5,21 @@ import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import {
-  OrderBuyEditDialogComponent
+    OrderBuyEditDialogComponent
 } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
 import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
+
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSelectionList } from '@angular/material/list';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+
 import { OrderBuyDataSource } from '../_data-source/order-buy-data-source';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyList } from '../_interfaces/order-buy-list';
@@ -61,9 +60,9 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<OrderBuyList>(true, []);
   title = 'Order List';
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('input') private input: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('input', { static: true }) private input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,

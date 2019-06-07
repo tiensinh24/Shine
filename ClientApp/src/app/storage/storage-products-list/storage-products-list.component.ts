@@ -1,14 +1,21 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { StorageProductsDataSource } from '../_data-source/storage-products-data-source';
-import { StorageProductEditDialogComponent } from '../_dialogs/storage-product-edit-dialog/storage-product-edit-dialog.component';
+import {
+    StorageProductEditDialogComponent
+} from '../_dialogs/storage-product-edit-dialog/storage-product-edit-dialog.component';
 import { StorageProduct } from '../_interfaces/storage-product';
 import { StorageProductsList } from '../_interfaces/storage-products-list';
 import { StorageService } from '../_services/storage.service';
@@ -28,9 +35,9 @@ export class StorageProductsListComponent implements OnInit, AfterViewInit, OnDe
 
   title = 'Product Import/Export Lists';
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,

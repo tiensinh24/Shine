@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '../auth/_services/auth.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-log-in',

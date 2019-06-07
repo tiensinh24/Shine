@@ -6,7 +6,7 @@ import { AdminComponent } from './admin.component';
 import { ManagerUserComponent } from './manager-user/manager-user.component';
 import { ManagerRoleComponent } from './manager-role/manager-role.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({

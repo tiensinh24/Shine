@@ -1,7 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
@@ -9,6 +5,23 @@ import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
+
+import { SelectionModel } from '@angular/cdk/collections';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { SupplierOrdersDataSource } from '../../_data-source/supplier-orders-data-source';
 import { SupplierOrders } from '../../_interfaces/supplier-orders';
 import { SupplierService } from '../../_services/supplier.service';
@@ -26,9 +39,9 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
 
   @Output() avgRating = new EventEmitter<number>();
 
-  @ViewChild(MatPaginator) paginator = <MatPaginator>{};
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator = <MatPaginator>{};
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,

@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CountrySelect } from 'src/app/country/_interfaces/country-select';
 import { CountryService } from 'src/app/country/_services/country.service';
 import { Supplier } from 'src/app/supplier/_interfaces/supplier';

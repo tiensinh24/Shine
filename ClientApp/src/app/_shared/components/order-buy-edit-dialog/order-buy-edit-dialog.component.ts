@@ -1,7 +1,3 @@
-import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Router } from '@angular/router';
 import { ClickEvent } from 'angular-star-rating';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -12,6 +8,11 @@ import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { environment } from 'src/environments/environment';
+
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-buy-edit-dialog',
@@ -27,7 +28,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   // Employees autocomplete
   employees: EmployeeSelect[];
   filteredEmployees: EmployeeSelect[];
-  @ViewChild('employeeInput') employeeInput: ElementRef;
+  @ViewChild('employeeInput', { static: true }) employeeInput: ElementRef;
 
   // Star rating
   rating: number;

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';

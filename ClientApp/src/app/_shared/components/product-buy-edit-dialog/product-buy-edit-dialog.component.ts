@@ -1,6 +1,3 @@
-import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
@@ -8,6 +5,23 @@ import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.
 import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { environment } from 'src/environments/environment';
+
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    AbstractControl,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    ValidationErrors,
+    Validators
+} from '@angular/forms';
+import {
+    MAT_DIALOG_DATA,
+    MatDialog,
+    MatDialogConfig,
+    MatDialogRef
+} from '@angular/material/dialog';
+
 import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-dialog.component';
 
 @Component({
@@ -17,15 +31,15 @@ import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-
 })
 export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
-  subscription: Subscription; 
+  subscription: Subscription;
   formGroup: FormGroup;
   editMode: boolean;
-  title: string;  
+  title: string;
 
   // Categories autocomplete
   categories: CategoryBuy[];
   filteredCategories: CategoryBuy[];
-  @ViewChild('categoryInput') categoryInput: ElementRef;
+  @ViewChild('categoryInput', { static: true }) categoryInput: ElementRef;
 
   constructor(
     private fb: FormBuilder,

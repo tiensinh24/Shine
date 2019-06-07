@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxGalleryAction, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
 import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
 import { PhotoService } from 'src/app/photo/_services/photo.service';

@@ -9,9 +9,10 @@ import {
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {
-    MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort
-} from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 import { SupplierDataSource } from '../../_data-source/supplier-data-source';
@@ -59,9 +60,9 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
 
   title = 'Suppliers List';
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
