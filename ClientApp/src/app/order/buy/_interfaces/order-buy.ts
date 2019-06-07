@@ -4,5 +4,6 @@ export interface OrderBuy {
   dateOfIssue: Date;
   timeForPayment: Date;
   personId: number;
+  employeeId: number;
   rating: number;
 }

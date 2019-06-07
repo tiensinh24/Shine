@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,0BAA0B,CAAC;EACzB,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;CAQpB;;AAVD,AAIE,0BAJwB,CAIxB,QAAQ,CAAC;EACP,aAAa,EAAE,IAAI;CAIpB;;AATH,AAMI,0BANsB,CAIxB,QAAQ,AAEL,OAAO,CAAC;EACP,KAAK,EAAE,eAAe;CACvB;;AAIL,AACE,OADK,CACL,QAAQ,CAAC;EACP,KAAK,EAAE,QAAQ;CAChB",
+    "sources": [
+        "sidenav-buy.component.scss"
+    ],
+    "names": [],
+    "file": "sidenav-buy.component.css"
+}

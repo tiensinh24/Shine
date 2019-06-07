@@ -7,9 +7,11 @@ export interface OrderBuyDetail {
   dateOfIssue: Date;
   timeForPayment: Date;
   personId: number;
+  employeeId: number;
   rating: number;
 
   supplierName: string;
+  employeeName: string;
   orderTotal: number;
   paymentTotal: number;
   products: OrderBuyProducts[];

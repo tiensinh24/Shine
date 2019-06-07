@@ -1,0 +1,21 @@
+mat-expansion-panel-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+mat-expansion-panel-header mat-icon {
+  padding-right: 1rem;
+}
+
+mat-expansion-panel-header mat-icon.expand {
+  color: mediumvioletred;
+}
+
+.active mat-icon {
+  color: deeppink;
+}
+/*# sourceMappingURL=sidenav-buy.component.css.map */

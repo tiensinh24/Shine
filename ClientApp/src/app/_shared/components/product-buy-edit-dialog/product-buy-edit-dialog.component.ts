@@ -17,13 +17,14 @@ import { CategoryBuyDialogComponent } from '../category-buy-dialog/category-buy-
 })
 export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
-  subscription: Subscription;
-  categories: CategoryBuy[];
+  subscription: Subscription; 
   formGroup: FormGroup;
   editMode: boolean;
-  title: string;
-  filteredCategories: CategoryBuy[];
+  title: string;  
 
+  // Categories autocomplete
+  categories: CategoryBuy[];
+  filteredCategories: CategoryBuy[];
   @ViewChild('categoryInput') categoryInput: ElementRef;
 
   constructor(
@@ -60,6 +61,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
       this.title = 'Create new product';
     }
 
+    // Filter category autocomplete
     merge(fromEvent(this.categoryInput.nativeElement, 'keyup'), fromEvent(this.categoryInput.nativeElement, 'click'))
       .pipe(
         debounceTime(200),

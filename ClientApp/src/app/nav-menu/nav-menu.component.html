@@ -147,8 +147,8 @@
       <!-- Avatar + Welcome -->
       <mat-card class="avatar" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
         <div fxFlexAlign="end" matTooltip="Switch to buy/sell mode">
-          <mat-slide-toggle #navToggle checked labelPosition="before">{{
-            navToggle.checked ? 'Buy' : 'Sell'
+          <mat-slide-toggle [(ngModel)]="sidenavToggle" labelPosition="before">{{
+            sidenavToggle ? 'Buy' : 'Sell'
           }}</mat-slide-toggle>
         </div>
 
@@ -159,63 +159,19 @@
 
       <!-- Expansion nav -->
       <mat-nav-list>
-        <mat-list-item>
-          <mat-icon>home</mat-icon>
-          <a matLine [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a>
+        <mat-list-item [routerLink]="['/home']" routerLinkActive="active">
+          <mat-icon matListIcon class="fas fa-home"></mat-icon>
+          <a matLine>Home</a>
         </mat-list-item>
       </mat-nav-list>
 
-      <mat-accordion class="main-accordion" multi="false" displayMode="flat">
-        <!-- Products group -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-icon class="fas fa-cookie-bite"></mat-icon>
-            <span>Products</span>
-          </mat-expansion-panel-header>
-          <!-- Expand list -->
-          <mat-nav-list>
-            <mat-list-item [routerLink]="['/product-buy']">
-              <mat-icon matListIcon>list</mat-icon>
-              <a matLine>Product lists</a>
-            </mat-list-item>
-            <mat-list-item [routerLink]="['/product-buy/remain']">
-              <mat-icon matListIcon>line_style</mat-icon>
-              <a matLine>Products remaining</a>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
-              <a matLine [routerLink]="['/supplier/reports']">Reports</a>
-            </mat-list-item>
-          </mat-nav-list>
-        </mat-expansion-panel>
+      <!-- Sidenav-buy -->
+      <app-sidenav-buy *ngIf="sidenavToggle; else sidenavSell"></app-sidenav-buy>
 
-        <!-- Suppliers group -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-icon class="fas fa-diagnoses"></mat-icon>
-            <span>Suppliers</span>
-          </mat-expansion-panel-header>
-          <!-- Expand list -->
-          <mat-nav-list>
-            <mat-list-item [routerLink]="['/supplier']">
-              <mat-icon matListIcon>list</mat-icon>
-              <a matLine>Supplier lists</a>
-            </mat-list-item>
-            <mat-list-item [routerLink]="['/supplier/reports']">
-              <mat-icon matListIcon color="accent" fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
-              <a matLine>Reports</a>
-            </mat-list-item>
-          </mat-nav-list>
-        </mat-expansion-panel>
-
-        <!-- Orders group -->
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-icon class="fas fa-donate"></mat-icon>
-            <span>Orders</span>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
-      </mat-accordion>
+      <!-- Sidenav-sell -->
+      <ng-template #sidenavSell>
+        <app-sidenav-sell></app-sidenav-sell>
+      </ng-template>
     </mat-sidenav>
 
     <!-- Content router-outlet -->

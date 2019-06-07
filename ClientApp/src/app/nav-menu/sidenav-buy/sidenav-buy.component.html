@@ -1,0 +1,51 @@
+<mat-accordion class="main-accordion" multi="false" displayMode="flat">
+  <!-- Products group -->
+  <mat-expansion-panel #productPanel>
+    <mat-expansion-panel-header>
+      <mat-icon [ngClass]="{ expand: productPanel.expanded }" class="fas fa-cookie-bite"></mat-icon>
+      <span>Products</span>
+    </mat-expansion-panel-header>
+    <!-- Expand list -->
+    <mat-nav-list>
+      <mat-list-item [routerLink]="['/product-buy/home']" routerLinkActive="active">
+        <mat-icon matListIcon>view_list</mat-icon>
+        <a matLine>Product lists</a>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/product-buy/remain']" routerLinkActive="active">
+        <mat-icon matListIcon>line_style</mat-icon>
+        <a matLine>Products remaining</a>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListIcon fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
+        <a matLine [routerLink]="['/supplier/reports']">Reports</a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-expansion-panel>
+
+  <!-- Suppliers group -->
+  <mat-expansion-panel #supplierPanel>
+    <mat-expansion-panel-header>
+      <mat-icon [ngClass]="{ expand: supplierPanel.expanded }" class="fas fa-diagnoses"></mat-icon>
+      <span>Suppliers</span>
+    </mat-expansion-panel-header>
+    <!-- Expand list -->
+    <mat-nav-list>
+      <mat-list-item [routerLink]="['/supplier/home']" routerLinkActive="active">
+        <mat-icon matListIcon>view_list</mat-icon>
+        <a matLine>Supplier lists</a>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/supplier/reports']" routerLinkActive="active">
+        <mat-icon matListIcon fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
+        <a matLine>Reports</a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-expansion-panel>
+
+  <!-- Orders group -->
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-icon class="fas fa-donate"></mat-icon>
+      <span>Orders</span>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</mat-accordion>

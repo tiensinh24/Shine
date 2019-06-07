@@ -44,10 +44,28 @@
       <mat-error *ngIf="get('timeForPayment').invalid">{{ getErrorMessage(get('timeForPayment')) }}</mat-error>
     </mat-form-field>
 
+    <!-- EmployeeId -->
+    <mat-form-field appearance="outline">
+      <mat-label>Employee</mat-label>
+      <input
+        appMatAutocompleteTriggerEnforceSelection
+        matInput
+        formControlName="employee"
+        [matAutocomplete]="autoEmployee"
+        #employeeInput
+        required
+      />
+      <mat-error *ngIf="get('employee').invalid">{{ getErrorMessage(get('employee')) }}</mat-error>
+    </mat-form-field>
+
+    <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">{{ employee.fullName }}</mat-option>
+    </mat-autocomplete>
+
     <!-- PersonId -->
     <mat-form-field appearance="outline">
-      <mat-label>Select a supplier</mat-label>
-      <mat-select placeholder="Select a supplier" formControlName="personId" required>
+      <mat-label>Supplier</mat-label>
+      <mat-select placeholder="Select a supplier" formControlName="personId" disabled>
         <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
           {{ supplier.fullName }}
         </mat-option>

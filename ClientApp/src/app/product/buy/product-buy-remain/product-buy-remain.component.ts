@@ -112,6 +112,8 @@ export class ProductBuyRemainComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onExpandStorages(productId: number) {
-    this.getProductRemainPerStorages(productId);
+    if (productId > 0) {
+      this.getProductRemainPerStorages(productId);
+    }
   }
 }

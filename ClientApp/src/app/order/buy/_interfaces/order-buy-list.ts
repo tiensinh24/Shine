@@ -3,10 +3,10 @@ export interface OrderBuyList {
   orderNumber: string;
   dateOfIssue: Date;
   timeForPayment: Date;
-  personId: number;
   rating: number;
-
+  personId: number;
   supplierName: string;
+  employeeId: number;
   employeeName: string;
 
   value: number;

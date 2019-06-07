@@ -1,21 +1,19 @@
-import { Subscription } from 'rxjs';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import {
-    OrderBuyEditDialogComponent
-} from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
-import {
-    OrderProductsEditDialogComponent
-} from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
-import {
-    PaymentEditDialogComponent
-} from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
-import { Payment } from 'src/app/order/_interfaces/payment';
-import { PaymentService } from 'src/app/payment/_services/payment.service';
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-
+import { Subscription } from 'rxjs';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import {
+  OrderBuyEditDialogComponent
+} from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import {
+  OrderProductsEditDialogComponent
+} from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
+import {
+  PaymentEditDialogComponent
+} from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
+import { Payment } from 'src/app/order/_interfaces/payment';
+import { PaymentService } from 'src/app/payment/_services/payment.service';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
 import { OrderBuyProducts } from '../_interfaces/order-buy-products';
@@ -66,11 +64,11 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   openOrderDialog() {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
-      autoFocus: true,
+      autoFocus: false,
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '800px',
-      height: '585px',
+      height: '675px',
       panelClass: 'custom-dialog'
     };
 
@@ -82,6 +80,8 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
         dateOfIssue: this.order.dateOfIssue,
         timeForPayment: this.order.timeForPayment,
         personId: this.order.personId,
+        employeeId: this.order.employeeId,
+        employeeName: this.order.employeeName,
         rating: this.order.rating
       };
 

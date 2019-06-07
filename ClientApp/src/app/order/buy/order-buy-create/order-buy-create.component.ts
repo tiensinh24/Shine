@@ -42,7 +42,6 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
     private supplierService: SupplierService,
     private employeeService: EmployeeService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
@@ -106,6 +105,7 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
       dateOfIssue: this.order.dateOfIssue,
       timeForPayment: this.order.timeForPayment,
       personId: this.order.personId,
+      employeeId: this.order.employeeId,
 
       productOrders: this.productsToAdd,
       payments: this.paymentsToAdd,

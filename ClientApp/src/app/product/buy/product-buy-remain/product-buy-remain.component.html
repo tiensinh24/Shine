@@ -69,7 +69,7 @@
         [ngClass]="{ expand: expandedElement === row }"
         [class.expanded-row]="expandedElement === row"
         (click)="expandedElement = expandedElement === row ? null : row"
-        (click)="onExpandStorages(expandedElement.productId)"
+        (click)="onExpandStorages(expandedElement?.productId)"
       ></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expand-detail-row"></tr>
     </table>

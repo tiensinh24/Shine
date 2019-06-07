@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ProductSelect } from 'src/app/product/_interfaces/product-select';
-import { ProductBuyList } from 'src/app/product/buy/_interfaces/product-buy-list';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBuyProducts } from '../../_interfaces/order-buy-products';
 
@@ -37,11 +36,9 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   getProductsBySupplier(supplierId: number) {
-    this.productsSub = this.supplierService
-      .getProductsForSelect(supplierId)
-      .subscribe((products: ProductSelect[]) => {
-        this.products = products;
-      });
+    this.productsSub = this.supplierService.getProductsForSelect(supplierId).subscribe((products: ProductSelect[]) => {
+      this.products = products;
+    });
   }
 
   // Output productOrders to main component
@@ -69,8 +66,10 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
         productId: this.formDetails.value.productId.productId,
         productName: this.formDetails.value.productId.productName
       });
-      this.productsToAdd.push(this.formDetails.value);
-      this.refreshProductSelection(this.formDetails.value.productId);
+      if (!this.formDetails.invalid) {
+        this.productsToAdd.push(this.formDetails.value);
+        this.refreshProductSelection(this.formDetails.value.productId);
+      }
     }
   }
 

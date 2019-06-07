@@ -1,3 +1,16 @@
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatMenuTrigger,
+  MatPaginator,
+  MatSelectionList,
+  MatSnackBar,
+  MatSort,
+  MatTableDataSource
+} from '@angular/material';
+import { Router } from '@angular/router';
 import { equal, strictEqual } from 'assert';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -5,24 +18,9 @@ import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import {
-    OrderBuyEditDialogComponent
+  OrderBuyEditDialogComponent
 } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
 import { SupplierList } from 'src/app/supplier/_interfaces/supplier-list';
-
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {
-    MatDialog,
-    MatDialogConfig,
-    MatMenuTrigger,
-    MatPaginator,
-    MatSelectionList,
-    MatSnackBar,
-    MatSort,
-    MatTableDataSource
-} from '@angular/material';
-import { Router } from '@angular/router';
-
 import { OrderBuyDataSource } from '../_data-source/order-buy-data-source';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyList } from '../_interfaces/order-buy-list';
@@ -197,7 +195,7 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '800px',
-      height: '585px',
+      height: '675px',
       panelClass: 'custom-dialog'
     };
 
@@ -209,7 +207,9 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
         dateOfIssue: orderEdit.dateOfIssue,
         timeForPayment: orderEdit.timeForPayment,
         personId: orderEdit.personId,
-        supplierName: orderEdit.supplierName
+        supplierName: orderEdit.supplierName,
+        employeeId: orderEdit.employeeId,
+        employeeName: orderEdit.employeeName
       };
     }
 

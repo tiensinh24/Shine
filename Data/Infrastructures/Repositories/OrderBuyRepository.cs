@@ -167,6 +167,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                 order.DateOfIssue = orderBuy.DateOfIssue;
                 order.TimeForPayment = orderBuy.TimeForPayment;
                 order.PersonId = orderBuy.PersonId;
+                order.EmployeeId = orderBuy.EmployeeId;
                 order.Rating = orderBuy.Rating;
             }
 

@@ -1,9 +1,12 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { ClickEvent } from 'angular-star-rating';
-import { Subscription } from 'rxjs';
+import { fromEvent, merge, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { EmployeeSelect } from 'src/app/employee/_interfaces/employee-select';
+import { EmployeeService } from 'src/app/employee/_services/employee.service';
 import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
@@ -21,35 +24,64 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   title: string;
 
+  // Employees autocomplete
+  employees: EmployeeSelect[];
+  filteredEmployees: EmployeeSelect[];
+  @ViewChild('employeeInput') employeeInput: ElementRef;
+
   // Star rating
   rating: number;
 
-  suppliersSub = new Subscription();
-  orderUpdateSub = new Subscription();
+  subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private orderBuyService: OrderBuyService,
     private supplierService: SupplierService,
+    private employeeService: EmployeeService,
     private dialogRef: MatDialogRef<OrderBuyEditDialogComponent>,
     // Inject data from supplier-list component
     @Inject(MAT_DIALOG_DATA) public dataFromDetail
   ) {}
 
   ngOnInit() {
-    this.createForm();
-
-    this.title = `Edit ${this.dataFromDetail.orderNumber}`;
-
-    this.updateForm();
-
-    this.getSuppliersSelect();
+    this.initialize();
   }
 
   ngOnDestroy(): void {
-    this.suppliersSub.unsubscribe();
-    this.orderUpdateSub.unsubscribe();
+    this.subscription.unsubscribe();
+  }
+
+  initialize() {
+    this.title = `Edit ${this.dataFromDetail.orderNumber}`;
+    this.createForm();
+
+    this.updateForm();
+
+    this.getEmployees();
+
+    // Disable edit supplier because order lineitems will...
+    this.getSuppliersSelect();
+
+    // Filter employee autocomplete
+    merge(fromEvent(this.employeeInput.nativeElement, 'keyup'), fromEvent(this.employeeInput.nativeElement, 'click'))
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        tap(() => {
+          const filter = this.employeeInput.nativeElement.value;
+
+          this.filteredEmployees = this.employees.filter(e => e.fullName.toLowerCase().includes(filter));
+        })
+      )
+      .subscribe();
+  }
+
+  getEmployees() {
+    this.subscription = this.employeeService.getEmployeesSelect().subscribe((employees: EmployeeSelect[]) => {
+      this.employees = this.filteredEmployees = employees;
+    });
   }
 
   createForm() {
@@ -58,6 +90,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
       personId: ['', Validators.required],
+      employee: [''],
       rating: ['']
     });
   }
@@ -70,12 +103,16 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       dateOfIssue: this.dataFromDetail.dateOfIssue,
       timeForPayment: this.dataFromDetail.timeForPayment,
       personId: this.dataFromDetail.personId,
+      employee: <EmployeeSelect>{
+        employeeId: this.dataFromDetail.employeeId,
+        fullName: this.dataFromDetail.employeeName
+      },
       rating: this.dataFromDetail.rating
     });
   }
 
   getSuppliersSelect() {
-    this.suppliersSub = this.supplierService.getSuppliersSelect().subscribe(res => {
+    this.subscription = this.supplierService.getSuppliersSelect().subscribe(res => {
       this.suppliers = res;
     });
   }
@@ -87,10 +124,11 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       dateOfIssue: this.formGroup.value.dateOfIssue,
       timeForPayment: this.formGroup.value.timeForPayment,
       personId: this.formGroup.value.personId,
+      employeeId: this.formGroup.value.employee.employeeId,
       rating: this.formGroup.value.rating
     };
 
-    this.orderUpdateSub = this.orderBuyService.updateOrder(tempOrder).subscribe(res => {
+    this.subscription = this.orderBuyService.updateOrder(tempOrder).subscribe(res => {
       this.dialogRef.close(res);
     });
   }
@@ -116,5 +154,9 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       : formControl.hasError('pattern')
       ? 'Please enter a number!'
       : '';
+  }
+
+  displayFn(employee: EmployeeSelect): string | undefined {
+    return employee ? employee.fullName : undefined;
   }
 }

@@ -2,8 +2,8 @@
     "version": 3,
     "mappings": "",
     "sources": [
-        "supplier-home.component.scss"
+        "sidenav-sell.component.scss"
     ],
     "names": [],
-    "file": "supplier-home.component.css"
+    "file": "sidenav-sell.component.css"
 }

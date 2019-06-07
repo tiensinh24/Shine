@@ -10,14 +10,14 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
-    MatDialog, MatDialogConfig, MatMenuTrigger, MatPaginator, MatSelectionList, MatSnackBar, MatSort
+    MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort
 } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { SupplierDataSource } from '../_data-source/supplier-data-source';
-import { Supplier } from '../_interfaces/supplier';
-import { SupplierList } from '../_interfaces/supplier-list';
-import { SupplierService } from '../_services/supplier.service';
+import { SupplierDataSource } from '../../_data-source/supplier-data-source';
+import { Supplier } from '../../_interfaces/supplier';
+import { SupplierList } from '../../_interfaces/supplier-list';
+import { SupplierService } from '../../_services/supplier.service';
 
 @Component({
   selector: 'app-supplier-list',

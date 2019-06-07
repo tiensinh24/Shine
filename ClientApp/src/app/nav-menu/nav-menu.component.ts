@@ -1,11 +1,7 @@
-import { Component, OnInit, AfterContentChecked, Input } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { AuthService } from '../auth/_services/auth.service';
 import { IconService } from '../_shared/_services/icon.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Breakpoints } from '@angular/cdk/layout';
+import { AuthService } from '../auth/_services/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -14,9 +10,10 @@ import { Breakpoints } from '@angular/cdk/layout';
 })
 export class NavMenuComponent implements OnInit, AfterContentChecked {
   user: string;
-  
+  sidenavToggle = true;
+
   @Input() loading: boolean;
-  
+
   constructor(private auth: AuthService, private router: Router, private iconService: IconService) {
     // Get svgIcon from IconService
     this.iconService.logo();

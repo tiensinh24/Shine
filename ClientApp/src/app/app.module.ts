@@ -13,10 +13,12 @@ import { HomeComponent } from './home/home.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SidenavBuyComponent } from './nav-menu/sidenav-buy/sidenav-buy.component';
+import { SidenavSellComponent } from './nav-menu/sidenav-sell/sidenav-sell.component';
 
 
 @NgModule({
-  declarations: [AppComponent, NavMenuComponent, HomeComponent, PageNotFoundComponent, LogInComponent],
+  declarations: [AppComponent, NavMenuComponent, HomeComponent, PageNotFoundComponent, LogInComponent, SidenavBuyComponent, SidenavSellComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
