@@ -99,7 +99,7 @@ namespace Shine {
             services.AddEntityFrameworkSqlServer();
 
             services.AddDbContextPool<AppDbContext>((serviceProvider, optionsBuilder) => {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_w"));
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_dk"));
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
 
