@@ -28,7 +28,7 @@ import { StorageService } from '../_services/storage.service';
 export class StorageProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   dataSource: StorageProductsDataSource;
   displayedColumns = ['select', 'date', 'productName', 'quantity', 'type', 'fromTo', 'actions'];
-  selection = new SelectionModel<StorageProductsList>(true, [], false);
+  selection = new SelectionModel<StorageProductsList>(true, []);
 
   storageId = +this.route.snapshot.params.storageId;
   subscription = new Subscription();

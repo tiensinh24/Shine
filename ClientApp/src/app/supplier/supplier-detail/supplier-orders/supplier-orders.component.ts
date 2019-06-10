@@ -8,14 +8,14 @@ import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,14 +34,14 @@ import { SupplierService } from '../../_services/supplier.service';
 export class SupplierOrdersComponent implements OnInit, AfterViewInit {
   dataSource: SupplierOrdersDataSource;
   displayedColumns = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'rating', 'actions'];
-  selection = new SelectionModel<SupplierOrders>(true, [], false);
-  supplierId: number;
+  selection = new SelectionModel<SupplierOrders>(true, []);
+  supplierId = +this.route.snapshot.params.supplierId;
 
   @Output() avgRating = new EventEmitter<number>();
 
-  @ViewChild(MatPaginator, { static: true }) paginator = <MatPaginator>{};
+  @ViewChild(MatPaginator, { static: false }) paginator = <MatPaginator>{};
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild('input', { static: false }) input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -59,42 +59,41 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private confirmDialogService: ConfirmDialogService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.supplierId = +this.route.snapshot.params.supplierId;
     this.dataSource = new SupplierOrdersDataSource(this.supplierService);
     this.dataSource.loadData(this.supplierId, this.pagingParams, this.sortParams);
   }
 
   ngAfterViewInit(): void {
-    if (!this.dataSource.isNull) {
-      // Server-side search
-      fromEvent(this.input.nativeElement, 'keyup')
-        .pipe(
-          debounceTime(250),
-          distinctUntilChanged(),
-          tap(() => {
-            this.paginator.pageIndex = 0;
-            this.paginator.pageSize = 8;
-            this.loadOrdersPage();
-          })
-        )
-        .subscribe();
 
-      // reset the paginator after sorting
-      this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    // Server-side search
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.paginator.pageSize = 8;
+          this.loadOrdersPage();
+        })
+      )
+      .subscribe();
 
-      // on sort or paginate events, load a new page
-      merge(this.sort.sortChange, this.paginator.page)
-        .pipe(
-          tap(() => {
-            this.loadOrdersPage();
-            setTimeout(() => this.selection.clear(), 50);
-          })
-        )
-        .subscribe();
-    }
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
+    // on sort or paginate events, load a new page
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => {
+          this.loadOrdersPage();
+          setTimeout(() => this.selection.clear(), 50);
+        })
+      )
+      .subscribe();
+
   }
 
   loadOrdersPage() {
@@ -141,7 +140,7 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
 
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.paginator.pageSize;
+    const numRows = this.paginator ? this.paginator.pageSize : 0;
 
     return numSelected === numRows;
   }

@@ -28,11 +28,11 @@ import { ProductBuyService } from '../_services/product-buy.service';
 export class ProductBuyListComponent implements OnInit, AfterViewInit {
   dataSource: ProductBuyDataSource;
   displayedColumns = ['select', 'photo', 'productName', 'specification', 'categoryName', 'actions'];
-  selection = new SelectionModel<ProductBuyList>(true, [], false);
+  selection = new SelectionModel<ProductBuyList>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild('input', { static: false }) input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,

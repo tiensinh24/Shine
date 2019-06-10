@@ -47,10 +47,10 @@ export class SupplierDetailComponent implements OnInit {
     this.galleryOptions = [
       {
         width: '100%',
-        height: '220px',
+        height: '300px',
         imageArrows: false,
         imageArrowsAutoHide: true,
-        imageSize: NgxGalleryImageSize.Contain,
+        imageSize: NgxGalleryImageSize.Cover,
         imageInfinityMove: true,
         imageBullets: true,
         imageAutoPlay: true,

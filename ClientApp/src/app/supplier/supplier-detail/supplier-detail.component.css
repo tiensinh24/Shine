@@ -1,80 +1,21 @@
-.mat-elevation-z8 {
-  margin: 1em;
+main {
+  margin: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-#main-container {
-  padding: 0;
+main section#supplier {
+  min-width: 300px;
 }
 
-#main-container mat-card-header,
-#main-container mat-card-content {
-  padding: 1rem 1rem 0 1rem;
-}
-
-#supplier-container {
-  background: lightyellow;
-}
-
-.product-table {
-  margin: 0;
-  width: 100%;
-  height: calc(100vh - 155px);
-  overflow-y: auto;
-}
-
-.mat-paginator-sticky {
-  bottom: 0;
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 10;
-}
-
-.mat-header-cell {
-  background-color: aliceblue;
+main section#supplier table td > span {
   color: royalblue;
+  text-align: left;
+  padding-right: 1rem;
 }
 
-.mat-row {
-  height: auto;
-}
-
-.mat-cell {
-  padding: 0 8px;
-}
-
-.col-1 {
-  font-weight: 500;
-  line-height: 20px;
-  color: royalblue;
-  padding-right: 1em;
-}
-
-.col-2 {
-  padding-left: 1em;
-}
-
-.more-button > button {
-  margin-top: 1rem;
-  -webkit-transition: cubic-bezier(0.075, 0.82, 0.165, 1) 250ms;
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 250ms;
-}
-
-.more-button > button:hover {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-  -webkit-transition: 150ms;
-  transition: 150ms;
-}
-
-.expand-buttons > button {
-  -webkit-transition: 100ms linear;
-  transition: 100ms linear;
-}
-
-.expand-buttons > button:hover {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-  -webkit-transition: 150ms;
-  transition: 150ms;
+main section#button-group {
+  padding: 0 1rem;
 }
 /*# sourceMappingURL=supplier-detail.component.css.map */

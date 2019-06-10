@@ -1,117 +1,126 @@
-<mat-card id="main-container" fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" class="mat-elevation-z8">
-  <!-- Card detail -->
-  <div id="supplier-container" fxFlex="30" fxFlex.xs="100">
-    <mat-card-header>
-      <img mat-card-avatar src="{{ mainPhotoUrl }}" />
+<main>
 
-      <mat-card-title>{{ supplier.fullName }}</mat-card-title>
-      <mat-card-subtitle
-        ><div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-          <div>{{ supplier.gender | gender }}</div>
+  <section id="supplier">
+    <mat-card>
+      <mat-card-header>
+        <img mat-card-avatar src="{{ mainPhotoUrl }}" />
 
-          <div>
-            <star-rating [starType]="'svg'" [rating]="rating" [showHalfStars]="true" [readOnly]="true"></star-rating>
+        <mat-card-title>{{ supplier.fullName }}</mat-card-title>
+        <mat-card-subtitle>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <div>{{ supplier.gender | gender }}</div>
+
+            <div>
+              <star-rating [starType]="'svg'" [rating]="rating" [showHalfStars]="true" [readOnly]="true">
+              </star-rating>
+            </div>
           </div>
-        </div>
-      </mat-card-subtitle>
-    </mat-card-header>
+        </mat-card-subtitle>
+      </mat-card-header>
 
-    <mat-card-content fxLayout="column" fxLayoutGap="16px">
       <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
 
-      <table>
-        <tr>
-          <td class="col-1">Full Name</td>
-          <td class="col-2">{{ supplier.fullName }}</td>
-        </tr>
-        <tr>
-          <td class="col-1">Age</td>
-          <td class="col-2">{{ supplier.dateOfBirth | age }}</td>
-        </tr>
-        <tr>
-          <td class="col-1">Telephone</td>
-          <td class="col-2">{{ supplier.telephone }}</td>
-        </tr>
-        <tr>
-          <td class="col-1">Fax</td>
-          <td class="col-2">{{ supplier.fax }}</td>
-        </tr>
-        <tr>
-          <td class="col-1">Continent</td>
-          <td class="col-2">{{ supplier.continentName }}</td>
-        </tr>
-        <tr>
-          <td class="col-1">Country</td>
-          <td class="col-2">{{ supplier.countryName }}</td>
-        </tr>
-      </table>
-    </mat-card-content>
-    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
-      <button mat-icon-button color="warn" (click)="openDialog()">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" [routerLink]="['/supplier']">
-        <mat-icon>list</mat-icon>
-      </button>
-    </mat-card-actions>
-  </div>
+      <mat-card-content>
+        <table>
+          <tr>
+            <td>
+              <span>
+                <mat-icon>cake</mat-icon>
+              </span>
+            </td>
+            <td>{{ supplier.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+          <tr>
+            <td>
+              <span>
+                <mat-icon>phone</mat-icon>
+              </span>
+            </td>
+            <td>{{ supplier.telephone }}</td>
+          </tr>
+          <tr>
+            <td>
+              <span>
+                <mat-icon>linear_scale</mat-icon>
+              </span>
+            </td>
+            <td>{{ supplier.fax }}</td>
+          </tr>
+          <tr>
+            <td>
+              <span>
+                <mat-icon>language</mat-icon>
+              </span>
+            </td>
+            <td>{{ supplier.countryName }} - {{ supplier.continentName }}</td>
+          </tr>
+        </table>
+      </mat-card-content>
 
-  <!-- Button Group -->
-  <div class="more-button" fxLayout.xs="row" fxLayout="column" fxLayoutGap="64px">
-    <!-- More/Less button -->
-    <button *ngIf="!multiButton" mat-mini-fab color="primary" (click)="toggleMultiButton()">
-      <mat-icon>expand_more</mat-icon>
-    </button>
-    <button *ngIf="multiButton" mat-mini-fab color="primary" (click)="toggleMultiButton()">
-      <mat-icon>expand_less</mat-icon>
-    </button>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+        <button mat-icon-button matTooltip="Edit supplier" color="warn" (click)="openDialog()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Supplier list" color="primary" [routerLink]="['/supplier']">
+          <mat-icon>list</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
 
-    <!-- Expand buttons -->
-    <div
-      class="expand-buttons"
-      *ngIf="multiButton"
-      fxLayout="column"
-      fxLayout.xs="row"
-      fxLayoutAlign="center"
-      fxLayoutGap="16px"
-    >
-      <button *ngIf="!isGallery" mat-mini-fab (click)="toggleGallery()">
-        <mat-icon matTooltip="Gallery">photo_library</mat-icon>
+  <section id="button-group">
+    <!-- Button Group -->
+    <div class="more-button" fxLayout.xs="row" fxLayout="column" fxLayoutGap="64px">
+      <!-- More/Less button -->
+      <button *ngIf="!multiButton" mat-mini-fab color="primary" (click)="toggleMultiButton()">
+        <mat-icon>expand_more</mat-icon>
       </button>
-      <button *ngIf="!isAdd" mat-mini-fab (click)="toggleAdd()">
-        <mat-icon matTooltip="Add products" aria-label="Add products">add</mat-icon>
+      <button *ngIf="multiButton" mat-mini-fab color="primary" (click)="toggleMultiButton()">
+        <mat-icon>expand_less</mat-icon>
       </button>
-      <button *ngIf="!isList" mat-mini-fab (click)="toggleList()">
-        <mat-icon matTooltip="Products list" aria-label="Products list">list</mat-icon>
-      </button>
-      <button *ngIf="!isUpload" mat-mini-fab (click)="toggleUpload()">
-        <mat-icon matTooltip="Upload photos" aria-label="Upload photos">cloud_upload</mat-icon>
-      </button>
-      <button *ngIf="!isOrder" mat-mini-fab (click)="toggleOrder()">
-        <mat-icon matTooltip="Orders list" aria-label="Orders list">shopping_cart</mat-icon>
-      </button>
-    </div>
-  </div>
 
-  <!-- Table details-->
-  <div fxFlex class="product-table">
-    <div *ngIf="isGallery" fxLayoutAlign="center center">
-      <app-person-photo-gallery
-        [photos]="supplier.photos"
-        (newMainPhoto)="refreshSetMainPhoto($event)"
-      ></app-person-photo-gallery>
+      <!-- Expand buttons -->
+      <div class="expand-buttons" *ngIf="multiButton" fxLayout="column" fxLayout.xs="row" fxLayoutAlign="center"
+        fxLayoutGap="16px">
+        <button *ngIf="!isGallery" mat-mini-fab (click)="toggleGallery()">
+          <mat-icon matTooltip="Gallery">photo_library</mat-icon>
+        </button>
+        <button *ngIf="!isAdd" mat-mini-fab (click)="toggleAdd()">
+          <mat-icon matTooltip="Add products" aria-label="Add products">add</mat-icon>
+        </button>
+        <button *ngIf="!isList" mat-mini-fab (click)="toggleList()">
+          <mat-icon matTooltip="Products list" aria-label="Products list">list</mat-icon>
+        </button>
+        <button *ngIf="!isUpload" mat-mini-fab (click)="toggleUpload()">
+          <mat-icon matTooltip="Upload photos" aria-label="Upload photos">cloud_upload</mat-icon>
+        </button>
+        <button *ngIf="!isOrder" mat-mini-fab (click)="toggleOrder()">
+          <mat-icon matTooltip="Orders list" aria-label="Orders list">shopping_cart</mat-icon>
+        </button>
+      </div>
     </div>
-    <div *ngIf="isUpload">
-      <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
+  </section>
+
+  <section id="childs">
+    <div fxFlex class="product-table">
+      <div *ngIf="isGallery" fxLayoutAlign="center center">
+        <app-person-photo-gallery [photos]="supplier.photos" (newMainPhoto)="refreshSetMainPhoto($event)">
+        </app-person-photo-gallery>
+      </div>
+      <div *ngIf="isUpload">
+        <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
+      </div>
+      <div *ngIf="isList">
+        <app-products-added></app-products-added>
+      </div>
+      <div *ngIf="isAdd">
+        <app-products-not-added [title]="title"></app-products-not-added>
+      </div>
+      <div *ngIf="isOrder">
+        <app-supplier-orders (avgRating)="refreshRating($event)"></app-supplier-orders>
+      </div>
     </div>
-    <div *ngIf="isList">
-      <app-products-added></app-products-added>
-    </div>
-    <div *ngIf="isAdd">
-      <app-products-not-added [title]="title"></app-products-not-added>
-    </div>
-    <div *ngIf="isOrder">
-      <app-supplier-orders (avgRating)="refreshRating($event)"></app-supplier-orders>
-    </div>
-  </div>
-</mat-card>
+  </section>
+
+
+</main>

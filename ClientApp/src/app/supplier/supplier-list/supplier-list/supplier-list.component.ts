@@ -55,7 +55,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     'rating',
     'actions'
   ];
-  selection = new SelectionModel<SupplierList>(true, [], false);
+  selection = new SelectionModel<SupplierList>(true, []);
   numRows: number;
 
   title = 'Suppliers List';
