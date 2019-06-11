@@ -1,24 +1,26 @@
-main {
-  margin: 1rem;
- display: flex;
+mat-card#main {
+    height: calc(100vh - 60px);
 
-  section#supplier {
-    min-width: 300px;
-
-    table { 
-      td {
-        >span {
-          color: royalblue;
-          text-align: left;
-          padding-right: 1rem;
+    section#supplier {
+      width: 300px;
+  
+      table {
+        td {
+          >span {
+            color: royalblue;
+            text-align: left;
+            padding-right: 1rem;
+          }
         }
       }
     }
+  
+    section#button-group {
+      padding: 0 1rem;
+    }
+  
+    section#childs {
+      overflow: auto;
+    }
   }
 
-  section#button-group {
-    padding: 0 1rem;
-  }
-
-  section#childs {}
-}

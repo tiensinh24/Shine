@@ -11,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/supplier/home', pathMatch: 'full' },
       { path: 'home', component: SupplierListHomeComponent },
+      { path: 'report', loadChildren: () => import('./_reports/supplier-report.module').then(m => m.SupplierReportModule) },
       { path: ':supplierId', component: SupplierDetailComponent }
     ]
   }
@@ -20,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SupplierRoutingModule {}
+export class SupplierRoutingModule { }

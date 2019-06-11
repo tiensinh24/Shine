@@ -4,6 +4,7 @@ using Mapster;
 
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
+using Shine.Data.Dto.Suppliers.Reports;
 using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster {
@@ -51,6 +52,8 @@ namespace Shine.Data.Dto._Mapster {
                 .Map(
                     dest => dest.FullName, src => src.FirstName + " " + src.LastName
                 );
+
+          
 
         }
     }

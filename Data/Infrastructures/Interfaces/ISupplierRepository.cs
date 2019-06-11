@@ -12,13 +12,16 @@ using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
+using Shine.Data.Dto.Suppliers.Reports;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Interfaces {
-    public interface ISupplierRepository : IRepository {
-#region Supplier
+namespace Shine.Data.Infrastructures.Interfaces
+{
+    public interface ISupplierRepository : IRepository
+    {
+        #region Supplier
 
-#region Get Values
+        #region Get Values
         Task<IEnumerable<SupplierListDto>> GetSuppliersAsync(
             Expression<Func<SupplierListDto, object>> sortColumn, string sortOrder);
 
@@ -30,9 +33,9 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
         Task<SupplierDetailDto> GetSupplierAsync(int id);
 
-#endregion
+        #endregion
 
-#region Actions
+        #region Actions
         Task AddSupplierAsync(Supplier supplier);
 
         Task<SupplierDto> UpdateSupplierAsync(Supplier supplier);
@@ -41,13 +44,13 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
         Task<bool> DeleteSuppliersAsync(string[] ids);
 
-#endregion       
+        #endregion
 
-#endregion
+        #endregion
 
-#region SupplierProduct
+        #region SupplierProduct
 
-#region Get Values
+        #region Get Values
 
         Task<IEnumerable<ProductSelectDto>> GetProductsForSelectAsync(int supplierId);
 
@@ -56,18 +59,18 @@ namespace Shine.Data.Infrastructures.Interfaces {
             Expression<Func<ProductsBySupplierDto, bool>> condition);
 
         JsonResult GetProductsNotBySupplier(int supplierId);
-#endregion
+        #endregion
 
-#region Actions
+        #region Actions
         Task AddSupplierProductAsync(PersonProduct model);
 
         Task<PersonProductDto> DeleteSupplierProductAsync(PersonProduct model);
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
-#region Orders
+        #region Orders
 
         Task<IEnumerable<SupplierOrdersDto>> GetOrdersAsync(int supplierId);
 
@@ -75,7 +78,16 @@ namespace Shine.Data.Infrastructures.Interfaces {
             PagingParams pagingParams, SortParams sortParams, string filter,
             Expression<Func<SupplierOrdersDto, bool>> condition);
 
-#endregion
+        #endregion
+
+        #region Reports
+
+        Task<PagedList<SupplierDebtDto>> GetPagedSupplierDebtAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter
+        );
+
+        #endregion
+
 
     }
 }

@@ -1,12 +1,16 @@
-.mat-elevation-z8 {
+main {
+  height: 100px;
+}
+
+main .mat-elevation-z8 {
   margin: 1em 0;
 }
 
-.card-content {
+main .card-content {
   margin: 1px;
 }
 
-.card-title {
+main .card-title {
   background: aliceblue;
   color: royalblue;
   top: 0px;
@@ -15,22 +19,22 @@
   z-index: 10;
 }
 
-.mat-expansion-panel {
+main .mat-expansion-panel {
   border-bottom: dotted 1px blueviolet;
 }
 
-.mat-expansion-panel-header.mat-expanded {
+main .mat-expansion-panel-header.mat-expanded {
   font-size: large;
   background-color: sandybrown;
 }
 
-.expand-header .mat-expansion-panel-header-title,
-.expand-header .mat-expansion-panel-header-description {
+main .expand-header .mat-expansion-panel-header-title,
+main .expand-header .mat-expansion-panel-header-description {
   -ms-flex-preferred-size: 0;
       flex-basis: 0;
 }
 
-.expand-header .mat-expansion-panel-header-description {
+main .expand-header .mat-expansion-panel-header-description {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -39,24 +43,24 @@
           align-items: center;
 }
 
-table {
+main table {
   border-collapse: collapse;
   width: 100%;
 }
 
-th {
+main th {
   font: 400;
   color: steelblue;
   text-align: left;
 }
 
-th,
-td {
+main th,
+main td {
   border-bottom: 1px solid orange;
   padding: 8px;
 }
 
-tr.row-content:hover {
+main tr.row-content:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }

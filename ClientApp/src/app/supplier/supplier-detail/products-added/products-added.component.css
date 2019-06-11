@@ -1,17 +1,18 @@
-.mat-header-cell {
+main .mat-header-cell {
   color: royalblue;
+  padding: 1rem;
 }
 
-.mat-cell {
-  padding: 0 8px;
+main .mat-cell {
+  padding: 0 1rem;
 }
 
-.mat-row:hover {
+main .mat-row:hover {
   cursor: pointer;
   background-color: aliceblue;
 }
 
-.mat-paginator-sticky {
+main .mat-paginator-sticky {
   bottom: 0.5px;
   position: -webkit-sticky;
   position: sticky;

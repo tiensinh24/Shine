@@ -1,7 +1,6 @@
-<main>
-
+<mat-card id="main" fxLayout="row">
   <section id="supplier">
-    <mat-card>
+    <mat-card class="mat-elevation-z0">
       <mat-card-header>
         <img mat-card-avatar src="{{ mainPhotoUrl }}" />
 
@@ -101,7 +100,7 @@
     </div>
   </section>
 
-  <section id="childs">
+  <section id="childs" fxFlex>
     <div fxFlex class="product-table">
       <div *ngIf="isGallery" fxLayoutAlign="center center">
         <app-person-photo-gallery [photos]="supplier.photos" (newMainPhoto)="refreshSetMainPhoto($event)">
@@ -121,6 +120,4 @@
       </div>
     </div>
   </section>
-
-
-</main>
+</mat-card>

@@ -1,25 +1,30 @@
-.mat-header-cell {
-  color: royalblue;
-}
+main {
+  width: 100%;
 
-.mat-cell {
-  padding: 0 8px;
-}
-
-.mat-row:hover {
-  cursor: pointer;
-  background-color: aliceblue;
-}
-
-.mat-paginator-sticky {
-  bottom: 0.5px;
-  position: sticky;
-  background: white;
-  z-index: 1;
-}
-
-#no-orders {
-  & h2.mat-h2 {
-    margin: 1rem 0;
+  .mat-header-cell {
+    color: royalblue;
   }
+  
+  .mat-cell {
+    padding: 0 8px;
+  }
+  
+  .mat-row:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+  }
+  
+  .mat-paginator-sticky {
+    bottom: 0.5px;
+    position: sticky;
+    background: white;
+    z-index: 1;
+  }
+  
+  #no-orders {
+    & h2.mat-h2 {
+      margin: 1rem 0;
+    }
+  }
+  
 }

@@ -20,6 +20,11 @@ main > .content table.main-table {
 
 main > .content table.main-table th {
   color: royalblue;
+  padding: 0 .5rem;
+}
+
+main > .content table.main-table td {
+  padding: 0 .5rem;
 }
 
 main > .content table.main-table .mat-row:hover {

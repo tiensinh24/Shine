@@ -3,11 +3,15 @@ using System.Linq;
 using Mapster;
 
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Models;
 
-namespace Shine.Data.Dto._Mapster {
-    public static class OrderBuySetting {
-        public static void Setting() {
+namespace Shine.Data.Dto._Mapster
+{
+    public static class OrderBuySetting
+    {
+        public static void Setting()
+        {
             TypeAdapterConfig<OrderBuy, OrderBuyListDto>.NewConfig()
                 .Map(
                     dest => dest.SupplierName,
@@ -42,33 +46,47 @@ namespace Shine.Data.Dto._Mapster {
                 )
                 .Map(
                     dest => dest.Products,
-                    src => src.ProductOrders.Select(p => new OrderBuyProducts {
+                    src => src.ProductOrders.Select(p => new OrderBuyProducts
+                    {
                         OrderId = p.OrderId,
-                            ProductId = p.Product.ProductId,
-                            ProductName = p.Product.ProductName,
-                            Specification = p.Product.Specification,
-                            Quantity = p.Quantity,
-                            Price = p.Price,
-                            Tax = p.Tax,
-                            Rate = p.Rate,
-                            Unit = p.Unit,
-                            Total = p.Price * p.Quantity * (1 + p.Tax) * p.Rate
+                        ProductId = p.Product.ProductId,
+                        ProductName = p.Product.ProductName,
+                        Specification = p.Product.Specification,
+                        Quantity = p.Quantity,
+                        Price = p.Price,
+                        Tax = p.Tax,
+                        Rate = p.Rate,
+                        Unit = p.Unit,
+                        Total = p.Price * p.Quantity * (1 + p.Tax) * p.Rate
                     })
                 )
                 .Map(
                     dest => dest.Payments,
-                    src => src.Payments.Select(p => new {
+                    src => src.Payments.Select(p => new
+                    {
                         p.PaymentId,
-                            p.OrderId,
-                            p.PaymentDate,
-                            p.Amount,
-                            p.Currency,
-                            p.Rate
+                        p.OrderId,
+                        p.PaymentDate,
+                        p.Amount,
+                        p.Currency,
+                        p.Rate
                     }).OrderByDescending(p => p.PaymentDate)
+                );
+
+            TypeAdapterConfig<OrderBuy, OrderBuyDebt>.NewConfig()
+                .Map(
+                    dest => dest.SupplierName,
+                    src => src.Person.FirstName + " " + src.Person.LastName
+                )
+                .Map(
+                    dest => dest.Debt,
+                    src => src.ProductOrders.Sum(po => (po.Quantity * po.Price * (1 + po.Tax)))
+                        - src.Payments.Sum(p => p.Amount)
                 );
         }
 
-        private static string GetFullName(string firstName, string lastName) {
+        private static string GetFullName(string firstName, string lastName)
+        {
             var fullName = firstName + ' ' + lastName;
             return fullName;
         }

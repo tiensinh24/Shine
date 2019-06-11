@@ -1,8 +1,12 @@
-.drop-zone mat-icon {
+main {
+  width: 100%;
+}
+
+main .drop-zone mat-icon {
   font-size: 64px;
 }
 
-.drop-zone {
+main .drop-zone {
   padding: 2em;
   line-height: 32px;
   display: inline-block;
@@ -10,40 +14,40 @@
   border: dotted 3px lightgray;
 }
 
-.drop-zone-icon {
+main .drop-zone-icon {
   font-size: 64px;
   color: darkslategray;
 }
 
-.ng-file-over {
+main .ng-file-over {
   padding: 2em;
   border: dotted 3px green;
 }
 
-.upload-table {
+main .upload-table {
   text-align: center;
   width: 100%;
 }
 
-.upload-table tr > th {
+main .upload-table tr > th {
   color: royalblue;
   border-bottom: 1px dotted sandybrown;
 }
 
-.upload-table tr > td {
+main .upload-table tr > td {
   border-bottom: 1px dotted sandybrown;
 }
 
-.mat-elevation-z1 {
+main .mat-elevation-z1 {
   margin: 1px;
 }
 
-.progress-all {
+main .progress-all {
   height: 8px;
   margin: 16px 0;
 }
 
-mat-card-title {
+main mat-card-title {
   text-align: center;
   font-size: large;
   color: rebeccapurple;

@@ -1,39 +1,42 @@
-<div class="card-content">
-  <mat-card class="card-title mat-elevation-z4" fxLayout="row" fxLayoutAlign="center center">
-    <div class="fill"></div>
-    <div>
-      <mat-card-title>{{ title }}</mat-card-title>
-    </div>
-    <div class="fill"></div>
-  </mat-card>
-  <mat-accordion class="expand-header">
-    <mat-expansion-panel #ex [class.mat-elevation-z8]="ex.expanded" hideToggle *ngFor="let cat of dataSource">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ cat.category }}
-        </mat-panel-title>
-        <mat-panel-description>
-          Open products list
-          <mat-icon color="primary">category</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <!-- Lazy load -->
-      <ng-template matExpansionPanelContent>
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Specification</th>
-            <th></th>
-          </tr>
-          <tr class="row-content" *ngFor="let prod of cat.products">
-            <td>{{ prod.productName }}</td>
-            <td>{{ prod.specification }}</td>
-            <td>
-              <mat-icon matTooltip="Add product to supplier" color="primary" (click)="onAdd(prod)">add</mat-icon>
-            </td>
-          </tr>
-        </table>
-      </ng-template>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
+<main>
+  <div class="card-content">
+    <mat-card class="card-title mat-elevation-z4" fxLayout="row" fxLayoutAlign="center center">
+      <div class="fill"></div>
+      <div>
+        <mat-card-title>{{ title }}</mat-card-title>
+      </div>
+      <div class="fill"></div>
+    </mat-card>
+    <mat-accordion class="expand-header">
+      <mat-expansion-panel #ex [class.mat-elevation-z8]="ex.expanded" hideToggle *ngFor="let cat of dataSource">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ cat.category }}
+          </mat-panel-title>
+          <mat-panel-description>
+            Open products list
+            <mat-icon color="primary">category</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!-- Lazy load -->
+        <ng-template matExpansionPanelContent>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Specification</th>
+              <th></th>
+            </tr>
+            <tr class="row-content" *ngFor="let prod of cat.products">
+              <td>{{ prod.productName }}</td>
+              <td>{{ prod.specification }}</td>
+              <td>
+                <mat-icon matTooltip="Add product to supplier" color="primary" (click)="onAdd(prod)">add</mat-icon>
+              </td>
+            </tr>
+          </table>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  
+</main>

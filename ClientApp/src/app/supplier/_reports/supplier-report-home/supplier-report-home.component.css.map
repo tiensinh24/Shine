@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAEI,IAFA,CAEA,YAAY,CAAC,aAAa,AAAA,MAAM,CAAC;EAC7B,KAAK,EAAE,SAAS;CACnB",
+    "sources": [
+        "supplier-report-home.component.scss"
+    ],
+    "names": [],
+    "file": "supplier-report-home.component.css"
+}

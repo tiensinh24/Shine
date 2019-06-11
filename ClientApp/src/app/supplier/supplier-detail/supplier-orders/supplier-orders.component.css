@@ -1,17 +1,21 @@
-.mat-header-cell {
+main {
+  width: 100%;
+}
+
+main .mat-header-cell {
   color: royalblue;
 }
 
-.mat-cell {
+main .mat-cell {
   padding: 0 8px;
 }
 
-.mat-row:hover {
+main .mat-row:hover {
   cursor: pointer;
   background-color: aliceblue;
 }
 
-.mat-paginator-sticky {
+main .mat-paginator-sticky {
   bottom: 0.5px;
   position: -webkit-sticky;
   position: sticky;
@@ -19,7 +23,7 @@
   z-index: 1;
 }
 
-#no-orders h2.mat-h2 {
+main #no-orders h2.mat-h2 {
   margin: 1rem 0;
 }
 /*# sourceMappingURL=supplier-orders.component.css.map */

@@ -9,7 +9,7 @@
     <mat-nav-list>
       <mat-list-item [routerLink]="['/product-buy/home']" routerLinkActive="active">
         <mat-icon matListIcon>view_list</mat-icon>
-        <a matLine>Product lists</a>
+        <a matLine>Product list</a>
       </mat-list-item>
       <mat-list-item [routerLink]="['/product-buy/remain']" routerLinkActive="active">
         <mat-icon matListIcon>line_style</mat-icon>
@@ -17,7 +17,7 @@
       </mat-list-item>
       <mat-list-item>
         <mat-icon matListIcon fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
-        <a matLine [routerLink]="['/supplier/reports']">Reports</a>
+        <a matLine [routerLink]="['/supplier/report']">Reports</a>
       </mat-list-item>
     </mat-nav-list>
   </mat-expansion-panel>
@@ -32,9 +32,9 @@
     <mat-nav-list>
       <mat-list-item [routerLink]="['/supplier/home']" routerLinkActive="active">
         <mat-icon matListIcon>view_list</mat-icon>
-        <a matLine>Supplier lists</a>
+        <a matLine>Supplier list</a>
       </mat-list-item>
-      <mat-list-item [routerLink]="['/supplier/reports']" routerLinkActive="active">
+      <mat-list-item [routerLink]="['/supplier/report']" routerLinkActive="active">
         <mat-icon matListIcon fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
         <a matLine>Reports</a>
       </mat-list-item>
@@ -42,10 +42,17 @@
   </mat-expansion-panel>
 
   <!-- Orders group -->
-  <mat-expansion-panel hideToggle>
+  <mat-expansion-panel #orderPanel>
     <mat-expansion-panel-header>
-      <mat-icon class="fas fa-donate"></mat-icon>
+      <mat-icon [ngClass]="{expand: orderPanel.expanded}" class="fas fa-donate"></mat-icon>
       <span>Orders</span>
     </mat-expansion-panel-header>
+    <!-- Expand list -->
+    <mat-nav-list>
+      <mat-list-item [routerLink]="['/order-buy/home']" routerLinkActive="active" >
+        <mat-icon matListIcon>view_list</mat-icon>
+        <a matLine>Order list</a>
+      </mat-list-item>
+    </mat-nav-list>
   </mat-expansion-panel>
 </mat-accordion>

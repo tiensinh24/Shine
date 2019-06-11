@@ -8,6 +8,7 @@ using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
+using Shine.Data.Dto.Suppliers.Reports;
 using Shine.Data.Models;
 
 namespace Shine.Controllers.Interfaces {
@@ -62,6 +63,13 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<Paged<SupplierOrdersDto>>> GetPagedOrders(
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
+
+#endregion
+
+#region Reports
+    
+    Task<ActionResult<Paged<SupplierDebtDto>>> GetPagedSupplierDebt(
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
 #endregion
 

@@ -36,7 +36,7 @@ import { SupplierComponent } from './supplier.component';
     ProductsAddedComponent,
     SupplierOrdersComponent,
     SupplierCardComponent,
-    SupplierListHomeComponent
+    SupplierListHomeComponent,    
   ],
   imports: [
     // Shared module

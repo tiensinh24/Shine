@@ -1,21 +1,22 @@
-main {
-  margin: 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+mat-card#main {
+  height: calc(100vh - 60px);
 }
 
-main section#supplier {
-  min-width: 300px;
+mat-card#main section#supplier {
+  width: 300px;
 }
 
-main section#supplier table td > span {
+mat-card#main section#supplier table td > span {
   color: royalblue;
   text-align: left;
   padding-right: 1rem;
 }
 
-main section#button-group {
+mat-card#main section#button-group {
   padding: 0 1rem;
+}
+
+mat-card#main section#childs {
+  overflow: auto;
 }
 /*# sourceMappingURL=supplier-detail.component.css.map */
