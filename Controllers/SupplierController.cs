@@ -221,13 +221,21 @@ namespace Shine.Controllers
 
         #region Reports
 
-        [HttpGet("report/debt")]
+        [HttpGet("debt")]
         public async Task<ActionResult<Paged<SupplierDebtDto>>> GetPagedSupplierDebt(
                     [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
         {
             var query = await _repository.GetPagedSupplierDebtAsync(pagingParams, sortParams, filter);
 
             return new Paged<SupplierDebtDto>(query);
+        }
+
+        [HttpGet("{supplierId}/debt")]
+        public async Task<ActionResult<OrderDebtBySupplierDto>> GetOrderDebtsBySupplier(int supplierId)
+        {
+            var orderDebts = await _repository.GetOrderDebtsBySupplierAsync(supplierId);
+
+            return orderDebts;
         }
 
 

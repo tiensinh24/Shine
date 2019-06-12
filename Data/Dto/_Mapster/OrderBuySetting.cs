@@ -4,6 +4,7 @@ using Mapster;
 
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Reports;
+using Shine.Data.Dto.Suppliers.Reports;
 using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster
@@ -73,16 +74,25 @@ namespace Shine.Data.Dto._Mapster
                     }).OrderByDescending(p => p.PaymentDate)
                 );
 
-            TypeAdapterConfig<OrderBuy, OrderBuyDebt>.NewConfig()
+            TypeAdapterConfig<OrderBuy, OrderBuyDebtDto>.NewConfig()
+                .Map(
+                    dest => dest.SupplierId, src => src.PersonId
+                )
                 .Map(
                     dest => dest.SupplierName,
                     src => src.Person.FirstName + " " + src.Person.LastName
                 )
                 .Map(
+                    dest => dest.MainPhotoUrl,
+                    src => src.Person.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
+                )
+                .Map(
                     dest => dest.Debt,
                     src => src.ProductOrders.Sum(po => (po.Quantity * po.Price * (1 + po.Tax)))
-                        - src.Payments.Sum(p => p.Amount)
+                        - (src.Payments.Count() == 0 ? 0 : src.Payments.Sum(p => p.Amount))
                 );
+
+           
         }
 
         private static string GetFullName(string firstName, string lastName)

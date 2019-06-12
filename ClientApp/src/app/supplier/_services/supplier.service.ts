@@ -15,6 +15,8 @@ import { SupplierOrders } from '../_interfaces/supplier-orders';
 import { SupplierProduct } from '../_interfaces/supplier-product';
 import { ProductsBySupplier } from '../_interfaces/supplier-products-list';
 import { SupplierSelect } from '../_interfaces/supplier-select';
+import { PagedSupplierDebts } from '../_interfaces/reports/paged-supplier-debt';
+import { OrderDebtBySupplier } from '../_interfaces/reports/order-debt-by-supplier';
 
 
 @Injectable({
@@ -23,7 +25,7 @@ import { SupplierSelect } from '../_interfaces/supplier-select';
 export class SupplierService {
   baseUrl = environment.URL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getSuppliers(): Observable<SupplierList[]> {
     return this.http.get<SupplierList[]>(`${this.baseUrl}api/supplier/`);
@@ -132,5 +134,33 @@ export class SupplierService {
     return this.http.get<PagedSupplierOrders>(`${this.baseUrl}api/supplier/${supplierId}/paged-orders`, {
       params: queryParams
     });
+  }
+
+
+
+  // *Reports
+
+  getPagedSupplierDebts(
+    pagingParams: PagingParams,
+    sortParams?: SortParams,
+    filter = ''
+  ): Observable<PagedSupplierDebts> {
+    let queryParams = new HttpParams()
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
+
+    if (sortParams !== undefined) {
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }
+
+    return this.http.get<PagedSupplierDebts>(`${this.baseUrl}api/supplier/debt`, {
+      params: queryParams
+    });
+  }
+
+  getOrderDebtsBySupplier(supplierId: number): Observable<OrderDebtBySupplier> {
+    return this.http.get<OrderDebtBySupplier>(`${this.baseUrl}api/supplier/${supplierId}/debt`);
   }
 }

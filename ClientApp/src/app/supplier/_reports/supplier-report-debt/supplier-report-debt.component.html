@@ -1,3 +1,35 @@
-<p>
-  supplier-report-debt works!
-</p>
+<main>
+  <section id="supplier-debt" fxLayout="column">
+    <table class="supplier-debt" mat-table [dataSource]="dataSource" matSort>
+
+      <!-- SupplierName Column -->
+      <ng-container matColumnDef="supplierName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier </th>
+        <td mat-cell *matCellDef="let row">{{ row.supplierName }}</td>
+      </ng-container>
+      <!-- Debt Column -->
+      <ng-container matColumnDef="debt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Debt </th>
+        <td mat-cell *matCellDef="let row">{{ row.debt | number }}</td>
+      </ng-container>
+
+      <!-- Header & footer -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <!-- Paginator & filter -->
+    <div fxLayout="row-reverse" class="mat-paginator-sticky">
+      <mat-paginator [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8"
+        [pageSizeOptions]="[8, 16, 25, 100]" showFirstLastButtons></mat-paginator>
+
+      <mat-form-field fxFlex>
+        <span matPrefix>
+          <mat-icon>search</mat-icon>
+        </span>
+        <input matInput type="search" placeholder="Search suppliers" #input />
+      </mat-form-field>
+    </div>
+  </section>
+
+</main>

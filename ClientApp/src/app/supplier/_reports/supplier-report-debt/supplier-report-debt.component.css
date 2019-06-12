@@ -1,0 +1,8 @@
+main > section#supplier-debt > table.supplier-debt th {
+  color: royalblue;
+}
+
+main > section#supplier-debt .mat-paginator-sticky {
+  background: white;
+}
+/*# sourceMappingURL=supplier-report-debt.component.css.map */

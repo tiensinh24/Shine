@@ -442,24 +442,90 @@ namespace Shine.Data.Infrastructures.Repositories
         public async Task<PagedList<SupplierDebtDto>> GetPagedSupplierDebtAsync(
             PagingParams pagingParams, SortParams sortParams, string filter)
         {
-            var ordersDebt = _context.Set<OrderBuy>()
+            var source = _context.Set<OrderBuy>()
+                .AsNoTracking()
+                .ProjectToType<OrderBuyDebtDto>()
+                .Where(o => o.Debt > 0)
+                .GroupBy(o => new
+                {
+                    o.SupplierId,
+                    o.SupplierName,
+                    o.MainPhotoUrl
+                })
+                .Select(group => new SupplierDebtDto
+                {
+                    SupplierId = group.Key.SupplierId,
+                    SupplierName = group.Key.SupplierName,
+                    MainPhotoUrl = group.Key.MainPhotoUrl,
+                    Debt = group.Sum(g => g.Debt)
+                });
+            
+            switch (sortParams.SortOrder)
+            {
+                case "asc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "supplierName":
+                            source = source.OrderBy(s => s.SupplierName);
+                            break;
+                        case "debt":
+                            source = source.OrderBy(s => s.Debt);
+                            break;
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "supplierName":
+                            source = source.OrderByDescending(s => s.SupplierName);
+                            break;
+                        case "debt":
+                            source = source.OrderByDescending(s => s.Debt);
+                            break;
+                    }
+                    break;
+
+                default:
+                    source = source.OrderBy(s => s.SupplierName);
+                    break;
+            }
+
+            if (!String.IsNullOrEmpty(filter))
+            {
+                source = source.Where(s => s.SupplierName.ToLower().Contains(filter.ToLower()));
+            }
+
+            return await PagedList<SupplierDebtDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
+        }
+
+        public async Task<ActionResult<OrderDebtBySupplierDto>> GetOrderDebtsBySupplierAsync(int supplierId)
+        {
+            var orderDebts = await _context.Set<OrderBuy>()
                 .AsNoTracking()
                 .Include(o => o.ProductOrders)
                 .Include(o => o.Payments)
                 .Include(o => o.Person)
-                .ProjectToType<OrderBuyDebt>()
-                .Where(o => o.Debt > 0);
+                .ProjectToType<OrderBuyDebtDto>()
+                .Where(o => o.Debt > 0 && o.SupplierId == supplierId)
+                .ToListAsync();
 
-            var suppliersDebt = ordersDebt
-                .GroupBy(o =>  o.SupplierName ,
-                    o => o.Debt,
-                    (key, element) => new SupplierDebtDto
-                    {
-                        SupplierName = key,
-                        Debt = element.Sum()
-                    });
 
-            return await PagedList<SupplierDebtDto>.CreateAsync(suppliersDebt, pagingParams.PageIndex, pagingParams.PageSize);
+            var rs = new OrderDebtBySupplierDto
+            {
+                SupplierId = orderDebts.Select(o => o.SupplierId).FirstOrDefault(),
+                SupplierName = orderDebts.Select(o => o.SupplierName).FirstOrDefault(),
+                Orders = orderDebts.Select(o => new _OrderDebtBySupplierDto
+                {
+                    OrderId = o.OrderId,
+                    OrderNumber = o.OrderNumber,
+                    DateOfIssue = o.DateOfIssue,
+                    TimeForPayment = o.TimeForPayment,
+                    Debt = o.Debt
+                })
+            };
+
+            return rs;
         }
 
         #endregion

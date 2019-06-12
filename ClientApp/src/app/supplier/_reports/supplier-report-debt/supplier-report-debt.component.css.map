@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAMM,IANF,GAGD,OAAO,AAAA,cAAc,GACnB,KAAK,AAAA,cAAc,CAElB,EAAE,CAAC;EACD,KAAK,EAAE,SAAS;CACjB;;AARP,AAYI,IAZA,GAGD,OAAO,AAAA,cAAc,CASpB,qBAAqB,CAAC;EACpB,UAAU,EAAE,KAAK;CAClB",
+    "sources": [
+        "supplier-report-debt.component.scss"
+    ],
+    "names": [],
+    "file": "supplier-report-debt.component.css"
+}

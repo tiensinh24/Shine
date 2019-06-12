@@ -86,6 +86,8 @@ namespace Shine.Data.Infrastructures.Interfaces
             PagingParams pagingParams, SortParams sortParams, string filter
         );
 
+        Task<ActionResult<OrderDebtBySupplierDto>> GetOrderDebtsBySupplierAsync(int supplierId);
+
         #endregion
 
 

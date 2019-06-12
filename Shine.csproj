@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="*"/>
     <PackageReference Include="System.Linq.Dynamic.Core" Version="*"/>
     <PackageReference Include="CloudinaryDotNet" Version="1.7.0"/>
+    <PackageReference Include="EFSqlTranslator.Translation" Version="2.1.0"/>
+    <PackageReference Include="EFSqlTranslator.EFModels" Version="2.0.0"/>
   </ItemGroup>
   <ItemGroup>
     <Content Remove="$(SpaRoot)**"/>

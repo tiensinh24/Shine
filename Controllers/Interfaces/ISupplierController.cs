@@ -71,6 +71,8 @@ namespace Shine.Controllers.Interfaces {
     Task<ActionResult<Paged<SupplierDebtDto>>> GetPagedSupplierDebt(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
+    Task<ActionResult<OrderDebtBySupplierDto>> GetOrderDebtsBySupplier(int supplierId);
+
 #endregion
 
     }
