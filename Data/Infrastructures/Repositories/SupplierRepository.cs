@@ -442,24 +442,46 @@ namespace Shine.Data.Infrastructures.Repositories
         public async Task<PagedList<SupplierDebtDto>> GetPagedSupplierDebtAsync(
             PagingParams pagingParams, SortParams sortParams, string filter)
         {
-            var source = _context.Set<OrderBuy>()
+            // TODO: work but cause n+1 & local
+            // var source = _context.Set<OrderBuy>()
+            //     .AsNoTracking()
+            //     .ProjectToType<OrderBuyDebtDto>()
+            //     .Where(o => o.Debt > 0)
+            //     .GroupBy(o => new
+            //     {
+            //         o.SupplierId,
+            //         o.SupplierName,
+            //         o.MainPhotoUrl
+            //     })
+            //     .Select(group => new SupplierDebtDto
+            //     {
+            //         SupplierId = group.Key.SupplierId,
+            //         SupplierName = group.Key.SupplierName,
+            //         MainPhotoUrl = group.Key.MainPhotoUrl,
+            //         Debt = group.Sum(g => g.Debt)
+            //     });
+
+            var source = _context.Set<Supplier>()
                 .AsNoTracking()
-                .ProjectToType<OrderBuyDebtDto>()
-                .Where(o => o.Debt > 0)
-                .GroupBy(o => new
+                .Include(s => s.Orders)
+                .ThenInclude(o => o.Payments)
+                .Include(s => s.Orders)
+                .ThenInclude(o => o.ProductOrders)
+                .GroupBy(s => new
                 {
-                    o.SupplierId,
-                    o.SupplierName,
-                    o.MainPhotoUrl
-                })
-                .Select(group => new SupplierDebtDto
-                {
-                    SupplierId = group.Key.SupplierId,
-                    SupplierName = group.Key.SupplierName,
-                    MainPhotoUrl = group.Key.MainPhotoUrl,
-                    Debt = group.Sum(g => g.Debt)
-                });
-            
+                    s.PersonId,
+                    SupplierName = s.FirstName + " " + s.LastName
+                },
+                    (key, element) => new SupplierDebtDto {
+                        SupplierId = key.PersonId,
+                        SupplierName = key.SupplierName,
+                        Debt = element.Count()
+                    });
+
+
+
+
+
             switch (sortParams.SortOrder)
             {
                 case "asc":
