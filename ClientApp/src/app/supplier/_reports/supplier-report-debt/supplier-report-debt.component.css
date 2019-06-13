@@ -2,7 +2,45 @@ main > section#supplier-debt > table.supplier-debt th {
   color: royalblue;
 }
 
-main > section#supplier-debt .mat-paginator-sticky {
+main > section#supplier-debt > table.supplier-debt td.avatar > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 15px;
+}
+
+main > section#supplier-debt > table.supplier-debt tr.expand-detail-row {
+  height: 0;
+}
+
+main > section#supplier-debt > table.supplier-debt tr.expand-element-row:hover {
+  cursor: pointer;
+  background: aliceblue;
+}
+
+main > section#supplier-debt > table.supplier-debt .expand-element-row td {
+  border-bottom-width: 0;
+}
+
+main > section#supplier-debt > table.supplier-debt .expand-element-detail {
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+main > section#supplier-debt > table.supplier-debt .expand-element-detail table {
+  width: 100%;
+  min-height: 60px;
+}
+
+main > section#supplier-debt > table.supplier-debt .expand-element-detail table th,
+main > section#supplier-debt > table.supplier-debt .expand-element-detail table td {
+  text-align: right;
+  height: 2rem;
+  padding: 0 1rem;
+}
+
+main > section#supplier-debt > table.supplier-debt .expand-element-detail .mat-paginator-sticky {
   background: white;
 }
 /*# sourceMappingURL=supplier-report-debt.component.css.map */

@@ -58,8 +58,6 @@ mat-card#main > mat-card-content > table .expand-element-detail {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-image: -webkit-gradient(linear, left bottom, left top, from(mediumslateblue), to(aliceblue));
-  background-image: linear-gradient(to top, mediumslateblue, aliceblue);
 }
 
 mat-card#main > mat-card-content > table .expand-element-detail table {

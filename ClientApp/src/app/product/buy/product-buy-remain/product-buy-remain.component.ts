@@ -2,15 +2,11 @@ import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
 
 import { ProductRemain } from '../../_interfaces/product-remain';
 import { ProductStorageRemain } from '../../_interfaces/product-storage-remain';
@@ -54,12 +50,7 @@ export class ProductBuyRemainComponent implements OnInit, AfterViewInit, OnDestr
   };
 
   constructor(
-    private productBuyService: ProductBuyService,
-    private router: Router,
-    private dialog: MatDialog,
-    private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar
-  ) {}
+    private productBuyService: ProductBuyService  ) {}
 
   ngOnInit() {
     this.dataSource = new ProductBuyRemainDataSource(this.productBuyService);

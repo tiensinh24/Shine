@@ -1,7 +1,7 @@
 export interface OrderDebtBySupplier {
     supplierId: number;
     supplierName: string;
-    Orders: OrderDebt[];
+    orders: OrderDebt[];
 }
 
 interface OrderDebt {

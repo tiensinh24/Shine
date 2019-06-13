@@ -442,41 +442,22 @@ namespace Shine.Data.Infrastructures.Repositories
         public async Task<PagedList<SupplierDebtDto>> GetPagedSupplierDebtAsync(
             PagingParams pagingParams, SortParams sortParams, string filter)
         {
-            // TODO: work but cause n+1 & local
-            // var source = _context.Set<OrderBuy>()
-            //     .AsNoTracking()
-            //     .ProjectToType<OrderBuyDebtDto>()
-            //     .Where(o => o.Debt > 0)
-            //     .GroupBy(o => new
-            //     {
-            //         o.SupplierId,
-            //         o.SupplierName,
-            //         o.MainPhotoUrl
-            //     })
-            //     .Select(group => new SupplierDebtDto
-            //     {
-            //         SupplierId = group.Key.SupplierId,
-            //         SupplierName = group.Key.SupplierName,
-            //         MainPhotoUrl = group.Key.MainPhotoUrl,
-            //         Debt = group.Sum(g => g.Debt)
-            //     });
-
             var source = _context.Set<Supplier>()
-                .AsNoTracking()
-                .Include(s => s.Orders)
-                .ThenInclude(o => o.Payments)
-                .Include(s => s.Orders)
-                .ThenInclude(o => o.ProductOrders)
+                .AsNoTracking()                
                 .GroupBy(s => new
                 {
                     s.PersonId,
-                    SupplierName = s.FirstName + " " + s.LastName
+                    SupplierName = s.FirstName + " " + s.LastName,
+                    MainPhotoUrl = s.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
                 },
                     (key, element) => new SupplierDebtDto {
                         SupplierId = key.PersonId,
                         SupplierName = key.SupplierName,
-                        Debt = element.Count()
-                    });
+                        MainPhotoUrl = key.MainPhotoUrl,
+                        Debt = element.Sum(e => e.Orders.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+                            - (o.Payments.Count() == 0 ? 0 : o.Payments.Sum(p => p.Amount))))
+                    })
+                .Where(o => o.Debt > 0);
 
 
 

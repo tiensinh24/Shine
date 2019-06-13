@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Subscription, merge, fromEvent } from 'rxjs';
+import { Subscription, merge, fromEvent, Observable } from 'rxjs';
 import { SupplierDebt } from '../../_interfaces/reports/supplier-debt';
 import { OrderDebtBySupplier } from '../../_interfaces/reports/order-debt-by-supplier';
 import { SupplierService } from '../../_services/supplier.service';
@@ -9,26 +9,38 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-supplier-report-debt',
   templateUrl: './supplier-report-debt.component.html',
-  styleUrls: ['./supplier-report-debt.component.scss']
+  styleUrls: ['./supplier-report-debt.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))      
+    ])
+  ]
 })
 export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDestroy {
   // Subscription
   subscription: Subscription;
 
+  expandedElement: SupplierDebt | null;
+
   // mat-table
   dataSource: SupplierDebtDataSource;
-  displayedColumns = ['supplierName', 'debt'];
+  displayedColumns = ['photo', 'supplierName', 'debt', 'actions'];
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('input', { static: false }) input: ElementRef;
 
-  supplierDebts: SupplierDebt[];
   orderDebtsBySupplier: OrderDebtBySupplier;
+
+  // boolean
+  showOrders = false;
 
   // Paging
   pagingParams = <PagingParams>{
@@ -74,7 +86,7 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnDestroy() {
-    
+
   }
 
   initialize() {
@@ -93,6 +105,19 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
     const filter = this.input.nativeElement.value;
 
     this.dataSource.loadData(this.pagingParams, this.sortParams, filter);
+  }
+
+  getOrderDebtsBySupplier(supplierId: number) {
+    this.subscription = this.supplierService.getOrderDebtsBySupplier(supplierId)
+      .subscribe((order: OrderDebtBySupplier) => {
+        this.orderDebtsBySupplier = order
+      })
+  }
+
+  onExpandSupplier(supplierId: number) {
+    if (supplierId > 0) {
+      this.getOrderDebtsBySupplier(supplierId);
+    }
   }
 
 }

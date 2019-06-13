@@ -1,7 +1,15 @@
 <main>
-  <section id="supplier-debt" fxLayout="column">
-    <table class="supplier-debt" mat-table [dataSource]="dataSource" matSort>
+  <section id="supplier-debt" *ngIf="!showOrders" fxLayout="column">
+    <table class="supplier-debt" mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
 
+      <!-- Photo Column -->
+      <ng-container matColumnDef="photo">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row" class="avatar">
+          <img *ngIf="!row.photoUrl" src="assets/default.jpg" />
+          <img *ngIf="row.photoUrl" src="{{ row.mainPhotoUrl }}" />
+        </td>
+      </ng-container>
       <!-- SupplierName Column -->
       <ng-container matColumnDef="supplierName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier </th>
@@ -12,10 +20,43 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Debt </th>
         <td mat-cell *matCellDef="let row">{{ row.debt | number }}</td>
       </ng-container>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary">
+            <mat-icon *ngIf="expandedElement !== row" matTooltip="Expand" aria-label="Expand">expand_more</mat-icon>
+            <mat-icon *ngIf="expandedElement === row" matTooltip="Collapse" aria-label="Expand">expand_less</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div *ngIf="orderDebtsBySupplier?.orders" class="expand-element-detail"
+            [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
+            fxLayoutAlign="end center">
+            <div style="width: 100px; height: 150px;"></div>
+            <table>
+              <tr *ngFor="let order of orderDebtsBySupplier?.orders">
+                <td>{{ order.orderId }}</td>
+                <td>{{ order.debt }}</td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </ng-container>
+
 
       <!-- Header & footer -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="expand-element-row"
+        [ngClass]="{ expand: expandedElement === row }" [class.expanded-row]="expandedElement === row"
+        (click)="expandedElement = expandedElement === row ? null : row"
+        (click)="onExpandSupplier(expandedElement?.supplierId)"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expand-detail-row"></tr>
     </table>
 
     <!-- Paginator & filter -->

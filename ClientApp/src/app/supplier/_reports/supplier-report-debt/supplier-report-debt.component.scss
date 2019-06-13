@@ -7,11 +7,50 @@ main {
       th {
         color: royalblue;
       }
-    }
+
+      td {
+
+        &.avatar>img {
+          width: 40px;
+          height: 40px;
+          border-radius: 15px;
+        }
+      }
+
+      tr.expand-detail-row {
+        height: 0;
+      }
+
+      tr.expand-element-row:hover {
+        cursor: pointer;
+        background: aliceblue;
+      }
+
+      .expand-element-row td {
+        border-bottom-width: 0;
+      }
+
+      .expand-element-detail {
+        overflow: hidden;
+        display: flex;
+
+        table {
+          width: 100%;
+          min-height: 60px;
+
+          th,
+          td {
+            text-align: right;
+            height: 2rem;
+            padding: 0 1rem;
+          }
+        }
 
 
-    .mat-paginator-sticky {
-      background: white;
+        .mat-paginator-sticky {
+          background: white;
+        }
+      }
     }
   }
 }
