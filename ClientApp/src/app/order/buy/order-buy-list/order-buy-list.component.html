@@ -12,14 +12,14 @@
     <h1>Orders</h1>
     <div fxFlex></div>
     <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="From...">        
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput [matDatepicker]="fromDate" (click)="fromDate.open()" placeholder="From...">        
+        <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+        <mat-datepicker #fromDate></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="F...">        
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput [matDatepicker]="toDate" (click)="toDate.open()" placeholder="To...">        
+        <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+        <mat-datepicker #toDate></mat-datepicker>
     </mat-form-field>
     <button mat-icon-button matTooltip="filter"><mat-icon>filter_list</mat-icon></button>
     <button mat-icon-button matTooltip="card"><mat-icon>layers</mat-icon></button>
