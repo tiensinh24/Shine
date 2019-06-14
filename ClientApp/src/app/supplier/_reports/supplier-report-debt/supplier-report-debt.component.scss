@@ -1,10 +1,24 @@
+.mat-paginator-sticky {
+  box-shadow: 0 2px 8px grey;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+
+  > h1 {
+    padding: 1rem 0 0 1rem;
+    color: royalblue;
+  }
+}
+
 main {
+  padding: 1rem;
 
+  >section#supplier-debt {    
 
-  >section#supplier-debt {
     >table.supplier-debt {
 
-      th {
+      th[mat-header-cell] { 
         color: royalblue;
       }
 
@@ -34,21 +48,18 @@ main {
         overflow: hidden;
         display: flex;
 
-        table {
+        table.order-expanded {
           width: 100%;
-          min-height: 60px;
 
-          th,
+          thead {
+            color: royalblue;
+          }
+
           td {
             text-align: right;
-            height: 2rem;
+            height: 1.6rem;
             padding: 0 1rem;
           }
-        }
-
-
-        .mat-paginator-sticky {
-          background: white;
         }
       }
     }

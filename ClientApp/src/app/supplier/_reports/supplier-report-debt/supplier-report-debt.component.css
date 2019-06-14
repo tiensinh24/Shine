@@ -1,4 +1,23 @@
-main > section#supplier-debt > table.supplier-debt th {
+.mat-paginator-sticky {
+  -webkit-box-shadow: 0 2px 8px grey;
+          box-shadow: 0 2px 8px grey;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+}
+
+.mat-paginator-sticky > h1 {
+  padding: 1rem 0 0 1rem;
+  color: royalblue;
+}
+
+main {
+  padding: 1rem;
+}
+
+main > section#supplier-debt > table.supplier-debt th[mat-header-cell] {
   color: royalblue;
 }
 
@@ -28,19 +47,17 @@ main > section#supplier-debt > table.supplier-debt .expand-element-detail {
   display: flex;
 }
 
-main > section#supplier-debt > table.supplier-debt .expand-element-detail table {
+main > section#supplier-debt > table.supplier-debt .expand-element-detail table.order-expanded {
   width: 100%;
-  min-height: 60px;
 }
 
-main > section#supplier-debt > table.supplier-debt .expand-element-detail table th,
-main > section#supplier-debt > table.supplier-debt .expand-element-detail table td {
+main > section#supplier-debt > table.supplier-debt .expand-element-detail table.order-expanded thead {
+  color: royalblue;
+}
+
+main > section#supplier-debt > table.supplier-debt .expand-element-detail table.order-expanded td {
   text-align: right;
-  height: 2rem;
+  height: 1.6rem;
   padding: 0 1rem;
-}
-
-main > section#supplier-debt > table.supplier-debt .expand-element-detail .mat-paginator-sticky {
-  background: white;
 }
 /*# sourceMappingURL=supplier-report-debt.component.css.map */

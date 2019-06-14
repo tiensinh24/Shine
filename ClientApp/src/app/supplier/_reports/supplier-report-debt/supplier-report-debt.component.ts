@@ -40,7 +40,6 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
   orderDebtsBySupplier: OrderDebtBySupplier;
 
   // boolean
-  showOrders = false;
 
   // Paging
   pagingParams = <PagingParams>{
