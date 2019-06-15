@@ -14,6 +14,7 @@ using Shine.Controllers.Interfaces;
 using Shine.Data;
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
@@ -55,10 +56,10 @@ namespace Shine.Controllers {
 
         [HttpGet("paged")]
         public async Task<ActionResult<Paged<OrderBuyListDto>>> GetPagedOrders(
-            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
-            var query = await _repository.GetPagedOrdersAsync(pagingParams, sortParams, filter, null);
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, [FromQuery] OrderBuyQuery query, string filter) {
+            var orders = await _repository.GetPagedOrdersAsync(pagingParams, sortParams, query, filter);
 
-            return new Paged<OrderBuyListDto>(query);
+            return new Paged<OrderBuyListDto>(orders);
         }
 
         [HttpGet("{orderId}/detail")]

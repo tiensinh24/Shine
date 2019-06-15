@@ -12,80 +12,94 @@ import { OrderBuyProducts } from '../_interfaces/order-buy-products';
 import { OrderBuyWithNavigations } from '../_interfaces/order-buy-with-details-to-add-dto';
 import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
+import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class OrderBuyService {
-  baseUrl = environment.URL;
+	baseUrl = environment.URL;
 
-  constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
-  getOrders(): Observable<OrderBuyList[]> {
-    return this.http.get<OrderBuyList[]>(`${this.baseUrl}api/orderBuy/`);
-  }
+	getOrders(): Observable<OrderBuyList[]> {
+		return this.http.get<OrderBuyList[]>(`${this.baseUrl}api/orderBuy/`);
+	}
 
-  getOrderDetail(orderId: number): Observable<OrderBuyDetail> {
-    return this.http.get<OrderBuyDetail>(`${this.baseUrl}api/orderBuy/${orderId}/detail`);
-  }
+	getOrderDetail(orderId: number): Observable<OrderBuyDetail> {
+		return this.http.get<OrderBuyDetail>(`${this.baseUrl}api/orderBuy/${orderId}/detail`);
+	}
 
-  getPagedOrders(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedOrderBuy> {
-    let queryParams = new HttpParams()
-      .set('pageIndex', `${pagingParams.pageIndex}`)
+	getPagedOrders(
+		pagingParams: PagingParams,
+		sortParams?: SortParams,
+		query?: OrderBuyQuery,
+		filter = ''
+	): Observable<PagedOrderBuy> {
+		let queryParams = new HttpParams()
+			.set('pageIndex', `${pagingParams.pageIndex}`)
       .set('pageSize', `${pagingParams.pageSize}`)
-      .set('filter', `${filter}`);
+      .set('query', JSON.stringify(query))
+			// .set('supplierId', `${query.supplierId}`)
+      // .set('employeeId', `${query.employeeId}`)
+			// .set('fromDate', `${query.fromDate}`)
+			// .set('toDate', `${query.toDate}`)
+			.set('filter', `${filter}`);
 
-    if (sortParams !== undefined) {
-      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
-      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
-    }
+		if (sortParams !== undefined) {
+			queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+			queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+		}
 
-    return this.http.get<PagedOrderBuy>(`${this.baseUrl}api/orderBuy/paged`, { params: queryParams });
-  }
+		return this.http.get<PagedOrderBuy>(`${this.baseUrl}api/orderBuy/paged`, { params: queryParams });
+	}
 
-  addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {
-    return this.http.post<HttpResponse<OrderBuyWithNavigations>>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
-  }
+	addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {
+		return this.http.post<HttpResponse<OrderBuyWithNavigations>>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
+	}
 
-  updateOrder(orderbuy: OrderBuy): Observable<OrderBuyList> {
-    return this.http.put<OrderBuyList>(`${this.baseUrl}api/orderBuy/`, orderbuy);
-  }
+	updateOrder(orderbuy: OrderBuy): Observable<OrderBuyList> {
+		return this.http.put<OrderBuyList>(`${this.baseUrl}api/orderBuy/`, orderbuy);
+	}
 
-  deleteOrder(orderId: number): Observable<number> {
-    return this.http.delete<number>(this.baseUrl + 'api/orderBuy/' + orderId);
-  }
+	deleteOrder(orderId: number): Observable<number> {
+		return this.http.delete<number>(this.baseUrl + 'api/orderBuy/' + orderId);
+	}
 
-  deleteOrders(idList: string[]): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/delete-all`, { headers: { ids: idList } });
-  }
+	deleteOrders(idList: string[]): Observable<boolean> {
+		return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/delete-all`, { headers: { ids: idList } });
+	}
 
-  // *LineItems
+	// *LineItems
 
-  getProductsNotAddedToOrderBySupplierSelect(orderId: number, supplierId: number): Observable<ProductSelect[]> {
-    return this.http.get<ProductSelect[]>(
-      `${this.baseUrl}api/orderBuy/${orderId}/products-not-added-by-supplier-${supplierId}/select`
-    );
-  }
+	getProductsNotAddedToOrderBySupplierSelect(orderId: number, supplierId: number): Observable<ProductSelect[]> {
+		return this.http.get<ProductSelect[]>(
+			`${this.baseUrl}api/orderBuy/${orderId}/products-not-added-by-supplier-${supplierId}/select`
+		);
+	}
 
-  addOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.post<OrderBuyProducts>(
-      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/add-item/`,
-      productOrder
-    );
-  }
+	addOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
+		return this.http.post<OrderBuyProducts>(
+			`${this.baseUrl}api/orderBuy/${productOrder.orderId}/add-item/`,
+			productOrder
+		);
+	}
 
-  addOrderProducts(productsOrder: ProductOrder[]): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}api/orderBuy/${productsOrder[0].orderId}/add-items/`, productsOrder);
-  }
+	addOrderProducts(productsOrder: ProductOrder[]): Observable<void> {
+		return this.http.post<void>(
+			`${this.baseUrl}api/orderBuy/${productsOrder[0].orderId}/add-items/`,
+			productsOrder
+		);
+	}
 
-  updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.put<OrderBuyProducts>(
-      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`,
-      productOrder
-    );
-  }
+	updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
+		return this.http.put<OrderBuyProducts>(
+			`${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`,
+			productOrder
+		);
+	}
 
-  deleteOrderProduct(orderId: number, productId: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/${orderId}/delete/${productId}`);
-  }
+	deleteOrderProduct(orderId: number, productId: number): Observable<boolean> {
+		return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/${orderId}/delete/${productId}`);
+	}
 }

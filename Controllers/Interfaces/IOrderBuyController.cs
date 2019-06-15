@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Models;
 
 namespace Shine.Controllers.Interfaces {
@@ -16,7 +17,7 @@ namespace Shine.Controllers.Interfaces {
         Task<ActionResult<IEnumerable<OrderBuyListDto>>> GetOrders();
 
         Task<ActionResult<Paged<OrderBuyListDto>>> GetPagedOrders(
-            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, [FromQuery] OrderBuyQuery query, string filter);
 
         Task<ActionResult<OrderBuyDetailDto>> GetOrderDetail(int orderId);
 #endregion

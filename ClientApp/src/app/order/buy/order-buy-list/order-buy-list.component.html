@@ -11,16 +11,19 @@
   <div class="title" fxLayout="row">
     <h1>Orders</h1>
     <div fxFlex></div>
-    <mat-form-field>
-        <input matInput [matDatepicker]="fromDate" (click)="fromDate.open()" placeholder="From...">        
+    <form [formGroup]="filterForm">
+      <mat-form-field>  
+        <input matInput formControlName="fromDate" [matDatepicker]="fromDate" (click)="fromDate.open()" placeholder="From...">        
         <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
-        <mat-datepicker #fromDate></mat-datepicker>
+        <mat-datepicker locale="en-GB" #fromDate></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-        <input matInput [matDatepicker]="toDate" (click)="toDate.open()" placeholder="To...">        
+        <input matInput formControlName="toDate" [matDatepicker]="toDate" (click)="toDate.open()" placeholder="To...">        
         <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
-        <mat-datepicker #toDate></mat-datepicker>
+        <mat-datepicker locale="en-GB" #toDate></mat-datepicker>
     </mat-form-field>
+    <button mat-button (click)="loadOrdersPage()">filter</button>
+    </form>
     <button mat-icon-button matTooltip="filter"><mat-icon>filter_list</mat-icon></button>
     <button mat-icon-button matTooltip="card"><mat-icon>layers</mat-icon></button>
 
@@ -159,3 +162,6 @@
     </div>
   </mat-card>
 </main>
+
+{{this.filterForm.value.fromDate}}
+{{this.filterForm.value.toDate}}

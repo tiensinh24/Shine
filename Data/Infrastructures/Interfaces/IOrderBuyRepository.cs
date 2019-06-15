@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Models;
@@ -20,8 +21,8 @@ namespace Shine.Data.Infrastructures.Interfaces {
             Expression<Func<OrderBuyListDto, object>> sortColumn, string sortOrder);
 
         Task<PagedList<OrderBuyListDto>> GetPagedOrdersAsync(
-            PagingParams pagingParams, SortParams sortParams, string filter,
-            Expression<Func<OrderBuyListDto, bool>> condition);
+            PagingParams pagingParams, SortParams sortParams, OrderBuyQuery query, string filter
+            );
 
         Task<OrderBuyDto> GetOrderAsync(int orderId);
 

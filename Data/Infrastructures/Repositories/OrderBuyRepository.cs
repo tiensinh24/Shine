@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
+using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
@@ -54,14 +55,10 @@ namespace Shine.Data.Infrastructures.Repositories {
         }
 
         public async Task<PagedList<OrderBuyListDto>> GetPagedOrdersAsync(
-            PagingParams pagingParams, SortParams sortParams, string filter,
-            Expression<Func<OrderBuyListDto, bool>> condition) {
+            PagingParams pagingParams, SortParams sortParams,OrderBuyQuery query, string filter
+            ) {
             var source = _context.Set<OrderBuy>()
-                .AsNoTracking()
-                .Include(o => o.Person)
-                .Include(o => o.Employee)
-                .Include(o => o.ProductOrders)
-                .Include(o => o.Costs)
+                .AsNoTracking()                
                 .ProjectToType<OrderBuyListDto>();
 
             switch (sortParams.SortOrder) {
@@ -116,12 +113,20 @@ namespace Shine.Data.Infrastructures.Repositories {
                     break;
             }
 
-            if (!string.IsNullOrEmpty(filter)) {
-                source = source.Where(p => (p.OrderNumber + p.DateOfIssue + p.SupplierName).ToLower().Contains(filter.ToLower()));
+            if (query.SupplierId > 0) {
+                source = source.Where(o => o.PersonId == query.SupplierId);
             }
 
-            if (condition != null) {
-                source = source.Where(condition);
+            if (query.EmployeeId > 0) {
+                source = source.Where(o => o.EmployeeId == query.EmployeeId);
+            }
+
+            if (query.FromDate < query.ToDate) {
+                source = source.Where(o => o.DateOfIssue >= query.FromDate && o.DateOfIssue <= query.ToDate);
+            }
+            
+            if (!string.IsNullOrEmpty(filter)) {
+                source = source.Where(p => (p.OrderNumber + p.DateOfIssue + p.SupplierName).ToLower().Contains(filter.ToLower()));
             }
 
             return await PagedList<OrderBuyListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
