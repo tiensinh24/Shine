@@ -14,6 +14,13 @@ import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
 import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
 
+function isEmpty(obj) {
+	for (var x in obj) {
+		return false;
+	}
+	return true;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -33,25 +40,27 @@ export class OrderBuyService {
 	getPagedOrders(
 		pagingParams: PagingParams,
 		sortParams?: SortParams,
-		query?: OrderBuyQuery,
+		queryParams?: OrderBuyQuery,
 		filter = ''
 	): Observable<PagedOrderBuy> {
-		let queryParams = new HttpParams()
+		let httpParams = new HttpParams()
 			.set('pageIndex', `${pagingParams.pageIndex}`)
-      .set('pageSize', `${pagingParams.pageSize}`)
-      .set('query', JSON.stringify(query))
-			// .set('supplierId', `${query.supplierId}`)
-      // .set('employeeId', `${query.employeeId}`)
-			// .set('fromDate', `${query.fromDate}`)
-			// .set('toDate', `${query.toDate}`)
+			.set('pageSize', `${pagingParams.pageSize}`)
 			.set('filter', `${filter}`);
 
-		if (sortParams !== undefined) {
-			queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
-			queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+		if (!isEmpty(sortParams))	{
+      httpParams = httpParams.append('sortColumn', `${sortParams.sortColumn}`);
+			httpParams = httpParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }		
+
+		if (!isEmpty(queryParams)) {
+			httpParams = httpParams.append('supplierId', `${queryParams.supplierId}`);
+			httpParams = httpParams.append('employeeId', `${queryParams.employeeId}`);
+			httpParams = httpParams.append('fromDate', `${queryParams.fromDate}`);
+			httpParams = httpParams.append('toDate', `${queryParams.toDate}`);
 		}
 
-		return this.http.get<PagedOrderBuy>(`${this.baseUrl}api/orderBuy/paged`, { params: queryParams });
+		return this.http.get<PagedOrderBuy>(`${this.baseUrl}api/orderBuy/paged`, { params: httpParams });
 	}
 
 	addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {

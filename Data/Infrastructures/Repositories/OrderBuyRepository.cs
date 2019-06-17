@@ -55,7 +55,7 @@ namespace Shine.Data.Infrastructures.Repositories {
         }
 
         public async Task<PagedList<OrderBuyListDto>> GetPagedOrdersAsync(
-            PagingParams pagingParams, SortParams sortParams,OrderBuyQuery query, string filter
+            PagingParams pagingParams, SortParams sortParams,OrderBuyQuery queryParams, string filter
             ) {
             var source = _context.Set<OrderBuy>()
                 .AsNoTracking()                
@@ -113,16 +113,16 @@ namespace Shine.Data.Infrastructures.Repositories {
                     break;
             }
 
-            if (query.SupplierId > 0) {
-                source = source.Where(o => o.PersonId == query.SupplierId);
+            if (queryParams.SupplierId > 0) {
+                source = source.Where(o => o.PersonId == queryParams.SupplierId);
             }
 
-            if (query.EmployeeId > 0) {
-                source = source.Where(o => o.EmployeeId == query.EmployeeId);
+            if (queryParams.EmployeeId > 0) {
+                source = source.Where(o => o.EmployeeId == queryParams.EmployeeId);
             }
 
-            if (query.FromDate < query.ToDate) {
-                source = source.Where(o => o.DateOfIssue >= query.FromDate && o.DateOfIssue <= query.ToDate);
+            if (queryParams.FromDate < queryParams.ToDate) {
+                source = source.Where(o => o.DateOfIssue >= queryParams.FromDate && o.DateOfIssue <= queryParams.ToDate);
             }
             
             if (!string.IsNullOrEmpty(filter)) {

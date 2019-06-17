@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StarRatingModule } from 'angular-star-rating';
 import { CoreModule } from './_shared/_core/core.module';
 import { ConfirmDialogSharedModule } from './_shared/components/confirm-dialog/confirm-dialog-shared.module';
 import { MaterialSharedModule } from './_shared/material-shared.module';
@@ -16,9 +15,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SidenavBuyComponent } from './nav-menu/sidenav-buy/sidenav-buy.component';
 import { SidenavSellComponent } from './nav-menu/sidenav-sell/sidenav-sell.component';
 
-
 @NgModule({
-  declarations: [AppComponent, NavMenuComponent, HomeComponent, PageNotFoundComponent, LogInComponent, SidenavBuyComponent, SidenavSellComponent],
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    HomeComponent,
+    PageNotFoundComponent,
+    LogInComponent,
+    SidenavBuyComponent,
+    SidenavSellComponent
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
