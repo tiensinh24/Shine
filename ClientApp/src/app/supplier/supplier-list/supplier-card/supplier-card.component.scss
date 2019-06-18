@@ -1,4 +1,4 @@
-.mat-paginator-sticky {
+.title.mat-paginator-sticky {
   box-shadow: 0 2px 8px grey;
   position: sticky;
   top: 0;
@@ -9,11 +9,14 @@
     padding: 1rem 0 0 1rem;
     color: royalblue;
   }
+
+  .clear-filter-icon:hover {
+    cursor: pointer;
+  }
+
 }
 
 main {
-  padding: 1rem;
-
   > .content {
     mat-card.card {
       margin: 1rem;
@@ -35,9 +38,10 @@ main {
 
       &:hover {
         cursor: pointer;
-        transform: translateY(-1.5rem);
+        transform: translate(1rem, -1rem);
         transition: 250ms ease-in;
         background: honeydew;
+        box-shadow: 1px 1px 10px 1px gray;
       }
     }
   }

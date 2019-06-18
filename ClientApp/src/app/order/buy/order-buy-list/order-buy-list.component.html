@@ -1,18 +1,25 @@
-<main class="mat-typography">
-  <!-- Loading progress bar -->
-  <mat-progress-bar
-    *ngIf="dataSource.isLoading | async"
-    color="accent"
-    aria-label="Progress bar"
-    mode="buffer"
-  ></mat-progress-bar>
+<!-- Loading progress bar -->
+<mat-progress-bar
+  *ngIf="dataSource.isLoading | async"
+  color="accent"
+  aria-label="Progress bar"
+  mode="buffer"
+></mat-progress-bar>
 
+<main class="mat-typography main" @flyInVez>
   <!-- title -->
   <div class="title" fxLayout="row" fxLayoutAlign="start center">
     <h1>Orders</h1>
     <div fxFlex></div>
     <!-- Filter form -->
-    <form [formGroup]="filterForm" [@openCloseFilter]="showFilter ? 'open' : 'closed'" fxLayout="row" fxLayoutAlign="start center">      
+    <form
+      class="filter-form"
+      @flyInOutHoz
+      [formGroup]="filterForm"
+      *ngIf="showFilter"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+    >
       <mat-form-field>
         <input
           matInput
@@ -69,9 +76,13 @@
     </form>
     <div fxFlex></div>
     <div>
-      <button mat-icon-button matTooltip="Advanced Filter" (click)="toggleFilter()">
+      <button
+        mat-icon-button
+        matTooltip="Advanced Filter"
+        (click)="toggleFilter()"
+      >
         <mat-icon>filter_list</mat-icon>
-      </button> 
+      </button>
     </div>
 
     <!-- Dynamic columns menu -->
