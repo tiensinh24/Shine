@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACP,UAAU,EAAE,kBAAqB;EACjC,KAAK,EAAE,SAAS;CACnB",
+    "sources": [
+        "order-buy-report.component.scss"
+    ],
+    "names": [],
+    "file": "order-buy-report.component.css"
+}

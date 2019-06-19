@@ -43,12 +43,12 @@ mat-sidenav-container.side-nav > mat-sidenav {
   min-width: 250px;
 }
 
-mat-sidenav-container.side-nav > mat-sidenav mat-card.avatar {
+mat-sidenav-container.side-nav > mat-sidenav div.avatar {
   background-image: url("../../assets/images/sidenav-avatar-bg.jpg");
   background-size: cover;
 }
 
-mat-sidenav-container.side-nav > mat-sidenav mat-card.avatar .user-avatar {
+mat-sidenav-container.side-nav > mat-sidenav div.avatar .user-avatar {
   text-align: center;
   width: 100px;
   height: 100px;
@@ -58,7 +58,7 @@ mat-sidenav-container.side-nav > mat-sidenav mat-card.avatar .user-avatar {
   background-size: cover;
 }
 
-mat-sidenav-container.side-nav > mat-sidenav mat-card.avatar h3 {
+mat-sidenav-container.side-nav > mat-sidenav div.avatar h3 {
   color: mediumslateblue;
 }
 

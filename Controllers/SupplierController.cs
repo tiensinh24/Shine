@@ -238,6 +238,14 @@ namespace Shine.Controllers
             return orderDebts;
         }
 
+        [HttpGet("report/pivot-month")]
+        public IActionResult GetOrderBySupplierPivotMonth([FromQuery] SortParams sortParams)
+        {
+            var query = _repository.GetOrderBySupplierPivotMonth(sortParams);
+
+            return Ok(query);
+        }
+
 
         #endregion
 

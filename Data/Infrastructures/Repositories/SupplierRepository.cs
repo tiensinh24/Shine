@@ -439,14 +439,15 @@ namespace Shine.Data.Infrastructures.Repositories
             PagingParams pagingParams, SortParams sortParams, string filter)
         {
             var source = _context.Set<Supplier>()
-                .AsNoTracking()                
+                .AsNoTracking()
                 .GroupBy(s => new
                 {
                     s.PersonId,
                     SupplierName = s.FirstName + " " + s.LastName,
                     MainPhotoUrl = s.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
                 },
-                    (key, element) => new SupplierDebtDto {
+                    (key, element) => new SupplierDebtDto
+                    {
                         SupplierId = key.PersonId,
                         SupplierName = key.SupplierName,
                         MainPhotoUrl = key.MainPhotoUrl,
@@ -525,6 +526,59 @@ namespace Shine.Data.Infrastructures.Repositories
             };
 
             return rs;
+        }
+
+        public object GetOrderBySupplierPivotMonth(SortParams sortParams)
+        {
+            var source = _context.Set<Supplier>()
+                .AsNoTracking()
+                .GroupBy(s => new
+                {
+                    s.PersonId,
+                    SupplierName = s.FirstName + " " + s.LastName,
+                    MainPhotoUrl = s.Photos.Where(p => p.IsMain == true).Select(p => p.PhotoUrl).ToList(),
+                    // Result = s.Orders.Select(o => new
+                    // {
+                    //     Month = o.DateOfIssue.Month,
+                    //     Value = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+                    // }).ToList()
+                },
+                    (key, element) => new
+                    {
+                        SupplierId = key.PersonId,
+                        SupplierName = key.SupplierName,
+                        MainPhotoUrl = key.MainPhotoUrl,
+                        // Total = key.Result.Sum(r => r.Value),
+                        // Result = key.Result,
+
+                    }).ToList();
+
+            // switch (sortParams.SortOrder)
+            // {
+            //     case "asc":
+            //         switch (sortParams.SortColumn)
+            //         {
+            //             case "supplierName":
+            //                 source = source.OrderBy(s => s.SupplierName);
+            //                 break;
+            //         }
+            //         break;
+
+            //     case "desc":
+            //         switch (sortParams.SortColumn)
+            //         {
+            //             case "supplierName":
+            //                 source = source.OrderByDescending(s => s.SupplierName);
+            //                 break;
+            //         }
+            //         break;
+
+            //     default:
+            //         source = source.OrderBy(s => s.SupplierName);
+            //         break;
+            // }
+
+            return source;
         }
 
         #endregion

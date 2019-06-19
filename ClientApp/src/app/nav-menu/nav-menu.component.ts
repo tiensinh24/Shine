@@ -1,7 +1,8 @@
-import { AfterContentChecked, Component, Input, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconService } from '../_shared/_services/icon.service';
 import { AuthService } from '../auth/_services/auth.service';
+import { MatSidenavContainer, MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-nav-menu',
@@ -10,7 +11,7 @@ import { AuthService } from '../auth/_services/auth.service';
 })
 export class NavMenuComponent implements OnInit, AfterContentChecked {
   user: string;
-  sidenavToggle = true;
+  sidenavMode = true;
 
   @Input() loading: boolean;
 
@@ -46,4 +47,5 @@ export class NavMenuComponent implements OnInit, AfterContentChecked {
   isLoggedIn() {
     return this.auth.isLoggedIn();
   }
+
 }

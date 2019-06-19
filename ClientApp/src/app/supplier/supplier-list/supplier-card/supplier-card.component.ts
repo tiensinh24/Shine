@@ -136,6 +136,7 @@ export class SupplierCardComponent implements OnInit, AfterViewInit {
     const filter = this.input.nativeElement.value;
     this.loadData(this.pagingParams, this.sortParams, filter);
 
+    // Scroll to top when goto other page
     this.mainSection.nativeElement.scrollIntoView({
       behavior: 'smooth',
       block: 'start'

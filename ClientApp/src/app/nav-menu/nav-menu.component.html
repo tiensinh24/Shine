@@ -142,20 +142,20 @@
   <mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
 
   <!-- Left Side Nav -->
-  <mat-sidenav-container class="side-nav mat-elevation-z8">
+  <mat-sidenav-container class="side-nav">
     <mat-sidenav #leftnav opened mode="side" role="navigation">
       <!-- Avatar + Welcome -->
-      <mat-card class="avatar" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
+      <div class="avatar" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
         <div fxFlexAlign="end" matTooltip="Switch to buy/sell mode">
-          <mat-slide-toggle [(ngModel)]="sidenavToggle" labelPosition="before">{{
-            sidenavToggle ? 'Buy' : 'Sell'
+          <mat-slide-toggle [(ngModel)]="sidenavMode" labelPosition="before">{{
+            sidenavMode ? 'Buy' : 'Sell'
           }}</mat-slide-toggle>
         </div>
 
         <h3>Welcome, {{ user }}</h3>
 
         <div class="user-avatar"></div>
-      </mat-card>
+      </div>
 
       <!-- Expansion nav -->
       <mat-nav-list>
@@ -166,7 +166,7 @@
       </mat-nav-list>
 
       <!-- Sidenav-buy -->
-      <app-sidenav-buy *ngIf="sidenavToggle; else sidenavSell"></app-sidenav-buy>
+      <app-sidenav-buy *ngIf="sidenavMode; else sidenavSell"></app-sidenav-buy>
 
       <!-- Sidenav-sell -->
       <ng-template #sidenavSell>

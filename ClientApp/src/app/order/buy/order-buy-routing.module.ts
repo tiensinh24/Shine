@@ -12,9 +12,9 @@ const routes: Routes = [
     component: OrderBuyComponent,
     children: [
       { path: '', redirectTo: '/order-buy/home', pathMatch: 'full' },
-      { path: 'home', component: OrderBuyHomeComponent },
-      { path: 'list', component: OrderBuyListComponent },
+      { path: 'home', component: OrderBuyHomeComponent },      
       { path: 'create', component: OrderBuyCreateComponent },
+      { path: 'report', loadChildren: () => import('./_reports/order-buy-report.module').then(m => m.OrderBuyReportModule) },
       { path: ':orderId', component: OrderBuyDetailComponent }
     ]
   }
