@@ -13,10 +13,9 @@ import { SupplierDetail } from '../_interfaces/supplier-detail';
 import { SupplierList } from '../_interfaces/supplier-list';
 import { SupplierOrders } from '../_interfaces/supplier-orders';
 import { SupplierProduct } from '../_interfaces/supplier-product';
-import { ProductsBySupplier } from '../_interfaces/supplier-products-list';
 import { SupplierSelect } from '../_interfaces/supplier-select';
 import { PagedSupplierDebts } from '../_interfaces/reports/paged-supplier-debt';
-import { OrderDebtBySupplier } from '../_interfaces/reports/order-debt-by-supplier';
+import { OrderDebt } from '../_interfaces/reports/order-debt';
 
 
 @Injectable({
@@ -160,7 +159,7 @@ export class SupplierService {
     });
   }
 
-  getOrderDebtsBySupplier(supplierId: number): Observable<OrderDebtBySupplier> {
-    return this.http.get<OrderDebtBySupplier>(`${this.baseUrl}api/supplier/${supplierId}/debt`);
+  getOrderDebtsBySupplier(supplierId: number): Observable<OrderDebt> {
+    return this.http.get<OrderDebt>(`${this.baseUrl}api/supplier/${supplierId}/debt`);
   }
 }

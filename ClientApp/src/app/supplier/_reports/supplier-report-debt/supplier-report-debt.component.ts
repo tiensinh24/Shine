@@ -1,7 +1,13 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  AfterViewInit
+} from '@angular/core';
 import { Subscription, merge, fromEvent, Observable } from 'rxjs';
 import { SupplierDebt } from '../../_interfaces/reports/supplier-debt';
-import { OrderDebtBySupplier } from '../../_interfaces/reports/order-debt-by-supplier';
 import { SupplierService } from '../../_services/supplier.service';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SupplierDebtDataSource } from '../../_data-source/reports/supplier-deb-data-source';
@@ -9,7 +15,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/animations';
+import { OrderDebt } from '../../_interfaces/reports/order-debt';
 
 @Component({
   selector: 'app-supplier-report-debt',
@@ -19,11 +32,15 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))      
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      )
     ])
   ]
 })
-export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SupplierReportDebtComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   // Subscription
   subscription: Subscription;
 
@@ -37,7 +54,7 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('input', { static: false }) input: ElementRef;
 
-  orderDebtsBySupplier: OrderDebtBySupplier;
+  orderDebtsBySupplier: OrderDebt;
 
   // boolean
 
@@ -52,7 +69,7 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
     sortOrder: ''
   };
 
-  constructor(private supplierService: SupplierService) { }
+  constructor(private supplierService: SupplierService) {}
 
   ngOnInit() {
     this.initialize();
@@ -84,14 +101,11 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
       .subscribe();
   }
 
-  ngOnDestroy() {
-
-  }
+  ngOnDestroy() {}
 
   initialize() {
     this.dataSource = new SupplierDebtDataSource(this.supplierService);
     this.dataSource.loadData(this.pagingParams, this.sortParams);
-
   }
 
   loadSupplierDebtsPage() {
@@ -107,10 +121,11 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getOrderDebtsBySupplier(supplierId: number) {
-    this.subscription = this.supplierService.getOrderDebtsBySupplier(supplierId)
-      .subscribe((order: OrderDebtBySupplier) => {
-        this.orderDebtsBySupplier = order
-      })
+    this.subscription = this.supplierService
+      .getOrderDebtsBySupplier(supplierId)
+      .subscribe((order: OrderDebt) => {
+        this.orderDebtsBySupplier = order;
+      });
   }
 
   onExpandSupplier(supplierId: number) {
@@ -118,5 +133,4 @@ export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDes
       this.getOrderDebtsBySupplier(supplierId);
     }
   }
-
 }

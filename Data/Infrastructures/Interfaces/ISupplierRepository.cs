@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Photos;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
@@ -86,7 +87,7 @@ namespace Shine.Data.Infrastructures.Interfaces
             PagingParams pagingParams, SortParams sortParams, string filter
         );
 
-        Task<ActionResult<OrderDebtBySupplierDto>> GetOrderDebtsBySupplierAsync(int supplierId);
+        Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplierAsync(int supplierId);
 
         object GetOrderBySupplierPivotMonth(SortParams sortParams);
 

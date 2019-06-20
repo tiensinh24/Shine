@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Shine.Controllers.Interfaces;
 using Shine.Data;
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
@@ -231,7 +232,7 @@ namespace Shine.Controllers
         }
 
         [HttpGet("{supplierId}/debt")]
-        public async Task<ActionResult<OrderDebtBySupplierDto>> GetOrderDebtsBySupplier(int supplierId)
+        public async Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplier(int supplierId)
         {
             var orderDebts = await _repository.GetOrderDebtsBySupplierAsync(supplierId);
 

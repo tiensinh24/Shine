@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy.Reports;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
@@ -458,8 +459,6 @@ namespace Shine.Data.Infrastructures.Repositories
 
 
 
-
-
             switch (sortParams.SortOrder)
             {
                 case "asc":
@@ -499,59 +498,75 @@ namespace Shine.Data.Infrastructures.Repositories
             return await PagedList<SupplierDebtDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public async Task<ActionResult<OrderDebtBySupplierDto>> GetOrderDebtsBySupplierAsync(int supplierId)
+        public async Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplierAsync(int supplierId)
         {
             var orderDebts = await _context.Set<OrderBuy>()
+                .Where(o => o.PersonId == supplierId)
                 .AsNoTracking()
-                .Include(o => o.ProductOrders)
-                .Include(o => o.Payments)
-                .Include(o => o.Person)
-                .ProjectToType<OrderBuyDebtDto>()
-                .Where(o => o.Debt > 0 && o.SupplierId == supplierId)
-                .ToListAsync();
-
-
-            var rs = new OrderDebtBySupplierDto
-            {
-                SupplierId = orderDebts.Select(o => o.SupplierId).FirstOrDefault(),
-                SupplierName = orderDebts.Select(o => o.SupplierName).FirstOrDefault(),
-                Orders = orderDebts.Select(o => new _OrderDebtBySupplierDto
+                .Select(o => new OrderDebtDto
                 {
                     OrderId = o.OrderId,
                     OrderNumber = o.OrderNumber,
                     DateOfIssue = o.DateOfIssue,
                     TimeForPayment = o.TimeForPayment,
-                    Debt = o.Debt
+                    Debt = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+                        - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
                 })
-            };
+                .Where(o => o.Debt > 0)
+                .ToListAsync();
 
-            return rs;
+            return orderDebts;
         }
 
         public object GetOrderBySupplierPivotMonth(SortParams sortParams)
         {
-            var source = _context.Set<Supplier>()
-                .AsNoTracking()
-                .GroupBy(s => new
-                {
-                    s.PersonId,
-                    SupplierName = s.FirstName + " " + s.LastName,
-                    MainPhotoUrl = s.Photos.Where(p => p.IsMain == true).Select(p => p.PhotoUrl).ToList(),
-                    // Result = s.Orders.Select(o => new
-                    // {
-                    //     Month = o.DateOfIssue.Month,
-                    //     Value = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
-                    // }).ToList()
-                },
-                    (key, element) => new
-                    {
-                        SupplierId = key.PersonId,
-                        SupplierName = key.SupplierName,
-                        MainPhotoUrl = key.MainPhotoUrl,
-                        // Total = key.Result.Sum(r => r.Value),
-                        // Result = key.Result,
 
-                    }).ToList();
+
+            // var orderGrp = _context.Set<OrderBuy>()
+            //     .AsNoTracking()
+            //     .Select(o => new {
+            //         OrderId = o.OrderId,
+            //         SupplierId = o.Person.PersonId,
+            //         OrderValue = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+            //             - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
+            //     });
+
+            // var supplierGroup = _context.Set<Supplier>()
+            //     .AsNoTracking()
+            //     .Join(orderGrp, 
+            //         s => s.PersonId,
+            //         o => o.SupplierId,
+            //         (s, o) => new {
+            //             SupplierId = s.PersonId,
+            //             OrderId = o.OrderId,
+            //             OrderValues = o.OrderValue
+            //         });
+
+            // var rs = supplierGroup.GroupBy(s => s.SupplierId)
+            //     .Select(s => new {
+            //         SupplierId = s.Key,
+            //         Values = s.Sum(o => o.OrderValues)
+            //     });
+
+            var rs = _context.Set<Supplier>()
+                .GroupJoin(_context.Set<OrderBuy>()
+                .Select(o => new
+                {
+                    SupplierId = o.Person.PersonId,
+                    SupplierName = o.Person.FirstName + " " + o.Person.LastName,
+                    OrderId = o.OrderId,
+                    Value = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+                        - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
+                }).Where(o => o.Value > 0),
+                s => s.PersonId, o => o.SupplierId,
+                (s, o) => new
+                {
+                    SupplierId = s.PersonId,
+                    Values = o.Sum(od => od.Value)
+                })
+                ;
+
+
 
             // switch (sortParams.SortOrder)
             // {
@@ -578,7 +593,7 @@ namespace Shine.Data.Infrastructures.Repositories
             //         break;
             // }
 
-            return source;
+            return rs;
         }
 
         #endregion
