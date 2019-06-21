@@ -1,0 +1,12 @@
+main#main {
+  padding: 1rem;
+}
+
+main#main table[mat-table] {
+  width: 100%;
+}
+
+main#main table[mat-table] th, main#main table[mat-table] td {
+  padding: .5rem;
+}
+/*# sourceMappingURL=order-buy-report-supplier.component.css.map */

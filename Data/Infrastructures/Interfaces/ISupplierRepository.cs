@@ -89,7 +89,7 @@ namespace Shine.Data.Infrastructures.Interfaces
 
         Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplierAsync(int supplierId);
 
-        object GetOrderBySupplierPivotMonth(SortParams sortParams);
+        Task<IEnumerable<OrderBySupplierPivotMonthDto>> GetOrderBySupplierPivotMonth(int year, SortParams sortParams);
 
         #endregion
 

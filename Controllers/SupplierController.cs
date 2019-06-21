@@ -240,9 +240,9 @@ namespace Shine.Controllers
         }
 
         [HttpGet("report/pivot-month")]
-        public IActionResult GetOrderBySupplierPivotMonth([FromQuery] SortParams sortParams)
+        public async Task<ActionResult<IEnumerable<OrderBySupplierPivotMonthDto>>> GetOrderBySupplierPivotMonthAsync(int year, [FromQuery] SortParams sortParams)
         {
-            var query = _repository.GetOrderBySupplierPivotMonth(sortParams);
+            var query = await _repository.GetOrderBySupplierPivotMonth(year, sortParams);
 
             return Ok(query);
         }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Shine.Data.Models.Interfaces;
 
 namespace Shine.Data.Models
-{    
+{
     public class ProductOrder : IAuditedEntityBase
     {
         #region Properties        
@@ -21,6 +21,7 @@ namespace Shine.Data.Models
         #region Navigation Properties
         public Product Product { get; set; }
         public Order Order { get; set; }
+
         #endregion
     }
 }

@@ -518,82 +518,32 @@ namespace Shine.Data.Infrastructures.Repositories
             return orderDebts;
         }
 
-        public object GetOrderBySupplierPivotMonth(SortParams sortParams)
+        public async Task<IEnumerable<OrderBySupplierPivotMonthDto>> GetOrderBySupplierPivotMonth(int year, SortParams sortParams)
         {
-
-
-            // var orderGrp = _context.Set<OrderBuy>()
-            //     .AsNoTracking()
-            //     .Select(o => new {
-            //         OrderId = o.OrderId,
-            //         SupplierId = o.Person.PersonId,
-            //         OrderValue = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
-            //             - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
-            //     });
-
-            // var supplierGroup = _context.Set<Supplier>()
-            //     .AsNoTracking()
-            //     .Join(orderGrp, 
-            //         s => s.PersonId,
-            //         o => o.SupplierId,
-            //         (s, o) => new {
-            //             SupplierId = s.PersonId,
-            //             OrderId = o.OrderId,
-            //             OrderValues = o.OrderValue
-            //         });
-
-            // var rs = supplierGroup.GroupBy(s => s.SupplierId)
-            //     .Select(s => new {
-            //         SupplierId = s.Key,
-            //         Values = s.Sum(o => o.OrderValues)
-            //     });
-
-            var rs = _context.Set<Supplier>()
-                .GroupJoin(_context.Set<OrderBuy>()
-                .Select(o => new
+            var query = await _context.Set<OrderBuy>()
+                .AsNoTracking()
+                .Where(o => o.DateOfIssue.Year == year)
+                .GroupBy(o => new { o.PersonId, SupplierName = o.Person.FirstName + " " + o.Person.LastName })
+                .Select(g => new OrderBySupplierPivotMonthDto
                 {
-                    SupplierId = o.Person.PersonId,
-                    SupplierName = o.Person.FirstName + " " + o.Person.LastName,
-                    OrderId = o.OrderId,
-                    Value = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
-                        - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
-                }).Where(o => o.Value > 0),
-                s => s.PersonId, o => o.SupplierId,
-                (s, o) => new
-                {
-                    SupplierId = s.PersonId,
-                    Values = o.Sum(od => od.Value)
-                })
-                ;
+                    SupplierId = g.Key.PersonId,
+                    SupplierName = g.Key.SupplierName,
+                    Jan = g.Where(o => o.DateOfIssue.Month == 1).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Feb = g.Where(o => o.DateOfIssue.Month == 2).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Mar = g.Where(o => o.DateOfIssue.Month == 3).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Apr = g.Where(o => o.DateOfIssue.Month == 4).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    May = g.Where(o => o.DateOfIssue.Month == 5).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Jun = g.Where(o => o.DateOfIssue.Month == 6).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Jul = g.Where(o => o.DateOfIssue.Month == 7).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Aug = g.Where(o => o.DateOfIssue.Month == 8).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Sep = g.Where(o => o.DateOfIssue.Month == 9).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Oct = g.Where(o => o.DateOfIssue.Month == 10).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Nov = g.Where(o => o.DateOfIssue.Month == 11).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Dec = g.Where(o => o.DateOfIssue.Month == 12).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Total = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax)))
+                }).ToListAsync();
 
-
-
-            // switch (sortParams.SortOrder)
-            // {
-            //     case "asc":
-            //         switch (sortParams.SortColumn)
-            //         {
-            //             case "supplierName":
-            //                 source = source.OrderBy(s => s.SupplierName);
-            //                 break;
-            //         }
-            //         break;
-
-            //     case "desc":
-            //         switch (sortParams.SortColumn)
-            //         {
-            //             case "supplierName":
-            //                 source = source.OrderByDescending(s => s.SupplierName);
-            //                 break;
-            //         }
-            //         break;
-
-            //     default:
-            //         source = source.OrderBy(s => s.SupplierName);
-            //         break;
-            // }
-
-            return rs;
+            return query;
         }
 
         #endregion

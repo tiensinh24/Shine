@@ -16,6 +16,7 @@ import { SupplierProduct } from '../_interfaces/supplier-product';
 import { SupplierSelect } from '../_interfaces/supplier-select';
 import { PagedSupplierDebts } from '../_interfaces/reports/paged-supplier-debt';
 import { OrderDebt } from '../_interfaces/reports/order-debt';
+import { OrderBySupplierPivotMonth } from '../_interfaces/reports/order-by-supplier-pivot-month';
 
 
 @Injectable({
@@ -161,5 +162,10 @@ export class SupplierService {
 
   getOrderDebtsBySupplier(supplierId: number): Observable<OrderDebt> {
     return this.http.get<OrderDebt>(`${this.baseUrl}api/supplier/${supplierId}/debt`);
+  }
+
+  getOrderBySupplierPivotMonth(year: number): Observable<OrderBySupplierPivotMonth[]> {
+    return this.http.get<OrderBySupplierPivotMonth[]>(`${this.baseUrl}api/supplier/report/pivot-month`,
+      {params: {year: year.toString()}});
   }
 }

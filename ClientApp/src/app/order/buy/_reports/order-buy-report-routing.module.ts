@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { OrderBuyReportComponent } from './order-buy-report.component';
 import { OrderBuyReportHomeComponent } from './order-buy-report-home/order-buy-report-home.component';
 import { OrderBuyReportEmployeeComponent } from './order-buy-report-employee/order-buy-report-employee.component';
-import { OrderBuyReportSupplierComponent } from '../../buy_reports/order-buy-report-supplier/order-buy-report-supplier.component';
+import { OrderBuyReportSupplierComponent } from './order-buy-report-supplier/order-buy-report-supplier.component';
 
 
 const routes: Routes = [

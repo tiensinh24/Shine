@@ -1,0 +1,11 @@
+main#main {
+    padding: 1rem;
+
+    table[mat-table] {
+        width: 100%;
+        
+        th,td {
+            padding: .5rem;
+        }
+    }
+}
