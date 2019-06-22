@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBySupplierPivotMonth } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-month';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import * as moment from 'moment';
   templateUrl: './order-buy-report-supplier.component.html',
   styleUrls: ['./order-buy-report-supplier.component.scss']
 })
-export class OrderBuyReportSupplierComponent implements OnInit, OnDestroy {
+export class OrderBuyReportSupplierComponent implements OnInit, AfterViewInit, OnDestroy {
   // Subscription
   pivotData$: Subscription;
 
@@ -20,7 +20,6 @@ export class OrderBuyReportSupplierComponent implements OnInit, OnDestroy {
   // chart
   showingChart = false;
   chartData: OrderBySupplierPivotMonth;
-
 
   dataSource: MatTableDataSource<OrderBySupplierPivotMonth>;
   columnsToDisplay = [
@@ -61,6 +60,11 @@ export class OrderBuyReportSupplierComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getData(this.currentYear);
     this.initialYears();
+    this.getTotalRow();
+  }
+
+  ngAfterViewInit() {
+    this.getTotalRow();
   }
 
   ngOnDestroy() {
@@ -85,14 +89,24 @@ export class OrderBuyReportSupplierComponent implements OnInit, OnDestroy {
       });
   }
 
+  getTotalRow() {
+      if (this.monthCols !== undefined) {
+        this.monthCols.forEach(col => {
+          this.chartData[col.key] = this.getTotal(col.key);
+        });
+        console.log(this.chartData);
+      }
+    
+  }
+
   getTotal(col: string) {
     return this.dataSource ? this.dataSource.data
       .map(t => t[col])
       .reduce((acc, value) => acc + value, 0) : 0;
   }
 
-  showChart(row: OrderBySupplierPivotMonth) {
-    this.showingChart = true;
+  toggleChart(row: OrderBySupplierPivotMonth) {
+    this.showingChart = !this.showingChart;
     this.chartData = row;
   }
 }

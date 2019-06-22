@@ -1,11 +1,23 @@
 main#main {
     padding: 1rem;
 
-    table[mat-table] {
+    div.pivot-table {
         width: 100%;
-        
-        th,td {
-            padding: .5rem;
+        height: calc(100vh - (160px + 1rem));
+
+        table[mat-table] {
+            th {
+                color: royalblue;
+            }
+    
+            th,td {
+                padding: .5rem;
+                
+                &.actions > mat-icon:hover {
+                    cursor: pointer;
+                } 
+            }
         }
+        
     }
 }

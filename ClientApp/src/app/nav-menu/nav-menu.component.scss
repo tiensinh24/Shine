@@ -21,7 +21,7 @@
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background-image: url("http://lorempixel.com/50/50/people");
+    background-image: url("https://picsum.photos/50");
     background-position: center;
     background-size: cover;
   }
@@ -34,8 +34,7 @@ mat-sidenav-container.side-nav {
   left: 0;
   right: 0;
 
-  > mat-sidenav {
-    min-width: 250px;
+  > .mat-sidenav {   
 
     div.avatar {
       background-image: url("../../assets/images/sidenav-avatar-bg.jpg");
@@ -46,13 +45,13 @@ mat-sidenav-container.side-nav {
         width: 100px;
         height: 100px;
         border-radius: 50px;
-        background-image: url("http://lorempixel.com/100/100/people");
+        background-image: url("https://picsum.photos/100");
         background-position: center;
         background-size: cover;
       }
 
       h3 {
-        color: mediumslateblue;
+        color: royalblue;
       }
     }
 
@@ -62,6 +61,7 @@ mat-sidenav-container.side-nav {
       }
     }
   }
+
 
   .footer {
     position: fixed;
