@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import {
   OrderBuyEditDialogComponent
-} from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+} from 'src/app/_shared/components/_buy/order-buy-edit-dialog/order-buy-edit-dialog.component';
 import {
   OrderProductsEditDialogComponent
 } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';

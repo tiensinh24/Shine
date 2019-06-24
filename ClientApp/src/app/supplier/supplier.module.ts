@@ -10,7 +10,7 @@ import {
 } from '../_shared/components/photo-upload/photo-upload-shared.module';
 import {
     SupplierEditDialogSharedModule
-} from '../_shared/components/supplier-edit-dialog/supplier-edit-dialog-shared.module';
+} from '../_shared/components/_buy/supplier-edit-dialog/supplier-edit-dialog-shared.module';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
 import { SharedModule } from '../_shared/shared.module';
 import { ProductsAddedComponent } from './supplier-detail/products-added/products-added.component';

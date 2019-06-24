@@ -7,16 +7,17 @@ import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { OrderBuyReportComponent } from './order-buy-report.component';
 import { OrderBuyReportHomeComponent } from './order-buy-report-home/order-buy-report-home.component';
 import { OrderBuyReportEmployeeComponent } from './order-buy-report-employee/order-buy-report-employee.component';
-import { OrderBuyReportSupplierComponent } from './order-buy-report-supplier/order-buy-report-supplier.component';
-import { OrderBuyReportSupplierChartComponent } from './order-buy-report-supplier/order-buy-report-supplier-chart/order-buy-report-supplier-chart.component';
+import { OrderBuyReportSupplierPivotMonthComponent } from '../../../_shared/components/_buy/_reports/order-buy-report-supplier-pivot-month/order-buy-report-supplier-pivot-month.component';
+import { OrderBuyReportSupplierPivotMonthChartComponent } from '../../../_shared/components/_buy/_reports/order-buy-report-supplier-pivot-month/chart/order-buy-report-supplier-pivot-month-chart.component';
+import { OrderBuyReportSupplierPivotMonthModule } from 'src/app/_shared/components/_buy/_reports/order-buy-report-supplier-pivot-month/order-buy-report-supplier-pivot-month.module';
 
 @NgModule({
   declarations: [
     OrderBuyReportComponent,
     OrderBuyReportHomeComponent,
     OrderBuyReportEmployeeComponent,
-    OrderBuyReportSupplierComponent,
-    OrderBuyReportSupplierChartComponent
+    // OrderBuyReportSupplierPivotMonthComponent,
+    // OrderBuyReportSupplierPivotMonthChartComponent
   ],
   imports: [
     // Shared module
@@ -25,8 +26,7 @@ import { OrderBuyReportSupplierChartComponent } from './order-buy-report-supplie
     // Material
     MaterialSharedModule,
 
-    // Google charts
-    GoogleChartsModule,
+    OrderBuyReportSupplierPivotMonthModule,
 
     // Routing
     OrderBuyReportRoutingModule

@@ -8,7 +8,7 @@ import { CategoryBuyListComponent } from './category-buy-list/category-buy-list.
 import { CategoryBuyDetailComponent } from './category-buy-detail/category-buy-detail.component';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
-import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog-shared.module';
+import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/_buy/category-buy-dialog/category-buy-dialog-shared.module';
 import { ConfirmDialogSharedModule } from 'src/app/_shared/components/confirm-dialog/confirm-dialog-shared.module';
 
 

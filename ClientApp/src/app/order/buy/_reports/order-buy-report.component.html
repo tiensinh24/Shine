@@ -1,16 +1,10 @@
 <mat-drawer-container class="right-nav">
   <mat-drawer mode="side" opened position="end">
     <mat-nav-list dense>
-      <mat-list-item
-        [routerLink]="['/order-buy/report/employee']"
-        routerLinkActive="active"
-      >
+      <mat-list-item [routerLink]="['/order-buy/report/employee']" routerLinkActive="active">
         <p matLine>Order by employees</p>
       </mat-list-item>
-      <mat-list-item
-        [routerLink]="['/order-buy/report/supplier']"
-        routerLinkActive="active"
-      >
+      <mat-list-item [routerLink]="['/order-buy/report/supplier/pivot-month']" routerLinkActive="active">
         <p matLine>Order by suppliers</p>
       </mat-list-item>
     </mat-nav-list>

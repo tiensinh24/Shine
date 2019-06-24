@@ -1,21 +1,21 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrderBuyReportSupplierChartComponent } from './order-buy-report-supplier-chart.component';
+import { OrderBuyReportSupplierPivotMonthChartComponent } from './order-buy-report-supplier-pivot-month-chart.component';
 
 describe('OrderBuyReportSupplierChartComponent', () => {
-  let component: OrderBuyReportSupplierChartComponent;
-  let fixture: ComponentFixture<OrderBuyReportSupplierChartComponent>;
+  let component: OrderBuyReportSupplierPivotMonthChartComponent;
+  let fixture: ComponentFixture<OrderBuyReportSupplierPivotMonthChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrderBuyReportSupplierChartComponent ]
+      declarations: [ OrderBuyReportSupplierPivotMonthChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderBuyReportSupplierChartComponent);
+    fixture = TestBed.createComponent(OrderBuyReportSupplierPivotMonthChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

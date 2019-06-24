@@ -1,0 +1,59 @@
+<main id="main" class="animated fadeInLeft">
+  <section id="main-content" *ngIf="!showingChart; else chart">
+    <!-- Year selection -->
+    <mat-form-field class="year-selection">
+      <mat-select placeholder="Choose a year" [(ngModel)]="selectedYear" (selectionChange)="getData($event.value)">
+        <mat-option *ngFor="let year of years" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Pivot table -->
+    <div class="pivot-table">
+      <table mat-table matSort [dataSource]="dataSource">
+        <!-- SupplierName column -->
+        <ng-container matColumnDef="supplierName" sticky>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplier Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.supplierName }}</td>
+          <td mat-footer-cell *matFooterCellDef>Total</td>
+        </ng-container>
+
+        <!-- Month columns -->
+        <ng-container [matColumnDef]="column.key" *ngFor="let column of monthCols">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.value }}</th>
+          <td mat-cell *matCellDef="let row">{{ row[column.key] | number }}</td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{ getTotal(column.key) | number }}
+          </td>
+        </ng-container>
+
+        <!-- Actions column -->
+        <ng-container matColumnDef="actions" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <mat-icon matTooltip="Show chart" color="primary" (click)="toggleChart(row)">bar_chart</mat-icon>
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            <mat-icon matTooltip="Show chart" color="primary" (click)="toggleTotalChart()">bar_chart</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+        <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
+      </table>
+    </div>
+  </section>
+
+  <ng-template #chart>
+    <div class="animated fadeInLeft">
+      <button mat-icon-button (click)="toggleChart()"><mat-icon>arrow_back</mat-icon>Go back</button>
+
+      <app-order-buy-report-supplier-pivot-quarter-chart
+        [chartYear]="selectedYear"
+        [chartData]="chartData"
+      ></app-order-buy-report-supplier-pivot-quarter-chart>
+    </div>
+  </ng-template>
+</main>

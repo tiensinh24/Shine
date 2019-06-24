@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/category-buy-dialog/category-buy-dialog-shared.module';
+import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/_buy/category-buy-dialog/category-buy-dialog-shared.module';
 import { PhotoUploadSharedModule } from 'src/app/_shared/components/photo-upload/photo-upload-shared.module';
-import { ProductBuyEditDialogSharedModule } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog-shared.module';
+import { ProductBuyEditDialogSharedModule } from 'src/app/_shared/components/_buy/product-buy-edit-dialog/product-buy-edit-dialog-shared.module';
 import { ProductPhotoGallerySharedModule } from 'src/app/_shared/components/product-photo-gallery/product-photo-gallery-shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';

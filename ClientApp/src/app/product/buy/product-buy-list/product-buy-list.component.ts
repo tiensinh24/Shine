@@ -5,7 +5,7 @@ import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
 import {
     ProductBuyEditDialogComponent
-} from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
+} from 'src/app/_shared/components/_buy/product-buy-edit-dialog/product-buy-edit-dialog.component';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';

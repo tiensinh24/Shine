@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
-import { SupplierEditDialogComponent } from 'src/app/_shared/components/supplier-edit-dialog/supplier-edit-dialog.component';
+import { SupplierEditDialogComponent } from 'src/app/_shared/components/_buy/supplier-edit-dialog/supplier-edit-dialog.component';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
 import { environment } from 'src/environments/environment';
 import { SupplierDetail } from '../_interfaces/supplier-detail';

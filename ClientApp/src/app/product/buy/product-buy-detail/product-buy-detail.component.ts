@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/product-buy-edit-dialog/product-buy-edit-dialog.component';
+import { ProductBuyEditDialogComponent } from 'src/app/_shared/components/_buy/product-buy-edit-dialog/product-buy-edit-dialog.component';
 import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
 import { environment } from 'src/environments/environment';
 import { ProductBuyDetail } from '../_interfaces/product-buy-detail';

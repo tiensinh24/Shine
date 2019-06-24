@@ -2,25 +2,24 @@ import { Component, OnInit, Input } from '@angular/core';
 import { OrderBySupplierPivotMonth } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-month';
 
 @Component({
-  selector: 'app-order-buy-report-supplier-chart',
-  templateUrl: './order-buy-report-supplier-chart.component.html',
-  styleUrls: ['./order-buy-report-supplier-chart.component.css']
+  selector: 'app-order-buy-report-supplier-pivot-month-chart',
+  templateUrl: './order-buy-report-supplier-pivot-month-chart.component.html',
+  styleUrls: ['./order-buy-report-supplier-pivot-month-chart.component.css']
 })
-export class OrderBuyReportSupplierChartComponent implements OnInit {
+export class OrderBuyReportSupplierPivotMonthChartComponent implements OnInit {
+  @Input() chartYear:  number;
   @Input() chartData: OrderBySupplierPivotMonth;
 
   title = '';
   type = 'ColumnChart';
   data = [[]];
-  columnNames = ['Month', 'Evenue'];
+  columnNames = ['Month', 'Values'];
   options = {};
-  width = 600;
-  height = 400;
 
   constructor() {}
 
   ngOnInit() {
-    this.title = `Evenue by ${this.chartData.supplierName}`;
+    this.title = `Order value by ${this.chartData.supplierName} in ${this.chartYear}`;
     this.data = [
       ['Jan', +`${this.chartData.jan}`],
       ['Feb', +`${this.chartData.feb}`],

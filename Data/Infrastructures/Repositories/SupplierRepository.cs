@@ -518,10 +518,10 @@ namespace Shine.Data.Infrastructures.Repositories
             return orderDebts;
         }
 
-        public async Task<IEnumerable<OrderBySupplierPivotMonthDto>> GetOrderBySupplierPivotMonth(int year, SortParams sortParams)
+        public async Task<IEnumerable<OrderBySupplierPivotMonthDto>> GetOrderBySupplierPivotMonthAsync(int year)
         {
             var query = await _context.Set<OrderBuy>()
-                .AsNoTracking()
+                .AsNoTracking()                
                 .Where(o => o.DateOfIssue.Year == year)
                 .GroupBy(o => new { o.PersonId, SupplierName = o.Person.FirstName + " " + o.Person.LastName })
                 .Select(g => new OrderBySupplierPivotMonthDto
@@ -541,7 +541,30 @@ namespace Shine.Data.Infrastructures.Repositories
                     Nov = g.Where(o => o.DateOfIssue.Month == 11).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
                     Dec = g.Where(o => o.DateOfIssue.Month == 12).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
                     Total = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax)))
-                }).ToListAsync();
+                })
+                .OrderBy(s => s.SupplierName)
+                .ToListAsync();
+
+            return query;
+        }
+
+        public async Task<IEnumerable<OrderBySupplierPivotQuarterDto>> GetOrderBySupplierPivotQuarterAsync(int year) {
+            var query = await _context.Set<OrderBuy>()
+                .AsNoTracking()
+                .Where(o => o.DateOfIssue.Year == year)
+                .GroupBy(o => new { o.PersonId, SupplierName = o.Person.FirstName + " " + o.Person.LastName})
+                .Select(g => new OrderBySupplierPivotQuarterDto
+                {
+                    SupplierId = g.Key.PersonId,
+                    SupplierName = g.Key.SupplierName,
+                    QuarterOne = g.Where(o => o.DateOfIssue.Month >= 1 && o.DateOfIssue.Month <=3).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    QuarterTwo = g.Where(o => o.DateOfIssue.Month >= 4 && o.DateOfIssue.Month <=6).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    QuarterThree = g.Where(o => o.DateOfIssue.Month >= 7 && o.DateOfIssue.Month <=9).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    QuarterFourth = g.Where(o => o.DateOfIssue.Month >= 10 && o.DateOfIssue.Month <=12).Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
+                    Total = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax)))
+                })
+                .OrderBy(s => s.SupplierName)
+                .ToListAsync();
 
             return query;
         }

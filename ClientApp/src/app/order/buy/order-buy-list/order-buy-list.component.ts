@@ -3,7 +3,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/_buy/order-buy-edit-dialog/order-buy-edit-dialog.component';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import {

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { OrderBuyEditDialogSharedModule } from 'src/app/_shared/components/order-buy-edit-dialog/order-buy-edit-dialog-shared.module';
+import { OrderBuyEditDialogSharedModule } from 'src/app/_shared/components/_buy/order-buy-edit-dialog/order-buy-edit-dialog-shared.module';
 import { OrderProductsEditDialogSharedModule } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog-shared.module';
 import { PaymentEditDialogSharedModule } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog-shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';

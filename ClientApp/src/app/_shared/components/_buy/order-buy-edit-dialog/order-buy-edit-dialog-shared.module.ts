@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../../shared.module';
-import { MaterialSharedModule } from '../../material-shared.module';
+import { SharedModule } from '../../../shared.module';
+import { MaterialSharedModule } from '../../../material-shared.module';
 import { OrderBuyEditDialogComponent } from './order-buy-edit-dialog.component';
 
 @NgModule({

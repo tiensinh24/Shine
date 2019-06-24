@@ -74,6 +74,10 @@ namespace Shine.Controllers.Interfaces
 
     Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplier(int supplierId);
 
+    Task<ActionResult<IEnumerable<OrderBySupplierPivotMonthDto>>> GetOrderBySupplierPivotMonth(int year);
+
+    Task<ActionResult<IEnumerable<OrderBySupplierPivotQuarterDto>>> GetOrderBySupplierPivotQuarter(int year);
+
 #endregion
 
     }

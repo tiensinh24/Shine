@@ -1,25 +1,29 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 import { OrderBySupplierPivotMonth } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-month';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-order-buy-report-supplier',
-  templateUrl: './order-buy-report-supplier.component.html',
-  styleUrls: ['./order-buy-report-supplier.component.scss']
+  selector: 'app-order-buy-report-supplier-pivot-month',
+  templateUrl: './order-buy-report-supplier-pivot-month.component.html',
+  styleUrls: ['./order-buy-report-supplier-pivot-month.component.scss']
 })
-export class OrderBuyReportSupplierComponent implements OnInit, AfterViewInit, OnDestroy {
+export class OrderBuyReportSupplierPivotMonthComponent implements OnInit, OnDestroy {
   // Subscription
   pivotData$: Subscription;
 
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   years = [];
-  currentYear = moment().year();
+  selectedYear = moment().year();
 
   // chart
   showingChart = false;
-  chartData: OrderBySupplierPivotMonth;
+  chartData = <OrderBySupplierPivotMonth>{};
+  chartTotalData = <OrderBySupplierPivotMonth>{};
 
   dataSource: MatTableDataSource<OrderBySupplierPivotMonth>;
   columnsToDisplay = [
@@ -58,13 +62,8 @@ export class OrderBuyReportSupplierComponent implements OnInit, AfterViewInit, O
   constructor(private supplierService: SupplierService) {}
 
   ngOnInit() {
-    this.getData(this.currentYear);
+    this.getData(this.selectedYear);
     this.initialYears();
-    this.getTotalRow();
-  }
-
-  ngAfterViewInit() {
-    this.getTotalRow();
   }
 
   ngOnDestroy() {
@@ -86,27 +85,37 @@ export class OrderBuyReportSupplierComponent implements OnInit, AfterViewInit, O
         this.dataSource = new MatTableDataSource<OrderBySupplierPivotMonth>(
           res
         );
+        this.dataSource.sort = this.sort;
       });
   }
 
   getTotalRow() {
-      if (this.monthCols !== undefined) {
-        this.monthCols.forEach(col => {
-          this.chartData[col.key] = this.getTotal(col.key);
-        });
-        console.log(this.chartData);
-      }
-    
+    this.chartTotalData.supplierName = 'all suppliers';
+
+    this.monthCols.forEach(col => {
+      this.chartTotalData[col.key] = this.getTotal(col.key);
+    });
   }
 
   getTotal(col: string) {
-    return this.dataSource ? this.dataSource.data
-      .map(t => t[col])
-      .reduce((acc, value) => acc + value, 0) : 0;
+    return this.dataSource
+      ? this.dataSource.data
+          .map(t => t[col])
+          .reduce((acc, value) => acc + value, 0)
+      : 0;
   }
 
-  toggleChart(row: OrderBySupplierPivotMonth) {
+  toggleChart(row?: OrderBySupplierPivotMonth) {
     this.showingChart = !this.showingChart;
+
     this.chartData = row;
+  }
+
+  toggleTotalChart() {
+    this.showingChart = !this.showingChart;
+
+    this.getTotalRow();
+
+    this.chartData = this.chartTotalData;
   }
 }

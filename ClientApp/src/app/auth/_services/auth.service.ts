@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
-import { tap, share } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { TokenResponse } from '../_interfaces/token-response';
 import { TokenRequest } from '../_interfaces/token-request';
