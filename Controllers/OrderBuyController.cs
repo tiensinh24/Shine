@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Mapster;
@@ -8,7 +6,6 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 using Shine.Controllers.Interfaces;
 using Shine.Data;
@@ -16,13 +13,12 @@ using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
-using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
-using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
-namespace Shine.Controllers {
-    [Produces("application/json")]
+namespace Shine.Controllers
+{
+  [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -166,9 +162,30 @@ namespace Shine.Controllers {
             await _repository.CommitAsync();
         }
 
-#endregion
+    #endregion
 
-#endregion
+    #endregion
 
+    #region Reports
+
+    [HttpGet("value-total")]
+    public ActionResult<decimal> GetOrdersSum(int year, int? month)
+    {
+      return _repository.GetOrdersSum(year, month);
     }
+
+    [HttpGet("cost-total")]
+    public ActionResult<decimal> GetOrdersCostSum(int year, int? month)
+    {
+      return _repository.GetOrdersCostSum(year, month);
+    }
+
+    [HttpGet("count")]
+    public ActionResult<int> GetOrdersCount(int year, int? month) {
+        return _repository.GetOrdersCount(year, month);
+    }
+
+    #endregion
+
+  }
 }

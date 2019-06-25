@@ -1,3 +1,17 @@
-<p>
-  order-buy-report-home works!
-</p>
+<main class="mat-typography">
+    <mat-card>
+        <mat-card-header>
+          <h1>{{ordersCount}}</h1>
+          <p> orders has placed this month with</p>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Values</p>
+          <h1>{{ordersValue | currency}}</h1>
+
+          <p>Costs</p>
+          <h1>{{ordersCost | currency}}</h1>
+        </mat-card-content>
+        
+      </mat-card>
+      
+</main>

@@ -34,17 +34,10 @@ export class OrderBuyService {
   }
 
   getOrderDetail(orderId: number): Observable<OrderBuyDetail> {
-    return this.http.get<OrderBuyDetail>(
-      `${this.baseUrl}api/orderBuy/${orderId}/detail`
-    );
+    return this.http.get<OrderBuyDetail>(`${this.baseUrl}api/orderBuy/${orderId}/detail`);
   }
 
-  getPagedOrders(
-    pagingParams: PagingParams,
-    sortParams?: SortParams,
-    queryParams?: OrderBuyQuery,
-    filter = ''
-  ): Observable<PagedOrderBuy> {
+  getPagedOrders(pagingParams: PagingParams, sortParams?: SortParams, queryParams?: OrderBuyQuery, filter = ''): Observable<PagedOrderBuy> {
     let httpParams = new HttpParams()
       .set('pageIndex', `${pagingParams.pageIndex}`)
       .set('pageSize', `${pagingParams.pageSize}`)
@@ -67,20 +60,12 @@ export class OrderBuyService {
     });
   }
 
-  addOrder(
-    orderWithDetails: OrderBuyWithNavigations
-  ): Observable<HttpResponse<OrderBuyWithNavigations>> {
-    return this.http.post<HttpResponse<OrderBuyWithNavigations>>(
-      `${this.baseUrl}api/orderBuy/`,
-      orderWithDetails
-    );
+  addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {
+    return this.http.post<HttpResponse<OrderBuyWithNavigations>>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
   }
 
   updateOrder(orderbuy: OrderBuy): Observable<OrderBuyList> {
-    return this.http.put<OrderBuyList>(
-      `${this.baseUrl}api/orderBuy/`,
-      orderbuy
-    );
+    return this.http.put<OrderBuyList>(`${this.baseUrl}api/orderBuy/`, orderbuy);
   }
 
   deleteOrder(orderId: number): Observable<number> {
@@ -95,43 +80,57 @@ export class OrderBuyService {
 
   // *LineItems
 
-  getProductsNotAddedToOrderBySupplierSelect(
-    orderId: number,
-    supplierId: number
-  ): Observable<ProductSelect[]> {
-    return this.http.get<ProductSelect[]>(
-      `${
-        this.baseUrl
-      }api/orderBuy/${orderId}/products-not-added-by-supplier-${supplierId}/select`
-    );
+  getProductsNotAddedToOrderBySupplierSelect(orderId: number, supplierId: number): Observable<ProductSelect[]> {
+    return this.http.get<ProductSelect[]>(`${this.baseUrl}api/orderBuy/${orderId}/products-not-added-by-supplier-${supplierId}/select`);
   }
 
   addOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.post<OrderBuyProducts>(
-      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/add-item/`,
-      productOrder
-    );
+    return this.http.post<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/${productOrder.orderId}/add-item/`, productOrder);
   }
 
   addOrderProducts(productsOrder: ProductOrder[]): Observable<void> {
-    return this.http.post<void>(
-      `${this.baseUrl}api/orderBuy/${productsOrder[0].orderId}/add-items/`,
-      productsOrder
-    );
+    return this.http.post<void>(`${this.baseUrl}api/orderBuy/${productsOrder[0].orderId}/add-items/`, productsOrder);
   }
 
   updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
     return this.http.put<OrderBuyProducts>(
-      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${
-        productOrder.productId
-      }`,
+      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`,
       productOrder
     );
   }
 
   deleteOrderProduct(orderId: number, productId: number): Observable<boolean> {
-    return this.http.delete<boolean>(
-      `${this.baseUrl}api/orderBuy/${orderId}/delete/${productId}`
-    );
+    return this.http.delete<boolean>(`${this.baseUrl}api/orderBuy/${orderId}/delete/${productId}`);
+  }
+
+  // *Reports
+  getOrdersSum(year: number, month?: number): Observable<number> {
+    let url = `${this.baseUrl}api/orderBuy/value-total?year=${year}`;
+
+    if (month > 0) {
+      url += `&month=${month}`;
+    }
+
+    return this.http.get<number>(url);
+  }
+
+  getOrdersCostSum(year: number, month?: number): Observable<number> {
+    let url = `${this.baseUrl}api/orderBuy/cost-total?year=${year}`;
+
+    if (month > 0) {
+      url += `&month=${month}`;
+    }
+
+    return this.http.get<number>(url);
+  }
+
+  getOrdersCount(year: number, month?: number): Observable<number> {
+    let url = `${this.baseUrl}api/orderBuy/count?year=${year}`;
+
+    if (month > 0) {
+      url += `&month=${month}`;
+    }
+
+    return this.http.get<number>(url);
   }
 }

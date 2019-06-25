@@ -44,5 +44,14 @@ namespace Shine.Controllers.Interfaces {
 
 #endregion
 
+#region Reports
+
+        ActionResult<decimal> GetOrdersSum(int year, int? month);
+        
+        ActionResult<decimal> GetOrdersCostSum(int year, int? month);
+        
+        ActionResult<int> GetOrdersCount(int year, int? month);
+    
+#endregion
     }
 }

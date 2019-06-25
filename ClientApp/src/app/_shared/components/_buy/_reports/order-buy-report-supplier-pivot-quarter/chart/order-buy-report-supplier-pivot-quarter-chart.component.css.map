@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACT,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,mBAAmB;EAC3B,UAAU,EAAE,IAAI;CACnB",
+    "sources": [
+        "order-buy-report-supplier-pivot-quarter-chart.component.scss"
+    ],
+    "names": [],
+    "file": "order-buy-report-supplier-pivot-quarter-chart.component.css"
+}

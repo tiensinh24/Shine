@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -8,11 +7,11 @@ using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
-using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Interfaces {
-    public interface IOrderBuyRepository : IRepository {
+namespace Shine.Data.Infrastructures.Interfaces
+{
+  public interface IOrderBuyRepository : IRepository {
 
 #region Order
 
@@ -61,6 +60,15 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task DeleteProductOrderAsync(int orderId, int productId);
 
 #endregion
+
+#endregion
+
+#region Reports
+    
+    decimal GetOrdersSum(int year, int? month);
+    decimal GetOrdersCostSum(int year, int? month);
+
+    int GetOrdersCount(int year, int? month);
 
 #endregion
 
