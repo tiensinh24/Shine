@@ -11,7 +11,7 @@
 
     <!-- Pivot table -->
     <div class="pivot-table">
-      <table mat-table matSort [dataSource]="dataSource">
+      <table class="animated fadeInLeft" mat-table matSort [dataSource]="dataSource" *ngIf="dataSource?.filteredData.length; else noData">
         <!-- SupplierName column -->
         <ng-container matColumnDef="supplierName" sticky>
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplier Name</th>
@@ -43,6 +43,11 @@
         <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
         <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
       </table>
+
+      <ng-template #noData>
+        <p>This year has no order.</p>
+      </ng-template>
+      
     </div>
   </section>
 
