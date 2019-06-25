@@ -8,16 +8,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [OrderBuyReportSupplierPivotQuarterComponent, OrderBuyReportSupplierPivotQuarterChartComponent],
   imports: [
     // Material
     MatTableModule,
+    MatSortModule,
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+
 
     // Share module
     SharedModule,
@@ -28,6 +31,7 @@ import { GoogleChartsModule } from 'angular-google-charts';
   exports: [
     // Material
     MatTableModule,
+    MatSortModule,
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,

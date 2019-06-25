@@ -15,7 +15,11 @@ export class OrderBuyReportSupplierPivotQuarterComponent implements OnInit, OnDe
   // Subscription
   pivotData$: Subscription;
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) set matSort(matSort: MatSort) {
+    this.sort = matSort;
+    this.dataSource.sort = this.sort;
+  }
 
   years = [];
   selectedYear = moment().year();
@@ -25,9 +29,9 @@ export class OrderBuyReportSupplierPivotQuarterComponent implements OnInit, OnDe
   chartData = <OrderBySupplierPivotQuarter>{};
   chartTotalData = <OrderBySupplierPivotQuarter>{};
 
-  dataSource: MatTableDataSource<OrderBySupplierPivotQuarter>;
+  dataSource = new MatTableDataSource<OrderBySupplierPivotQuarter>();
   columnsToDisplay = ['supplierName', 'quarterOne', 'quarterTwo', 'quarterThree', 'quarterFourth', 'total', 'actions'];
-  monthCols = [
+  quarterCols = [
     { key: 'quarterOne', value: 'Q01' },
     { key: 'quarterTwo', value: 'Q02' },
     { key: 'quarterThree', value: 'Q03' },
@@ -57,14 +61,13 @@ export class OrderBuyReportSupplierPivotQuarterComponent implements OnInit, OnDe
   getData(year: number) {
     this.pivotData$ = this.supplierService.getOrderBySupplierPivotQuarter(year).subscribe((res: OrderBySupplierPivotQuarter[]) => {
       this.dataSource = new MatTableDataSource<OrderBySupplierPivotQuarter>(res);
-      this.dataSource.sort = this.sort;
     });
   }
 
   getTotalRow() {
     this.chartTotalData.supplierName = 'all suppliers';
 
-    this.monthCols.forEach(col => {
+    this.quarterCols.forEach(col => {
       this.chartTotalData[col.key] = this.getTotal(col.key);
     });
   }
@@ -75,15 +78,14 @@ export class OrderBuyReportSupplierPivotQuarterComponent implements OnInit, OnDe
 
   toggleChart(row?: OrderBySupplierPivotQuarter) {
     this.showingChart = !this.showingChart;
-
     this.chartData = row;
+    this.dataSource.sort = this.sort;
   }
 
   toggleTotalChart() {
     this.showingChart = !this.showingChart;
-
     this.getTotalRow();
-
     this.chartData = this.chartTotalData;
+    this.dataSource.sort = this.sort;
   }
 }

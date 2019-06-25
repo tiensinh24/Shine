@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { OrderBySupplierPivotQuarter } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-quarter';
 
 @Component({
   selector: 'app-order-buy-report-supplier-pivot-quarter-chart',
@@ -6,10 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-buy-report-supplier-pivot-quarter-chart.component.scss']
 })
 export class OrderBuyReportSupplierPivotQuarterChartComponent implements OnInit {
+  @Input() chartYear: number;
+  @Input() chartData: OrderBySupplierPivotQuarter;
 
-  constructor() { }
+  title = '';
+  type = 'ColumnChart';
+  data = [[]];
+  columnNames = ['Quarter', 'Values'];
+  options = {};
+
+  constructor() {}
 
   ngOnInit() {
+    this.title = `Order value by ${this.chartData.supplierName} in ${this.chartYear}`;
+    this.data = [
+      ['Q01', +`${this.chartData.quarterOne}`],
+      ['Q02', +`${this.chartData.quarterTwo}`],
+      ['Q03', +`${this.chartData.quarterThree}`],
+      ['Q04', +`${this.chartData.quarterFourth}`],
+      ['Total', +`${this.chartData.total}`]
+    ];
   }
-
 }

@@ -15,7 +15,11 @@ export class OrderBuyReportSupplierPivotMonthComponent implements OnInit, OnDest
   // Subscription
   pivotData$: Subscription;
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.dataSource.sort = this.sort;
+  }
 
   years = [];
   selectedYear = moment().year();
@@ -25,7 +29,7 @@ export class OrderBuyReportSupplierPivotMonthComponent implements OnInit, OnDest
   chartData = <OrderBySupplierPivotMonth>{};
   chartTotalData = <OrderBySupplierPivotMonth>{};
 
-  dataSource: MatTableDataSource<OrderBySupplierPivotMonth>;
+  dataSource = new MatTableDataSource<OrderBySupplierPivotMonth>();
   columnsToDisplay = [
     'supplierName',
     'jan',
@@ -79,14 +83,9 @@ export class OrderBuyReportSupplierPivotMonthComponent implements OnInit, OnDest
   }
 
   getData(year: number) {
-    this.pivotData$ = this.supplierService
-      .getOrderBySupplierPivotMonth(year)
-      .subscribe((res: OrderBySupplierPivotMonth[]) => {
-        this.dataSource = new MatTableDataSource<OrderBySupplierPivotMonth>(
-          res
-        );
-        this.dataSource.sort = this.sort;
-      });
+    this.pivotData$ = this.supplierService.getOrderBySupplierPivotMonth(year).subscribe((res: OrderBySupplierPivotMonth[]) => {
+      this.dataSource = new MatTableDataSource<OrderBySupplierPivotMonth>(res);
+    });
   }
 
   getTotalRow() {
@@ -98,11 +97,7 @@ export class OrderBuyReportSupplierPivotMonthComponent implements OnInit, OnDest
   }
 
   getTotal(col: string) {
-    return this.dataSource
-      ? this.dataSource.data
-          .map(t => t[col])
-          .reduce((acc, value) => acc + value, 0)
-      : 0;
+    return this.dataSource ? this.dataSource.data.map(t => t[col]).reduce((acc, value) => acc + value, 0) : 0;
   }
 
   toggleChart(row?: OrderBySupplierPivotMonth) {

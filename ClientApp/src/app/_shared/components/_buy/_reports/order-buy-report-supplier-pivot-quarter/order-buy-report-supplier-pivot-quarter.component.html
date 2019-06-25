@@ -19,8 +19,8 @@
           <td mat-footer-cell *matFooterCellDef>Total</td>
         </ng-container>
 
-        <!-- Month columns -->
-        <ng-container [matColumnDef]="column.key" *ngFor="let column of monthCols">
+        <!-- Quarter columns -->
+        <ng-container [matColumnDef]="column.key" *ngFor="let column of quarterCols">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.value }}</th>
           <td mat-cell *matCellDef="let row">{{ row[column.key] | number }}</td>
           <td mat-footer-cell *matFooterCellDef>
