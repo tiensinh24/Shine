@@ -13,9 +13,10 @@ import { OrderBuyWithNavigations } from '../_interfaces/order-buy-with-details-t
 import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
 import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
+import { OrderAndCostPerMonth } from '../_interfaces/_reports/order-and-cost-per-month';
 
 function isEmpty(obj) {
-  for (let x in obj) {
+  for (const x in obj) {
     return false;
   }
   return true;
@@ -132,5 +133,11 @@ export class OrderBuyService {
     }
 
     return this.http.get<number>(url);
+  }
+
+  getOrderAndCostPerMonth(year: number): Observable<OrderAndCostPerMonth[]> {
+    const url = `${this.baseUrl}api/orderBuy/order-and-cost-per-month?year=${year}`;
+
+    return this.http.get<OrderAndCostPerMonth[]>(url);
   }
 }

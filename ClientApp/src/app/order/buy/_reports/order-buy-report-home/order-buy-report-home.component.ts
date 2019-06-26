@@ -3,6 +3,7 @@ import { OrderBuyService } from '../../_services/order-buy.service';
 import { Subscription } from 'rxjs';
 
 import * as moment from 'moment';
+import { OrderAndCostPerMonth } from '../../_interfaces/_reports/order-and-cost-per-month';
 
 @Component({
   selector: 'app-order-buy-report-home',
@@ -18,10 +19,15 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   ordersCost$: Subscription;
   ordersCount: number;
   ordersCount$: Subscription;
+  chartMonthData: OrderAndCostPerMonth[];
+  chartMonthData$: Subscription;
+
+  // true: month & false: quarter
+  chartMode = true;
 
   // Current year & month
   currentYear = moment().year();
-  currentMonth = moment().month();  
+  currentMonth = moment().month() + 1;
 
   ngOnInit() {
     this.initialize();
@@ -45,5 +51,11 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
     this.ordersCount$ = this.orderService.getOrdersCount(this.currentYear, this.currentMonth).subscribe(res => {
       this.ordersCount = res;
     });
+
+    this.chartMonthData$ = this.orderService.getOrderAndCostPerMonth(this.currentYear).subscribe(res => {
+      this.chartMonthData = res;
+    });
+
+    
   }
 }

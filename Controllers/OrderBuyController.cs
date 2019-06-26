@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shine.Controllers.Interfaces;
 using Shine.Data;
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
@@ -183,6 +184,14 @@ namespace Shine.Controllers
     [HttpGet("count")]
     public ActionResult<int> GetOrdersCount(int year, int? month) {
         return _repository.GetOrdersCount(year, month);
+    }
+
+    [HttpGet("order-and-cost-per-month")]
+    public async Task<ActionResult<IEnumerable<OrderAndCostPerMonthDto>>> GetOrderAndCostPerMonth(int year)
+    {
+      var query = await _repository.GetOrderAndCostPerMonthAsync(year);
+
+      return Ok(query);
     }
 
     #endregion

@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
@@ -65,10 +66,11 @@ namespace Shine.Data.Infrastructures.Interfaces
 
 #region Reports
     
-    decimal GetOrdersSum(int year, int? month);
+    decimal GetOrdersSum(int year, int? month);    
     decimal GetOrdersCostSum(int year, int? month);
-
     int GetOrdersCount(int year, int? month);
+    Task<IEnumerable<OrderAndCostPerMonthDto>> GetOrderAndCostPerMonthAsync(int year);
+    Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year);
 
 #endregion
 

@@ -28,6 +28,9 @@ import { MatSortModule } from '@angular/material/sort';
     GoogleChartsModule
   ],
   exports: [
+    OrderBuyReportSupplierPivotMonthComponent,
+    OrderBuyReportSupplierPivotMonthChartComponent,
+
     // Material
     MatTableModule,
     MatSortModule,

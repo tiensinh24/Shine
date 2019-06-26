@@ -13,7 +13,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/order-buy/report/home', pathMatch: 'full' },
       { path: 'home', component: OrderBuyReportHomeComponent },
-      { path: 'employee', component: OrderBuyReportEmployeeComponent },
       { path: 'supplier/pivot-month', component: OrderBuyReportSupplierPivotMonthComponent },
       { path: 'supplier/pivot-quarter', component: OrderBuyReportSupplierPivotQuarterComponent }
     ]

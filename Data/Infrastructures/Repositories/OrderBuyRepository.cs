@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Products;
@@ -353,7 +354,7 @@ namespace Shine.Data.Infrastructures.Repositories
         query = _repository
         .AsNoTracking()
         .Where(o => o.DateOfIssue.Year == year && o.DateOfIssue.Month == month)
-        .Count();        
+        .Count();
       }
       else
       {
@@ -365,6 +366,29 @@ namespace Shine.Data.Infrastructures.Repositories
 
       return query;
     }
+
+    public async Task<IEnumerable<OrderAndCostPerMonthDto>> GetOrderAndCostPerMonthAsync(int year)
+    {
+      var query = await _context.Set<OrderBuy>()
+        .AsNoTracking()
+        .Where(o => o.DateOfIssue.Year == year && o.OrderType == true)
+        .GroupBy(o => o.DateOfIssue.Month)
+        .Select(g => new OrderAndCostPerMonthDto
+        {
+          Month = g.Key,
+          Amount = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity* po.Price * (1 + po.Tax))),
+          Cost = g.Sum(o => o.Costs.Sum(c => c.Amount))
+        })
+        .ToListAsync();
+
+      return query;
+    }
+
+    public Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year)
+    {
+      throw new NotImplementedException();
+    }
+
 
     #endregion
 

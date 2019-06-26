@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Models;
@@ -51,6 +52,8 @@ namespace Shine.Controllers.Interfaces {
         ActionResult<decimal> GetOrdersCostSum(int year, int? month);
         
         ActionResult<int> GetOrdersCount(int year, int? month);
+
+        Task<ActionResult<IEnumerable<OrderAndCostPerMonthDto>>> GetOrderAndCostPerMonth(int year);
     
 #endregion
     }

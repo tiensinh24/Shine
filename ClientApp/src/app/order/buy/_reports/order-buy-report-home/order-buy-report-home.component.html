@@ -1,17 +1,36 @@
 <main class="mat-typography">
-    <mat-card>
-        <mat-card-header>
-          <h1>{{ordersCount}}</h1>
-          <p> orders has placed this month with</p>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Values</p>
-          <h1>{{ordersValue | currency}}</h1>
+  <mat-card class="month-review mat-elevation-z0">
+    <mat-card-header>
+      <mat-card-title>
+        <h1>This month's review</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
+      <div class="review">
+        <p>Order values</p>
+        <h1>{{ ordersValue | currency }}</h1>
 
-          <p>Costs</p>
-          <h1>{{ordersCost | currency}}</h1>
-        </mat-card-content>
-        
-      </mat-card>
-      
+        <p>Costs</p>
+        <h1>{{ ordersCost | currency }} </h1>
+
+        <div fxLayout="row">
+          <h1>{{ ordersCount }}</h1>
+          <p>of total orders</p>
+        </div>
+      </div>
+
+      <div class="chart" fxLayout="column" fxLayoutAlign="start stretch">
+        <app-order-buy-month-chart *ngIf="chartMonthData" [year]="currentYear" [chartData]="chartMonthData"></app-order-buy-month-chart>
+
+        <mat-button-toggle-group [(ngModel)]="chartMode" fxFlexAlign="center">
+          <mat-button-toggle checked value="true">Month</mat-button-toggle>
+          <mat-button-toggle value="false">Quarter</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </main>
+
+{{chartMode}}
+
+

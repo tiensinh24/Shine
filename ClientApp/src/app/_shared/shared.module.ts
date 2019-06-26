@@ -9,9 +9,10 @@ import { AgePipe } from './_pipes/age.pipe';
 import { CustomCurrencyPipe } from './_pipes/custom-currency.pipe';
 import { GenderPipe } from './_pipes/gender.pipe';
 import { ImportPipe } from './_pipes/import.pipe';
+import { MonthPipe } from './_pipes/month.pipe';
 
 @NgModule({
-  declarations: [GenderPipe, AgePipe, CustomCurrencyPipe, ImportPipe, MatAutocompleteTriggerEnforceSelectionDirective],
+  declarations: [GenderPipe, AgePipe, CustomCurrencyPipe, ImportPipe, MonthPipe, MatAutocompleteTriggerEnforceSelectionDirective],
   imports: [
     CommonModule,
 

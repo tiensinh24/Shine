@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shine.Data;
+using Shine.Data.Dto.Orders;
 using Shine.Data.Models;
 
 namespace Shine.Controllers
@@ -20,24 +21,18 @@ namespace Shine.Controllers
     }
 
     [HttpGet]
-    public decimal OrdersSumAsync(int year, int? month)
+    public object OrdersSumAsync(int year)
     {
-      decimal query;
-
-      if (month > 0)
-      {
-        query = _context.Costs
+      var query = _context.Set<OrderBuy>()
         .AsNoTracking()
-        .Where(c => c.Order.OrderType == true && c.Order.DateOfIssue.Year == year && c.Order.DateOfIssue.Month == month)
-        .Sum(c => c.Amount);
-      }
-      else
-      {
-        query = _context.Costs
-        .AsNoTracking()
-        .Where(c => c.Order.OrderType == true && c.Order.DateOfIssue.Year == year)
-        .Sum(c => c.Amount);
-      }
+        .Where(o => o.DateOfIssue.Year == year && o.OrderType == true)
+        .GroupBy(o => o.DateOfIssue.Month)
+        .Select(g => new OrderAndCostPerMonthDto
+        {
+          Month = g.Key,
+          Amount = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity* po.Price * (1 + po.Tax))),
+          Cost = g.Sum(o => o.Costs.Sum(c => c.Amount))
+        });
 
       return query;
     }

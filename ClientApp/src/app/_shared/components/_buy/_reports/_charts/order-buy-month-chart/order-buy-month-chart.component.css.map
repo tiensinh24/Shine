@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "order-buy-month-chart.component.scss"
+    ],
+    "names": [],
+    "file": "order-buy-month-chart.component.css"
+}
