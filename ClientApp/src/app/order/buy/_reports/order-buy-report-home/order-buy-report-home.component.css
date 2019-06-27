@@ -21,11 +21,13 @@ main mat-card.month-review > div.review > div.count > h1 {
 
 main mat-card.debt {
   margin-top: 1rem;
+  width: 400px;
 }
 
 main mat-card.latest-order {
   margin-top: 1rem;
   padding: 0;
+  width: 400px;
 }
 
 main mat-card.latest-order h1.title {

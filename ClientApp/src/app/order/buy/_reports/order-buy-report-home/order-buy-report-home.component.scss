@@ -23,11 +23,13 @@ main {
 
   mat-card.debt {
     margin-top: 1rem;
+    width: 400px;
   }
 
   mat-card.latest-order {
     margin-top: 1rem;
     padding: 0;
+    width: 400px;
 
     h1.title {
       background: mediumslateblue;

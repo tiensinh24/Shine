@@ -30,9 +30,9 @@
     </mat-card>
   </section>
 
-  <div fxLayout="row" fxLayoutGap="1rem">
-    <section id="debt" fxFlex="50">
-      <mat-card class="debt mat-elevation-z0">
+  <section id="debt-latest-order">
+    <div fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="1rem">
+      <mat-card fxFlex="50" class="debt mat-elevation-z0">
         <mat-card-header>
           <mat-card-title>Payment remaning</mat-card-title>
           <mat-card-subtitle>{{ currentYear }}</mat-card-subtitle>
@@ -44,10 +44,8 @@
           <button mat-button>Ok</button>
         </mat-card-actions>
       </mat-card>
-    </section>
 
-    <section id="latest-order" fxFlex>
-      <mat-card class="latest-order">
+      <mat-card *ngIf="latestOrder" fxFlex class="latest-order">
         <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="32px">
           <h1 class="title">Latest order</h1>
           <div class="avatar"></div>
@@ -72,6 +70,6 @@
           </div>
         </div>
       </mat-card>
-    </section>
-  </div>
+    </div>
+  </section>
 </main>
