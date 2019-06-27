@@ -14,6 +14,7 @@ using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
+using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -376,7 +377,7 @@ namespace Shine.Data.Infrastructures.Repositories
         .Select(g => new OrderAndCostPerMonthDto
         {
           Month = g.Key,
-          Amount = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity* po.Price * (1 + po.Tax))),
+          Amount = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
           Cost = g.Sum(o => o.Costs.Sum(c => c.Amount))
         })
         .ToListAsync();
@@ -387,6 +388,29 @@ namespace Shine.Data.Infrastructures.Repositories
     public Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year)
     {
       throw new NotImplementedException();
+    }
+
+    public async Task<OrderBuyLatestDto> GetLatestOrderAsync()
+    {
+      var order = await _repository
+        .AsNoTracking()
+        .ProjectToType<OrderBuyLatestDto>()
+        .OrderByDescending(o => o.DateOfIssue)
+        .FirstOrDefaultAsync();
+
+      return order;
+    }
+
+    public decimal GetTotalOrderDebt()
+    {
+      var debt = _repository
+        .AsNoTracking()
+        .Where(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+          - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0) > 0)
+        .Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+          - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0));
+
+      return debt;
     }
 
 

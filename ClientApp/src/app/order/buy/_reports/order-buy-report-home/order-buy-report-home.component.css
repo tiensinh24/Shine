@@ -2,20 +2,70 @@ main {
   padding: 1rem;
 }
 
-main mat-card.month-review > mat-card-header {
-  color: royalblue;
+main mat-card.month-review h1.title {
+  color: salmon;
 }
 
-main mat-card.month-review > mat-card-content .chart {
+main mat-card.month-review > div.review > div.value > h1 {
+  color: dodgerblue;
+}
+
+main mat-card.month-review > div.review > div.cost > h1 {
+  color: dodgerblue;
+}
+
+main mat-card.month-review > div.review > div.count > h1 {
+  font-size: xx-large;
+  color: salmon;
+}
+
+main mat-card.debt {
+  margin-top: 1rem;
+}
+
+main mat-card.latest-order {
+  margin-top: 1rem;
+  padding: 0;
+}
+
+main mat-card.latest-order h1.title {
+  background: mediumslateblue;
+  height: 100px;
   width: 100%;
-}
-
-mat-button-toggle {
+  text-align: center;
   color: white;
-  background: #4CAF50;
+  padding-top: 1rem;
 }
 
-mat-button-toggle.mat-button-toggle-checked, mat-button-toggle.cdk-focused, mat-button-toggle.cdk-mouse-focused {
+main mat-card.latest-order .avatar {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: absolute;
+  margin-top: 60px;
+  width: 100px;
+  height: 100px;
+  z-index: 10;
+  border: 5px solid white;
+  border-radius: 100px;
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+
+main mat-card.latest-order .rating {
+  padding-top: 1rem;
+}
+
+main mat-card.latest-order .content {
+  padding: 0 1rem 1rem 1rem;
+}
+
+main mat-card.latest-order .content > div > mat-icon {
+  font-size: 32px;
+}
+
+mat-button-toggle.mat-button-toggle-checked,
+mat-button-toggle.cdk-focused,
+mat-button-toggle.cdk-mouse-focused {
   color: white;
   background: #3f51b5;
 }

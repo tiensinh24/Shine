@@ -17,7 +17,7 @@ namespace Shine.Data.Dto.Suppliers {
         public string Telephone { get; set; }
         public string Fax { get; set; }
         public int CountryId { get; set; }
-        public decimal Rating { get; set; }
+        public Single Rating { get; set; }
 
 #endregion
 

@@ -13,6 +13,7 @@ using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
+using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -192,6 +193,20 @@ namespace Shine.Controllers
       var query = await _repository.GetOrderAndCostPerMonthAsync(year);
 
       return Ok(query);
+    }
+
+    [HttpGet("latest")]
+    public async Task<ActionResult<OrderBuyLatestDto>> GetLatestOrder()
+    {
+        var query = await _repository.GetLatestOrderAsync();
+
+        return query;
+    }
+
+    [HttpGet("total-debt")]
+    public ActionResult<decimal> GetTotalOrderDebt()
+    {
+        return _repository.GetTotalOrderDebt();
     }
 
     #endregion

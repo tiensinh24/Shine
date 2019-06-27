@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { OrderBuyService } from '../../_services/order-buy.service';
 import { Subscription } from 'rxjs';
 
 import * as moment from 'moment';
 import { OrderAndCostPerMonth } from '../../_interfaces/_reports/order-and-cost-per-month';
+import { NavMenuComponent } from 'src/app/nav-menu/nav-menu.component';
+import { OrderBuyLatest } from '../../_interfaces/_reports/order-buy-latest';
 
 @Component({
   selector: 'app-order-buy-report-home',
@@ -13,14 +15,19 @@ import { OrderAndCostPerMonth } from '../../_interfaces/_reports/order-and-cost-
 export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   constructor(private orderService: OrderBuyService) {}
   // Subscription
-  ordersValue: number;
   ordersValue$: Subscription;
-  ordersCost: number;
   ordersCost$: Subscription;
-  ordersCount: number;
   ordersCount$: Subscription;
-  chartMonthData: OrderAndCostPerMonth[];
   chartMonthData$: Subscription;
+  latestOrder$: Subscription;
+  totalDebt$: Subscription;
+
+  ordersValue: number;
+  ordersCost: number;
+  ordersCount: number;
+  chartMonthData: OrderAndCostPerMonth[];
+  latestOrder: OrderBuyLatest;
+  totalDebt: number;
 
   // true: month & false: quarter
   chartMode = true;
@@ -37,6 +44,9 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
     this.ordersValue$.unsubscribe();
     this.ordersCost$.unsubscribe();
     this.ordersCount$.unsubscribe();
+    this.chartMonthData$.unsubscribe();
+    this.latestOrder$.unsubscribe();
+    this.totalDebt$.unsubscribe();
   }
 
   initialize() {
@@ -56,6 +66,16 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
       this.chartMonthData = res;
     });
 
-    
+    this.latestOrder$ = this.orderService.getLatestOrder().subscribe((res: OrderBuyLatest) => {
+      this.latestOrder = res;
+    });
+
+    this.totalDebt$ = this.orderService.getTotalOrderDebt().subscribe((res: number) => {
+      this.totalDebt = res;
+    });
+  }
+
+  setChartMode() {
+    this.chartMode = !this.chartMode;
   }
 }

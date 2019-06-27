@@ -2,7 +2,7 @@ import { AfterContentChecked, Component, Input, OnInit, ViewChild } from '@angul
 import { Router } from '@angular/router';
 import { IconService } from '../_shared/_services/icon.service';
 import { AuthService } from '../auth/_services/auth.service';
-import { MatSidenavContainer, MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-nav-menu',
@@ -14,6 +14,8 @@ export class NavMenuComponent implements OnInit, AfterContentChecked {
   sidenavMode = true;
 
   @Input() loading: boolean;
+
+  @ViewChild('leftnav', { static: false }) leftnav: MatSidenav;
 
   constructor(private auth: AuthService, private router: Router, private iconService: IconService) {
     // Get svgIcon from IconService
@@ -46,6 +48,10 @@ export class NavMenuComponent implements OnInit, AfterContentChecked {
 
   isLoggedIn() {
     return this.auth.isLoggedIn();
+  }
+
+  toggleLeftNav() {
+    this.leftnav.toggle();
   }
 
 }

@@ -14,6 +14,7 @@ import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
 import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
 import { OrderAndCostPerMonth } from '../_interfaces/_reports/order-and-cost-per-month';
+import { OrderBuyLatest } from '../_interfaces/_reports/order-buy-latest';
 
 function isEmpty(obj) {
   for (const x in obj) {
@@ -139,5 +140,13 @@ export class OrderBuyService {
     const url = `${this.baseUrl}api/orderBuy/order-and-cost-per-month?year=${year}`;
 
     return this.http.get<OrderAndCostPerMonth[]>(url);
+  }
+
+  getLatestOrder(): Observable<OrderBuyLatest> {
+    return this.http.get<OrderBuyLatest>(`${this.baseUrl}api/orderBuy/latest`);
+  }
+
+  getTotalOrderDebt(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}api/orderBuy/total-debt`);
   }
 }

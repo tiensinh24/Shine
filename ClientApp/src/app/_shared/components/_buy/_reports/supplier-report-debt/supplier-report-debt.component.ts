@@ -7,10 +7,10 @@ import {
   AfterViewInit
 } from '@angular/core';
 import { Subscription, merge, fromEvent, Observable } from 'rxjs';
-import { SupplierDebt } from '../../_interfaces/reports/supplier-debt';
-import { SupplierService } from '../../_services/supplier.service';
+import { SupplierDebt } from '../../../../../supplier/_interfaces/reports/supplier-debt';
+import { SupplierService } from '../../../../../supplier/_services/supplier.service';
 import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SupplierDebtDataSource } from '../../_data-source/reports/supplier-deb-data-source';
+import { SupplierDebtDataSource } from '../../../../../supplier/_data-source/reports/supplier-deb-data-source';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
@@ -22,7 +22,7 @@ import {
   transition,
   animate
 } from '@angular/animations';
-import { OrderDebt } from '../../_interfaces/reports/order-debt';
+import { OrderDebt } from '../../../../../supplier/_interfaces/reports/order-debt';
 
 @Component({
   selector: 'app-supplier-report-debt',

@@ -7,6 +7,7 @@ using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Queries;
+using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Models;
 
 namespace Shine.Controllers.Interfaces {
@@ -54,6 +55,10 @@ namespace Shine.Controllers.Interfaces {
         ActionResult<int> GetOrdersCount(int year, int? month);
 
         Task<ActionResult<IEnumerable<OrderAndCostPerMonthDto>>> GetOrderAndCostPerMonth(int year);
+
+        Task<ActionResult<OrderBuyLatestDto>> GetLatestOrder();
+
+        ActionResult<decimal> GetTotalOrderDebt();
     
 #endregion
     }

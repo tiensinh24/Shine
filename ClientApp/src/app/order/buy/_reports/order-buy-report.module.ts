@@ -9,6 +9,7 @@ import { OrderBuyReportEmployeeComponent } from './order-buy-report-employee/ord
 import { OrderBuyReportSupplierPivotMonthModule } from 'src/app/_shared/components/_buy/_reports/order-buy-report-supplier-pivot-month/order-buy-report-supplier-pivot-month.module';
 import { OrderBuyReportSupplierPivotQuarterModule } from 'src/app/_shared/components/_buy/_reports/order-buy-report-supplier-pivot-quarter/order-buy-report-supplier-pivot-quarter.module';
 import { OrderBuyMonthChartModule } from 'src/app/_shared/components/_buy/_reports/_charts/order-buy-month-chart/order-buy-month-chart.module';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [OrderBuyReportComponent, OrderBuyReportHomeComponent, OrderBuyReportEmployeeComponent],
@@ -19,10 +20,11 @@ import { OrderBuyMonthChartModule } from 'src/app/_shared/components/_buy/_repor
     // Material
     MaterialSharedModule,
 
-    // Shared reports
+    // Feather modules
     OrderBuyReportSupplierPivotMonthModule,
     OrderBuyReportSupplierPivotQuarterModule,
     OrderBuyMonthChartModule,
+    StarRatingModule,
 
     // Routing
     OrderBuyReportRoutingModule

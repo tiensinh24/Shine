@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "",
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACX,KAAK,EAAE,IAAI;EACX,UAAU,EAAE,KAAK;EACjB,SAAS,EAAE,OAAO;CACnB",
     "sources": [
         "order-buy-month-chart.component.scss"
     ],

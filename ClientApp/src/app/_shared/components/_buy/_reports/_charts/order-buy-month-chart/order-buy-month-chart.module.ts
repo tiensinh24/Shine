@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { OrderBuyMonthChartComponent } from './order-buy-month-chart.component';
+import { AngularResizedEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [OrderBuyMonthChartComponent],
   imports: [
     // Google charts
-    GoogleChartsModule
+    GoogleChartsModule,
+
+    // Resize event
+    AngularResizedEventModule
   ],
   exports: [
     OrderBuyMonthChartComponent,
 
     // Google charts
-    GoogleChartsModule,
+    GoogleChartsModule
   ]
 })
 export class OrderBuyMonthChartModule {}

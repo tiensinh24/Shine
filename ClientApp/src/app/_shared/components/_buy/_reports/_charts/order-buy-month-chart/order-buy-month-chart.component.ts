@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { OrderAndCostPerMonth } from 'src/app/order/buy/_interfaces/_reports/order-and-cost-per-month';
+import { GoogleChartComponent } from 'angular-google-charts';
+import { ResizedEvent } from 'angular-resize-event';
 
 @Component({
   selector: 'app-order-buy-month-chart',
@@ -15,9 +17,18 @@ export class OrderBuyMonthChartComponent implements OnInit {
   data = [[]];
   columnNames = ['Month', 'Value', 'Cost'];
   options = {
-    width: 600,
-    height: 400
+    // width: 600,
+    // height: 400,
+    // legend: { position: 'top', maxLines: 3 },
+    // bar: { groupWidth: '75%' },
+    // isStacked: true
   };
+  @ViewChild('chart', { static: false }) chart: GoogleChartComponent;
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.chart.wrapper.draw();
+  }
 
   constructor() {}
 
@@ -77,4 +88,6 @@ export class OrderBuyMonthChartComponent implements OnInit {
         break;
     }
   }
+
+
 }

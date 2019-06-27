@@ -1,36 +1,77 @@
 <main class="mat-typography">
-  <mat-card class="month-review mat-elevation-z0">
-    <mat-card-header>
-      <mat-card-title>
-        <h1>This month's review</h1>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
-      <div class="review">
-        <p>Order values</p>
-        <h1>{{ ordersValue | currency }}</h1>
+  <section id="month-review">
+    <mat-card fxLayout="row" style="min-width: 200px;" class="month-review mat-elevation-z0">
+      <div class="review" fxLayout="column">
+        <h1 class="title">This month's review</h1>
+        <div class="value">
+          <p>Order values</p>
+          <h1>{{ ordersValue | currency }}</h1>
+        </div>
 
-        <p>Costs</p>
-        <h1>{{ ordersCost | currency }} </h1>
+        <div class="cost">
+          <p>Costs</p>
+          <h1>{{ ordersCost | currency }}</h1>
+        </div>
 
-        <div fxLayout="row">
+        <div class="count" fxLayout="row">
           <h1>{{ ordersCount }}</h1>
-          <p>of total orders</p>
+          <p>of totals order</p>
         </div>
       </div>
 
-      <div class="chart" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="chart" fxFlex fxLayout="column" fxLayoutAlign="start stretch">
         <app-order-buy-month-chart *ngIf="chartMonthData" [year]="currentYear" [chartData]="chartMonthData"></app-order-buy-month-chart>
 
-        <mat-button-toggle-group [(ngModel)]="chartMode" fxFlexAlign="center">
+        <mat-button-toggle-group (change)="setChartMode()" fxFlexAlign="center">
           <mat-button-toggle checked value="true">Month</mat-button-toggle>
           <mat-button-toggle value="false">Quarter</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </mat-card>
+  </section>
+
+  <div fxLayout="row" fxLayoutGap="1rem">
+    <section id="debt" fxFlex="50">
+      <mat-card class="debt mat-elevation-z0">
+        <mat-card-header>
+          <mat-card-title>Payment remaning</mat-card-title>
+          <mat-card-subtitle>{{ currentYear }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <h1>{{ totalDebt | currency }}</h1>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>Ok</button>
+        </mat-card-actions>
+      </mat-card>
+    </section>
+
+    <section id="latest-order" fxFlex>
+      <mat-card class="latest-order">
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="32px">
+          <h1 class="title">Latest order</h1>
+          <div class="avatar"></div>
+          <star-rating class="rating" [starType]="'svg'" [rating]="latestOrder.rating" [readOnly]="true"></star-rating>
+          <div class="content" fxFlexAlign="start" fxLayout="column" fxLayoutGap="16px">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <mat-icon matTooltip="Supplier" fontSet="far" fontIcon="fa-id-card" color="primary"></mat-icon>
+              <span>{{ latestOrder.supplierName }}</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <mat-icon matTooltip="Order No." color="primary">shopping_cart</mat-icon>
+              <span>{{ latestOrder.orderNumber }}</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <mat-icon matTooltip="Order's date & payment's time" color="primary">date_range</mat-icon>
+              <span>{{ latestOrder.dateOfIssue | date: 'dd/MM/yyyy' }} - {{ latestOrder.timeForPayment | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <mat-icon matTooltip="Order's date & payment's time" color="primary">attach_money</mat-icon>
+              <span>{{ latestOrder.value | currency }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </section>
+  </div>
 </main>
-
-{{chartMode}}
-
-
