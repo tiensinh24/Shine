@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { OrderBuyService } from '../../_services/order-buy.service';
-import { Subscription } from 'rxjs';
-
-import * as moment from 'moment';
 import { OrderAndCostPerMonth } from '../../_interfaces/_reports/order-and-cost-per-month';
-import { NavMenuComponent } from 'src/app/nav-menu/nav-menu.component';
 import { OrderBuyLatest } from '../../_interfaces/_reports/order-buy-latest';
+import { OrderBuyService } from '../../_services/order-buy.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { Subscription } from 'rxjs';
+import { OrderValue } from 'src/app/order/_interfaces/order-value';
+
 
 @Component({
   selector: 'app-order-buy-report-home',
@@ -13,7 +13,6 @@ import { OrderBuyLatest } from '../../_interfaces/_reports/order-buy-latest';
   styleUrls: ['./order-buy-report-home.component.scss']
 })
 export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
-  constructor(private orderService: OrderBuyService) {}
   // Subscription
   ordersValue$: Subscription;
   ordersCost$: Subscription;
@@ -21,6 +20,7 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   chartMonthData$: Subscription;
   latestOrder$: Subscription;
   totalDebt$: Subscription;
+  topOrders$: Subscription;
 
   ordersValue: number;
   ordersCost: number;
@@ -28,6 +28,7 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   chartMonthData: OrderAndCostPerMonth[];
   latestOrder: OrderBuyLatest;
   totalDebt: number;
+  topOrders: OrderValue[];
 
   // true: month & false: quarter
   chartMode = true;
@@ -35,6 +36,8 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   // Current year & month
   currentYear = moment().year();
   currentMonth = moment().month() + 1;
+
+  constructor(private orderService: OrderBuyService) {}
 
   ngOnInit() {
     this.initialize();
@@ -47,6 +50,7 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
     this.chartMonthData$.unsubscribe();
     this.latestOrder$.unsubscribe();
     this.totalDebt$.unsubscribe();
+    this.topOrders$.unsubscribe();
   }
 
   initialize() {
@@ -72,6 +76,10 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
 
     this.totalDebt$ = this.orderService.getTotalOrderDebt().subscribe((res: number) => {
       this.totalDebt = res;
+    });
+
+    this.topOrders$ = this.orderService.getTopOrderValue(2, this.currentYear, 0, this.currentMonth).subscribe((res: OrderValue[]) => {
+      this.topOrders = res;
     });
   }
 

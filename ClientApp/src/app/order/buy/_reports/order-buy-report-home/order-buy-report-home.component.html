@@ -1,6 +1,6 @@
 <main class="mat-typography">
   <section id="month-review">
-    <mat-card fxLayout="row" style="min-width: 200px;" class="month-review mat-elevation-z0">
+    <mat-card fxLayout="row" class="month-review mat-elevation-z0 animated fadeInLeft">
       <div class="review" fxLayout="column">
         <h1 class="title">This month's review</h1>
         <div class="value">
@@ -30,9 +30,9 @@
     </mat-card>
   </section>
 
-  <section id="debt-latest-order">
-    <div fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="1rem">
-      <mat-card fxFlex="50" class="debt mat-elevation-z0">
+  <section id="debt-latest-top-order">
+    <div class="content" fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="1rem" class="animated fadeInLeft delay-1s">
+      <mat-card *ngIf="totalDebt" fxFlex="33" class="debt mat-elevation-z0">
         <mat-card-header>
           <mat-card-title>Payment remaning</mat-card-title>
           <mat-card-subtitle>{{ currentYear }}</mat-card-subtitle>
@@ -40,13 +40,13 @@
         <mat-card-content>
           <h1>{{ totalDebt | currency }}</h1>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>Ok</button>
+        <mat-card-actions align="end">
+          <button class="detail" mat-flat-button matTooltip="Detail" color="accent">Detail</button>
         </mat-card-actions>
       </mat-card>
 
-      <mat-card *ngIf="latestOrder" fxFlex class="latest-order">
-        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="32px">
+      <mat-card *ngIf="latestOrder" fxFlex="33" class="latest-order mat-elevation-z0">
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
           <h1 class="title">Latest order</h1>
           <div class="avatar"></div>
           <star-rating class="rating" [starType]="'svg'" [rating]="latestOrder.rating" [readOnly]="true"></star-rating>
@@ -55,7 +55,7 @@
               <mat-icon matTooltip="Supplier" fontSet="far" fontIcon="fa-id-card" color="primary"></mat-icon>
               <span>{{ latestOrder.supplierName }}</span>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
               <mat-icon matTooltip="Order No." color="primary">shopping_cart</mat-icon>
               <span>{{ latestOrder.orderNumber }}</span>
             </div>
@@ -69,7 +69,40 @@
             </div>
           </div>
         </div>
+        <mat-card-actions align="end">
+          <button
+            class="list"
+            mat-flat-button
+            matTooltip="Order lists"
+            color="accent"
+            [routerLink]="['/order-buy']"
+            routerLinkActive="router-link-active"
+          >
+            More
+          </button>
+          <button
+            class="detail"
+            mat-flat-button
+            matTooltip="Detail"
+            color="accent"
+            [routerLink]="['/order-buy', latestOrder.orderId]"
+            routerLinkActive="router-link-active"
+          >
+            Detail
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card *ngIf="topOrders" fxFlex="33" class="top-orders mat-elevation-z0">
+        <h1>Top orders</h1>
+
+        <div *ngFor="let order of topOrders">
+          <p>No. {{ order.orderNumber }}</p>
+          <h1>{{ order.value | currency }}</h1>
+        </div>
       </mat-card>
     </div>
   </section>
 </main>
+
+<app-supplier-report-debt *ngIf="false"></app-supplier-report-debt>

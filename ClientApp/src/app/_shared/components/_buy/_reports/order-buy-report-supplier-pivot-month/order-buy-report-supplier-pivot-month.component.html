@@ -1,4 +1,4 @@
-<main id="main" class="animated fadeInLeft">
+<main id="main">
   <section id="main-content" *ngIf="!showingChart; else chart">
     <!-- Year selection -->
     <mat-form-field class="year-selection">
@@ -47,7 +47,6 @@
       <ng-template #noData>
         <p>This year has no order.</p>
       </ng-template>
-      
     </div>
   </section>
 

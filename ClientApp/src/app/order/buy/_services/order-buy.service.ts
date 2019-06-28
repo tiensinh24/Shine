@@ -1,10 +1,6 @@
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { ProductSelect } from 'src/app/product/_interfaces/product-select';
-import { environment } from 'src/environments/environment';
+import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
+import { OrderAndCostPerMonth } from '../_interfaces/_reports/order-and-cost-per-month';
+import { OrderBuyLatest } from '../_interfaces/_reports/order-buy-latest';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
 import { OrderBuyList } from '../_interfaces/order-buy-list';
@@ -12,9 +8,14 @@ import { OrderBuyProducts } from '../_interfaces/order-buy-products';
 import { OrderBuyWithNavigations } from '../_interfaces/order-buy-with-details-to-add-dto';
 import { PagedOrderBuy } from '../_interfaces/paged-order-buy';
 import { ProductOrder } from '../_interfaces/product-order';
-import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
-import { OrderAndCostPerMonth } from '../_interfaces/_reports/order-and-cost-per-month';
-import { OrderBuyLatest } from '../_interfaces/_reports/order-buy-latest';
+import { OrderValue } from '../../_interfaces/order-value';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { ProductSelect } from 'src/app/product/_interfaces/product-select';
+import { environment } from 'src/environments/environment';
 
 function isEmpty(obj) {
   for (const x in obj) {
@@ -148,5 +149,19 @@ export class OrderBuyService {
 
   getTotalOrderDebt(): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}api/orderBuy/total-debt`);
+  }
+
+  getTopOrderValue(numRows: number, year: number, quarter?: number, month?: number): Observable<OrderValue[]> {
+    let queryParams = new HttpParams().set('numRows', `${numRows}`).set('year', `${year}`);
+
+    if (quarter !== undefined) {
+      queryParams = queryParams.append('quarter', `${quarter}`);
+    }
+
+    if (month !== undefined) {
+      queryParams = queryParams.append('month', `${month}`);
+    }
+
+    return this.http.get<OrderValue[]>(`${this.baseUrl}api/orderBuy/top-value`, { params: queryParams });
   }
 }

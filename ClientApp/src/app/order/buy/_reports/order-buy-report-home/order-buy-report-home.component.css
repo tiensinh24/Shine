@@ -2,35 +2,47 @@ main {
   padding: 1rem;
 }
 
-main mat-card.month-review h1.title {
-  color: salmon;
+main section#month-review mat-card.month-review h1.title {
+  color: #3f51b5;
 }
 
-main mat-card.month-review > div.review > div.value > h1 {
-  color: dodgerblue;
+main section#month-review mat-card.month-review > div.review {
+  min-width: 200px;
 }
 
-main mat-card.month-review > div.review > div.cost > h1 {
-  color: dodgerblue;
+main section#month-review mat-card.month-review > div.review > div.value > h1 {
+  color: deeppink;
 }
 
-main mat-card.month-review > div.review > div.count > h1 {
+main section#month-review mat-card.month-review > div.review > div.cost > h1 {
+  color: deeppink;
+}
+
+main section#month-review mat-card.month-review > div.review > div.count > h1 {
   font-size: xx-large;
-  color: salmon;
+  color: #3f51b5;
 }
 
-main mat-card.debt {
-  margin-top: 1rem;
-  width: 400px;
+main section#month-review mat-button-toggle.mat-button-toggle-checked,
+main section#month-review mat-button-toggle.cdk-focused,
+main section#month-review mat-button-toggle.cdk-mouse-focused {
+  color: white;
+  background: #3f51b5;
 }
 
-main mat-card.latest-order {
+main section#debt-latest-top-order {
   margin-top: 1rem;
+}
+
+main section#debt-latest-top-order mat-card.debt {
   padding: 0;
-  width: 400px;
 }
 
-main mat-card.latest-order h1.title {
+main section#debt-latest-top-order mat-card.latest-order {
+  padding: 0;
+}
+
+main section#debt-latest-top-order mat-card.latest-order h1.title {
   background: mediumslateblue;
   height: 100px;
   width: 100%;
@@ -39,9 +51,7 @@ main mat-card.latest-order h1.title {
   padding-top: 1rem;
 }
 
-main mat-card.latest-order .avatar {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+main section#debt-latest-top-order mat-card.latest-order .avatar {
   position: absolute;
   margin-top: 60px;
   width: 100px;
@@ -53,22 +63,30 @@ main mat-card.latest-order .avatar {
   background-size: cover;
 }
 
-main mat-card.latest-order .rating {
-  padding-top: 1rem;
+main section#debt-latest-top-order mat-card.latest-order .rating {
+  padding-top: 2rem;
 }
 
-main mat-card.latest-order .content {
+main section#debt-latest-top-order mat-card.latest-order .content {
   padding: 0 1rem 1rem 1rem;
 }
 
-main mat-card.latest-order .content > div > mat-icon {
+main section#debt-latest-top-order mat-card.latest-order .content > div > mat-icon {
   font-size: 32px;
 }
 
-mat-button-toggle.mat-button-toggle-checked,
-mat-button-toggle.cdk-focused,
-mat-button-toggle.cdk-mouse-focused {
-  color: white;
-  background: #3f51b5;
+main section#debt-latest-top-order mat-card.latest-order .mat-card-actions {
+  position: relative;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+main section#debt-latest-top-order mat-card.latest-order .mat-card-actions button.detail,
+main section#debt-latest-top-order mat-card.latest-order .mat-card-actions button.list {
+  border-radius: 25px;
+}
+
+main section#debt-latest-top-order mat-card.top-orders {
+  padding: 0;
 }
 /*# sourceMappingURL=order-buy-report-home.component.css.map */

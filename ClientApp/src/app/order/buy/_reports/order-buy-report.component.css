@@ -1,4 +1,20 @@
-.right-nav {
-  min-height: calc(100vh - 60px);
+.main-container {
+  width: 100%;
+}
+
+.main-container .main-content {
+  width: 100%;
+}
+
+.main-container .right-nav {
+  background: white;
+}
+
+.main-container .right-nav mat-nav-list {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  right: 0;
+  border-left: 3px solid royalblue;
 }
 /*# sourceMappingURL=order-buy-report.component.css.map */

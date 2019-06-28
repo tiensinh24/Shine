@@ -1,30 +1,21 @@
 .mat-paginator-sticky {
-  box-shadow: 0 2px 8px grey;
   position: sticky;
-  top: 0;
-  z-index: 10;
+  bottom: 0;
+  z-index: 1;
   background: white;
-
-  > h1 {
-    padding: 1rem 0 0 1rem;
-    color: royalblue;
-  }
 }
 
 main {
   padding: 1rem;
 
-  >section#supplier-debt {    
-
-    >table.supplier-debt {
-
-      th[mat-header-cell] { 
+  > section#supplier-debt {
+    > table.supplier-debt {
+      th[mat-header-cell] {
         color: royalblue;
       }
 
       td {
-
-        &.avatar>img {
+        &.avatar > img {
           width: 40px;
           height: 40px;
           border-radius: 15px;

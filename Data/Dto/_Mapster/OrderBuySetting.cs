@@ -111,6 +111,11 @@ namespace Shine.Data.Dto._Mapster
               src => src.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
           );
 
+      TypeAdapterConfig<OrderBuy, OrderValueDto>.NewConfig()
+          .Map(
+              dest => dest.Value,
+              src => src.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+          );
 
 
     }

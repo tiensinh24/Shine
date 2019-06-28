@@ -413,6 +413,60 @@ namespace Shine.Data.Infrastructures.Repositories
       return debt;
     }
 
+    public async Task<IEnumerable<OrderValueDto>> GetTopOrderValueAsync(int numRows, int year, int? quarter, int? month)
+    {
+
+      var query = _repository.AsNoTracking()
+        .Where(o => o.DateOfIssue.Year == year);
+
+      // Get by month
+      if (month >= 1 && month <= 12)
+      {
+        query = query.Where(o => o.DateOfIssue.Month == month);
+      }
+
+      // Get by quarter
+      if (quarter >= 1 && quarter <= 4)
+      {
+        switch (quarter)
+        {
+          case 1:
+            query = query.Where(
+              o => o.DateOfIssue.Month >= 1 && o.DateOfIssue.Month <= 3
+            );
+            break;
+
+          case 2:
+            query = query.Where(
+              o => o.DateOfIssue.Month >= 4 && o.DateOfIssue.Month <= 6
+            );
+            break;
+
+          case 3:
+            query = query.Where(
+              o => o.DateOfIssue.Month >= 7 && o.DateOfIssue.Month <= 9
+            );
+            break;
+
+          case 4:
+            query = query.Where(
+              o => o.DateOfIssue.Month >= 10 && o.DateOfIssue.Month <= 12
+            );
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      var orders = await query.ProjectToType<OrderValueDto>()
+        .OrderByDescending(o => o.Value)
+        .Take(numRows)
+        .ToListAsync();
+
+      return orders;
+    }
+
 
     #endregion
 

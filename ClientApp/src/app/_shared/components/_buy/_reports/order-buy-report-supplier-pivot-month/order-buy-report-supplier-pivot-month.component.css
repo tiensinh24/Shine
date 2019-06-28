@@ -9,14 +9,6 @@ main#main .year-selection {
   left: 0;
 }
 
-main#main div.pivot-table {
-  height: calc(100vh - (150px + 1rem));
-}
-
-main#main div.pivot-table table[mat-table] {
-  width: 100%;
-}
-
 main#main div.pivot-table table[mat-table] th {
   color: royalblue;
 }
@@ -25,9 +17,8 @@ main#main div.pivot-table table[mat-table] td > mat-icon:hover {
   cursor: pointer;
 }
 
-main#main div.pivot-table table[mat-table] th, main#main div.pivot-table table[mat-table] td {
-  padding: .5rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+main#main div.pivot-table table[mat-table] th,
+main#main div.pivot-table table[mat-table] td {
+  padding: 0.5rem;
 }
 /*# sourceMappingURL=order-buy-report-supplier-pivot-month.component.css.map */
