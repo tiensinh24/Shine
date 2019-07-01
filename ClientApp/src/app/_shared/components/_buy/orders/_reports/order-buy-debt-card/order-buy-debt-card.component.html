@@ -1,0 +1,14 @@
+<mat-card *ngIf="totalDebt" class="debt mat-elevation-z0">
+  <div class="title" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
+    <mat-icon>account_balance</mat-icon>
+    <h1 fxFlexAlign="center">Payment remains</h1>
+  </div>
+
+  <div class="content">
+    <p>Total debts</p>
+    <div class="value" fxLayout="row" fxLayoutAlign="space-between stretch">
+      <h1>{{ totalDebt | currency }}</h1>
+      <button mat-icon-button color="accent"><mat-icon>list_alt</mat-icon></button>
+    </div>
+  </div>
+</mat-card>

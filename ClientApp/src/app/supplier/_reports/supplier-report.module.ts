@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-
+import { SupplierReportHomeComponent } from './supplier-report-home/supplier-report-home.component';
 import { SupplierReportRoutingModule } from './supplier-report-routing.module';
 import { SupplierReportComponent } from './supplier-report.component';
-import { SupplierReportHomeComponent } from './supplier-report-home/supplier-report-home.component';
-import { SupplierReportDebtComponent } from '../../_shared/components/_buy/_reports/supplier-report-debt/supplier-report-debt.component';
-import { SharedModule } from 'src/app/_shared/shared.module';
+import { NgModule } from '@angular/core';
+import { SupplierReportDebtModule } from 'src/app/_shared/components/_buy/suppliers/_reports/supplier-report-debt/supplier-report-debt.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
-import { SupplierReportDebtModule } from 'src/app/_shared/components/_buy/_reports/supplier-report-debt/supplier-report-debt.module';
+import { SharedModule } from 'src/app/_shared/shared.module';
 
 @NgModule({
   declarations: [SupplierReportComponent, SupplierReportHomeComponent],

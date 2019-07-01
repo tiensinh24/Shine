@@ -23,70 +23,12 @@ main section#month-review mat-card.month-review > div.review > div.count > h1 {
   color: #3f51b5;
 }
 
-main section#month-review mat-button-toggle.mat-button-toggle-checked,
-main section#month-review mat-button-toggle.cdk-focused,
-main section#month-review mat-button-toggle.cdk-mouse-focused {
+main section#month-review mat-button-toggle.mat-button-toggle-checked {
   color: white;
   background: #3f51b5;
 }
 
 main section#debt-latest-top-order {
   margin-top: 1rem;
-}
-
-main section#debt-latest-top-order mat-card.debt {
-  padding: 0;
-}
-
-main section#debt-latest-top-order mat-card.latest-order {
-  padding: 0;
-}
-
-main section#debt-latest-top-order mat-card.latest-order h1.title {
-  background: mediumslateblue;
-  height: 100px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  padding-top: 1rem;
-}
-
-main section#debt-latest-top-order mat-card.latest-order .avatar {
-  position: absolute;
-  margin-top: 60px;
-  width: 100px;
-  height: 100px;
-  z-index: 10;
-  border: 5px solid white;
-  border-radius: 100px;
-  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
-  background-size: cover;
-}
-
-main section#debt-latest-top-order mat-card.latest-order .rating {
-  padding-top: 2rem;
-}
-
-main section#debt-latest-top-order mat-card.latest-order .content {
-  padding: 0 1rem 1rem 1rem;
-}
-
-main section#debt-latest-top-order mat-card.latest-order .content > div > mat-icon {
-  font-size: 32px;
-}
-
-main section#debt-latest-top-order mat-card.latest-order .mat-card-actions {
-  position: relative;
-  bottom: 1rem;
-  right: 1rem;
-}
-
-main section#debt-latest-top-order mat-card.latest-order .mat-card-actions button.detail,
-main section#debt-latest-top-order mat-card.latest-order .mat-card-actions button.list {
-  border-radius: 25px;
-}
-
-main section#debt-latest-top-order mat-card.top-orders {
-  padding: 0;
 }
 /*# sourceMappingURL=order-buy-report-home.component.css.map */

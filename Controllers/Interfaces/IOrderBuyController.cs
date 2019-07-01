@@ -60,7 +60,7 @@ namespace Shine.Controllers.Interfaces {
 
         ActionResult<decimal> GetTotalOrderDebt();
 
-        Task<ActionResult<IEnumerable<OrderValueDto>>> GetTopOrderValue(int numRows, int year, int? quarter, int? month);
+        Task<ActionResult<IEnumerable<OrderValueDto>>> GetTopOrderValue(int numRows, int year, int month, string type);
     
 #endregion
     }

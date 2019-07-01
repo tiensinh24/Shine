@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+
 using Mapster;
 
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +19,7 @@ using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
+using Shine.Helpers;
 
 namespace Shine.Data.Infrastructures.Repositories
 {
@@ -413,50 +415,56 @@ namespace Shine.Data.Infrastructures.Repositories
       return debt;
     }
 
-    public async Task<IEnumerable<OrderValueDto>> GetTopOrderValueAsync(int numRows, int year, int? quarter, int? month)
+    public async Task<IEnumerable<OrderValueDto>> GetTopOrderValueAsync(int numRows, int year, int month, string type)
     {
 
       var query = _repository.AsNoTracking()
         .Where(o => o.DateOfIssue.Year == year);
 
       // Get by month
-      if (month >= 1 && month <= 12)
+      if (type == "m")
       {
         query = query.Where(o => o.DateOfIssue.Month == month);
       }
 
       // Get by quarter
-      if (quarter >= 1 && quarter <= 4)
+      if (type == "q")
       {
-        switch (quarter)
+        var quarter = Helpers.Helpers.GetQuarter(month);
+
+        if (quarter >= 1 && quarter <= 4)
         {
-          case 1:
-            query = query.Where(
-              o => o.DateOfIssue.Month >= 1 && o.DateOfIssue.Month <= 3
-            );
-            break;
+          switch (quarter)
+          {
+            case 1:
+              query = query.Where(
+                o => o.DateOfIssue.Month >= 1 && o.DateOfIssue.Month <= 3
+              );
+              break;
 
-          case 2:
-            query = query.Where(
-              o => o.DateOfIssue.Month >= 4 && o.DateOfIssue.Month <= 6
-            );
-            break;
+            case 2:
+              query = query.Where(
+                o => o.DateOfIssue.Month >= 4 && o.DateOfIssue.Month <= 6
+              );
+              break;
 
-          case 3:
-            query = query.Where(
-              o => o.DateOfIssue.Month >= 7 && o.DateOfIssue.Month <= 9
-            );
-            break;
+            case 3:
+              query = query.Where(
+                o => o.DateOfIssue.Month >= 7 && o.DateOfIssue.Month <= 9
+              );
+              break;
 
-          case 4:
-            query = query.Where(
-              o => o.DateOfIssue.Month >= 10 && o.DateOfIssue.Month <= 12
-            );
-            break;
+            case 4:
+              query = query.Where(
+                o => o.DateOfIssue.Month >= 10 && o.DateOfIssue.Month <= 12
+              );
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
         }
+
       }
 
       var orders = await query.ProjectToType<OrderValueDto>()

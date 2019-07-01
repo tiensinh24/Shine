@@ -15,7 +15,7 @@
 
         <div class="count" fxLayout="row">
           <h1>{{ ordersCount }}</h1>
-          <p>of totals order</p>
+          <p>of total orders</p>
         </div>
       </div>
 
@@ -32,75 +32,11 @@
 
   <section id="debt-latest-top-order">
     <div class="content" fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="1rem" class="animated fadeInLeft delay-1s">
-      <mat-card *ngIf="totalDebt" fxFlex="33" class="debt mat-elevation-z0">
-        <mat-card-header>
-          <mat-card-title>Payment remaning</mat-card-title>
-          <mat-card-subtitle>{{ currentYear }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <h1>{{ totalDebt | currency }}</h1>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button class="detail" mat-flat-button matTooltip="Detail" color="accent">Detail</button>
-        </mat-card-actions>
-      </mat-card>
+      <app-order-buy-debt-card fxFlex="33"></app-order-buy-debt-card>
 
-      <mat-card *ngIf="latestOrder" fxFlex="33" class="latest-order mat-elevation-z0">
-        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
-          <h1 class="title">Latest order</h1>
-          <div class="avatar"></div>
-          <star-rating class="rating" [starType]="'svg'" [rating]="latestOrder.rating" [readOnly]="true"></star-rating>
-          <div class="content" fxFlexAlign="start" fxLayout="column" fxLayoutGap="16px">
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-              <mat-icon matTooltip="Supplier" fontSet="far" fontIcon="fa-id-card" color="primary"></mat-icon>
-              <span>{{ latestOrder.supplierName }}</span>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-              <mat-icon matTooltip="Order No." color="primary">shopping_cart</mat-icon>
-              <span>{{ latestOrder.orderNumber }}</span>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-              <mat-icon matTooltip="Order's date & payment's time" color="primary">date_range</mat-icon>
-              <span>{{ latestOrder.dateOfIssue | date: 'dd/MM/yyyy' }} - {{ latestOrder.timeForPayment | date: 'dd/MM/yyyy' }}</span>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-              <mat-icon matTooltip="Order's date & payment's time" color="primary">attach_money</mat-icon>
-              <span>{{ latestOrder.value | currency }}</span>
-            </div>
-          </div>
-        </div>
-        <mat-card-actions align="end">
-          <button
-            class="list"
-            mat-flat-button
-            matTooltip="Order lists"
-            color="accent"
-            [routerLink]="['/order-buy']"
-            routerLinkActive="router-link-active"
-          >
-            More
-          </button>
-          <button
-            class="detail"
-            mat-flat-button
-            matTooltip="Detail"
-            color="accent"
-            [routerLink]="['/order-buy', latestOrder.orderId]"
-            routerLinkActive="router-link-active"
-          >
-            Detail
-          </button>
-        </mat-card-actions>
-      </mat-card>
+      <app-order-buy-latest fxFlex="33"></app-order-buy-latest>
 
-      <mat-card *ngIf="topOrders" fxFlex="33" class="top-orders mat-elevation-z0">
-        <h1>Top orders</h1>
-
-        <div *ngFor="let order of topOrders">
-          <p>No. {{ order.orderNumber }}</p>
-          <h1>{{ order.value | currency }}</h1>
-        </div>
-      </mat-card>
+      <app-order-buy-top fxFlex></app-order-buy-top>
     </div>
   </section>
 </main>

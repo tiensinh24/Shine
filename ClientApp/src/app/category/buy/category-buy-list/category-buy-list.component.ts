@@ -1,23 +1,27 @@
-import { fromEvent, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import {
-    CategoryBuyDialogComponent
-} from 'src/app/_shared/components/_buy/category-buy-dialog/category-buy-dialog.component';
-
+import { CategoryBuyDataSource } from '../_data-source/category-buy-data-source';
+import { CategoryBuy } from '../_interfaces/category-buy';
+import { CategoryBuyService } from '../_services/category-buy.service';
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+  } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { CategoryBuyDialogComponent } from 'src/app/_shared/components/_buy/categories/category-buy-dialog/category-buy-dialog.component';
 
-import { CategoryBuyDataSource } from '../_data-source/category-buy-data-source';
-import { CategoryBuy } from '../_interfaces/category-buy';
-import { CategoryBuyService } from '../_services/category-buy.service';
+
 
 @Component({
   selector: 'app-category-buy-list',

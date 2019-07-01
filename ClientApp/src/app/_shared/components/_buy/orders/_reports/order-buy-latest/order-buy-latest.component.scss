@@ -1,0 +1,52 @@
+mat-card.latest-order {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  .title {
+    background: mediumslateblue;
+    height: 80px;
+    width: 100%;
+    text-align: center;
+    color: white;
+
+    h1 {
+      padding-top: 0.5rem;
+    }
+  }
+
+  .avatar {
+    position: absolute;
+    margin-top: 40px;
+    width: 80px;
+    height: 80px;
+    z-index: 10;
+    border: 5px solid white;
+    border-radius: 100px;
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  .rating {
+    padding-top: 2rem;
+  }
+
+  .content {
+    padding: 0 1rem 1rem 1rem;
+
+    > div > mat-icon {
+      font-size: 32px;
+    }
+  }
+
+  .mat-card-actions {
+    position: relative;
+    bottom: 1rem;
+    right: 1rem;
+
+    button.detail,
+    button.list {
+      border-radius: 25px;
+    }
+  }
+}

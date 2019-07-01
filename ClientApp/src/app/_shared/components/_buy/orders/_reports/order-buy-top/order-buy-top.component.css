@@ -1,0 +1,44 @@
+mat-card.top-orders {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+mat-card.top-orders .title {
+  width: 100%;
+  height: 80px;
+  padding-top: 0.5rem;
+  background: mediumslateblue;
+  color: white;
+}
+
+mat-card.top-orders .title mat-icon {
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  font-size: 48px;
+}
+
+mat-card.top-orders .title h1 {
+  padding-top: 0.5rem;
+}
+
+mat-card.top-orders .content {
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+
+mat-card.top-orders .content .value {
+  padding-left: 1rem;
+  color: #3f51b5;
+}
+
+mat-card.top-orders div.toggle-button-group {
+  padding-bottom: 1rem;
+}
+
+mat-card.top-orders div.toggle-button-group mat-button-toggle.mat-button-toggle-checked {
+  margin: 0 auto;
+  color: white;
+  background: #3f51b5;
+}
+/*# sourceMappingURL=order-buy-top.component.css.map */

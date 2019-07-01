@@ -1,0 +1,53 @@
+mat-card.latest-order {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+mat-card.latest-order .title {
+  background: mediumslateblue;
+  height: 80px;
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+mat-card.latest-order .title h1 {
+  padding-top: 0.5rem;
+}
+
+mat-card.latest-order .avatar {
+  position: absolute;
+  margin-top: 40px;
+  width: 80px;
+  height: 80px;
+  z-index: 10;
+  border: 5px solid white;
+  border-radius: 100px;
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+
+mat-card.latest-order .rating {
+  padding-top: 2rem;
+}
+
+mat-card.latest-order .content {
+  padding: 0 1rem 1rem 1rem;
+}
+
+mat-card.latest-order .content > div > mat-icon {
+  font-size: 32px;
+}
+
+mat-card.latest-order .mat-card-actions {
+  position: relative;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+mat-card.latest-order .mat-card-actions button.detail,
+mat-card.latest-order .mat-card-actions button.list {
+  border-radius: 25px;
+}
+/*# sourceMappingURL=order-buy-latest.component.css.map */

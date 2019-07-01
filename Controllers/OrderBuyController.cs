@@ -227,9 +227,9 @@ namespace Shine.Controllers
     }
 
     [HttpGet("top-value")]
-    public async Task<ActionResult<IEnumerable<OrderValueDto>>> GetTopOrderValue(int numRows, int year, int? quarter, int? month)
+    public async Task<ActionResult<IEnumerable<OrderValueDto>>> GetTopOrderValue(int numRows, int year, int month, string type)
     {
-      var orders = await _repository.GetTopOrderValueAsync(numRows, year, quarter, month);
+      var orders = await _repository.GetTopOrderValueAsync(numRows, year, month, type);
 
       return Ok(orders);
     }

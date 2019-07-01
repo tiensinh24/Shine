@@ -1,13 +1,19 @@
+import { SupplierDetail } from '../_interfaces/supplier-detail';
+import { SupplierService } from '../_services/supplier.service';
 import { formatNumber } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
-import { SupplierEditDialogComponent } from 'src/app/_shared/components/_buy/supplier-edit-dialog/supplier-edit-dialog.component';
+import {
+  NgxGalleryAnimation,
+  NgxGalleryImage,
+  NgxGalleryImageSize,
+  NgxGalleryOptions
+  } from 'ngx-gallery';
+import { SupplierEditDialogComponent } from 'src/app/_shared/components/_buy/suppliers/supplier-edit-dialog/supplier-edit-dialog.component';
 import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
 import { environment } from 'src/environments/environment';
-import { SupplierDetail } from '../_interfaces/supplier-detail';
-import { SupplierService } from '../_services/supplier.service';
+
 
 @Component({
   selector: 'app-supplier-detail',

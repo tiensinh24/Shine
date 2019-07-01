@@ -24,14 +24,7 @@ main {
       }
     }
 
-    mat-button-toggle {
-      // color: white;
-      // background: #4CAF50;
-    }
-
-    mat-button-toggle.mat-button-toggle-checked,
-    mat-button-toggle.cdk-focused,
-    mat-button-toggle.cdk-mouse-focused {
+    mat-button-toggle.mat-button-toggle-checked {
       color: white;
       background: #3f51b5;
     }
@@ -39,61 +32,6 @@ main {
 
   section#debt-latest-top-order {
     margin-top: 1rem;
-
-    mat-card.debt {
-      padding: 0;
-    }
-
-    mat-card.latest-order {
-      padding: 0;
-
-      h1.title {
-        background: mediumslateblue;
-        height: 100px;
-        width: 100%;
-        text-align: center;
-        color: white;
-        padding-top: 1rem;
-      }
-
-      .avatar {
-        position: absolute;
-        margin-top: 60px;
-        width: 100px;
-        height: 100px;
-        z-index: 10;
-        border: 5px solid white;
-        border-radius: 100px;
-        background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-        background-size: cover;
-      }
-
-      .rating {
-        padding-top: 2rem;
-      }
-
-      .content {
-        padding: 0 1rem 1rem 1rem;
-
-        > div > mat-icon {
-          font-size: 32px;
-        }
-      }
-
-      .mat-card-actions {
-        position: relative;
-        bottom: 1rem;
-        right: 1rem;
-
-        button.detail,
-        button.list {
-          border-radius: 25px;
-        }
-      }
-    }
-
-    mat-card.top-orders {
-      padding: 0;
-    }
+    
   }
 }

@@ -1,0 +1,22 @@
+<mat-card *ngIf="topOrders" class="top-orders mat-elevation-z0">
+  <div class="title" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
+    <mat-icon>arrow_upward</mat-icon>
+    <h1 fxFlexAlign="center">Top orders</h1>
+  </div>
+
+  <div class="content" *ngFor="let order of topOrders">
+    <p>No. {{ order.orderNumber }}</p>
+    <div class="value" fxLayout="row" fxLayoutAlign="space-between stretch">
+      <h1>{{ order.value | currency }}</h1>
+      <button mat-icon-button color="accent"><mat-icon>list_alt</mat-icon></button>
+    </div>
+  </div>
+
+  <div class="toggle-button-group" fxLayout="row" fxLayoutAlign="center">
+    <mat-button-toggle-group fxFlexAlign="center" (change)="setTopOrderMode($event)">
+      <mat-button-toggle checked value="m">Month</mat-button-toggle>
+      <mat-button-toggle value="q">Quarter</mat-button-toggle>
+      <mat-button-toggle value="y">Year</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</mat-card>

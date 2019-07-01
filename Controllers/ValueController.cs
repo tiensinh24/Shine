@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shine.Data;
 using Shine.Data.Dto.Orders;
+using Shine.Data.Dto.Suppliers.Reports;
 using Shine.Data.Models;
 
 namespace Shine.Controllers
@@ -21,18 +24,30 @@ namespace Shine.Controllers
     }
 
     [HttpGet]
-    public object OrdersSumAsync(int year)
+    public IEnumerable<SupplierDebtDto> OrdersSumAsync(int numRows)
     {
       var query = _context.Set<OrderBuy>()
         .AsNoTracking()
-        .Where(o => o.DateOfIssue.Year == year && o.OrderType == true)
-        .GroupBy(o => o.DateOfIssue.Month)
-        .Select(g => new OrderAndCostPerMonthDto
+        .GroupBy(o => new
         {
-          Month = g.Key,
-          Amount = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity* po.Price * (1 + po.Tax))),
-          Cost = g.Sum(o => o.Costs.Sum(c => c.Amount))
-        });
+          o.PersonId,
+          SupplierName = o.Person.FirstName + " " + o.Person.LastName,
+          MainPhotoUrl = o.Person.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
+        },
+        o => new
+        {
+          Debt = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+            - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
+        },
+        (k, e) => new SupplierDebtDto
+        {
+          SupplierId = k.PersonId,
+          SupplierName = k.SupplierName,
+          MainPhotoUrl = k.MainPhotoUrl,
+          Debt = e.Sum(d => d.Debt)
+        })
+        .OrderByDescending(g => g.Debt)
+        .Take(numRows);
 
       return query;
     }

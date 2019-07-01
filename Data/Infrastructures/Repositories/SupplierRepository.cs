@@ -517,6 +517,36 @@ namespace Shine.Data.Infrastructures.Repositories
       return orderDebts;
     }
 
+
+    public async Task<IEnumerable<SupplierDebtDto>> GetTopSupplierDebtAsync(int numRows)
+    {
+      var query = await _context.Set<OrderBuy>()
+        .AsNoTracking()
+        .GroupBy(o => new
+        {
+          o.PersonId,
+          SupplierName = o.Person.FirstName + " " + o.Person.LastName,
+          MainPhotoUrl = o.Person.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
+        },
+        o => new
+        {
+          Debt = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+            - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
+        },
+        (k, e) => new SupplierDebtDto
+        {
+          SupplierId = k.PersonId,
+          SupplierName = k.SupplierName,
+          MainPhotoUrl = k.MainPhotoUrl,
+          Debt = e.Sum(d => d.Debt)
+        })
+        .OrderByDescending(g => g.Debt)
+        .Take(numRows)
+        .ToListAsync();
+
+      return query;
+    }
+
     public async Task<IEnumerable<OrderBySupplierPivotMonthDto>> GetOrderBySupplierPivotMonthAsync(int year)
     {
       var query = await _context.Set<OrderBuy>()
@@ -568,6 +598,7 @@ namespace Shine.Data.Infrastructures.Repositories
 
       return query;
     }
+
 
     #endregion
 

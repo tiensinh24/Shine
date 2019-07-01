@@ -1,0 +1,34 @@
+mat-card.debt {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+mat-card.debt .title {
+  width: 100%;
+  height: 80px;
+  padding-top: 0.5rem;
+  background: mediumslateblue;
+  color: white;
+}
+
+mat-card.debt .title mat-icon {
+  padding-top: .5rem;
+  padding-left: 1rem;
+  font-size: 48px;
+}
+
+mat-card.debt .title h1 {
+  padding-top: 0.5rem;
+}
+
+mat-card.debt .content {
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+
+mat-card.debt .content .value {
+  padding-left: 1rem;
+  color: #3f51b5;
+}
+/*# sourceMappingURL=order-buy-debt-card.component.css.map */

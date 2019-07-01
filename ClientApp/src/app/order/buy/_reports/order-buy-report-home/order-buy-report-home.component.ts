@@ -4,8 +4,6 @@ import { OrderBuyService } from '../../_services/order-buy.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-import { OrderValue } from 'src/app/order/_interfaces/order-value';
-
 
 @Component({
   selector: 'app-order-buy-report-home',
@@ -18,17 +16,11 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   ordersCost$: Subscription;
   ordersCount$: Subscription;
   chartMonthData$: Subscription;
-  latestOrder$: Subscription;
-  totalDebt$: Subscription;
-  topOrders$: Subscription;
 
   ordersValue: number;
   ordersCost: number;
   ordersCount: number;
   chartMonthData: OrderAndCostPerMonth[];
-  latestOrder: OrderBuyLatest;
-  totalDebt: number;
-  topOrders: OrderValue[];
 
   // true: month & false: quarter
   chartMode = true;
@@ -48,9 +40,6 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
     this.ordersCost$.unsubscribe();
     this.ordersCount$.unsubscribe();
     this.chartMonthData$.unsubscribe();
-    this.latestOrder$.unsubscribe();
-    this.totalDebt$.unsubscribe();
-    this.topOrders$.unsubscribe();
   }
 
   initialize() {
@@ -70,17 +59,6 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
       this.chartMonthData = res;
     });
 
-    this.latestOrder$ = this.orderService.getLatestOrder().subscribe((res: OrderBuyLatest) => {
-      this.latestOrder = res;
-    });
-
-    this.totalDebt$ = this.orderService.getTotalOrderDebt().subscribe((res: number) => {
-      this.totalDebt = res;
-    });
-
-    this.topOrders$ = this.orderService.getTopOrderValue(2, this.currentYear, 0, this.currentMonth).subscribe((res: OrderValue[]) => {
-      this.topOrders = res;
-    });
   }
 
   setChartMode() {

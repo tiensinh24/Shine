@@ -1,3 +1,7 @@
+import { OrderBuy } from '../_interfaces/order-buy';
+import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
+import { OrderBuyProducts } from '../_interfaces/order-buy-products';
+import { OrderBuyService } from '../_services/order-buy.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -5,21 +9,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import {
-  OrderBuyEditDialogComponent
-} from 'src/app/_shared/components/_buy/order-buy-edit-dialog/order-buy-edit-dialog.component';
-import {
-  OrderProductsEditDialogComponent
-} from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
-import {
-  PaymentEditDialogComponent
-} from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
+import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import { OrderProductsEditDialogComponent } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
+import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
 import { Payment } from 'src/app/order/_interfaces/payment';
 import { PaymentService } from 'src/app/payment/_services/payment.service';
-import { OrderBuy } from '../_interfaces/order-buy';
-import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
-import { OrderBuyProducts } from '../_interfaces/order-buy-products';
-import { OrderBuyService } from '../_services/order-buy.service';
 
 @Component({
   selector: 'app-order-buy-detail',

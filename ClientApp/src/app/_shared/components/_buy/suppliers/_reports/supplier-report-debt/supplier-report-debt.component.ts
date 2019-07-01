@@ -1,28 +1,34 @@
 import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  AfterViewInit
-} from '@angular/core';
-import { Subscription, merge, fromEvent, Observable } from 'rxjs';
-import { SupplierDebt } from '../../../../../supplier/_interfaces/reports/supplier-debt';
-import { SupplierService } from '../../../../../supplier/_services/supplier.service';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SupplierDebtDataSource } from '../../../../../supplier/_data-source/reports/supplier-deb-data-source';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import {
-  trigger,
+  animate,
   state,
   style,
   transition,
-  animate
-} from '@angular/animations';
-import { OrderDebt } from '../../../../../supplier/_interfaces/reports/order-debt';
+  trigger
+  } from '@angular/animations';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+  } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import {
+  fromEvent,
+  merge,
+  Observable,
+  Subscription
+  } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { SupplierDebtDataSource } from 'src/app/supplier/_data-source/reports/supplier-deb-data-source';
+import { OrderDebt } from 'src/app/supplier/_interfaces/reports/order-debt';
+import { SupplierDebt } from 'src/app/supplier/_interfaces/reports/supplier-debt';
+import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+
 
 @Component({
   selector: 'app-supplier-report-debt',

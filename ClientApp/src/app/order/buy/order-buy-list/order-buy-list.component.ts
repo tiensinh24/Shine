@@ -1,10 +1,17 @@
-import { fromEvent, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
-import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/_buy/order-buy-edit-dialog/order-buy-edit-dialog.component';
-
+import { OrderBuyDataSource } from '../_data-source/order-buy-data-source';
+import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
+import { OrderBuy } from '../_interfaces/order-buy';
+import { OrderBuyList } from '../_interfaces/order-buy-list';
+import { OrderBuyService } from '../_services/order-buy.service';
+import {
+  animate,
+  query,
+  stagger,
+  state,
+  style,
+  transition,
+  trigger
+  } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   AfterViewInit,
@@ -12,28 +19,21 @@ import {
   ElementRef,
   OnInit,
   ViewChild
-} from '@angular/core';
+  } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog.component';
 
-import { OrderBuyDataSource } from '../_data-source/order-buy-data-source';
-import { OrderBuy } from '../_interfaces/order-buy';
-import { OrderBuyList } from '../_interfaces/order-buy-list';
-import { OrderBuyService } from '../_services/order-buy.service';
-import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import {
-  state,
-  style,
-  transition,
-  animate,
-  trigger,
-  query,
-  stagger
-} from '@angular/animations';
+
 
 @Component({
   selector: 'app-order-buy-list',

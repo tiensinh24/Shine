@@ -1,17 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { ProductBuy } from '../_interfaces/product-buy';
+import { ProductBuyService } from '../_services/product-buy.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+  } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { environment } from 'src/environments/environment';
-import { ProductBuyService } from '../_services/product-buy.service';
-import { ProductBuy } from '../_interfaces/product-buy';
+import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { CategoryBuyDialogComponent } from 'src/app/_shared/components/_buy/categories/category-buy-dialog/category-buy-dialog.component';
 import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
 import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { CategoryBuyDialogComponent } from 'src/app/_shared/components/_buy/category-buy-dialog/category-buy-dialog.component';
-import { ConfirmDialogService } from 'src/app/_shared/_services/confirm-dialog.service';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-product-buy-edit',

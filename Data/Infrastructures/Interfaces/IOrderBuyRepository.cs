@@ -74,7 +74,7 @@ namespace Shine.Data.Infrastructures.Interfaces
     Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year);
     Task<OrderBuyLatestDto> GetLatestOrderAsync();
     decimal GetTotalOrderDebt();
-    Task<IEnumerable<OrderValueDto>> GetTopOrderValueAsync(int numRows, int year, int? quarter, int? month);
+    Task<IEnumerable<OrderValueDto>> GetTopOrderValueAsync(int numRows, int year, int month, string type);
 
 #endregion
 

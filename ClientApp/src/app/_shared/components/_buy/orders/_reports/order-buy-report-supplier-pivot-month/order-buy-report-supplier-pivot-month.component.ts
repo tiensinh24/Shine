@@ -1,10 +1,15 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { OrderBySupplierPivotMonth } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-month';
-import { Subscription } from 'rxjs';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+  } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
-import { MatSort } from '@angular/material/sort';
+import { Subscription } from 'rxjs';
+import { OrderBySupplierPivotMonth } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-month';
+import { SupplierService } from 'src/app/supplier/_services/supplier.service';
 
 @Component({
   selector: 'app-order-buy-report-supplier-pivot-month',

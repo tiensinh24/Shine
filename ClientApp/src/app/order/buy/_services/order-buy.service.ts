@@ -151,16 +151,12 @@ export class OrderBuyService {
     return this.http.get<number>(`${this.baseUrl}api/orderBuy/total-debt`);
   }
 
-  getTopOrderValue(numRows: number, year: number, quarter?: number, month?: number): Observable<OrderValue[]> {
-    let queryParams = new HttpParams().set('numRows', `${numRows}`).set('year', `${year}`);
-
-    if (quarter !== undefined) {
-      queryParams = queryParams.append('quarter', `${quarter}`);
-    }
-
-    if (month !== undefined) {
-      queryParams = queryParams.append('month', `${month}`);
-    }
+  getTopOrderValue(numRows: number, year: number, month: number, type: string): Observable<OrderValue[]> {
+    const queryParams = new HttpParams()
+      .set('numRows', `${numRows}`)
+      .set('year', `${year}`)
+      .set('month', `${month}`)
+      .set('type', `${type}`);
 
     return this.http.get<OrderValue[]>(`${this.baseUrl}api/orderBuy/top-value`, { params: queryParams });
   }
