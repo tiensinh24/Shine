@@ -517,36 +517,32 @@ namespace Shine.Data.Infrastructures.Repositories
       return orderDebts;
     }
 
-
     public async Task<IEnumerable<SupplierDebtDto>> GetTopSupplierDebtAsync(int numRows)
     {
-      var query = await _context.Set<OrderBuy>()
-        .AsNoTracking()
-        .GroupBy(o => new
-        {
-          o.PersonId,
-          SupplierName = o.Person.FirstName + " " + o.Person.LastName,
-          MainPhotoUrl = o.Person.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
-        },
-        o => new
-        {
-          Debt = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
-            - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0)
-        },
-        (k, e) => new SupplierDebtDto
-        {
-          SupplierId = k.PersonId,
-          SupplierName = k.SupplierName,
-          MainPhotoUrl = k.MainPhotoUrl,
-          Debt = e.Sum(d => d.Debt)
-        })
-        .OrderByDescending(g => g.Debt)
-        .Take(numRows)
-        .ToListAsync();
+      var query = await _context.Set<Supplier>()
+          .AsNoTracking()
+          .GroupBy(s => new
+          {
+            s.PersonId,
+            SupplierName = s.FirstName + " " + s.LastName,
+            MainPhotoUrl = s.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
+          },
+              (key, element) => new SupplierDebtDto
+              {
+                SupplierId = key.PersonId,
+                SupplierName = key.SupplierName,
+                MainPhotoUrl = key.MainPhotoUrl,
+                Debt = element.Sum(e => e.Orders.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+                          - (o.Payments.Count() == 0 ? 0 : o.Payments.Sum(p => p.Amount))))
+              })
+          .Where(o => o.Debt > 0)
+          .OrderByDescending(o => o.Debt)
+          .Take(numRows)
+          .ToListAsync();
 
       return query;
     }
-
+    
     public async Task<IEnumerable<OrderBySupplierPivotMonthDto>> GetOrderBySupplierPivotMonthAsync(int year)
     {
       var query = await _context.Set<OrderBuy>()
@@ -598,6 +594,8 @@ namespace Shine.Data.Infrastructures.Repositories
 
       return query;
     }
+
+
 
 
     #endregion

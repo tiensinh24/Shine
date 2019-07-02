@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using Shine.Data.Dto.Costs;
 using Shine.Data.Dto.Payments;
 using Shine.Data.Dto.Products.Buy;
 
@@ -21,6 +21,10 @@ namespace Shine.Data.Dto.Orders.Buy {
         public decimal PaymentTotal { get; set; }
         public IEnumerable<OrderBuyProducts> Products { get; set; }
         public IEnumerable<PaymentDto> Payments { get; set; }
+        public decimal TotalPayment { get; set; }
+        public IEnumerable<CostDto> Costs { get; set; }
+        public decimal TotalCost { get; set; }
+        public decimal Debt { get; set; }
 
     }
 

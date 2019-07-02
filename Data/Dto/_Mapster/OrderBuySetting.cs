@@ -72,6 +72,28 @@ namespace Shine.Data.Dto._Mapster
                 p.Currency,
                 p.Rate
               }).OrderByDescending(p => p.PaymentDate)
+          )
+          .Map(
+              dest => dest.TotalPayment,
+              src => src.Payments.Sum(p => p.Amount)
+          )
+          .Map(
+              dest => dest.Costs,
+              src => src.Costs.Select(c => new
+              {
+                c.Description,
+                c.Amount,
+                c.Currency
+              })
+          )
+          .Map(
+              dest => dest.TotalCost,
+              src => src.Costs.Sum(c => c.Amount)
+          )
+          .Map(
+              dest => dest.Debt,
+              src => src.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
+                - (src.Payments.Any() ? src.Payments.Sum(p => p.Amount) : 0)
           );
 
       TypeAdapterConfig<OrderBuy, OrderBuyDebtDto>.NewConfig()

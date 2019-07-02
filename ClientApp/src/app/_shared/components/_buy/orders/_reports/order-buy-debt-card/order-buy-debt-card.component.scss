@@ -11,7 +11,7 @@ mat-card.debt {
     color: white;
 
     mat-icon {
-      padding-top: .5rem;
+      padding-top: 0.5rem;
       padding-left: 1rem;
       font-size: 48px;
     }
@@ -27,7 +27,34 @@ mat-card.debt {
 
     .value {
       padding-left: 1rem;
+      color: deeppink;
+    }
+
+    .top-debt {
+      padding-top: 1rem;
       color: #3f51b5;
+
+      .avatar {
+        margin-right: 1rem;
+        vertical-align: middle;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      h2 {
+        display: inline;
+      }
+    }
+  }
+
+  .mat-card-actions {
+    position: relative;
+    bottom: 1rem;
+    right: 1rem;
+
+    button {
+      border-radius: 25px;
     }
   }
 }

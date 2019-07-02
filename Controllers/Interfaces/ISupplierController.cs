@@ -70,13 +70,15 @@ namespace Shine.Controllers.Interfaces
 #region Reports
     
     Task<ActionResult<Paged<SupplierDebtDto>>> GetPagedSupplierDebt(
-            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);    
 
     Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplier(int supplierId);
 
     Task<ActionResult<IEnumerable<OrderBySupplierPivotMonthDto>>> GetOrderBySupplierPivotMonth(int year);
 
     Task<ActionResult<IEnumerable<OrderBySupplierPivotQuarterDto>>> GetOrderBySupplierPivotQuarter(int year);
+
+    Task<ActionResult<IEnumerable<SupplierDebtDto>>> GetTopSupplierDebt(int numRows);
 
 #endregion
 

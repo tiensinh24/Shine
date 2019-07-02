@@ -6,10 +6,6 @@
   background: white;
 }
 
-main {
-  padding: 1rem;
-}
-
 main > section#supplier-debt > table.supplier-debt th[mat-header-cell] {
   color: royalblue;
 }

@@ -1,7 +1,13 @@
 import { OrderAndCostPerMonth } from '../../_interfaces/_reports/order-and-cost-per-month';
 import { OrderBuyLatest } from '../../_interfaces/_reports/order-buy-latest';
 import { OrderBuyService } from '../../_services/order-buy.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit
+  } from '@angular/core';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -24,6 +30,11 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
 
   // true: month & false: quarter
   chartMode = true;
+
+  // Receive from output
+  showMoreDebt: boolean;
+  showOrderDetail: boolean;
+  orderId: number;
 
   // Current year & month
   currentYear = moment().year();
@@ -58,10 +69,31 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
     this.chartMonthData$ = this.orderService.getOrderAndCostPerMonth(this.currentYear).subscribe(res => {
       this.chartMonthData = res;
     });
-
   }
 
   setChartMode() {
     this.chartMode = !this.chartMode;
+  }
+
+  // *Get from output
+
+  getOutShowMoreDebt(event: boolean) {
+    this.showMoreDebt = event;
+
+    if (this.showMoreDebt) {
+      this.showOrderDetail = false;
+    }
+  }
+
+  getOutShowOrderDetail(event: boolean) {
+    this.showOrderDetail = event;
+
+    if (this.showOrderDetail) {
+      this.showMoreDebt = false;
+    }
+  }
+
+  getOutOrderId(event: number) {
+    this.orderId = event;
   }
 }

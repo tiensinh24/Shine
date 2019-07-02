@@ -95,6 +95,7 @@ namespace Shine.Data.Infrastructures.Interfaces
 
         Task<IEnumerable<OrderBySupplierPivotQuarterDto>> GetOrderBySupplierPivotQuarterAsync(int year);
 
+
         #endregion
 
 

@@ -7,29 +7,25 @@
     <star-rating class="rating" [starType]="'svg'" [rating]="latestOrder.rating" [readOnly]="true"></star-rating>
     <div class="content" fxFlexAlign="start" fxLayout="column" fxLayoutGap="16px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <mat-icon matTooltip="Supplier" fontSet="far" fontIcon="fa-id-card" color="primary"></mat-icon>
+        <span><mat-icon matTooltip="Supplier" color="primary">person</mat-icon></span>
         <span>{{ latestOrder.supplierName }}</span>
       </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-        <mat-icon matTooltip="Order No." color="primary">shopping_cart</mat-icon>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+        <span><mat-icon matTooltip="Order No." color="primary">shopping_cart</mat-icon></span>
         <span>{{ latestOrder.orderNumber }}</span>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <mat-icon matTooltip="Order & payment date" color="primary">date_range</mat-icon>
+        <span><mat-icon matTooltip="Order & payment date" color="primary">date_range</mat-icon></span>
         <span>{{ latestOrder.dateOfIssue | date: 'dd/MM/yyyy' }} - {{ latestOrder.timeForPayment | date: 'dd/MM/yyyy' }}</span>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <mat-icon matTooltip="Order value" color="primary">attach_money</mat-icon>
+        <span><mat-icon matTooltip="Order value" color="primary">attach_money</mat-icon></span>
         <span>{{ latestOrder.value | currency }}</span>
       </div>
     </div>
   </div>
   <mat-card-actions align="end">
-    <button class="list" mat-icon-button matTooltip="Order lists" color="accent">
-      <mat-icon>list</mat-icon>
-    </button>
-    <button class="detail" mat-icon-button matTooltip="Detail" color="accent">
-      <mat-icon>list_alt</mat-icon>
-    </button>
+    <button mat-button *ngIf="!isDetail" (click)="outShowDetail()" matTooltip="Show more" color="accent">More</button>
+    <button mat-button *ngIf="isDetail" (click)="outShowDetail()" matTooltip="Show less" color="accent">Less</button>
   </mat-card-actions>
 </mat-card>

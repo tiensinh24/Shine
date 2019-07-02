@@ -1,5 +1,6 @@
-import { Payment } from 'src/app/order/_interfaces/payment';
 import { OrderBuyProducts } from './order-buy-products';
+import { Cost } from '../../_interfaces/cost';
+import { Payment } from 'src/app/order/_interfaces/payment';
 
 export interface OrderBuyDetail {
   orderId: number;
@@ -16,4 +17,8 @@ export interface OrderBuyDetail {
   paymentTotal: number;
   products: OrderBuyProducts[];
   payments: Payment[];
+  totalPayment: number;
+  costs: Cost[];
+  totalCost: number;
+  debt: number;
 }

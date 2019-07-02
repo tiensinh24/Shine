@@ -1,3 +1,16 @@
+import { PagedSupplier } from '../_interfaces/paged-supplier';
+import { PagedSupplierOrders } from '../_interfaces/paged-supplier-orders';
+import { OrderBySupplierPivotMonth } from '../_interfaces/reports/order-by-supplier-pivot-month';
+import { OrderBySupplierPivotQuarter } from '../_interfaces/reports/order-by-supplier-pivot-quarter';
+import { OrderDebt } from '../_interfaces/reports/order-debt';
+import { PagedSupplierDebts } from '../_interfaces/reports/paged-supplier-debt';
+import { SupplierDebt } from '../_interfaces/reports/supplier-debt';
+import { Supplier } from '../_interfaces/supplier';
+import { SupplierDetail } from '../_interfaces/supplier-detail';
+import { SupplierList } from '../_interfaces/supplier-list';
+import { SupplierOrders } from '../_interfaces/supplier-orders';
+import { SupplierProduct } from '../_interfaces/supplier-product';
+import { SupplierSelect } from '../_interfaces/supplier-select';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -6,18 +19,6 @@ import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { ProductSelect } from 'src/app/product/_interfaces/product-select';
 import { PagedProductBuy } from 'src/app/product/buy/_interfaces/paged-product-buy';
 import { environment } from 'src/environments/environment';
-import { PagedSupplier } from '../_interfaces/paged-supplier';
-import { PagedSupplierOrders } from '../_interfaces/paged-supplier-orders';
-import { Supplier } from '../_interfaces/supplier';
-import { SupplierDetail } from '../_interfaces/supplier-detail';
-import { SupplierList } from '../_interfaces/supplier-list';
-import { SupplierOrders } from '../_interfaces/supplier-orders';
-import { SupplierProduct } from '../_interfaces/supplier-product';
-import { SupplierSelect } from '../_interfaces/supplier-select';
-import { PagedSupplierDebts } from '../_interfaces/reports/paged-supplier-debt';
-import { OrderDebt } from '../_interfaces/reports/order-debt';
-import { OrderBySupplierPivotMonth } from '../_interfaces/reports/order-by-supplier-pivot-month';
-import { OrderBySupplierPivotQuarter } from '../_interfaces/reports/order-by-supplier-pivot-quarter';
 
 @Injectable({
   providedIn: 'root'
@@ -230,5 +231,11 @@ export class SupplierService {
       `${this.baseUrl}api/supplier/report/pivot-quarter`,
       { params: { year: year.toString() } }
     );
+  }
+
+  getTopSupplierDebt(numRows: number): Observable<SupplierDebt[]> {
+    const url = `${this.baseUrl}api/supplier/top-debt?numRows=${numRows}`;
+
+    return this.http.get<SupplierDebt[]>(url);
   }
 }

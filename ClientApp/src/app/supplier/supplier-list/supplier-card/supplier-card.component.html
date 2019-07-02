@@ -1,29 +1,14 @@
 <main class="mat-typography">
   <!-- Title, paginator & filter -->
-  <div
-    class="title mat-paginator-sticky"
-    fxLayout="row"
-    fxLayoutAlign="space-around center"
-    fxLayoutGap="64px"
-  >
+  <div class="title mat-paginator-sticky" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="64px">
     <h1>Suppliers</h1>
 
     <div class="search" fxFlex fxLayout="row-reverse">
-      <mat-paginator
-        [length]="paging?.totalItems"
-        [pageSize]="8"
-        [pageSizeOptions]="[8, 12, 24, 100]"
-        showFirstLastButtons
-      ></mat-paginator>
+      <mat-paginator [length]="paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 12, 24, 100]" showFirstLastButtons></mat-paginator>
 
       <mat-form-field fxFlex>
         <span matPrefix><mat-icon>search</mat-icon></span>
-        <span
-          matSuffix
-          matTooltip="Clear"
-          class="clear-filter-icon"
-          (click)="clearFilter()"
-          *ngIf="input.value"
+        <span matSuffix matTooltip="Clear" class="clear-filter-icon" (click)="clearFilter()" *ngIf="input.value"
           ><mat-icon>clear</mat-icon></span
         >
         <input matInput type="search" placeholder="Search suppliers" #input />
@@ -33,27 +18,10 @@
   </div>
 
   <!-- Loading progress bar -->
-  <mat-progress-bar
-    *ngIf="loading"
-    color="accent"
-    aria-label="Progress bar"
-    mode="buffer"
-  ></mat-progress-bar>
+  <mat-progress-bar *ngIf="loading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
 
-  <div
-    *ngIf="!loading"
-    @flyInVez
-    #mainSection
-    class="content"
-    fxLayout="row wrap"
-    fxLayoutAlign="center stretch"
-  >
-    <mat-card
-      fxFlex="22"
-      *ngFor="let supplier of suppliers"
-      class="card"
-      [routerLink]="['/supplier', supplier.personId]"
-    >
+  <div *ngIf="!loading" @flyInVez #mainSection class="content" fxLayout="row wrap" fxLayoutAlign="center stretch">
+    <mat-card fxFlex="22" *ngFor="let supplier of suppliers" class="card" [routerLink]="['/supplier', supplier.personId]">
       <mat-card-header>
         <img mat-card-avatar src="{{ mainPhotoUrl }}" />
 
@@ -63,12 +31,7 @@
             <div>{{ supplier.gender | gender }}</div>
 
             <div>
-              <star-rating
-                [starType]="'svg'"
-                [rating]="supplier.rating"
-                [showHalfStars]="true"
-                [readOnly]="true"
-              ></star-rating>
+              <star-rating [starType]="'svg'" [rating]="supplier.rating" [showHalfStars]="true" [readOnly]="true"></star-rating>
             </div>
           </div>
         </mat-card-subtitle>
@@ -80,7 +43,7 @@
             <td>
               <span><mat-icon>cake</mat-icon></span>
             </td>
-            <td>{{ supplier.dateOfBirth | date: "dd/MM/yyyy" }}</td>
+            <td>{{ supplier.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
           </tr>
           <tr>
             <td>

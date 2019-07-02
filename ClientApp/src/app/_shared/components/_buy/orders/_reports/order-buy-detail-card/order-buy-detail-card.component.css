@@ -1,0 +1,35 @@
+mat-card.main {
+  padding: 0;
+}
+
+mat-card.main div.summary {
+  padding-top: 1rem;
+}
+
+mat-card.main div.summary h1 {
+  padding-left: 1rem;
+  color: #3f51b5;
+}
+
+mat-card.main div.line-items {
+  padding-top: 1rem;
+  width: 100%;
+}
+
+mat-card.main div.line-items .title {
+  color: #3f51b5;
+}
+
+mat-card.main div.line-items table.table {
+  width: 100%;
+}
+
+mat-card.main div.line-items table.table th,
+mat-card.main div.line-items table.table td {
+  padding: 0.5rem;
+}
+
+mat-card.main div.line-items table.table th {
+  color: royalblue;
+}
+/*# sourceMappingURL=order-buy-detail-card.component.css.map */

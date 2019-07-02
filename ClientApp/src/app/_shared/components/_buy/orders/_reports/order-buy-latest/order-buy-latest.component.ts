@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output
+  } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OrderBuyLatest } from 'src/app/order/buy/_interfaces/_reports/order-buy-latest';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
@@ -15,6 +21,11 @@ export class OrderBuyLatestComponent implements OnInit, OnDestroy {
   // Variables
   latestOrder: OrderBuyLatest;
 
+  // Output
+  @Output() orderId = new EventEmitter<number>();
+  @Output() showDetail = new EventEmitter<boolean>();
+  isDetail = false;
+
   constructor(private orderService: OrderBuyService) {}
 
   ngOnInit() {
@@ -28,6 +39,14 @@ export class OrderBuyLatestComponent implements OnInit, OnDestroy {
   getLatestOrder() {
     this.latestOrder$ = this.orderService.getLatestOrder().subscribe((res: OrderBuyLatest) => {
       this.latestOrder = res;
+
+      // emit OrderId
+      this.orderId.emit(this.latestOrder.orderId);
     });
+  }
+
+  outShowDetail() {
+    this.showDetail.emit(!this.isDetail);
+    this.isDetail = !this.isDetail;
   }
 }

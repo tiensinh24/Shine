@@ -1,0 +1,51 @@
+<mat-card class="main mat-elevation-z0">
+  <div fxLayout="row" fxLayoutGap="32px">
+    <div class="summary">
+      <p>Value</p>
+      <h1>{{ order?.orderTotal | currency }}</h1>
+
+      <p>Payment</p>
+      <h1>{{ order?.totalPayment | currency }}</h1>
+
+      <p>Cost</p>
+      <h1>{{ order?.totalCost | currency }}</h1>
+
+      <p>Remain</p>
+      <h1>{{ order?.debt | currency }}</h1>
+    </div>
+
+    <mat-divider vertical></mat-divider>
+
+    <div fxFlex class="line-items">
+      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="32px">
+        <h2 class="title">Line items</h2>
+      </div>
+
+      <!-- Line item table -->
+      <table mat-table [dataSource]="dataSource" class="table" *ngIf="order?.products?.length > 0">
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef>Product Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
+        </ng-container>
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let row">{{ row.quantity | number }}</td>
+        </ng-container>
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let row">{{ row.price | currency }}</td>
+        </ng-container>
+        <!-- Tax Column -->
+        <ng-container matColumnDef="tax">
+          <th mat-header-cell *matHeaderCellDef>Tax</th>
+          <td mat-cell *matCellDef="let row">{{ row.tax | percent }}</td>
+        </ng-container>
+        <!-- Header & footer -->
+        <tr mat-header-row *matHeaderRowDef="displayedcolumn; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedcolumn"></tr>
+      </table>
+    </div>
+  </div>
+</mat-card>

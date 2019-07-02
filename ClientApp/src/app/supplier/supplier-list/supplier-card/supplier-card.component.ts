@@ -1,35 +1,36 @@
-import { fromEvent, of } from 'rxjs';
+import { PagedSupplier } from '../../_interfaces/paged-supplier';
+import { SupplierList } from '../../_interfaces/supplier-list';
+import { SupplierService } from '../../_services/supplier.service';
 import {
-  debounceTime,
-  distinctUntilChanged,
-  tap,
-  catchError,
-  finalize
-} from 'rxjs/operators';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-
+  animate,
+  query,
+  stagger,
+  style,
+  transition,
+  trigger
+  } from '@angular/animations';
 import {
   AfterViewInit,
   Component,
   ElementRef,
   OnInit,
   ViewChild
-} from '@angular/core';
+  } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
-import { SupplierService } from '../../_services/supplier.service';
+import { fromEvent, of } from 'rxjs';
 import {
-  trigger,
-  transition,
-  query,
-  style,
-  stagger,
-  animate} from '@angular/animations';
-import { SupplierList } from '../../_interfaces/supplier-list';
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  finalize,
+  tap
+  } from 'rxjs/operators';
 import { Paging } from 'src/app/_shared/_intefaces/paging';
-import { PagedSupplier } from '../../_interfaces/paged-supplier';
+import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
+import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
+
+
 
 @Component({
   selector: 'app-supplier-card',
@@ -42,12 +43,7 @@ import { PagedSupplier } from '../../_interfaces/paged-supplier';
           '.card, mat-card',
           [
             style({ opacity: 0, transform: 'translateY(100px)' }),
-            stagger(30, [
-              animate(
-                '500ms cubic-bezier(0.35, 0, 0.25, 1)',
-                style({ opacity: 1, transform: 'none' })
-              )
-            ])
+            stagger(30, [animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))])
           ],
           { optional: true }
         )

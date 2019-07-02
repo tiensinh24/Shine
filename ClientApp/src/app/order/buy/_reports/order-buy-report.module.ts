@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { StarRatingModule } from 'angular-star-rating';
 import { OrderBuyMonthChartModule } from 'src/app/_shared/components/_buy/orders/_charts/order-buy-month-chart/order-buy-month-chart.module';
 import { OrderBuyDebtCardModule } from 'src/app/_shared/components/_buy/orders/_reports/order-buy-debt-card/order-buy-debt-card.module';
+import { OrderBuyDetailCardModule } from 'src/app/_shared/components/_buy/orders/_reports/order-buy-detail-card/order-buy-detail-card.module';
 import { OrderBuyLatestModule } from 'src/app/_shared/components/_buy/orders/_reports/order-buy-latest/order-buy-latest.module';
 import { OrderBuyReportSupplierPivotMonthModule } from 'src/app/_shared/components/_buy/orders/_reports/order-buy-report-supplier-pivot-month/order-buy-report-supplier-pivot-month.module';
 import { OrderBuyReportSupplierPivotQuarterModule } from 'src/app/_shared/components/_buy/orders/_reports/order-buy-report-supplier-pivot-quarter/order-buy-report-supplier-pivot-quarter.module';
@@ -32,6 +33,7 @@ import { SharedModule } from 'src/app/_shared/shared.module';
     OrderBuyTopModule,
     OrderBuyLatestModule,
     OrderBuyDebtCardModule,
+    OrderBuyDetailCardModule,
 
     // Routing
     OrderBuyReportRoutingModule

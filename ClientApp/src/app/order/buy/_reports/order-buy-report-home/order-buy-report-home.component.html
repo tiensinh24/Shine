@@ -32,13 +32,28 @@
 
   <section id="debt-latest-top-order">
     <div class="content" fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="1rem" class="animated fadeInLeft delay-1s">
-      <app-order-buy-debt-card fxFlex="33"></app-order-buy-debt-card>
+      <app-order-buy-debt-card
+        [ngClass]="{ 'mat-elevation-z8': showMoreDebt }"
+        fxFlex="33"
+        [moreDebtInput]="this.showMoreDebt"
+        (showMoreDebt)="getOutShowMoreDebt($event)"
+      ></app-order-buy-debt-card>
 
-      <app-order-buy-latest fxFlex="33"></app-order-buy-latest>
+      <app-order-buy-latest
+        [ngClass]="{ 'mat-elevation-z8': showOrderDetail }"
+        fxFlex="33"
+        (showDetail)="getOutShowOrderDetail($event)"
+        (orderId)="getOutOrderId($event)"
+      ></app-order-buy-latest>
 
       <app-order-buy-top fxFlex></app-order-buy-top>
     </div>
+    <mat-expansion-panel class="card-group-expansion mat-elevation-z8" [expanded]="showMoreDebt">
+      <app-supplier-report-debt></app-supplier-report-debt>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="card-group-expansion mat-elevation-z8" [expanded]="showOrderDetail">
+      <app-order-buy-detail-card *ngIf="orderId" [orderId]="orderId"></app-order-buy-detail-card>
+    </mat-expansion-panel>
   </section>
 </main>
-
-<app-supplier-report-debt *ngIf="false"></app-supplier-report-debt>

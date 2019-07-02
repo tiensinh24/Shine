@@ -36,7 +36,7 @@ mat-card.latest-order .content {
   padding: 0 1rem 1rem 1rem;
 }
 
-mat-card.latest-order .content > div > mat-icon {
+mat-card.latest-order .content > div mat-icon {
   font-size: 32px;
 }
 

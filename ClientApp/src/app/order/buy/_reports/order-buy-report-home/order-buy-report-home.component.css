@@ -6,15 +6,13 @@ main section#month-review mat-card.month-review h1.title {
   color: #3f51b5;
 }
 
-main section#month-review mat-card.month-review > div.review {
-  min-width: 200px;
-}
-
 main section#month-review mat-card.month-review > div.review > div.value > h1 {
+  padding-left: 1rem;
   color: deeppink;
 }
 
 main section#month-review mat-card.month-review > div.review > div.cost > h1 {
+  padding-left: 1rem;
   color: deeppink;
 }
 
@@ -30,5 +28,10 @@ main section#month-review mat-button-toggle.mat-button-toggle-checked {
 
 main section#debt-latest-top-order {
   margin-top: 1rem;
+}
+
+main section#debt-latest-top-order .card-group-expansion {
+  margin-top: 1rem;
+  padding: 0;
 }
 /*# sourceMappingURL=order-buy-report-home.component.css.map */

@@ -28,6 +28,9 @@ mat-card.top-orders {
     .value {
       padding-left: 1rem;
       color: #3f51b5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 

@@ -28,7 +28,7 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
   displayedcolumn = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'total', 'actions'];
   dataSource = new MatTableDataSource<OrderBuyProducts>([]);
 
-  orderSub = new Subscription();
+  orderSub: Subscription;
 
   constructor(
     private orderService: OrderBuyService,

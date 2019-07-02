@@ -255,6 +255,14 @@ namespace Shine.Controllers
             return Ok(query);
         }
 
+        [HttpGet("top-debt")]
+        public async Task<ActionResult<IEnumerable<SupplierDebtDto>>> GetTopSupplierDebt(int numRows)
+        {
+            var query = await _repository.GetTopSupplierDebtAsync(numRows);
+
+            return Ok(query);
+        }
+
 
         #endregion
 
