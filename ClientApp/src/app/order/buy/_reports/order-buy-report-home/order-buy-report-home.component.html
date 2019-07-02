@@ -35,13 +35,14 @@
       <app-order-buy-debt-card
         [ngClass]="{ 'mat-elevation-z8': showMoreDebt }"
         fxFlex="33"
-        [moreDebtInput]="this.showMoreDebt"
+        [moreDebt]="showMoreDebt"
         (showMoreDebt)="getOutShowMoreDebt($event)"
       ></app-order-buy-debt-card>
 
       <app-order-buy-latest
         [ngClass]="{ 'mat-elevation-z8': showOrderDetail }"
         fxFlex="33"
+        [isDetail]="showOrderDetail"
         (showDetail)="getOutShowOrderDetail($event)"
         (orderId)="getOutOrderId($event)"
       ></app-order-buy-latest>
