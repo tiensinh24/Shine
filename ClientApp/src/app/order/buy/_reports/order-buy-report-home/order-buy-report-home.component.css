@@ -30,8 +30,13 @@ main section#debt-latest-top-order {
   margin-top: 1rem;
 }
 
-main section#debt-latest-top-order .card-group-expansion {
+main section#debt-latest-top-order div.content div.card-group app-order-buy-debt-card,
+main section#debt-latest-top-order div.content div.card-group app-order-buy-latest,
+main section#debt-latest-top-order div.content div.card-group app-order-buy-top {
+  width: 300px;
+}
+
+main section#debt-latest-top-order div.content .card-group-expansion {
   margin-top: 1rem;
-  padding: 0;
 }
 /*# sourceMappingURL=order-buy-report-home.component.css.map */

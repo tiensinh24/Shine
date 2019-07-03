@@ -1,4 +1,4 @@
-<div class="main-container" fxLayout="row">
+<!-- <div class="main-container">
   <div class="main-content">
     <router-outlet></router-outlet>
   </div>
@@ -13,4 +13,20 @@
       </mat-list-item>
     </mat-nav-list>
   </div>
-</div>
+</div> -->
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" position="end" opened>
+    <mat-nav-list dense>
+      <mat-list-item [routerLink]="['/order-buy/report/employee']" routerLinkActive="active">
+        <p matLine>Order by employees</p>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/order-buy/report/supplier/pivot-month']" routerLinkActive="active">
+        <p matLine>Order by suppliers</p>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

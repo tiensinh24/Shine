@@ -25,10 +25,12 @@ export class OrderBuyLatestComponent implements OnInit, OnDestroy {
   // Output
   @Output() orderId = new EventEmitter<number>();
   @Output() showDetail = new EventEmitter<boolean>();
+  @Output() showOrderList = new EventEmitter<boolean>();
   
 
   // Input
   @Input() isDetail = false;
+  @Input() isOrderList = false;
 
   constructor(private orderService: OrderBuyService) {}
 
@@ -53,6 +55,9 @@ export class OrderBuyLatestComponent implements OnInit, OnDestroy {
 
   outShowDetail() {
     this.showDetail.emit(!this.isDetail);
-    // this.isDetail = !this.isDetail;
+  }
+
+  outShowOrderList() {
+    this.showOrderList.emit(!this.isOrderList);
   }
 }

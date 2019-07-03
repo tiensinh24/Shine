@@ -1,22 +1,24 @@
 <mat-card *ngIf="topOrders" class="top-orders mat-elevation-z0">
-  <div class="title" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
-    <mat-icon>arrow_upward</mat-icon>
-    <h1 fxFlexAlign="center">Top orders</h1>
-  </div>
-
-  <div class="content" *ngFor="let order of topOrders">
-    <p>No. {{ order.orderNumber }}</p>
-    <div class="value">
-      <h1>{{ order.value | currency }}</h1>
-      <h1><button mat-button color="accent">Detail</button></h1>
+  <mat-card-content flex>
+    <div class="title" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
+      <mat-icon>arrow_upward</mat-icon>
+      <h1 fxFlexAlign="center">Top orders</h1>
     </div>
-  </div>
 
-  <div class="toggle-button-group" fxLayout="row" fxLayoutAlign="center">
-    <mat-button-toggle-group fxFlexAlign="center" (change)="setTopOrderMode($event)">
+    <div class="content" *ngFor="let order of topOrders">
+      <p>No. {{ order.orderNumber }}</p>
+      <div class="value">
+        <h1>{{ order.value | currency }}</h1>
+        <h1><button mat-button color="accent">Detail</button></h1>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="center">
+    <mat-button-toggle-group (change)="setTopOrderMode($event)">
       <mat-button-toggle checked value="m">Month</mat-button-toggle>
       <mat-button-toggle value="q">Quarter</mat-button-toggle>
       <mat-button-toggle value="y">Year</mat-button-toggle>
     </mat-button-toggle-group>
-  </div>
+  </mat-card-actions>
 </mat-card>

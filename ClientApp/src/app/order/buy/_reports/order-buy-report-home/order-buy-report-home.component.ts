@@ -34,6 +34,7 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   // Receive from output
   showMoreDebt: boolean;
   showOrderDetail: boolean;
+  showOrderList: boolean;
   orderId: number;
 
   // Current year & month
@@ -80,17 +81,22 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   getOutShowMoreDebt(event: boolean) {
     this.showMoreDebt = event;
 
-    if (this.showMoreDebt) {
-      this.showOrderDetail = false;
-    }
+    this.showOrderDetail = false;
+    this.showOrderList = false;
   }
 
   getOutShowOrderDetail(event: boolean) {
     this.showOrderDetail = event;
 
-    if (this.showOrderDetail) {
-      this.showMoreDebt = false;
-    }
+    this.showMoreDebt = false;
+    this.showOrderList = false;
+  }
+
+  getOutShowOrderList(event: boolean) {
+    this.showOrderList = event;
+
+    this.showMoreDebt = false;
+    this.showOrderDetail = false;
   }
 
   getOutOrderId(event: number) {

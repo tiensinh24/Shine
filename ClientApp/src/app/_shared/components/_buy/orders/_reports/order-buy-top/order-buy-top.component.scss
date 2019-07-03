@@ -2,6 +2,8 @@ mat-card.top-orders {
   padding: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .title {
     width: 100%;
@@ -34,11 +36,12 @@ mat-card.top-orders {
     }
   }
 
-  div.toggle-button-group {
-    padding-bottom: 1rem;
+  .mat-card-actions {
+    position: relative;
+    bottom: 1.5rem;
+    margin-top: auto;
 
     mat-button-toggle.mat-button-toggle-checked {
-      margin: 0 auto;
       color: white;
       background: #3f51b5;
     }

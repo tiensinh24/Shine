@@ -5,9 +5,6 @@ import { OrderBuyList } from '../_interfaces/order-buy-list';
 import { OrderBuyService } from '../_services/order-buy.service';
 import {
   animate,
-  query,
-  stagger,
-  state,
   style,
   transition,
   trigger

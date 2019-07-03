@@ -28,7 +28,7 @@ export class OrderBuyDebtCardComponent implements OnInit,  OnDestroy {
   topSupplierDebt: SupplierDebt[];
 
   // Output
-  @Output() showMoreDebt = new EventEmitter<boolean>();  
+  @Output() showMoreDebt = new EventEmitter<boolean>();
 
   @Input() moreDebt = false;
 
@@ -61,6 +61,5 @@ export class OrderBuyDebtCardComponent implements OnInit,  OnDestroy {
 
   outShowMoreDebt() {
     this.showMoreDebt.emit(!this.moreDebt);
-    // this.moreDebt = !this.moreDebt;
   }
 }

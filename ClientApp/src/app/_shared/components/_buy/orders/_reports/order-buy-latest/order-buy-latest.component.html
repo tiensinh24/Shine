@@ -1,31 +1,39 @@
 <mat-card *ngIf="latestOrder" class="latest-order mat-elevation-z0">
-  <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
-    <div class="title">
-      <h1>Latest order</h1>
+  <mat-card-content flex>
+    <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
+      <div class="title">
+        <h1>Latest order</h1>
+      </div>
+      <div class="avatar"></div>
+      <star-rating class="rating" [starType]="'svg'" [rating]="latestOrder.rating" [readOnly]="true"></star-rating>
+      <div class="content" fxFlexAlign="start" fxLayout="column" fxLayoutGap="16px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+          <span><mat-icon matTooltip="Supplier" color="primary">person</mat-icon></span>
+          <span>{{ latestOrder.supplierName }}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+          <span><mat-icon matTooltip="Order No." color="primary">shopping_cart</mat-icon></span>
+          <span>{{ latestOrder.orderNumber }}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+          <span><mat-icon matTooltip="Order & payment date" color="primary">date_range</mat-icon></span>
+          <span>{{ latestOrder.dateOfIssue | date: 'dd/MM/yyyy' }} - {{ latestOrder.timeForPayment | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+          <span><mat-icon matTooltip="Order value" color="primary">attach_money</mat-icon></span>
+          <span>{{ latestOrder.value | currency }}</span>
+        </div>
+      </div>
     </div>
-    <div class="avatar"></div>
-    <star-rating class="rating" [starType]="'svg'" [rating]="latestOrder.rating" [readOnly]="true"></star-rating>
-    <div class="content" fxFlexAlign="start" fxLayout="column" fxLayoutGap="16px">
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <span><mat-icon matTooltip="Supplier" color="primary">person</mat-icon></span>
-        <span>{{ latestOrder.supplierName }}</span>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <span><mat-icon matTooltip="Order No." color="primary">shopping_cart</mat-icon></span>
-        <span>{{ latestOrder.orderNumber }}</span>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <span><mat-icon matTooltip="Order & payment date" color="primary">date_range</mat-icon></span>
-        <span>{{ latestOrder.dateOfIssue | date: 'dd/MM/yyyy' }} - {{ latestOrder.timeForPayment | date: 'dd/MM/yyyy' }}</span>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <span><mat-icon matTooltip="Order value" color="primary">attach_money</mat-icon></span>
-        <span>{{ latestOrder.value | currency }}</span>
-      </div>
-    </div>
-  </div>
+  </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-button *ngIf="!isDetail" (click)="outShowDetail()" matTooltip="Show more" color="accent">More</button>
-    <button mat-button *ngIf="isDetail" (click)="outShowDetail()" matTooltip="Show less" color="accent">Less</button>
+    <div class="more-button">
+        <button mat-button *ngIf="!isDetail" (click)="outShowDetail()" matTooltip="Show more" color="accent">More</button>
+        <button mat-button *ngIf="isDetail" (click)="outShowDetail()" matTooltip="Show less" color="accent">Less</button>
+    </div>
+    <div class="list-button">
+        <button mat-button *ngIf="!isOrderList" (click)="outShowOrderList()" matTooltip="Show order lists" color="accent">Lists</button>
+        <button mat-button *ngIf="isOrderList" (click)="outShowOrderList()" matTooltip="Collapse" color="accent">Collapse</button>
+    </div>
   </mat-card-actions>
 </mat-card>

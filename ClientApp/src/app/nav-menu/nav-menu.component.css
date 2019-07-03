@@ -39,9 +39,21 @@ mat-sidenav-container.side-nav {
   right: 0;
 }
 
+mat-sidenav-container.side-nav > .mat-sidenav {
+  position: fixed;
+  top: 60px;
+  height: calc(100vh - 60px);
+}
+
 mat-sidenav-container.side-nav > .mat-sidenav div.avatar {
   background-image: url("../../assets/images/sidenav-avatar-bg.jpg");
   background-size: cover;
+}
+
+mat-sidenav-container.side-nav > .mat-sidenav div.avatar .nav-buy-sell-toggle {
+  padding: 1rem;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
 }
 
 mat-sidenav-container.side-nav > .mat-sidenav div.avatar .user-avatar {

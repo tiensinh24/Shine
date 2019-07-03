@@ -1,18 +1,12 @@
-.main-container {
-  width: 100%;
+.mat-sidenav {
+  position: fixed;
+  top: 60px;
+  height: calc(100vh - 60px);
 
-  .main-content {
-    width: 100%;
-  }
+  // Need for scroll to work
+  right: 0.5rem;
 
-  .right-nav {
-    background: white;
-
-    mat-nav-list {
-      position: sticky;
-      top: 0;
-      right: 0;
-      border-left: 3px solid royalblue;
-    }
+  .mat-nav-list {
+    border-left: 3px solid royalblue;
   }
 }

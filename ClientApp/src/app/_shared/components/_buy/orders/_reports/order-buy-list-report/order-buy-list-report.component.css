@@ -1,0 +1,45 @@
+div.main > .title {
+  padding-top: 1rem;
+}
+
+div.main > .title > h1 {
+  color: royalblue;
+}
+
+div.main > .content {
+  padding: 0;
+}
+
+div.main > .content table.main-table {
+  width: 100%;
+}
+
+div.main > .content table.main-table th,
+div.main > .content table.main-table td {
+  padding: 0 0.5rem;
+}
+
+div.main > .content table.main-table th {
+  color: royalblue;
+}
+
+div.main > .content table.main-table .mat-row:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+div.main > .content table.main-table .mat-row .avatar > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+
+div.main > .content .mat-paginator-sticky {
+  padding-left: 1rem;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: white;
+}
+/*# sourceMappingURL=order-buy-list-report.component.css.map */

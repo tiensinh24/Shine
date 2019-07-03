@@ -1,26 +1,28 @@
 <mat-card *ngIf="totalDebt" class="debt mat-elevation-z0 mat-typography">
-  <div class="title" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
-    <mat-icon>account_balance</mat-icon>
-    <h1 fxFlexAlign="center">Payment remains</h1>
-  </div>
-
-  <div class="content">
-    <p>Total debts</p>
-    <div class="value" fxLayout="row" fxLayoutAlign="space-between stretch">
-      <h1>{{ totalDebt | currency }}</h1>
+  <mat-card-content flex>
+    <div class="title" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="32px">
+      <mat-icon>account_balance</mat-icon>
+      <h1 fxFlexAlign="center">Payment remains</h1>
     </div>
 
-    <p>Top suppliers</p>
-    <div class="top-debt" *ngFor="let supplier of topSupplierDebt">
-      <img
-        title="{{ supplier.supplierName }}"
-        src="{{ supplier.mainPhotoUrl ? supplier.mainPhotoUrl : 'assets/default.jpg' }}"
-        alt="Avatar"
-        class="avatar"
-      />
-      <h2>{{ supplier.debt | currency }}</h2>
+    <div class="content">
+      <p>Total debts</p>
+      <div class="value" fxLayout="row" fxLayoutAlign="space-between stretch">
+        <h1>{{ totalDebt | currency }}</h1>
+      </div>
+
+      <p>Top suppliers</p>
+      <div class="top-debt" *ngFor="let supplier of topSupplierDebt">
+        <img
+          title="{{ supplier.supplierName }}"
+          src="{{ supplier.mainPhotoUrl ? supplier.mainPhotoUrl : 'assets/default.jpg' }}"
+          alt="Avatar"
+          class="avatar"
+        />
+        <h2>{{ supplier.debt | currency }}</h2>
+      </div>
     </div>
-  </div>
+  </mat-card-content>
 
   <mat-card-actions align="end">
     <button mat-button *ngIf="!moreDebt" (click)="outShowMoreDebt()" matTooltip="Show more" color="accent">More</button>

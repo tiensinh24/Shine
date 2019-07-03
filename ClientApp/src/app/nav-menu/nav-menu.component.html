@@ -145,8 +145,8 @@
   <mat-sidenav-container class="side-nav">
     <mat-sidenav #leftnav opened mode="side" role="navigation">
       <!-- Avatar + Welcome -->
-      <div class="avatar" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
-        <div fxFlexAlign="end" matTooltip="Switch to buy/sell mode">
+      <div class="avatar" fxLayout="column" fxLayoutAlign="start center">
+        <div class="nav-buy-sell-toggle" matTooltip="Switch to buy/sell mode">
           <mat-slide-toggle [(ngModel)]="sidenavMode" labelPosition="before">{{
             sidenavMode ? 'Buy' : 'Sell'
           }}</mat-slide-toggle>

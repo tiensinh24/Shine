@@ -24,7 +24,7 @@ export class OrderBuyDetailCardComponent implements OnInit, OnDestroy {
   order: OrderBuyDetail;
 
   // Products table
-  displayedcolumn = ['productName', 'quantity', 'price', 'tax'];
+  displayedcolumn = ['productName', 'quantity', 'unit', 'price', 'tax'];
   dataSource = new MatTableDataSource<OrderBuyProducts>([]);
 
   // Input
