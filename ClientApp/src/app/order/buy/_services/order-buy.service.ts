@@ -1,5 +1,6 @@
 import { OrderBuyQuery } from '../_interfaces/_query/order-buy-query';
 import { OrderAndCostPerMonth } from '../_interfaces/_reports/order-and-cost-per-month';
+import { OrderAndCostPerQuarter } from '../_interfaces/_reports/order-and-cost-per-quarter';
 import { OrderBuyLatest } from '../_interfaces/_reports/order-buy-latest';
 import { OrderBuy } from '../_interfaces/order-buy';
 import { OrderBuyDetail } from '../_interfaces/order-buy-detail';
@@ -141,6 +142,12 @@ export class OrderBuyService {
     const url = `${this.baseUrl}api/orderBuy/order-and-cost-per-month?year=${year}`;
 
     return this.http.get<OrderAndCostPerMonth[]>(url);
+  }
+
+  getOrderAndCostPerQuarter(year: number): Observable<OrderAndCostPerQuarter[]> {
+    const url = `${this.baseUrl}api/orderBuy/order-and-cost-per-quarter?year=${year}`;
+
+    return this.http.get<OrderAndCostPerQuarter[]>(url);
   }
 
   getLatestOrder(): Observable<OrderBuyLatest> {

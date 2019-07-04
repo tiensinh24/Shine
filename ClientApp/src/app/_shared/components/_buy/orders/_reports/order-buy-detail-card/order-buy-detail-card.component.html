@@ -1,56 +1,121 @@
 <mat-card class="main mat-elevation-z0">
-  <div fxLayout="row" fxLayoutGap="32px">
-    <div class="summary">
-      <p>Value</p>
-      <h1>{{ order?.orderTotal | currency }}</h1>
+  <div fxLayout="row">
+    <div fxLayout="column" class="pie-chart-group">
+      <!-- Pie chart -->
+      <google-chart *ngIf="order" [type]="'PieChart'" [data]="pieChartData" [columnNames]="columnNames" [options]="options"> </google-chart>
 
-      <p>Payment</p>
-      <h1>{{ order?.totalPayment | currency }}</h1>
-
-      <p>Cost</p>
-      <h1>{{ order?.totalCost | currency }}</h1>
-
-      <p>Remain</p>
+      <p>Debt</p>
       <h1>{{ order?.debt | currency }}</h1>
     </div>
 
-    <mat-divider vertical></mat-divider>
+    <div fxFlex class="main-content">
+      <div class="value-expand-group">
+        <p>Value</p>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <h1>{{ order?.orderTotal | currency }}</h1>
+          <h1>
+            <button mat-icon-button (click)="toggleValueExpansion()">
+              <mat-icon matTooltip="Collapse" *ngIf="valueExpand">expand_less</mat-icon>
+              <mat-icon matTooltip="More detail" *ngIf="!valueExpand">expand_more</mat-icon>
+            </button>
+          </h1>
+        </div>
 
-    <div fxFlex class="line-items">
-      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="32px">
-        <h2 class="title">Line items</h2>
+        <mat-expansion-panel #valueExpansion class="mat-elevation-z0" [expanded]="valueExpand">
+          <!-- Line item table -->
+          <table mat-table [dataSource]="valueDataSource" class="table" *ngIf="order?.products?.length > 0">
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef>Product Name</th>
+              <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
+            </ng-container>
+            <!-- Quantity Column -->
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let row">{{ row.quantity | number }}</td>
+            </ng-container>
+            <!-- Unit Column -->
+            <ng-container matColumnDef="unit">
+              <th mat-header-cell *matHeaderCellDef>Unit</th>
+              <td mat-cell *matCellDef="let row">{{ row.unit }}</td>
+            </ng-container>
+            <!-- Price Column -->
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef>Price</th>
+              <td mat-cell *matCellDef="let row">{{ row.price | number }}</td>
+            </ng-container>
+            <!-- Tax Column -->
+            <ng-container matColumnDef="tax">
+              <th mat-header-cell *matHeaderCellDef>Tax</th>
+              <td mat-cell *matCellDef="let row">{{ row.tax | percent }}</td>
+            </ng-container>
+            <!-- Header & footer -->
+            <tr mat-header-row *matHeaderRowDef="valueDisplayedcolumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: valueDisplayedcolumns"></tr>
+          </table>
+        </mat-expansion-panel>
       </div>
 
-      <!-- Line item table -->
-      <table mat-table [dataSource]="dataSource" class="table" *ngIf="order?.products?.length > 0">
-        <ng-container matColumnDef="productName">
-          <th mat-header-cell *matHeaderCellDef>Product Name</th>
-          <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
-        </ng-container>
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef>Quantity</th>
-          <td mat-cell *matCellDef="let row">{{ row.quantity | number }}</td>
-        </ng-container>
-        <!-- Unit Column -->
-        <ng-container matColumnDef="unit">
-          <th mat-header-cell *matHeaderCellDef>Unit</th>
-          <td mat-cell *matCellDef="let row">{{ row.unit }}</td>
-        </ng-container>
-        <!-- Price Column -->
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef>Price</th>
-          <td mat-cell *matCellDef="let row">{{ row.price | currency }}</td>
-        </ng-container>
-        <!-- Tax Column -->
-        <ng-container matColumnDef="tax">
-          <th mat-header-cell *matHeaderCellDef>Tax</th>
-          <td mat-cell *matCellDef="let row">{{ row.tax | percent }}</td>
-        </ng-container>
-        <!-- Header & footer -->
-        <tr mat-header-row *matHeaderRowDef="displayedcolumn; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedcolumn"></tr>
-      </table>
+      <div class="payment-expand-group">
+        <p>Payment</p>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <h1>{{ order?.paymentTotal | currency }}</h1>
+          <h1>
+            <button mat-icon-button (click)="togglePaymentExpansion()">
+              <mat-icon matTooltip="Collapse" *ngIf="paymentExpand">expand_less</mat-icon>
+              <mat-icon matTooltip="More detail" *ngIf="!paymentExpand">expand_more</mat-icon>
+            </button>
+          </h1>
+        </div>
+
+        <mat-expansion-panel #paymentExpansion class="mat-elevation-z0" [expanded]="paymentExpand">
+          <!-- Payment table -->
+          <table mat-table [dataSource]="paymentDataSource">
+            <!-- Payment date column -->
+            <ng-container matColumnDef="paymentDate">
+              <th mat-header-cell *matHeaderCellDef>Payment Date</th>
+              <td mat-cell *matCellDef="let row">{{ row.paymentDate | date: 'dd/MM/yyyy' }}</td>
+            </ng-container>
+            <!-- Amount column -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td mat-cell *matCellDef="let row">{{ row.amount | number }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="paymentDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: paymentDisplayedColumns"></tr>
+          </table>
+        </mat-expansion-panel>
+      </div>
+
+      <div class="cost-expand-group">
+        <p>Cosst</p>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <h1>{{ order?.totalCost | currency }}</h1>
+          <h1>
+            <button mat-icon-button (click)="toggleCostExpansion()">
+              <mat-icon matTooltip="Collapse" *ngIf="costExpand">expand_less</mat-icon>
+              <mat-icon matTooltip="More detail" *ngIf="!costExpand">expand_more</mat-icon>
+            </button>
+          </h1>
+        </div>
+
+        <mat-expansion-panel #costExpansion class="mat-elevation-z0" [expanded]="costExpand">
+          <!-- Cost table -->
+          <table mat-table [dataSource]="costDataSource">
+            <!-- Description column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+            </ng-container>
+            <!-- Amount column -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td mat-cell *matCellDef="let row">{{ row.amount | number }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="costDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: costDisplayedColumns"></tr>
+          </table>
+        </mat-expansion-panel>
+      </div>
     </div>
   </div>
 </mat-card>

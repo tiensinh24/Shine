@@ -212,6 +212,14 @@ namespace Shine.Controllers
       return Ok(query);
     }
 
+    [HttpGet("order-and-cost-per-quarter")]
+    public async Task<ActionResult<IEnumerable<OrderAndCostPerQuarterDto>>> GetOrderAndCostPerQuarter(int year)
+    {
+      var query = await _repository.GetOrderAndCostPerQuarterAsync(year);
+
+      return Ok(query);
+    }
+
     [HttpGet("latest")]
     public async Task<ActionResult<OrderBuyLatestDto>> GetLatestOrder()
     {

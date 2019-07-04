@@ -1,34 +1,27 @@
 mat-card.main {
   padding: 0;
 
-  div.summary {
+  div.pie-chart-group {
+    align-self: center;
+
+    h1 {
+      color: deeppink;
+      padding-left: 1rem;
+    }
+  }
+
+  div.main-content {
     padding-top: 1rem;
 
     h1 {
       padding-left: 1rem;
       color: #3f51b5;
     }
-  }
 
-  div.line-items {
-    padding-top: 1rem;
-    width: 100%;
-
-    .title {
-      color: #3f51b5;
-    }
-
-    table.table {
+    mat-expansion-panel .mat-table {
       width: 100%;
-
-      th,
-      td {
-        padding: 0.5rem;
-      }
-
-      th {
-        color: royalblue;
-      }
+      padding-left: 1rem;
+      margin-bottom: 2rem;
     }
   }
 }

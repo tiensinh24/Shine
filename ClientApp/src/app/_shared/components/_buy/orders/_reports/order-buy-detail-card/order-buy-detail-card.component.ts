@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   Input,
   OnDestroy,
@@ -7,6 +6,8 @@ import {
   } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { Cost } from 'src/app/order/_interfaces/cost';
+import { Payment } from 'src/app/order/_interfaces/payment';
 import { OrderBuyDetail } from 'src/app/order/buy/_interfaces/order-buy-detail';
 import { OrderBuyProducts } from 'src/app/order/buy/_interfaces/order-buy-products';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
@@ -23,14 +24,35 @@ export class OrderBuyDetailCardComponent implements OnInit, OnDestroy {
   // Variables
   order: OrderBuyDetail;
 
-  // Products table
-  displayedcolumn = ['productName', 'quantity', 'unit', 'price', 'tax'];
-  dataSource = new MatTableDataSource<OrderBuyProducts>([]);
+  // Google pie chart
+  pieChartData = [[]];
+  columnNames = ['Value', 'Cost'];
+  options = {
+    width: 300,
+    height: 300,
+    pieHole: 0.4,
+    legend: { position: 'top', maxLines: 3 }
+  };
+
+  // boolean
+  valueExpand = true;
+  paymentExpand = false;
+  costExpand = false;
+
+  // Line items table
+  valueDisplayedcolumns = ['productName', 'quantity', 'unit', 'price', 'tax'];
+  valueDataSource = new MatTableDataSource<OrderBuyProducts>([]);
+
+  // Payment table
+  paymentDisplayedColumns = ['paymentDate', 'amount'];
+  paymentDataSource = new MatTableDataSource<Payment>([]);
+
+  // Cost table
+  costDisplayedColumns = ['description', 'amount'];
+  costDataSource = new MatTableDataSource<Cost>([]);
 
   // Input
   @Input() orderId: number;
-
-  // Output
 
   constructor(private orderService: OrderBuyService) {}
 
@@ -45,7 +67,25 @@ export class OrderBuyDetailCardComponent implements OnInit, OnDestroy {
   getOrder(orderId: number) {
     this.order$ = this.orderService.getOrderDetail(orderId).subscribe((res: OrderBuyDetail) => {
       this.order = res;
-      this.dataSource = new MatTableDataSource<OrderBuyProducts>(res.products);
+      this.valueDataSource = new MatTableDataSource<OrderBuyProducts>(res.products);
+      this.paymentDataSource = new MatTableDataSource<Payment>(res.payments);
+      this.costDataSource = new MatTableDataSource<Cost>(res.costs);
+
+      this.pieChartData.shift();
+      this.pieChartData.push(['Value', res.orderTotal], ['Cost', res.totalCost]);
     });
+  }
+
+  // *Toggle expansion group
+  toggleValueExpansion() {
+    this.valueExpand = !this.valueExpand;
+  }
+
+  togglePaymentExpansion() {
+    this.paymentExpand = !this.paymentExpand;
+  }
+
+  toggleCostExpansion() {
+    this.costExpand = !this.costExpand;
   }
 }

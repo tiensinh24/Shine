@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACX,KAAK,EAAE,IAAI;EACX,UAAU,EAAE,KAAK;CAClB",
+    "sources": [
+        "order-buy-quarter-chart.component.scss"
+    ],
+    "names": [],
+    "file": "order-buy-quarter-chart.component.css"
+}

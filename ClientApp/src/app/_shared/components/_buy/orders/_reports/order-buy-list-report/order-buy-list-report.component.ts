@@ -47,9 +47,8 @@ export class OrderBuyListReportComponent implements OnInit, AfterViewInit {
     { key: 'value', value: 'Values' },
     { key: 'cost', value: 'Cost' },
     { key: 'rating', value: 'Rating' },
-    { key: 'actions', value: 'Actions' }
   ];
-  columnsToDisplay = ['orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'employeeName', 'value', 'cost', 'rating', 'actions'];
+  columnsToDisplay = ['orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'employeeName', 'value', 'cost', 'rating'];
 
   title = 'Order List';
 

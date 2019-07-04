@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shine.Data;
 using Shine.Data.Dto.Orders;
-using Shine.Data.Dto.Suppliers.Reports;
 using Shine.Data.Models;
 
 namespace Shine.Controllers
@@ -25,29 +23,29 @@ namespace Shine.Controllers
     }
 
     [HttpGet]
-    public IEnumerable<SupplierDebtDto> OrdersSumAsync(int numRows)
+    public async Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year)
     {
-      var source = _context.Set<Supplier>()
-          .AsNoTracking()
-          .GroupBy(s => new
-          {
-            s.PersonId,
-            SupplierName = s.FirstName + " " + s.LastName,
-            MainPhotoUrl = s.Photos.FirstOrDefault(p => p.IsMain == true).PhotoUrl
-          },
-              (key, element) => new SupplierDebtDto
-              {
-                SupplierId = key.PersonId,
-                SupplierName = key.SupplierName,
-                MainPhotoUrl = key.MainPhotoUrl,
-                Debt = element.Sum(e => e.Orders.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
-                          - (o.Payments.Count() == 0 ? 0 : o.Payments.Sum(p => p.Amount))))
-              })
-          .Where(o => o.Debt > 0)
-          .OrderByDescending(o => o.Debt)
-          .Take(numRows);
+      var query = await _context.Set<OrderBuy>()
+        .AsNoTracking()
+        .Where(o => o.DateOfIssue.Year == year)
+        .Select(o => new
+        {
+          Quarter = Data.Helpers.Helpers.GetQuarter(o.DateOfIssue.Month),
+          Value = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax)),
+          Cost = o.Costs.Sum(c => c.Amount)
+        })
+        .GroupBy(g => g.Quarter)
+        .Select(g => new OrderAndCostPerQuarterDto
+        {
+          Quarter = g.Key,
+          Amount = g.Sum(i => i.Value),
+          Cost = g.Sum(i => i.Cost)
+        })
+        .OrderBy(g => g.Quarter)
+        .ToListAsync();
 
-      return source;
+      return query;
     }
   }
 }
+

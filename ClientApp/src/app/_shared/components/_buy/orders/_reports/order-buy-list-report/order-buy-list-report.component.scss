@@ -1,6 +1,7 @@
 div.main {
   > .title {
     padding-top: 1rem;
+    padding-left: 1rem;
     > h1 {
       color: royalblue;
     }
@@ -36,11 +37,14 @@ div.main {
     }
 
     .mat-paginator-sticky {
-      padding-left: 1rem;
       position: sticky;
       bottom: 0;
       z-index: 10;
       background: white;
+
+      mat-icon {
+        padding-left: 1rem;
+      }
     }
   }
 }

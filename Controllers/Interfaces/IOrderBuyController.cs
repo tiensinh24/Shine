@@ -55,6 +55,7 @@ namespace Shine.Controllers.Interfaces {
         ActionResult<int> GetOrdersCount(int year, int? month);
 
         Task<ActionResult<IEnumerable<OrderAndCostPerMonthDto>>> GetOrderAndCostPerMonth(int year);
+        Task<ActionResult<IEnumerable<OrderAndCostPerQuarterDto>>> GetOrderAndCostPerQuarter(int year);
 
         Task<ActionResult<OrderBuyLatestDto>> GetLatestOrder();
 

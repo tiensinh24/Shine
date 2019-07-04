@@ -67,7 +67,7 @@ export class SupplierReportDebtComponent
   // Paging
   pagingParams = <PagingParams>{
     pageIndex: 0,
-    pageSize: 8
+    pageSize: 5
   };
 
   sortParams = <SortParams>{

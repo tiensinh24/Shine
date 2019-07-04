@@ -40,3 +40,7 @@ body {
 .dynamic-cols-menu [matSubheader] {
   padding: 0 1rem;
 }
+
+.padding-remove .mat-expansion-panel-body {
+  padding: 0;
+}

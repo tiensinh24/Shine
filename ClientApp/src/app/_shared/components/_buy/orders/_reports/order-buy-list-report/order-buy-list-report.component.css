@@ -1,5 +1,6 @@
 div.main > .title {
   padding-top: 1rem;
+  padding-left: 1rem;
 }
 
 div.main > .title > h1 {
@@ -35,11 +36,14 @@ div.main > .content table.main-table .mat-row .avatar > img {
 }
 
 div.main > .content .mat-paginator-sticky {
-  padding-left: 1rem;
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
   z-index: 10;
   background: white;
+}
+
+div.main > .content .mat-paginator-sticky mat-icon {
+  padding-left: 1rem;
 }
 /*# sourceMappingURL=order-buy-list-report.component.css.map */

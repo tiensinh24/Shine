@@ -18,6 +18,9 @@ export class OrderBuyTopComponent implements OnInit, OnDestroy {
   currentYear = moment().year();
   currentMonth = moment().month() + 1;
   topOrders: OrderValue[];
+  topsMonth: OrderValue[] = [];
+  topsQuarter: OrderValue[] = [];
+  topsYear: OrderValue[] = [];
 
   // Boolean
   orderMode = 'm';
@@ -38,13 +41,47 @@ export class OrderBuyTopComponent implements OnInit, OnDestroy {
 
   getTopOrders(numRow: number, year: number, month: number, type: string) {
     this.topOrders$ = this.orderService.getTopOrderValue(numRow, year, month, type).subscribe((res: OrderValue[]) => {
-      this.topOrders = res;
+      if (type === 'm') {
+        this.topOrders = this.topsMonth = res;
+      }
+
+      if (type === 'q') {
+        this.topOrders = this.topsQuarter = res;
+      }
+
+      if (type === 'y') {
+        this.topOrders = this.topsYear = res;
+      }
     });
   }
 
   setTopOrderMode(event: MatButtonToggleChange) {
     this.orderMode = event.value;
 
-    this.getTopOrders(3, this.currentYear, this.currentMonth, this.orderMode);
+    switch (this.orderMode) {
+      case 'y':
+        if (this.topsYear.length === 0) {
+          this.getTopOrders(3, this.currentYear, this.currentMonth, this.orderMode);
+        } else {
+          this.topOrders = this.topsYear;
+        }
+        break;
+
+      case 'q':
+        if (this.topsQuarter.length === 0) {
+          this.getTopOrders(3, this.currentYear, this.currentMonth, this.orderMode);
+        } else {
+          this.topOrders = this.topsQuarter;
+        }
+        break;
+
+      default:
+        if (this.topsMonth.length === 0) {
+          this.getTopOrders(3, this.currentYear, this.currentMonth, this.orderMode);
+        } else {
+          this.topOrders = this.topsMonth;
+        }
+        break;
+    }
   }
 }

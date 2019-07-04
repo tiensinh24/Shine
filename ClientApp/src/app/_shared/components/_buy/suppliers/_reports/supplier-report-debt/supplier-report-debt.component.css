@@ -1,11 +1,3 @@
-.mat-paginator-sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-  background: white;
-}
-
 main > section#supplier-debt > table.supplier-debt th[mat-header-cell] {
   color: royalblue;
 }
@@ -48,5 +40,17 @@ main > section#supplier-debt > table.supplier-debt .expand-element-detail table.
   text-align: right;
   height: 1.6rem;
   padding: 0 1rem;
+}
+
+main > section#supplier-debt > .mat-paginator-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  background: white;
+}
+
+main > section#supplier-debt > .mat-paginator-sticky mat-icon {
+  padding-left: 1rem;
 }
 /*# sourceMappingURL=supplier-report-debt.component.css.map */

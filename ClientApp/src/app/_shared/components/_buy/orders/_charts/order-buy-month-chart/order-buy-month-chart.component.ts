@@ -1,7 +1,12 @@
-import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
-import { OrderAndCostPerMonth } from 'src/app/order/buy/_interfaces/_reports/order-and-cost-per-month';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild
+  } from '@angular/core';
 import { GoogleChartComponent } from 'angular-google-charts';
-import { ResizedEvent } from 'angular-resize-event';
+import { OrderAndCostPerMonth } from 'src/app/order/buy/_interfaces/_reports/order-and-cost-per-month';
 
 @Component({
   selector: 'app-order-buy-month-chart',
@@ -88,6 +93,4 @@ export class OrderBuyMonthChartComponent implements OnInit {
         break;
     }
   }
-
-
 }

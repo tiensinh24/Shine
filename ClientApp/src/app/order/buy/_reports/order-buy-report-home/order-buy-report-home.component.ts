@@ -1,13 +1,7 @@
 import { OrderAndCostPerMonth } from '../../_interfaces/_reports/order-and-cost-per-month';
-import { OrderBuyLatest } from '../../_interfaces/_reports/order-buy-latest';
+import { OrderAndCostPerQuarter } from '../../_interfaces/_reports/order-and-cost-per-quarter';
 import { OrderBuyService } from '../../_services/order-buy.service';
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit
-  } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -22,11 +16,13 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
   ordersCost$: Subscription;
   ordersCount$: Subscription;
   chartMonthData$: Subscription;
+  chartQuarterData$: Subscription;
 
   ordersValue: number;
   ordersCost: number;
   ordersCount: number;
   chartMonthData: OrderAndCostPerMonth[];
+  chartQuarterData: OrderAndCostPerQuarter[];
 
   // true: month & false: quarter
   chartMode = true;
@@ -52,6 +48,7 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
     this.ordersCost$.unsubscribe();
     this.ordersCount$.unsubscribe();
     this.chartMonthData$.unsubscribe();
+    this.chartQuarterData$.unsubscribe();
   }
 
   initialize() {
@@ -70,9 +67,13 @@ export class OrderBuyReportHomeComponent implements OnInit, OnDestroy {
     this.chartMonthData$ = this.orderService.getOrderAndCostPerMonth(this.currentYear).subscribe(res => {
       this.chartMonthData = res;
     });
+
+    this.chartQuarterData$ = this.orderService.getOrderAndCostPerQuarter(this.currentYear).subscribe((res: OrderAndCostPerQuarter[]) => {
+      this.chartQuarterData = res;
+    });
   }
 
-  setChartMode() {
+  toggleChartMode() {
     this.chartMode = !this.chartMode;
   }
 

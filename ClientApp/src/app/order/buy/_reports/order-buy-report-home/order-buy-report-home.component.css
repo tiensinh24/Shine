@@ -36,7 +36,11 @@ main section#debt-latest-top-order div.content div.card-group app-order-buy-top 
   width: 300px;
 }
 
-main section#debt-latest-top-order div.content .card-group-expansion {
+main section#debt-latest-top-order div.content div.card-group-expansion {
   margin-top: 1rem;
+}
+
+main section#debt-latest-top-order div.content div.card-group-expansion .detail-card {
+  padding-left: 1rem;
 }
 /*# sourceMappingURL=order-buy-report-home.component.css.map */

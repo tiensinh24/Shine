@@ -20,9 +20,10 @@
       </div>
 
       <div class="chart" fxFlex fxLayout="column" fxLayoutAlign="start stretch">
-        <app-order-buy-month-chart *ngIf="chartMonthData" [year]="currentYear" [chartData]="chartMonthData"></app-order-buy-month-chart>
+        <app-order-buy-month-chart *ngIf="chartMonthData && this.chartMode" [year]="currentYear" [chartData]="chartMonthData"></app-order-buy-month-chart>
+        <app-order-buy-quarter-chart *ngIf="chartQuarterData && !this.chartMode" [year]="currentYear" [chartData]="chartQuarterData"></app-order-buy-quarter-chart>
 
-        <mat-button-toggle-group (change)="setChartMode()" fxFlexAlign="center">
+        <mat-button-toggle-group (change)="toggleChartMode()" fxFlexAlign="center">
           <mat-button-toggle checked value="true">Month</mat-button-toggle>
           <mat-button-toggle value="false">Quarter</mat-button-toggle>
         </mat-button-toggle-group>
@@ -48,20 +49,21 @@
           (orderId)="getOutOrderId($event)"
         ></app-order-buy-latest>
 
-        <app-order-buy-top></app-order-buy-top>
+          <app-order-buy-top></app-order-buy-top>
+        
       </div>
 
       <!-- Expansion group -->
       <div class="card-group-expansion">
-        <mat-expansion-panel *ngIf="showMoreDebt" class="mat-elevation-z8" [expanded]="showMoreDebt">
+        <mat-expansion-panel class="padding-remove mat-elevation-z8" [expanded]="showMoreDebt">
           <app-supplier-report-debt></app-supplier-report-debt>
         </mat-expansion-panel>
 
-        <mat-expansion-panel *ngIf="orderId" class="mat-elevation-z8" [expanded]="showOrderDetail">
-          <app-order-buy-detail-card [orderId]="orderId"></app-order-buy-detail-card>
+        <mat-expansion-panel class=" detail-card padding-remove mat-elevation-z8" [expanded]="showOrderDetail">
+          <app-order-buy-detail-card *ngIf="orderId" [orderId]="orderId"></app-order-buy-detail-card>
         </mat-expansion-panel>
 
-        <mat-expansion-panel *ngIf="showOrderList" class="mat-elevation-z8" [expanded]="showOrderList">
+        <mat-expansion-panel class="padding-remove mat-elevation-z8" [expanded]="showOrderList">
           <app-order-buy-list-report></app-order-buy-list-report>
         </mat-expansion-panel>
       </div>

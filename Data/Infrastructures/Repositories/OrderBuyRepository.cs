@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-
 using Mapster;
 
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +18,6 @@ using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
-using Shine.Helpers;
 
 namespace Shine.Data.Infrastructures.Repositories
 {
@@ -374,7 +372,7 @@ namespace Shine.Data.Infrastructures.Repositories
     {
       var query = await _context.Set<OrderBuy>()
         .AsNoTracking()
-        .Where(o => o.DateOfIssue.Year == year && o.OrderType == true)
+        .Where(o => o.DateOfIssue.Year == year)
         .GroupBy(o => o.DateOfIssue.Month)
         .Select(g => new OrderAndCostPerMonthDto
         {
@@ -387,9 +385,28 @@ namespace Shine.Data.Infrastructures.Repositories
       return query;
     }
 
-    public Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year)
+    public async Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year)
     {
-      throw new NotImplementedException();
+      var query = await _context.Set<OrderBuy>()
+        .AsNoTracking()
+        .Where(o => o.DateOfIssue.Year == year)
+        .Select(o => new
+        {
+          Quarter = Helpers.Helpers.GetQuarter(o.DateOfIssue.Month),
+          Value = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax)),
+          Cost = o.Costs.Sum(c => c.Amount)
+        })
+        .GroupBy(g => g.Quarter)
+        .Select(g => new OrderAndCostPerQuarterDto
+        {
+          Quarter = g.Key,
+          Amount = g.Sum(i => i.Value),
+          Cost = g.Sum(i => i.Cost)
+        })
+        .OrderBy(g => g.Quarter)
+        .ToListAsync();
+
+      return query;
     }
 
     public async Task<OrderBuyLatestDto> GetLatestOrderAsync()

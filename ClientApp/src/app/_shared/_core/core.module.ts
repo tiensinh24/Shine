@@ -1,10 +1,12 @@
+import { ConfirmDialogService } from '../_services/confirm-dialog.service';
+import { ValidateService } from '../_services/validate.service';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MAT_AUTOCOMPLETE_DEFAULT_OPTIONS, MAT_AUTOCOMPLETE_SCROLL_STRATEGY } from '@angular/material/autocomplete';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MAT_AUTOCOMPLETE_DEFAULT_OPTIONS } from '@angular/material/autocomplete';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { AuthGuard } from 'src/app/auth/_guards/auth.guard';
 import { AuthResponseInterceptor } from 'src/app/auth/_services/auth.response.interceptor';
 import { AuthService } from 'src/app/auth/_services/auth.service';
@@ -17,8 +19,6 @@ import { ProductService } from 'src/app/product/_services/product.service';
 import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
 import { StorageService } from 'src/app/storage/_services/storage.service';
 import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-import { ConfirmDialogService } from '../_services/confirm-dialog.service';
-import { ValidateService } from '../_services/validate.service';
 
 @NgModule({
   declarations: [],

@@ -75,8 +75,8 @@
       <div fxFlex fxLayout="row-reverse">
         <mat-paginator
           [length]="(dataSource.paging | async)?.totalItems"
-          [pageSize]="8"
-          [pageSizeOptions]="[8, 12, 24, 100]"
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 25]"
           showFirstLastButtons
         ></mat-paginator>
 

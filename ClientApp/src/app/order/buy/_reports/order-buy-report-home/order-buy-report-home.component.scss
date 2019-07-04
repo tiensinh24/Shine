@@ -42,9 +42,12 @@ main {
         }
       }
 
-      .card-group-expansion {
-        margin-top: 1rem;
+      div.card-group-expansion {
+        margin-top: 1rem;     
         
+        .detail-card {
+          padding-left: 1rem;
+        }
       }
     }
   }
