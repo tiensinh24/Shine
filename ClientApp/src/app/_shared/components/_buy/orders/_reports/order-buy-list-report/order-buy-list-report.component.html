@@ -4,9 +4,22 @@
     <h1>Orders</h1>
     <div fxFlex></div>
     <!-- Filter form -->
-    <form class="filter-form" @flyInOutHoz [formGroup]="filterForm" *ngIf="showFilter" fxLayout="row" fxLayoutAlign="start center">
+    <form
+      class="filter-form"
+      @flyInOutHoz
+      [formGroup]="filterForm"
+      *ngIf="showFilter"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+    >
       <mat-form-field>
-        <input matInput formControlName="fromDate" [matDatepicker]="fromDate" (click)="fromDate.open()" placeholder="From..." />
+        <input
+          matInput
+          formControlName="fromDate"
+          [matDatepicker]="fromDate"
+          (click)="fromDate.open()"
+          placeholder="From..."
+        />
         <mat-datepicker-toggle
           matSuffix
           matTooltip="Clear"
@@ -15,11 +28,21 @@
         >
           <mat-icon matDatepickerToggleIcon>clear</mat-icon>
         </mat-datepicker-toggle>
-        <mat-datepicker-toggle *ngIf="!filterForm.controls['fromDate'].value" matSuffix [for]="fromDate"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          *ngIf="!filterForm.controls['fromDate'].value"
+          matSuffix
+          [for]="fromDate"
+        ></mat-datepicker-toggle>
         <mat-datepicker locale="en-GB" #fromDate></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput formControlName="toDate" [matDatepicker]="toDate" (click)="toDate.open()" placeholder="To..." />
+        <input
+          matInput
+          formControlName="toDate"
+          [matDatepicker]="toDate"
+          (click)="toDate.open()"
+          placeholder="To..."
+        />
         <mat-datepicker-toggle
           matSuffix
           matTooltip="Clear"
@@ -28,7 +51,11 @@
         >
           <mat-icon matDatepickerToggleIcon>clear</mat-icon>
         </mat-datepicker-toggle>
-        <mat-datepicker-toggle *ngIf="!filterForm.controls['toDate'].value" matSuffix [for]="toDate"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          *ngIf="!filterForm.controls['toDate'].value"
+          matSuffix
+          [for]="toDate"
+        ></mat-datepicker-toggle>
         <mat-datepicker locale="en-GB" #toDate></mat-datepicker>
       </mat-form-field>
 
@@ -41,23 +68,42 @@
     </form>
     <div fxFlex></div>
     <div>
-      <button mat-icon-button matTooltip="Advanced Filter" (click)="toggleFilter()">
+      <button
+        mat-icon-button
+        matTooltip="Advanced Filter"
+        (click)="toggleFilter()"
+      >
         <mat-icon>filter_list</mat-icon>
       </button>
     </div>
 
     <!-- Dynamic columns menu -->
-    <button mat-icon-button [matMenuTriggerFor]="dynamicCols" matTooltip="more settings">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="dynamicCols"
+      matTooltip="more settings"
+    >
       <mat-icon>more_vert</mat-icon>
     </button>
-    <mat-menu class="dynamic-cols-menu" #dynamicCols="matMenu" [overlapTrigger]="false">
+    <mat-menu
+      class="dynamic-cols-menu"
+      #dynamicCols="matMenu"
+      [overlapTrigger]="false"
+    >
       <div>
-        <mat-selection-list [(ngModel)]="columnsToDisplay" (click)="$event.stopPropagation()">
+        <mat-selection-list
+          [(ngModel)]="columnsToDisplay"
+          (click)="$event.stopPropagation()"
+        >
           <h3 class="mat-h3" matSubHeader>Select columns to display</h3>
 
           <mat-divider></mat-divider>
 
-          <mat-list-option selected *ngFor="let column of displayedColumns" [value]="column.key">
+          <mat-list-option
+            selected
+            *ngFor="let column of displayedColumns"
+            [value]="column.key"
+          >
             {{ column.value }}
           </mat-list-option>
         </mat-selection-list>
@@ -73,7 +119,13 @@
 
   <div class="content">
     <!-- Table -->
-    <table mat-table class="main-table" [dataSource]="dataSource" matSort>
+    <table
+      mat-table
+      class="main-table"
+      [dataSource]="dataSource"
+      matSort
+      multiTemplateDataRows
+    >
       <!-- OrderNumber Column -->
       <ng-container matColumnDef="orderNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -87,7 +139,7 @@
           Date of Issue
         </th>
         <td mat-cell *matCellDef="let row">
-          {{ row.dateOfIssue | date: 'dd/MM/yyyy' }}
+          {{ row.dateOfIssue | date: "dd/MM/yyyy" }}
         </td>
       </ng-container>
       <!-- TimeForPayment Column -->
@@ -96,7 +148,7 @@
           Time for Payment
         </th>
         <td mat-cell *matCellDef="let row">
-          {{ row.timeForPayment | date: 'dd/MM/yyyy' }}
+          {{ row.timeForPayment | date: "dd/MM/yyyy" }}
         </td>
       </ng-container>
       <!-- SupplierName Column -->
@@ -125,12 +177,51 @@
       <ng-container matColumnDef="rating">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
         <td mat-cell *matCellDef="let row">
-          <star-rating [starType]="'svg'" [rating]="row.rating" [readOnly]="true"></star-rating>
+          <star-rating
+            [starType]="'svg'"
+            [rating]="row.rating"
+            [readOnly]="true"
+          ></star-rating>
+        </td>
+      </ng-container>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            matTooltip="Order detail"
+            color="primary"
+            (click)="toggleDetail(row)"
+          >
+            <mat-icon aria-label="Detail">list_alt</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td 
+          mat-cell
+          *matCellDef="let detail"
+          [attr.colspan]="columnsToDisplay.length"
+        >
+        {{detail.row.orderId}}
+          <!-- <app-order-buy-detail-card
+            
+            [orderId]="detail.row.orderId"
+          ></app-order-buy-detail-card> -->
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['expandedDetail']"
+        class="expand-detail-row"
+      ></tr>
     </table>
 
     <!-- Paginator & filter -->

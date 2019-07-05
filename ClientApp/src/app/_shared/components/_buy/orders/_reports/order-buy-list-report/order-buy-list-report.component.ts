@@ -21,6 +21,7 @@ import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
 import { OrderBuyDataSource } from 'src/app/order/buy/_data-source/order-buy-data-source';
 import { OrderBuyQuery } from 'src/app/order/buy/_interfaces/_query/order-buy-query';
 import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
+import { OrderBuyList } from 'src/app/order/buy/_interfaces/order-buy-list';
 
 @Component({
   selector: 'app-order-buy-list-report',
@@ -39,6 +40,7 @@ import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
 export class OrderBuyListReportComponent implements OnInit, AfterViewInit {
   dataSource: OrderBuyDataSource;
   displayedColumns = [
+    
     { key: 'orderNumber', value: 'Order Number' },
     { key: 'dateOfIssue', value: 'Order Date' },
     { key: 'timeForPayment', value: `Payment's Time` },
@@ -47,14 +49,27 @@ export class OrderBuyListReportComponent implements OnInit, AfterViewInit {
     { key: 'value', value: 'Values' },
     { key: 'cost', value: 'Cost' },
     { key: 'rating', value: 'Rating' },
+    { key: 'actions', value: 'Actions' }
   ];
-  columnsToDisplay = ['orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'employeeName', 'value', 'cost', 'rating'];
+  columnsToDisplay = [
+    
+    'orderNumber',
+    'dateOfIssue',
+    'timeForPayment',
+    'supplierName',
+    'employeeName',
+    'value',
+    'cost',
+    'rating',
+    'actions'
+  ];
+  selectedRow: OrderBuyList;
 
   title = 'Order List';
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('input', { static: false }) private input: ElementRef;
+  @ViewChild('input', { static: false }) private input: ElementRef; 
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -70,6 +85,7 @@ export class OrderBuyListReportComponent implements OnInit, AfterViewInit {
 
   // boolean
   showFilter = false;
+  showDetail = false;
 
   // Formgroup
   filterForm: FormGroup;
@@ -157,4 +173,10 @@ export class OrderBuyListReportComponent implements OnInit, AfterViewInit {
   clearFilterControl(control: string) {
     this.filterForm.controls[control].reset();
   }
+
+  toggleDetail(row: OrderBuyList) {
+    this.selectedRow = row;
+    this.showDetail = !this.showDetail;   
+  }
+
 }

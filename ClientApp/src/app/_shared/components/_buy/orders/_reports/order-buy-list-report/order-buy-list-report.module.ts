@@ -17,6 +17,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { StarRatingModule } from 'angular-star-rating';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';
+import { OrderBuyDetailCardModule } from '../order-buy-detail-card/order-buy-detail-card.module';
 
 @NgModule({
   declarations: [OrderBuyListReportComponent],
@@ -42,6 +43,9 @@ import { SharedModule } from 'src/app/_shared/shared.module';
     MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
+
+    // Feature modules
+    OrderBuyDetailCardModule,
   ],
   exports: [OrderBuyListReportComponent]
 })

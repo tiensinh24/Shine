@@ -2,15 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders;
-using Shine.Data.Dto.Photos;
 using Shine.Data.Dto.Products;
-using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Dto.Suppliers.Reports;

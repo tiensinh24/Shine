@@ -6,22 +6,19 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-
-using Shine.Data.Dto.Token;
-using Shine.Data.Infrastructures.Services;
 using Shine.Data.Models;
 using Shine.Data.Models.Config;
 using Shine.Data.Models.Config.Extentions;
 using Shine.Data.Models.Interfaces;
 
-namespace Shine.Data {
+namespace Shine.Data
+{
     public class AppDbContext : IdentityDbContext {
         private readonly IOptionsSnapshot<HttpContextAccessor> _httpContextAccessor;
 

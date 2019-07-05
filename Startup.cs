@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -24,7 +22,8 @@ using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Infrastructures.Services;
 using Shine.Helpers;
 
-namespace Shine {
+namespace Shine
+{
     public class Startup {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;

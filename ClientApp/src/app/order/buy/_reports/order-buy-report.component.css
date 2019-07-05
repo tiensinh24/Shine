@@ -2,7 +2,7 @@
   position: fixed;
   top: 60px;
   height: calc(100vh - 60px);
-  right: 0.5rem;
+  right: 1rem;
 }
 
 .mat-sidenav .mat-nav-list {
