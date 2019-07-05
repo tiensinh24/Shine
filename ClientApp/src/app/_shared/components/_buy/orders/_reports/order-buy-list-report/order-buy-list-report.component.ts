@@ -176,7 +176,7 @@ export class OrderBuyListReportComponent implements OnInit, AfterViewInit {
 
   toggleDetail(row: OrderBuyList) {
     this.selectedRow = row;
-    this.showDetail = !this.showDetail;   
+    this.showDetail = !this.showDetail;
   }
 
 }

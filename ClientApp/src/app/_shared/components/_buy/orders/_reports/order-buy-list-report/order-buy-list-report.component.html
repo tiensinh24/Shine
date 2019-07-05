@@ -202,25 +202,27 @@
 
       <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
       <ng-container matColumnDef="expandedDetail">
-        <td 
+        <td
           mat-cell
           *matCellDef="let detail"
           [attr.colspan]="columnsToDisplay.length"
         >
-        {{detail.row.orderId}}
-          <!-- <app-order-buy-detail-card
-            
-            [orderId]="detail.row.orderId"
-          ></app-order-buy-detail-card> -->
+          <app-order-buy-detail-card
+            *ngIf="showDetail && detail == selectedRow"
+            [orderId]="selectedRow.orderId"
+          ></app-order-buy-detail-card>
         </td>
       </ng-container>
 
+      <!-- TODO: expansion detail -->
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
       <tr
+      
         mat-row
         *matRowDef="let row; columns: ['expandedDetail']"
         class="expand-detail-row"
+        style="height: 0; min-height: 0; max-height: 0; visibility: 'hidden'"
       ></tr>
     </table>
 
