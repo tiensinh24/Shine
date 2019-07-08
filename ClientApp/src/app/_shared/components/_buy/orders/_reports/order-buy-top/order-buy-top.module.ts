@@ -1,11 +1,11 @@
 import { OrderBuyTopComponent } from './order-buy-top.component';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'src/app/_shared/shared.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [OrderBuyTopComponent],
@@ -17,7 +17,8 @@ import { SharedModule } from 'src/app/_shared/shared.module';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTooltipModule
   ],
   exports: [OrderBuyTopComponent]
 })

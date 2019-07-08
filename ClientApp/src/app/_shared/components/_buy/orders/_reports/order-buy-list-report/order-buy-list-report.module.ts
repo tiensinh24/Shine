@@ -18,6 +18,7 @@ import { StarRatingModule } from 'angular-star-rating';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { OrderBuyDetailCardModule } from '../order-buy-detail-card/order-buy-detail-card.module';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [OrderBuyListReportComponent],
@@ -43,6 +44,7 @@ import { OrderBuyDetailCardModule } from '../order-buy-detail-card/order-buy-det
     MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
+    MatExpansionModule,
 
     // Feature modules
     OrderBuyDetailCardModule,

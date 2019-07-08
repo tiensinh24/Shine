@@ -24,15 +24,18 @@ div.main > .content table.main-table th {
   color: royalblue;
 }
 
-div.main > .content table.main-table .mat-row:hover {
+div.main > .content table.main-table .mat-row.parent-row:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }
 
-div.main > .content table.main-table .mat-row .avatar > img {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
+div.main > .content table.main-table .mat-row.expand-row {
+  height: 0;
+}
+
+div.main > .content table.main-table .mat-row.expand-row th, div.main > .content table.main-table .mat-row.expand-row td {
+  padding: 0;
+  border: none;
 }
 
 div.main > .content .mat-paginator-sticky {

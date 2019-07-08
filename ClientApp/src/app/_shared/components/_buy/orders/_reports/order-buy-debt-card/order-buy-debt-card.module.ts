@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'src/app/_shared/shared.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [OrderBuyDebtCardComponent],
@@ -14,7 +15,8 @@ import { SharedModule } from 'src/app/_shared/shared.module';
     // Material
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule,
   ],
   exports: [OrderBuyDebtCardComponent]
 })

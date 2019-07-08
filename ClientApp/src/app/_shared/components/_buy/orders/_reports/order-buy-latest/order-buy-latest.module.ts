@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { StarRatingModule } from 'angular-star-rating';
 import { SharedModule } from 'src/app/_shared/shared.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [OrderBuyLatestComponent],
@@ -16,6 +17,7 @@ import { SharedModule } from 'src/app/_shared/shared.module';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
 
     // Star rating
     StarRatingModule

@@ -1,4 +1,4 @@
-main#main {
+main#main {  
   padding: 1rem;
 
   .year-selection {
@@ -8,11 +8,11 @@ main#main {
   }
 
   div.pivot-table {
-    height: calc(100vh - (150px + 1rem));
+    max-height: calc(100vh - (60px + 6rem));
+    overflow: auto;
 
-    table[mat-table] {
-      width: 100%;
-
+    table.mat-table {
+      width: 100%;  
       th {
         color: royalblue;
       }

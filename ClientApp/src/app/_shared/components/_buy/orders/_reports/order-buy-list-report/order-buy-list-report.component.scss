@@ -22,16 +22,19 @@ div.main {
         color: royalblue;
       }
 
-      .mat-row {
+      .mat-row.parent-row {        
         &:hover {
           cursor: pointer;
-          background-color: whitesmoke;
+          background-color: whitesmoke;          
         }
+      }
 
-        .avatar > img {
-          width: 30px;
-          height: 30px;
-          border-radius: 15px;
+      .mat-row.expand-row {        
+        height: 0;       
+        
+        th, td {
+          padding: 0;
+          border: none;
         }
       }
     }

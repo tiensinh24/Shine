@@ -55,15 +55,15 @@
 
       <!-- Expansion group -->
       <div class="card-group-expansion">
-        <mat-expansion-panel class="padding-remove mat-elevation-z8" [expanded]="showMoreDebt">
+        <mat-expansion-panel class="padding-remove mat-elevation-z0" [ngClass]="{'mat-elevation-z8': showMoreDebt}" [expanded]="showMoreDebt">
           <app-supplier-report-debt></app-supplier-report-debt>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class=" detail-card padding-remove mat-elevation-z8" [expanded]="showOrderDetail">
+        <mat-expansion-panel class=" detail-card padding-remove mat-elevation-z0" [ngClass]="{'mat-elevation-z8': showOrderDetail}" [expanded]="showOrderDetail">
           <app-order-buy-detail-card *ngIf="orderId" [orderId]="orderId"></app-order-buy-detail-card>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="padding-remove mat-elevation-z8" [expanded]="showOrderList">
+        <mat-expansion-panel class="padding-remove mat-elevation-z0" [ngClass]="{'mat-elevation-z8': showOrderList}" [expanded]="showOrderList">
           <app-order-buy-list-report></app-order-buy-list-report>
         </mat-expansion-panel>
       </div>
