@@ -1,0 +1,83 @@
+.fill {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+}
+
+.toolbar {
+  -webkit-box-shadow: 5px 2px 15px 2px grey;
+          box-shadow: 5px 2px 15px 2px grey;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.toolbar [routerLinkActive] {
+  cursor: pointer;
+}
+
+.toolbar .home-logo {
+  font-size: larger;
+}
+
+.toolbar .user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-image: url("https://picsum.photos/50");
+  background-position: center;
+  background-size: cover;
+}
+
+mat-sidenav-container.side-nav {
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+mat-sidenav-container.side-nav > .mat-sidenav {
+  position: fixed;
+  top: 60px;
+  height: calc(100vh - 60px);
+}
+
+mat-sidenav-container.side-nav > .mat-sidenav div.avatar {
+  background-image: url("../../../assets/images/sidenav-avatar-bg.jpg");
+  background-size: cover;
+}
+
+mat-sidenav-container.side-nav > .mat-sidenav div.avatar .nav-buy-sell-toggle {
+  padding: 1rem;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+mat-sidenav-container.side-nav > .mat-sidenav div.avatar .user-avatar {
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-image: url("https://picsum.photos/100");
+  background-position: center;
+  background-size: cover;
+}
+
+mat-sidenav-container.side-nav > .mat-sidenav div.avatar h3 {
+  color: royalblue;
+}
+
+mat-sidenav-container.side-nav > .mat-sidenav .active mat-icon {
+  color: mediumvioletred;
+}
+
+mat-sidenav-container.side-nav .footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+/*# sourceMappingURL=nav-menu.component.css.map */

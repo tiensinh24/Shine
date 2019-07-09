@@ -2,9 +2,9 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { ProductOrder } from 'src/app/order/buy/_interfaces/product-order';
-import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
-import { ProductSelect } from 'src/app/product/_interfaces/product-select';
+import { ProductOrder } from 'src/app/_shared/intefaces/buy/order/product-order';
+import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
+import { ProductSelect } from 'src/app/_shared/intefaces/public/product-select';
 
 @Component({
   selector: 'app-order-products-edit-dialog',

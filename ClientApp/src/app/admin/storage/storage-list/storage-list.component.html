@@ -1,0 +1,10 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card *ngFor="let storage of storages" class=" card mat-elevation-z8" [routerLink]="['/admin/storage', storage.storageId]">
+    <mat-card-title>
+      <h4 class="mat-h4">{{ storage.name }}</h4>
+    </mat-card-title>
+    <mat-card-actions>
+      <img src="https://picsum.photos/200" />
+    </mat-card-actions>
+  </mat-card>
+</div>

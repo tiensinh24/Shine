@@ -1,0 +1,42 @@
+div.product-info {
+  min-width: 300px;
+}
+
+div.product-info h2.title {
+  color: royalblue;
+}
+
+div.photos {
+  width: 100%;
+}
+
+div.photos h2.title {
+  color: royalblue;
+}
+
+div.photos img.image {
+  border-radius: 20px;
+  width: 150px;
+  height: 150px;
+  -webkit-transition: 200ms ease-in;
+  transition: 200ms ease-in;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+div.photos img.image:hover {
+  cursor: pointer;
+  -webkit-transition: 200ms ease-out;
+  transition: 200ms ease-out;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+div.photos div.photo-upload {
+  margin-top: 2rem;
+}
+
+div.photos div.photo-upload .mat-expansion-panel-header {
+  color: royalblue;
+}
+/*# sourceMappingURL=product-buy-edit.component.css.map */

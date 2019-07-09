@@ -1,0 +1,38 @@
+div.product-info {
+  min-width: 300px;
+
+  h2.title {
+    color: royalblue
+  }
+}
+
+div.photos {
+  width: 100%;
+
+  h2.title {
+    color: royalblue;
+  }
+
+  img.image {
+    border-radius: 20px;
+    width: 150px;
+    height: 150px;
+    transition: 200ms ease-in;
+    transform: scale(1);
+
+    &:hover {
+      cursor: pointer;
+      transition: 200ms ease-out;
+      transform: scale(1.2)
+    }
+  }
+
+  div.photo-upload {
+    margin-top: 2rem;
+
+
+    .mat-expansion-panel-header {      
+      color: royalblue;
+    }
+  }
+}

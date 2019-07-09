@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-import { OrderValue } from 'src/app/order/_interfaces/order-value';
-import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
+import { OrderValue } from 'src/app/_shared/intefaces/public/order-value';
+import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 
 @Component({
   selector: 'app-order-buy-top',

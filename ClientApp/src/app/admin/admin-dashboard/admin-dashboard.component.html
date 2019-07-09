@@ -1,0 +1,38 @@
+<main fxLayout="row wrap" class="mat-typography">
+  <div class="card" @flyInVez fxLayout="row wrap" fxLayoutAlign="space-around">
+    <div class="product" [routerLink]="['/admin/product-buy']" fxLayout="column" fxLayoutAlign="center center">
+      <i class="fas fa-cookie-bite"></i>
+      <h2>Products</h2>
+      <p>Add or manager products</p>
+    </div>
+    <div class="supplier" [routerLink]="['/admin/supplier']" fxLayout="column" fxLayoutAlign="center center">
+      <i class="fas fa-diagnoses"></i>
+      <h2>Suppliers</h2>
+      <p>Add or manager suppliers</p>
+    </div>
+    <div class="customer" [routerLink]="['/admin/customer']" fxLayout="column" fxLayoutAlign="center center">
+      <i class="fab fa-d-and-d"></i>
+      <h2>Customers</h2>
+      <p>Add or manager customers</p>
+    </div>
+    <div class="order" [routerLink]="['/admin/order-buy']" fxLayout="column" fxLayoutAlign="center center">
+      <i class="fas fa-donate"></i>
+      <h2>Orders</h2>
+      <p>Add or manager orders</p>
+    </div>
+    <div class="storage" [routerLink]="['/admin/storage']" fxLayout="column" fxLayoutAlign="center center">
+      <i class="fas fa-dolly"></i>
+      <h2>Storages</h2>
+      <p>Add or manager storages</p>
+    </div>
+    <div class="report" [routerLink]="['/report']" fxLayout="column" fxLayoutAlign="center center">
+      <i class="fab fa-accusoft"></i>
+      <h2>Reports</h2>
+      <p>View reports</p>
+    </div>
+  </div>
+</main>
+
+<img src="../../assets/images/home-bg.png" class="page-bg" />
+
+<a [routerLink]="['/product-buy']" routerLinkActive="router-link-active">text</a>

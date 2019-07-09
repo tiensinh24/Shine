@@ -1,15 +1,10 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild
-  } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-import { OrderBySupplierPivotMonth } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-month';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
+import { OrderBySupplierPivotMonth } from 'src/app/_shared/intefaces/buy/supplier/report/order-by-supplier-pivot-month';
 
 @Component({
   selector: 'app-order-buy-report-supplier-pivot-month',
@@ -35,23 +30,7 @@ export class OrderBuyReportSupplierPivotMonthComponent implements OnInit, OnDest
   chartTotalData = <OrderBySupplierPivotMonth>{};
 
   dataSource = new MatTableDataSource<OrderBySupplierPivotMonth>();
-  columnsToDisplay = [
-    'supplierName',
-    'jan',
-    'feb',
-    'mar',
-    'apr',
-    'may',
-    'jun',
-    'jul',
-    'aug',
-    'sep',
-    'oct',
-    'nov',
-    'dec',
-    'total',
-    'actions'
-  ];
+  columnsToDisplay = ['supplierName', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'total', 'actions'];
   monthCols = [
     { key: 'jan', value: 'Jan' },
     { key: 'feb', value: 'Feb' },

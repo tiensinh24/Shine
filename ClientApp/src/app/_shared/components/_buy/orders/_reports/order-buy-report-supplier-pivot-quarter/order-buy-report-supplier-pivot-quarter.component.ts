@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { OrderBySupplierPivotQuarter } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-quarter';
 import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { MatTableDataSource } from '@angular/material/table';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
+import { OrderBySupplierPivotQuarter } from 'src/app/_shared/intefaces/buy/supplier/report/order-by-supplier-pivot-quarter';
 
 @Component({
   selector: 'app-order-buy-report-supplier-pivot-quarter',

@@ -1,35 +1,14 @@
 import { CategoryBuyDialogComponent } from '../../categories/category-buy-dialog/category-buy-dialog.component';
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnDestroy,
-  OnInit,
-  ViewChild
-  } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators
-  } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef
-  } from '@angular/material/dialog';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { CategoryBuy } from 'src/app/category/buy/_interfaces/category-buy';
-import { CategoryBuyService } from 'src/app/category/buy/_services/category-buy.service';
-import { ProductBuy } from 'src/app/product/buy/_interfaces/product-buy';
-import { ProductBuyService } from 'src/app/product/buy/_services/product-buy.service';
+import { ProductBuy } from 'src/app/_shared/intefaces/buy/product/product-buy';
+import { ProductBuyService } from 'src/app/_shared/services/buy/product-buy.service';
 import { environment } from 'src/environments/environment';
-
-
+import { CategoryBuy } from 'src/app/_shared/intefaces/buy/category/category-buy';
+import { CategoryBuyService } from 'src/app/_shared/services/buy/category-buy.service';
 
 @Component({
   selector: 'app-product-buy-edit-dialog',
@@ -180,13 +159,7 @@ export class ProductBuyEditDialogComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required')
-      ? 'You must enter a value'
-      : formControl.hasError('email')
-      ? 'Not a valid email'
-      : formControl.hasError('pattern')
-      ? 'Please enter a number!'
-      : '';
+    return formControl.hasError('required') ? 'You must enter a value' : formControl.hasError('email') ? 'Not a valid email' : formControl.hasError('pattern') ? 'Please enter a number!' : '';
   }
 
   displayFn(category: CategoryBuy): string | undefined {

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { OrderBySupplierPivotQuarter } from 'src/app/supplier/_interfaces/reports/order-by-supplier-pivot-quarter';
+import { OrderBySupplierPivotQuarter } from 'src/app/_shared/intefaces/buy/supplier/report/order-by-supplier-pivot-quarter';
+
 
 @Component({
   selector: 'app-order-buy-report-supplier-pivot-quarter-chart',

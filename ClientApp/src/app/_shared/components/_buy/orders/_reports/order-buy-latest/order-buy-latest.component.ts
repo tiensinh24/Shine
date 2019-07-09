@@ -7,8 +7,9 @@ import {
   Output
   } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { OrderBuyLatest } from 'src/app/order/buy/_interfaces/_reports/order-buy-latest';
-import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
+
+import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
+import { OrderBuyLatest } from 'src/app/_shared/intefaces/buy/order/report/order-buy-latest';
 
 @Component({
   selector: 'app-order-buy-latest',

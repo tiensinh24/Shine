@@ -1,34 +1,15 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-  } from '@angular/animations';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild
-  } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {
-  fromEvent,
-  merge,
-  Observable,
-  Subscription
-  } from 'rxjs';
+import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { SupplierDebtDataSource } from 'src/app/supplier/_data-source/reports/supplier-deb-data-source';
-import { OrderDebt } from 'src/app/supplier/_interfaces/reports/order-debt';
-import { SupplierDebt } from 'src/app/supplier/_interfaces/reports/supplier-debt';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
-
+import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
+import { SupplierDebt } from 'src/app/_shared/intefaces/buy/supplier/report/supplier-debt';
+import { SupplierDebtDataSource } from 'src/app/admin/_buy/supplier/_data-source/reports/supplier-deb-data-source';
+import { OrderDebt } from 'src/app/_shared/intefaces/buy/supplier/report/order-debt';
+import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
+import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
 
 @Component({
   selector: 'app-supplier-report-debt',
@@ -38,15 +19,11 @@ import { SupplierService } from 'src/app/supplier/_services/supplier.service';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      )
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])
   ]
 })
-export class SupplierReportDebtComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+export class SupplierReportDebtComponent implements OnInit, AfterViewInit, OnDestroy {
   // Subscription
   subscription: Subscription;
 
@@ -127,11 +104,9 @@ export class SupplierReportDebtComponent
   }
 
   getOrderDebtsBySupplier(supplierId: number) {
-    this.subscription = this.supplierService
-      .getOrderDebtsBySupplier(supplierId)
-      .subscribe((order: OrderDebt) => {
-        this.orderDebtsBySupplier = order;
-      });
+    this.subscription = this.supplierService.getOrderDebtsBySupplier(supplierId).subscribe((order: OrderDebt) => {
+      this.orderDebtsBySupplier = order;
+    });
   }
 
   onExpandSupplier(supplierId: number) {

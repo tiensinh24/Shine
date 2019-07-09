@@ -1,0 +1,69 @@
+main {
+  margin: 1rem;
+}
+
+main .card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+}
+
+main .card > div {
+  min-width: 200px;
+  min-height: 200px;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-transition: 250ms ease-out;
+  transition: 250ms ease-out;
+}
+
+main .card > div:hover {
+  cursor: pointer;
+  background: floralwhite;
+  -webkit-transform: translateY(-2rem);
+          transform: translateY(-2rem);
+  -webkit-transition: 250ms ease-in;
+  transition: 250ms ease-in;
+}
+
+main .card > div.product {
+  color: coral;
+}
+
+main .card > div.supplier {
+  color: royalblue;
+}
+
+main .card > div.customer {
+  color: cornflowerblue;
+}
+
+main .card > div.order {
+  color: mediumseagreen;
+}
+
+main .card > div.storage {
+  color: mediumpurple;
+}
+
+main .card > div.report {
+  color: mediumslateblue;
+}
+
+main .card i {
+  font-size: 48px;
+}
+
+img.page-bg {
+  max-width: 75%;
+  height: auto;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  opacity: 0.1;
+  z-index: -1;
+}
+/*# sourceMappingURL=admin-dashboard.component.css.map */

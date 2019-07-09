@@ -1,12 +1,6 @@
-import {
-  Component,
-  HostListener,
-  Input,
-  OnInit,
-  ViewChild
-  } from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { GoogleChartComponent } from 'angular-google-charts';
-import { OrderAndCostPerMonth } from 'src/app/order/buy/_interfaces/_reports/order-and-cost-per-month';
+import { OrderAndCostPerMonth } from 'src/app/_shared/intefaces/buy/order/report/order-and-cost-per-month';
 
 @Component({
   selector: 'app-order-buy-month-chart',

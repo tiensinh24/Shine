@@ -6,11 +6,11 @@ import {
   } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { Cost } from 'src/app/order/_interfaces/cost';
-import { Payment } from 'src/app/order/_interfaces/payment';
-import { OrderBuyDetail } from 'src/app/order/buy/_interfaces/order-buy-detail';
-import { OrderBuyProducts } from 'src/app/order/buy/_interfaces/order-buy-products';
-import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
+import { Cost } from 'src/app/_shared/intefaces/public/cost';
+import { Payment } from 'src/app/_shared/intefaces/public/payment';
+import { OrderBuyDetail } from 'src/app/_shared/intefaces/buy/order/order-buy-detail';
+import { OrderBuyProducts } from 'src/app/_shared/intefaces/buy/order/order-buy-products';
+import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 
 @Component({
   selector: 'app-order-buy-detail-card',

@@ -3,8 +3,8 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { Payment } from 'src/app/order/_interfaces/payment';
-import { PaymentService } from 'src/app/payment/_services/payment.service';
+import { Payment } from 'src/app/_shared/intefaces/public/payment';
+import { PaymentService } from 'src/app/_shared/services/public/payment.service';
 
 @Component({
   selector: 'app-payment-edit-dialog',

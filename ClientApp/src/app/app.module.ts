@@ -2,29 +2,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule } from './_shared/_core/core.module';
+import { CoreModule } from './_shared/core/core.module';
 import { ConfirmDialogSharedModule } from './_shared/components/confirm-dialog/confirm-dialog-shared.module';
 import { MaterialSharedModule } from './_shared/material-shared.module';
 import { SharedModule } from './_shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LogInComponent } from './log-in/log-in.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { SidenavBuyComponent } from './nav-menu/sidenav-buy/sidenav-buy.component';
-import { SidenavSellComponent } from './nav-menu/sidenav-sell/sidenav-sell.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { LogInComponent } from './_shared/components/log-in/log-in.component';
+import { PageNotFoundComponent } from './_shared/components/page-not-found/page-not-found.component';
+import { NavMenuComponent } from './admin/nav-menu/nav-menu.component';
+import { SidenavBuyComponent } from './admin/nav-menu/sidenav-buy/sidenav-buy.component';
+import { SidenavSellComponent } from './admin/nav-menu/sidenav-sell/sidenav-sell.component';
+import { HomeComponent } from './main/home/home.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    PageNotFoundComponent,
-    LogInComponent,
-    SidenavBuyComponent,
-    SidenavSellComponent
-  ],
+  declarations: [AppComponent, PageNotFoundComponent, LogInComponent, HomeComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,

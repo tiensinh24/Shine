@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { AuthService } from 'src/app/auth/_services/auth.service';
-import { Photo } from 'src/app/photo/_interfaces/photo';
+import { Photo } from 'src/app/_shared/intefaces/public/photo';
 import { environment } from 'src/environments/environment';
 
 @Component({

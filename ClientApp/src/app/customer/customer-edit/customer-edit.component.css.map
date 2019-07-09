@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "customer-edit.component.scss"
-    ],
-    "names": [],
-    "file": "customer-edit.component.css"
-}

@@ -1,18 +1,19 @@
 import { ClickEvent } from 'angular-star-rating';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { EmployeeSelect } from 'src/app/employee/_interfaces/employee-select';
-import { EmployeeService } from 'src/app/employee/_services/employee.service';
-import { OrderBuy } from 'src/app/order/buy/_interfaces/order-buy';
-import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
-import { SupplierSelect } from 'src/app/supplier/_interfaces/supplier-select';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { OrderBuy } from 'src/app/_shared/intefaces/buy/order/order-buy';
+import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
+
+import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { environment } from 'src/environments/environment';
 
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { SupplierSelect } from 'src/app/_shared/intefaces/buy/supplier/supplier-select';
+import { EmployeeSelect } from 'src/app/_shared/intefaces/public/employee-select';
+import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
 
 @Component({
   selector: 'app-order-buy-edit-dialog',

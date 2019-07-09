@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgxGalleryAction, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
-import { PhotoForProduct } from 'src/app/photo/_interfaces/photo-for-product';
-import { PhotoService } from 'src/app/photo/_services/photo.service';
+import { NgxGalleryAction, NgxGalleryImage, NgxGalleryOptions, NgxGalleryImageSize } from 'ngx-gallery';
+import { PhotoForProduct } from 'src/app/_shared/intefaces/public/photo-for-product';
+import { PhotoService } from 'src/app/_shared/services/public/photo.service';
 import { environment } from 'src/environments/environment';
-import { ConfirmDialogService } from '../../_services/confirm-dialog.service';
+import { ConfirmDialogService } from '../../services/public/confirm-dialog.service';
 
 @Component({
   selector: 'app-product-photo-gallery',
@@ -14,18 +14,15 @@ import { ConfirmDialogService } from '../../_services/confirm-dialog.service';
 export class ProductPhotoGalleryComponent implements OnChanges {
   baseUrl = environment.URL;
 
-  galleryOptions: NgxGalleryOptions[] = [];
+  
   galleryImages: NgxGalleryImage[] = [];
 
   @Input() photos: PhotoForProduct[] = [];
+  galleryOptions: NgxGalleryOptions[];
 
   @Output() newMainPhoto = new EventEmitter<PhotoForProduct>();
 
-  constructor(
-    private photoService: PhotoService,
-    private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private photoService: PhotoService, private confirmService: ConfirmDialogService, private snackBar: MatSnackBar) {}
 
   ngOnChanges(changes: SimpleChanges) {
     const change = changes['photos'];
@@ -50,12 +47,19 @@ export class ProductPhotoGalleryComponent implements OnChanges {
 
     this.galleryOptions = [
       {
-        width: '100%',
-        imageSize: 'contain',
-        imageActions: deleteAction,
-        imageInfinityMove: true,
-        thumbnailsMoveSize: 4
-      }
+        width: '600px',
+        height: '545px',
+        imageSize: NgxGalleryImageSize.Contain,
+        imageAutoPlay: true,
+        imageAutoPlayPauseOnHover: true,
+        thumbnailActions: deleteAction,
+        previewAutoPlay: true,
+        previewAutoPlayPauseOnHover: true,
+        previewInfinityMove: true,
+        thumbnailsMargin: 32
+      },
+      { breakpoint: 500, width: '300px', height: '300px', thumbnailsColumns: 3 },
+      { breakpoint: 300, width: '100%', height: '200px', thumbnailsColumns: 2 }
     ];
 
     if (photos) {
@@ -81,7 +85,7 @@ export class ProductPhotoGalleryComponent implements OnChanges {
     }
   }
 
-  deletePhoto(event: Event, index: number): void {
+  deletePhoto(index: number): void {
     const dialogRef = this.confirmService.openDialog('Are you sure to delete this photo?');
 
     dialogRef.afterClosed().subscribe((res: boolean) => {
@@ -98,7 +102,7 @@ export class ProductPhotoGalleryComponent implements OnChanges {
     });
   }
 
-  setMainPhoto(event: Event, index: number): void {
+  setMainPhoto(index: number): void {
     const photoId = +this.galleryImages[index].url;
 
     const photoToUpdate = <PhotoForProduct>{

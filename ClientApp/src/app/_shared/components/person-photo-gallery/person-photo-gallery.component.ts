@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxGalleryAction, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions } from 'ngx-gallery';
-import { Photo } from 'src/app/photo/_interfaces/photo';
-import { PhotoForPerson } from 'src/app/photo/_interfaces/photo-for-person';
-import { PhotoService } from 'src/app/photo/_services/photo.service';
+
+import { PhotoForPerson } from 'src/app/_shared/intefaces/public/photo-for-person';
+import { PhotoService } from 'src/app/_shared/services/public/photo.service';
 import { environment } from 'src/environments/environment';
-import { ConfirmDialogService } from '../../_services/confirm-dialog.service';
+import { ConfirmDialogService } from '../../services/public/confirm-dialog.service';
 
 @Component({
   selector: 'app-person-photo-gallery',
@@ -22,11 +22,7 @@ export class PersonPhotoGalleryComponent implements OnInit {
 
   @Output() newMainPhoto = new EventEmitter<PhotoForPerson>();
 
-  constructor(
-    private photoService: PhotoService,
-    private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private photoService: PhotoService, private confirmService: ConfirmDialogService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.getImagesForGallery(this.photos);

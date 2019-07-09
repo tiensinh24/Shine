@@ -1,10 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CountrySelect } from 'src/app/country/_interfaces/country-select';
-import { CountryService } from 'src/app/country/_services/country.service';
-import { Supplier } from 'src/app/supplier/_interfaces/supplier';
-import { SupplierService } from 'src/app/supplier/_services/supplier.service';
+import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
+import { CountrySelect } from 'src/app/_shared/intefaces/public/country-select';
+import { CountryService } from 'src/app/_shared/services/public/country.service';
+import { Supplier } from 'src/app/_shared/intefaces/buy/supplier/supplier';
 
 @Component({
   selector: 'app-supplier-edit-dialog',

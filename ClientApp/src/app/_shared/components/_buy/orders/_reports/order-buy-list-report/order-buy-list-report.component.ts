@@ -5,12 +5,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { PagingParams } from 'src/app/_shared/_intefaces/paging-params';
-import { SortParams } from 'src/app/_shared/_intefaces/sort-params';
-import { OrderBuyDataSource } from 'src/app/order/buy/_data-source/order-buy-data-source';
-import { OrderBuyQuery } from 'src/app/order/buy/_interfaces/_query/order-buy-query';
-import { OrderBuyService } from 'src/app/order/buy/_services/order-buy.service';
-import { OrderBuyList } from 'src/app/order/buy/_interfaces/order-buy-list';
+
+import { OrderBuyDataSource } from 'src/app/admin/_buy/order/_data-source/order-buy-data-source';
+
+import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
+import { OrderBuyList } from 'src/app/_shared/intefaces/buy/order/order-buy-list';
+import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
+import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
+import { OrderBuyQuery } from 'src/app/_shared/intefaces/buy/order/query/order-buy-query';
 
 @Component({
   selector: 'app-order-buy-list-report',

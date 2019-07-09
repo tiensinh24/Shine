@@ -1,0 +1,73 @@
+<h1>{{ title }}</h1>
+
+<mat-card fxLayout="row" fxLayoutGap="4rem">
+  <div class="product-info">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <h2>
+        <button mat-icon-button><mat-icon>info</mat-icon></button>
+      </h2>
+      <h2 class="title">Product Info</h2>
+    </div>
+    <!-- Formgroup -->
+    <form class="edit-form" fxLayout="column" [formGroup]="formGroup">
+      <!-- Product Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Product Name</mat-label>
+        <input matInput placeholder="Product Name" formControlName="productName" required />
+        <mat-error *ngIf="get('productName').invalid">{{ getErrorMessage(get('productName')) }}</mat-error>
+      </mat-form-field>
+      <!-- Specification -->
+      <mat-form-field appearance="outline">
+        <mat-label>Specification</mat-label>
+        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="20" placeholder="Specification" formControlName="specification" required></textarea>
+        <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage(get('specification')) }}</mat-error>
+      </mat-form-field>
+      <!-- CategoryId -->
+      <mat-form-field appearance="outline">
+        <mat-label>Enter or select category</mat-label>
+        <input appMatAutocompleteTriggerEnforceSelection matInput formControlName="category" [matAutocomplete]="autoCategory" #categoryInput required />
+
+        <mat-error *ngIf="get('category').invalid">{{ getErrorMessage(get('category')) }}</mat-error>
+      </mat-form-field>
+
+      <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let category of filteredCategories" [value]="category">{{ category.categoryName }}</mat-option>
+        <mat-option>
+          <button mat-button color="primary" (click)="openDialog()">Add New Category</button>
+        </mat-option>
+      </mat-autocomplete>
+    </form>
+
+    <!-- Action Buttons -->
+    <button mat-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+      Submit
+    </button>
+    <button mat-button>
+      Cancel
+    </button>
+  </div>
+
+  <div class="photos">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <h2>
+        <button mat-icon-button><mat-icon>photo_album</mat-icon></button>
+      </h2>
+      <h2 class="title">Photos</h2>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="2rem grid">
+      <div *ngFor="let photo of product?.photos">
+        <img class="image" src="{{ photo.photoUrl }}" alt="" />
+      </div>
+    </div>
+
+    <div class="photo-upload">
+      <mat-expansion-panel class="padding-remove">
+        <mat-expansion-panel-header>
+          Upload photos
+        </mat-expansion-panel-header>
+        <app-photo-upload [uploadUrl]="photoUploadUrl"></app-photo-upload>
+      </mat-expansion-panel>
+    </div>
+  </div>
+</mat-card>

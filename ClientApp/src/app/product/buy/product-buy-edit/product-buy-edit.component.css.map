@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,QAAQ,CAAC;EACL,MAAM,EAAE,GAAG;CACd;;AAED,AAAA,WAAW,CAAC;EACR,gBAAgB,EAAE,SAAS;EAC3B,aAAa,EAAE,KAAK;EACpB,UAAU,EAAE,MAAM;EAClB,KAAK,EAAE,KAAK;CACf;;AAED,AAAA,KAAK,CAAC;EACF,IAAI,EAAE,QAAQ;CACjB",
-    "sources": [
-        "product-buy-edit.component.scss"
-    ],
-    "names": [],
-    "file": "product-buy-edit.component.css"
-}

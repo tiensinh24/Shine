@@ -14,6 +14,10 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<PhotoDto>> GetPhoto(int photoId);
 
+        Task<ActionResult<IEnumerable<PhotoForPersonDto>>> GetPhotosForPerson(int personId);
+
+        Task<ActionResult<IEnumerable<PhotoForProductDto>>> GetPhotosForProduct(int productId);
+
 #endregion
 
 #region Actions
