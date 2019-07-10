@@ -37,6 +37,7 @@ mat-sidenav-container.side-nav {
   > .mat-sidenav {
     position: fixed;
     top: 60px;
+    min-width: 200px;
     height: calc(100vh - 60px);
 
     div.avatar {
@@ -61,13 +62,7 @@ mat-sidenav-container.side-nav {
       h3 {
         color: royalblue;
       }
-    }
-
-    .active {
-      mat-icon {
-        color: mediumvioletred;
-      }
-    }
+    }    
   }
 
   .footer {

@@ -8,10 +8,11 @@ import { ProductBuyService } from 'src/app/_shared/services/buy/product-buy.serv
 import { environment } from 'src/environments/environment';
 import { CategoryBuy } from 'src/app/_shared/intefaces/buy/category/category-buy';
 import { CategoryBuyService } from 'src/app/_shared/services/buy/category-buy.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryBuyDialogComponent } from 'src/app/_shared/components/_buy/categories/category-buy-dialog/category-buy-dialog.component';
-import { PhotoForProduct } from 'src/app/_shared/intefaces/public/photo-for-product';
 import { ProductBuyDetail } from 'src/app/_shared/intefaces/buy/product/product-buy-detail';
+import { Photo } from 'src/app/_shared/intefaces/public/photo';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-buy-edit',
@@ -32,6 +33,9 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   photoUploadUrl = `${this.baseUrl}api/photo/product/${this.productId}`;
   title: string;
 
+  // photo upload
+  photoUploadExpansion = false;
+
   // Form
   formGroup: FormGroup;
   editMode: boolean;
@@ -40,7 +44,15 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   filteredCategories: CategoryBuy[];
   @ViewChild('categoryInput', { static: true }) categoryInput: ElementRef;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private dialog: MatDialog, private productBuyService: ProductBuyService, private categoryBuyService: CategoryBuyService) {}
+  constructor(
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private productBuyService: ProductBuyService,
+    private categoryBuyService: CategoryBuyService
+  ) {}
 
   ngOnInit() {
     this.initialize();
@@ -91,7 +103,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     this.product$ = this.productBuyService.getProduct(productId).subscribe((res: ProductBuyDetail) => {
       this.product = res;
 
-      this.title = `Edit ${res.productName}`;     
+      this.title = `Edit ${res.productName}`;
 
       this.updateForm(res);
     });
@@ -154,11 +166,28 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       tempProductBuy.productId = this.productId;
 
-      this.productBuyService.updateProduct(tempProductBuy).subscribe();
+      this.productBuyService.updateProduct(tempProductBuy).subscribe((res: ProductBuy) => {
+        if (res) {
+          this.snackBar.open('Product has been updated', 'Success');
+        } else {
+          this.snackBar.open('Update failed, please try again', 'Error');
+        }
+      });
       // Create mode
     } else {
-      this.productBuyService.addProduct(tempProductBuy).subscribe();
+      this.productBuyService.addProduct(tempProductBuy).subscribe((res: ProductBuy) => {
+        if (res) {
+          this.router.navigate(['/admin/product-buy/edit/', res.productId]);
+          this.snackBar.open('Product created', 'Success');
+        } else {
+          this.snackBar.open(`Can't create product, please try again`, 'Error');
+        }
+      });
     }
+  }
+
+  onCancel() {
+    this.updateForm(this.product);
   }
 
   get(name: string): AbstractControl {
@@ -171,5 +200,13 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
 
   displayFn(category: CategoryBuy): string | undefined {
     return category ? category.categoryName : undefined;
+  }
+
+  refreshPhotoUpload(event: Photo) {
+    this.product.photos.push(event);
+  }
+
+  togglePhotoUploadExpansion() {
+    this.photoUploadExpansion = !this.photoUploadExpansion;
   }
 }

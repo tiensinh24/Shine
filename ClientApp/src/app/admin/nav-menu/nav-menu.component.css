@@ -42,6 +42,7 @@ mat-sidenav-container.side-nav {
 mat-sidenav-container.side-nav > .mat-sidenav {
   position: fixed;
   top: 60px;
+  min-width: 200px;
   height: calc(100vh - 60px);
 }
 
@@ -68,10 +69,6 @@ mat-sidenav-container.side-nav > .mat-sidenav div.avatar .user-avatar {
 
 mat-sidenav-container.side-nav > .mat-sidenav div.avatar h3 {
   color: royalblue;
-}
-
-mat-sidenav-container.side-nav > .mat-sidenav .active mat-icon {
-  color: mediumvioletred;
 }
 
 mat-sidenav-container.side-nav .footer {

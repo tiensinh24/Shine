@@ -1,62 +1,26 @@
-<mat-accordion class="main-accordion" multi="false" displayMode="flat">
-  <!-- Products group -->
-  <mat-expansion-panel #productPanel>
-    <mat-expansion-panel-header>
-      <mat-icon [ngClass]="{ expand: productPanel.expanded }" class="fas fa-cookie-bite"></mat-icon>
-      <span>Products</span>
-    </mat-expansion-panel-header>
-    <!-- Expand list -->
-    <mat-nav-list>
-      <mat-list-item [routerLink]="['/admin/product-buy/home']" routerLinkActive="active">
-        <mat-icon matListIcon>view_list</mat-icon>
-        <a matLine>Product list</a>
-      </mat-list-item>
-      <mat-list-item [routerLink]="['/admin/product-buy/remain']" routerLinkActive="active">
-        <mat-icon matListIcon>line_style</mat-icon>
-        <a matLine>Products remaining</a>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon matListIcon fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
-        <a matLine [routerLink]="['/admin/supplier/report']">Reports</a>
-      </mat-list-item>
-    </mat-nav-list>
-  </mat-expansion-panel>
+<mat-nav-list>
+  <mat-list-item [routerLink]="['/admin/home']" routerLinkActive="active">
+    <mat-icon matListIcon class="fas fa-home"></mat-icon>
+    <a matLine>Home</a>
+  </mat-list-item>
 
-  <!-- Suppliers group -->
-  <mat-expansion-panel #supplierPanel>
-    <mat-expansion-panel-header>
-      <mat-icon [ngClass]="{ expand: supplierPanel.expanded }" class="fas fa-diagnoses"></mat-icon>
-      <span>Suppliers</span>
-    </mat-expansion-panel-header>
-    <!-- Expand list -->
-    <mat-nav-list>
-      <mat-list-item [routerLink]="['/admin/supplier/home']" routerLinkActive="active">
-        <mat-icon matListIcon>view_list</mat-icon>
-        <a matLine>Supplier list</a>
-      </mat-list-item>
-      <mat-list-item [routerLink]="['/admin/supplier/report']" routerLinkActive="active">
-        <mat-icon matListIcon fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
-        <a matLine>Reports</a>
-      </mat-list-item>
-    </mat-nav-list>
-  </mat-expansion-panel>
+  <mat-list-item [routerLink]="['/admin/product-buy/home']" routerLinkActive="active">
+    <mat-icon matListIcon class="fas fa-cookie-bite"></mat-icon>
+    <a matLine>Product</a>
+  </mat-list-item>
 
-  <!-- Orders group -->
-  <mat-expansion-panel #orderPanel>
-    <mat-expansion-panel-header>
-      <mat-icon [ngClass]="{expand: orderPanel.expanded}" class="fas fa-donate"></mat-icon>
-      <span>Orders</span>
-    </mat-expansion-panel-header>
-    <!-- Expand list -->
-    <mat-nav-list>
-      <mat-list-item [routerLink]="['/admin/order-buy/home']" routerLinkActive="active" >
-        <mat-icon matListIcon>view_list</mat-icon>
-        <a matLine>Order list</a>
-      </mat-list-item>
-      <mat-list-item [routerLink]="['/admin/order-buy/report']" routerLinkActive="active">
-        <mat-icon matListIcon fontSet="fab" fontIcon="fa-accusoft"></mat-icon>
-        <a matLine>Reports</a>
-      </mat-list-item>
-    </mat-nav-list>
-  </mat-expansion-panel>
-</mat-accordion>
+  <mat-list-item [routerLink]="['/admin/supplier/home']" routerLinkActive="active">
+    <mat-icon matListIcon class="fas fa-diagnoses"></mat-icon>
+    <a matLine>Supplier</a>
+  </mat-list-item>
+
+  <mat-list-item [routerLink]="['/admin/order-buy/home']" routerLinkActive="active">
+    <mat-icon matListIcon class="fas fa-donate"></mat-icon>
+    <a matLine>Order</a>
+  </mat-list-item>
+
+  <mat-list-item [routerLink]="['/admin/storage/home']" routerLinkActive="active" >
+    <mat-icon matListIcon>storage</mat-icon>
+    <a matLine>Storage</a>
+  </mat-list-item>
+</mat-nav-list>

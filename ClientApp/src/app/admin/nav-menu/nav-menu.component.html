@@ -106,14 +106,6 @@
         <div class="user-avatar"></div>
       </div>
 
-      <!-- Expansion nav -->
-      <mat-nav-list>
-        <mat-list-item [routerLink]="['/admin/home']" routerLinkActive="active">
-          <mat-icon matListIcon class="fas fa-home"></mat-icon>
-          <a matLine>Home</a>
-        </mat-list-item>
-      </mat-nav-list>
-
       <!-- Sidenav-buy -->
       <app-sidenav-buy *ngIf="sidenavMode; else sidenavSell"></app-sidenav-buy>
 

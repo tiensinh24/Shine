@@ -1,17 +1,5 @@
-mat-expansion-panel-header {
-  display: flex;
-  align-items: center;
-
-  mat-icon {
-    padding-right: 1rem;
-    &.expand {
-      color: mediumvioletred;
-    }
-  }
-}
-
 .active {
   mat-icon {
-    color: deeppink;
+    color: mediumvioletred;
   }
 }
