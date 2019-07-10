@@ -5,11 +5,9 @@ main {
     margin-bottom: 8px;
   }
 
-  >.title {
-    >h1 {
+  >h1.title {    
       color: royalblue;
-    }
-  }
+    }  
 
   >.content {
     padding: 0;

@@ -35,17 +35,53 @@ main#main {
           color: royalblue;
         }
       
-        img.image {
-          border-radius: 20px;
-          width: 150px;
-          height: 150px;
-          transition: 200ms ease-in;
-          transform: scale(1);
-      
-          &:hover {
-            cursor: pointer;
-            transition: 200ms ease-out;
-            transform: scale(1.2)
+        div.product-photos {
+          div.photo {           
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+
+            &:hover {
+              cursor: pointer;
+
+              img.image {
+                opacity: 0.75;                
+                transition: 250ms ease-out;
+                transform: scale(1.2)
+              }
+
+              div.img-btn {
+                padding: 0 1rem;
+                width: auto;
+                height: auto;
+                background: white;
+                border-radius: 50px;
+                opacity: 1;
+                transform: translateY(-5rem);
+                transition: 250ms ease-in;
+              }
+            }            
+
+            img.image {
+              border-radius: 20px;
+              width: 150px;
+              height: 150px;
+              transition: 200ms ease-in;
+              transform: scale(1);
+          
+            }
+
+            div.img-btn {              
+              display: flex;
+              justify-content: center;              
+              width: 0;
+              height: 0;
+              opacity: 0;              
+              transform: translateY(0);
+              transition: 200ms ease-out;
+            }
+  
+            
           }
         }
       

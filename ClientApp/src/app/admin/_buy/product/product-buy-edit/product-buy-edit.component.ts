@@ -13,6 +13,8 @@ import { CategoryBuyDialogComponent } from 'src/app/_shared/components/_buy/cate
 import { ProductBuyDetail } from 'src/app/_shared/intefaces/buy/product/product-buy-detail';
 import { Photo } from 'src/app/_shared/intefaces/public/photo';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PhotoService } from 'src/app/_shared/services/public/photo.service';
+import { PhotoForProduct } from 'src/app/_shared/intefaces/public/photo-for-product';
 
 @Component({
   selector: 'app-product-buy-edit',
@@ -23,6 +25,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   // Subscriptions
   categories$ = new Subscription();
   product$ = new Subscription();
+  photo$ = new Subscription();
 
   // Variables
   categories: CategoryBuy[];
@@ -51,7 +54,8 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialog: MatDialog,
     private productBuyService: ProductBuyService,
-    private categoryBuyService: CategoryBuyService
+    private categoryBuyService: CategoryBuyService,
+    private photoService: PhotoService
   ) {}
 
   ngOnInit() {
@@ -61,6 +65,7 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.categories$.unsubscribe();
     this.product$.unsubscribe();
+    this.photo$.unsubscribe();
   }
 
   initialize() {
@@ -188,6 +193,34 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.updateForm(this.product);
+  }
+
+  deletePhoto(photoId: number) {
+    this.photo$ = this.photoService.deletePhoto(photoId).subscribe((res: Photo) => {
+      if (res) {
+        const index = this.product.photos.findIndex(p => p.photoId === photoId);
+        this.product.photos.splice(index, 1);
+
+        this.snackBar.open('Photo deleted', 'Success');
+      } else {
+        this.snackBar.open(`Can't delete photo, please try again`, 'Error');
+      }
+    });
+  }
+
+  setMainPhoto(photo: PhotoForProduct) {
+    this.photo$ = this.photoService.setMainPhotoForProduct(photo).subscribe((res: PhotoForProduct) => {
+      if (res) {
+        const index = this.product.photos.findIndex(p => p.photoId === photo.photoId);
+
+        this.product.photos.splice(index, 1);
+        this.product.photos.unshift(res);
+
+        this.snackBar.open('Main photo has been set', 'Success');
+      } else {
+        this.snackBar.open(`Can't set main photo, please try again`, 'Error');
+      }
+    });
   }
 
   get(name: string): AbstractControl {

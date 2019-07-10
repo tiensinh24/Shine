@@ -6,7 +6,7 @@ main mat-progress-bar {
   margin-bottom: 8px;
 }
 
-main > .title > h1 {
+main > h1.title {
   color: royalblue;
 }
 

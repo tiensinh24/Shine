@@ -3,7 +3,9 @@
     <div fxLayout="column">
       <button mat-icon-button matTooltip="Go back" class="back-btn" [routerLink]="['/admin/product-buy']"><mat-icon>arrow_back</mat-icon></button>
 
-      <span><h1 class="title">{{ title }}</h1></span>
+      <span
+        ><h1 class="title">{{ title }}</h1></span
+      >
 
       <div class="card-content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="2rem">
         <div fxFlex="30" class="product-info">
@@ -57,12 +59,20 @@
             <h2>
               <button mat-icon-button><mat-icon>photo_album</mat-icon></button>
             </h2>
-            <h2 class="title">Product photos</h2>
+            <h2 class="title">Product Photos</h2>
           </div>
 
           <div *ngIf="product?.photos.length > 0; else noPhoto" fxLayout="row wrap" fxLayoutGap="1rem grid">
-            <div *ngFor="let photo of product?.photos">
-              <img class="image" src="{{ photo.photoUrl }}" alt="" />
+            <div class="product-photos" *ngFor="let photo of product?.photos">
+              <div class="photo">
+                <img class="image" src="{{ photo.photoUrl }}" alt="" />
+
+                <!-- Img relay -->
+                <div class="img-btn">
+                  <button mat-icon-button matTooltip="Delete photo" color="warn" (click)="deletePhoto(photo.photoId)"><mat-icon>delete</mat-icon></button>
+                  <button mat-icon-button matTooltip="Set main photo" color="primary" (click)="setMainPhoto(photo)"><mat-icon>check_circle_outline</mat-icon></button>
+                </div>
+              </div>
             </div>
           </div>
 

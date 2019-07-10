@@ -6,10 +6,10 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { ProductRemain } from '../../../../_shared/intefaces/public/product-remain';
-import { ProductStorageRemain } from '../../../../_shared/intefaces/public/product-storage-remain';
-import { ProductBuyRemainDataSource } from '../_data-source/product-buy-remain-data-source';
-import { ProductBuyService } from '../../../../_shared/services/buy/product-buy.service';
+import { ProductRemain } from '../../../../intefaces/public/product-remain';
+import { ProductStorageRemain } from '../../../../intefaces/public/product-storage-remain';
+import { ProductBuyRemainDataSource } from '../../../../../admin/_buy/product/_data-source/product-buy-remain-data-source';
+import { ProductBuyService } from '../../../../services/buy/product-buy.service';
 import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
 import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
 

@@ -1,8 +1,5 @@
-import { ProductBuyDetailComponent } from './product-buy-detail/product-buy-detail.component';
+
 import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.component';
-import { ProductBuyHomeComponent } from './product-buy-home/product-buy-home.component';
-import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
-import { ProductBuyRemainComponent } from './product-buy-remain/product-buy-remain.component';
 import { ProductBuyRoutingModule } from './product-buy-routing.module';
 import { ProductBuyComponent } from './product-buy.component';
 import { NgModule } from '@angular/core';
@@ -12,15 +9,13 @@ import { PhotoUploadSharedModule } from 'src/app/_shared/components/photo-upload
 import { ProductPhotoGallerySharedModule } from 'src/app/_shared/components/product-photo-gallery/product-photo-gallery-shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';
+import { ProductBuyListComponent } from './product-buy-list/product-buy-list.component';
 
 @NgModule({
   declarations: [
     ProductBuyComponent,
-    ProductBuyHomeComponent,
-    ProductBuyDetailComponent,
-    ProductBuyEditComponent,
     ProductBuyListComponent,
-    ProductBuyRemainComponent
+    ProductBuyEditComponent,
   ],
   imports: [
     // Shared
