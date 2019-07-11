@@ -33,11 +33,12 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
 
   baseUrl = environment.URL;
   productId = +this.route.snapshot.params.productId;
-  photoUploadUrl = `${this.baseUrl}api/photo/product/${this.productId}`;
+  
   title: string;
 
   // photo upload
   photoUploadExpansion = false;
+  photoUploadUrl = `${this.baseUrl}api/photo/product/${this.productId}`;
 
   // Form
   formGroup: FormGroup;

@@ -1,37 +1,40 @@
-main#main mat-card.main {
-  min-height: calc(100vh - (60px + 2rem));
+mat-card.main {
+  height: calc(100vh - (55px + 8rem));
+  overflow: auto;
 }
 
-main#main mat-card.main button.back-btn {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  left: 0;
+mat-card.main .title-group {
   padding: 0;
   margin-bottom: 1rem;
-  -ms-flex-item-align: start;
-      align-self: flex-start;
-  z-index: 1;
 }
 
-main#main mat-card.main button.back-btn .mat-icon {
+mat-card.main .title-group .mat-icon {
   font-size: 32px;
 }
 
-main#main mat-card.main h1.title {
+mat-card.main .title-group h1.title {
   margin-bottom: 2rem;
   color: royalblue;
 }
 
-main#main mat-card.main .card-content div.product-info h2.title {
+mat-card.main .card-content {
+  width: 100%;
+}
+
+mat-card.main .card-content form.edit-form {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+mat-card.main .card-content form.edit-form h2.title {
   color: royalblue;
 }
 
-main#main mat-card.main .card-content div.photos h2.title {
+mat-card.main .card-content div.photos h2.title {
   color: royalblue;
 }
 
-main#main mat-card.main .card-content div.photos div.product-photos div.photo {
+mat-card.main .card-content div.photos div.supplier-photos div.photo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -44,11 +47,11 @@ main#main mat-card.main .card-content div.photos div.product-photos div.photo {
           align-items: center;
 }
 
-main#main mat-card.main .card-content div.photos div.product-photos div.photo:hover {
+mat-card.main .card-content div.photos div.supplier-photos div.photo:hover {
   cursor: pointer;
 }
 
-main#main mat-card.main .card-content div.photos div.product-photos div.photo:hover img.image {
+mat-card.main .card-content div.photos div.supplier-photos div.photo:hover img.image {
   opacity: 0.75;
   -webkit-transition: 250ms ease-out;
   transition: 250ms ease-out;
@@ -56,7 +59,7 @@ main#main mat-card.main .card-content div.photos div.product-photos div.photo:ho
           transform: scale(1.2);
 }
 
-main#main mat-card.main .card-content div.photos div.product-photos div.photo:hover div.img-btn {
+mat-card.main .card-content div.photos div.supplier-photos div.photo:hover div.img-btn {
   padding: 0 1rem;
   width: auto;
   height: auto;
@@ -69,7 +72,7 @@ main#main mat-card.main .card-content div.photos div.product-photos div.photo:ho
   transition: 250ms ease-in;
 }
 
-main#main mat-card.main .card-content div.photos div.product-photos div.photo img.image {
+mat-card.main .card-content div.photos div.supplier-photos div.photo img.image {
   border-radius: 20px;
   width: 150px;
   height: 150px;
@@ -79,7 +82,7 @@ main#main mat-card.main .card-content div.photos div.product-photos div.photo im
           transform: scale(1);
 }
 
-main#main mat-card.main .card-content div.photos div.product-photos div.photo div.img-btn {
+mat-card.main .card-content div.photos div.supplier-photos div.photo div.img-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -95,7 +98,25 @@ main#main mat-card.main .card-content div.photos div.product-photos div.photo di
   transition: 200ms ease-out;
 }
 
-main#main mat-card.main .card-content div.photos div.no-photo div {
+mat-card.main .card-content div.photos div.photo-upload {
+  margin-top: 2rem;
+}
+
+mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: 200ms ease-in;
+  transition: 200ms ease-in;
+}
+
+mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: 200ms ease-out;
+  transition: 200ms ease-out;
+}
+
+mat-card.main .card-content div.photos div.no-photo div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -111,22 +132,4 @@ main#main mat-card.main .card-content div.photos div.no-photo div {
   height: 150px;
   opacity: 0.75;
 }
-
-main#main mat-card.main .card-content div.photos div.photo-upload {
-  margin-top: 2rem;
-}
-
-main#main mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  -webkit-transition: 200ms ease-in;
-  transition: 200ms ease-in;
-}
-
-main#main mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn:hover {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-  -webkit-transition: 200ms ease-out;
-  transition: 200ms ease-out;
-}
-/*# sourceMappingURL=product-buy-edit.component.css.map */
+/*# sourceMappingURL=supplier-edit.component.css.map */

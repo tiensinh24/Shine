@@ -1,13 +1,7 @@
 import { SupplierDataSource } from '../../_data-source/supplier-data-source';
 
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild
-  } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,9 +16,6 @@ import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
 import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { ConfirmDialogService } from 'src/app/_shared/services/public/confirm-dialog.service';
 import { Supplier } from 'src/app/_shared/intefaces/buy/supplier/supplier';
-
-
-
 
 @Component({
   selector: 'app-supplier-list',
@@ -46,19 +37,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     { key: 'rating', value: 'Rating' },
     { key: 'actions', value: 'Actions' }
   ];
-  columnsToDisplay = [
-    'select',
-    'photo',
-    'personNumber',
-    'gender',
-    'fullName',
-    'dateOfBirth',
-    'telephone',
-    'countryName',
-    'continentName',
-    'rating',
-    'actions'
-  ];
+  columnsToDisplay = ['select', 'photo', 'personNumber', 'gender', 'fullName', 'dateOfBirth', 'telephone', 'countryName', 'continentName', 'rating', 'actions'];
   selection = new SelectionModel<SupplierList>(true, []);
   numRows: number;
 
@@ -78,13 +57,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     sortOrder: ''
   };
 
-  constructor(
-    private supplierService: SupplierService,
-    private router: Router,
-    private dialog: MatDialog,
-    private confirmService: ConfirmDialogService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private supplierService: SupplierService, private router: Router, private dialog: MatDialog, private confirmService: ConfirmDialogService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.dataSource = new SupplierDataSource(this.supplierService);
@@ -131,7 +104,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   }
 
   onCreate() {
-    this.openDialog(0);
+    this.router.navigate(['/admin/supplier/create']);
   }
 
   onDetail(supplier: Supplier) {
@@ -139,13 +112,11 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   }
 
   onEdit(supplier: Supplier) {
-    this.openDialog(supplier.personId);
+    this.router.navigate(['/admin/supplier/edit', supplier.personId]);
   }
 
   onDelete(supplier: Supplier) {
-    const dialogRef = this.confirmService.openDialog(
-      `Are you sure to delete ${supplier.firstName} ${supplier.lastName}?`
-    );
+    const dialogRef = this.confirmService.openDialog(`Are you sure to delete ${supplier.firstName} ${supplier.lastName}?`);
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {

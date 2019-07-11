@@ -1,0 +1,18 @@
+<mat-progress-bar *ngIf="loading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+
+<mat-card  class="main" *ngIf="!loading">
+  <div *ngFor="let product of products.items">
+    <div fxLayout="row wrap" fxLayoutGap="1rem">
+      <img src="{{product.photoUrl}}" alt="">
+    </div>
+  </div>
+
+  <!-- Paginator & search -->
+  <div fxLayout="row-reverse" class="mat-paginator-sticky">
+    <mat-paginator fxFlex="70" [length]="products.paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25]" showFirstLastButtons> </mat-paginator>
+
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Search products" #input />
+    </mat-form-field>
+  </div>
+</mat-card>

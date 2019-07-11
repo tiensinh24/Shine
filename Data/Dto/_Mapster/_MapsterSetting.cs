@@ -11,6 +11,7 @@ namespace Shine.Data.Dto._Mapster {
             ProductOrderSetting.Setting();
             StorageSetting.Setting();
             StorageProductSetting.Setting();
+            PersonProductSetting.Setting();
         }
     }
 }

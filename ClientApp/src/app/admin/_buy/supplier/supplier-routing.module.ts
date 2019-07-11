@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { SupplierListHomeComponent } from './supplier-list/supplier-list-home.component';
 import { SupplierComponent } from './supplier.component';
+import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/admin/supplier/home', pathMatch: 'full' },
       { path: 'home', component: SupplierListHomeComponent },
-      { path: 'report', loadChildren: () => import('../../../main/_reports/supplier-report.module').then(m => m.SupplierReportModule) },
+      { path: 'create', component: SupplierEditComponent },
+      { path: 'edit/:supplierId', component: SupplierEditComponent },
       { path: ':supplierId', component: SupplierDetailComponent }
     ]
   }
@@ -21,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SupplierRoutingModule { }
+export class SupplierRoutingModule {}

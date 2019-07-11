@@ -1,6 +1,5 @@
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -40,12 +39,7 @@ export class ProductsAddedComponent implements OnInit, AfterViewInit {
     sortOrder: ''
   };
 
-  constructor(
-    private supplierService: SupplierService,
-    private route: ActivatedRoute,
-    private snackBar: MatSnackBar,
-    private confirmDialogService: ConfirmDialogService
-  ) {}
+  constructor(private supplierService: SupplierService, private route: ActivatedRoute, private snackBar: MatSnackBar, private confirmDialogService: ConfirmDialogService) {}
 
   ngOnInit() {
     this.supplierId = +this.route.snapshot.params.supplierId;

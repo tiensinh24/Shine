@@ -160,7 +160,7 @@ namespace Shine.Controllers
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
         {
             var query = await _repository.GetPagedProductsAsync(
-                pagingParams, sortParams, filter, p => p.PersonId == supplierId);
+                supplierId, pagingParams, sortParams, filter);
 
             return new Paged<ProductsBySupplierDto>(query);
         }

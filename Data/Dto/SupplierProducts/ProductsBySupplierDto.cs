@@ -6,5 +6,7 @@ namespace Shine.Data.Dto.SupplierProducts {
         public string Specification { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
+
+        public string PhotoUrl { get; set; }
     }
 }

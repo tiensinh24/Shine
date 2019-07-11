@@ -14,6 +14,11 @@ import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SupplierEditDialogSharedModule } from 'src/app/_shared/components/_buy/suppliers/supplier-edit-dialog/supplier-edit-dialog-shared.module';
 import { PhotoUploadSharedModule } from 'src/app/_shared/components/photo-upload/photo-upload-shared.module';
 import { PersonPhotoGallerySharedModule } from 'src/app/_shared/components/person-photo-gallery/person-photo-gallery-shared.module';
+import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { SupplierProductsAddedComponent } from './supplier-edit/supplier-products-added/supplier-products-added.component';
+
+
 
 @NgModule({
   declarations: [
@@ -24,7 +29,9 @@ import { PersonPhotoGallerySharedModule } from 'src/app/_shared/components/perso
     ProductsAddedComponent,
     SupplierOrdersComponent,
     SupplierCardComponent,
-    SupplierListHomeComponent
+    SupplierListHomeComponent,
+    SupplierEditComponent,
+    SupplierProductsAddedComponent,
   ],
   imports: [
     // Shared module
@@ -32,6 +39,9 @@ import { PersonPhotoGallerySharedModule } from 'src/app/_shared/components/perso
 
     // Material
     MaterialSharedModule,
+
+    MatTabsModule,
+    
 
     // Dialog
     SupplierEditDialogSharedModule,

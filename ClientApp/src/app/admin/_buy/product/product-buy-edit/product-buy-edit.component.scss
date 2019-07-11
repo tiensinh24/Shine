@@ -1,4 +1,4 @@
-main#main {  
+main#main {
   mat-card.main {
     min-height: calc(100vh - (60px + 2rem));
 
@@ -8,7 +8,7 @@ main#main {
       left: 0;
       padding: 0;
       margin-bottom: 1rem;
-      align-self: flex-start;      
+      align-self: flex-start;
       z-index: 1;
 
       .mat-icon {
@@ -22,22 +22,20 @@ main#main {
     }
 
     .card-content {
-      div.product-info {        
-      
-        h2.title {
-          color: royalblue
-        }
-      }
-      
-      div.photos {        
-          
+      div.product-info {
         h2.title {
           color: royalblue;
         }
-      
+      }
+
+      div.photos {
+        h2.title {
+          color: royalblue;
+        }
+
         div.product-photos {
-          div.photo {           
-            display: flex; 
+          div.photo {
+            display: flex;
             flex-direction: column;
             align-items: center;
 
@@ -45,9 +43,9 @@ main#main {
               cursor: pointer;
 
               img.image {
-                opacity: 0.75;                
+                opacity: 0.75;
                 transition: 250ms ease-out;
-                transform: scale(1.2)
+                transform: scale(1.2);
               }
 
               div.img-btn {
@@ -60,7 +58,7 @@ main#main {
                 transform: translateY(-5rem);
                 transition: 250ms ease-in;
               }
-            }            
+            }
 
             img.image {
               border-radius: 20px;
@@ -68,23 +66,33 @@ main#main {
               height: 150px;
               transition: 200ms ease-in;
               transform: scale(1);
-          
             }
 
-            div.img-btn {              
+            div.img-btn {
               display: flex;
-              justify-content: center;              
+              justify-content: center;
               width: 0;
               height: 0;
-              opacity: 0;              
+              opacity: 0;
               transform: translateY(0);
               transition: 200ms ease-out;
             }
-  
-            
           }
         }
-      
+
+        div.no-photo {
+          div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            background: whitesmoke;
+            width: 150px;
+            height: 150px;
+            opacity: 0.75;
+          }
+        }
+
         div.photo-upload {
           margin-top: 2rem;
 
@@ -100,7 +108,5 @@ main#main {
         }
       }
     }
-
-    
   }
 }

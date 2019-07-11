@@ -52,8 +52,7 @@ namespace Shine.Data.Infrastructures.Interfaces
         Task<IEnumerable<ProductSelectDto>> GetProductsForSelectAsync(int supplierId);
 
         Task<PagedList<ProductsBySupplierDto>> GetPagedProductsAsync(
-            PagingParams pagingParams, SortParams sortParams, string filter,
-            Expression<Func<ProductsBySupplierDto, bool>> condition);
+            int supplierId, PagingParams pagingParams, SortParams sortParams, string filter);
 
         JsonResult GetProductsNotBySupplier(int supplierId);
         #endregion

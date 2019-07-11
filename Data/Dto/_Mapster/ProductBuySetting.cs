@@ -20,6 +20,8 @@ namespace Shine.Data.Dto._Mapster {
                     dest => dest.PhotoUrl, src => src.Photos.FirstOrDefault(p => p.IsMain).PhotoUrl
                 );
 
+            
+
             TypeAdapterConfig<ProductBuy, ProductBuyDetailDto>.NewConfig()
                 .Map(
                     dest => dest.CategoryName, source => source.Category.CategoryName

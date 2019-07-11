@@ -5,4 +5,5 @@ export interface ProductsBySupplier {
   specification: string;
   categoryId: number;
   categoryName: string;
+  photoUrl: string;
 }
