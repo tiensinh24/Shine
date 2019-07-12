@@ -31,6 +31,9 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
 
   supplierId = +this.route.snapshot.params.supplierId;
 
+  // boolean
+  isAddProduct = false;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('input', { static: true }) input: ElementRef;
@@ -111,5 +114,9 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
         this.snackBar.open(`${product.productName} deleted`, 'Success');
       }
     });
+  }
+
+  toggleAddProduct() {
+    this.isAddProduct = !this.isAddProduct;
   }
 }

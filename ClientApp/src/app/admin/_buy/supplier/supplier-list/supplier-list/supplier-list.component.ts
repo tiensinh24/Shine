@@ -1,5 +1,4 @@
 import { SupplierDataSource } from '../../_data-source/supplier-data-source';
-
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -57,7 +56,13 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     sortOrder: ''
   };
 
-  constructor(private supplierService: SupplierService, private router: Router, private dialog: MatDialog, private confirmService: ConfirmDialogService, private snackBar: MatSnackBar) {}
+  constructor(
+    private supplierService: SupplierService,
+    private router: Router,
+    private dialog: MatDialog,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.dataSource = new SupplierDataSource(this.supplierService);

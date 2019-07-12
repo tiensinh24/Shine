@@ -22,11 +22,11 @@
                 <h2>
                   <button mat-icon-button><mat-icon>info</mat-icon></button>
                 </h2>
-                <h2 class="title">Supplier Information</h2>
+                <h2 class="title">General</h2>
               </div>
 
               <!-- PersonNumber -->
-              <mat-form-field appearance="outline" fxFlex="33">
+              <mat-form-field appearance="outline">
                 <mat-label>Person Number</mat-label>
                 <input matInput placeholder="PersonNumber" formControlName="personNumber" required />
                 <mat-icon matSuffix>perm_identity</mat-icon>
@@ -34,7 +34,7 @@
               </mat-form-field>
 
               <!-- FirstName -->
-              <mat-form-field appearance="outline" fxFlex="50">
+              <mat-form-field appearance="outline">
                 <mat-label>First Name</mat-label>
                 <input matInput placeholder="FirstName" formControlName="firstName" required />
                 <mat-icon matSuffix>person</mat-icon>
@@ -42,7 +42,7 @@
               </mat-form-field>
 
               <!-- LastName -->
-              <mat-form-field appearance="outline" fxFlex>
+              <mat-form-field appearance="outline">
                 <mat-label>Last Name</mat-label>
                 <input matInput placeholder="LastName" formControlName="lastName" required />
                 <mat-icon matSuffix>person</mat-icon>
@@ -50,7 +50,7 @@
               </mat-form-field>
 
               <!-- DateOfBirth -->
-              <mat-form-field appearance="outline" fxFlex="50">
+              <mat-form-field appearance="outline">
                 <mat-label>Date Of Birth</mat-label>
                 <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="dateOfBirth" required />
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -59,7 +59,7 @@
               </mat-form-field>
 
               <!-- Gender -->
-              <div class="gender-group" fxLayout="row" fxLayoutGap="32px" fxFlex="50">
+              <div class="gender-group" fxLayout="row" fxLayoutGap="32px">
                 <mat-radio-group fxLayoutGap="32px" formControlName="gender">
                   <mat-radio-button [value]="true">Male</mat-radio-button>
                   <mat-radio-button [value]="false">Female</mat-radio-button>
@@ -73,11 +73,11 @@
                 <h2>
                   <button mat-icon-button><mat-icon>contacts</mat-icon></button>
                 </h2>
-                <h2 class="title">Contact Information</h2>
+                <h2 class="title">Contact</h2>
               </div>
 
               <!-- Telephone -->
-              <mat-form-field appearance="outline" fxFlex="33">
+              <mat-form-field appearance="outline">
                 <mat-label>Telephone</mat-label>
                 <input matInput placeholder="Telephone" formControlName="telephone" required />
                 <mat-icon matSuffix>phone</mat-icon>
@@ -85,7 +85,7 @@
               </mat-form-field>
 
               <!-- Fax -->
-              <mat-form-field appearance="outline" fxFlex>
+              <mat-form-field appearance="outline">
                 <mat-label>Fax</mat-label>
                 <input matInput placeholder="Fax" formControlName="fax" required />
                 <mat-icon matSuffix>print</mat-icon>
@@ -93,7 +93,7 @@
               </mat-form-field>
 
               <!-- CountryId -->
-              <mat-form-field appearance="outline" fxFlex>
+              <mat-form-field appearance="outline">
                 <mat-label>Country</mat-label>
                 <mat-select placeholder="Select country" formControlName="countryId" required>
                   <mat-option *ngFor="let country of countries" [value]="country.countryId">
@@ -104,24 +104,24 @@
               </mat-form-field>
             </div>
           </div>
-
-          <!-- Action Buttons -->
-          <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="1rem">
-            <button mat-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
-              Submit
-            </button>
-            <button mat-button (click)="onCancel()">
-              Cancel
-            </button>
-          </div>
         </form>
+
+        <!-- Action Buttons -->
+        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="1rem">
+          <button mat-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+            Submit
+          </button>
+          <button mat-button (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
 
         <div class="photos" *ngIf="supplierId > 0">
           <div fxLayout="row" fxLayoutAlign="start center">
             <h2>
               <button mat-icon-button><mat-icon>photo_album</mat-icon></button>
             </h2>
-            <h2 class="title">Supplier Photos</h2>
+            <h2 class="title">Photos</h2>
           </div>
 
           <div *ngIf="supplier?.photos.length > 0; else noPhoto" fxLayout="row wrap" fxLayoutGap="1rem grid">
@@ -147,7 +147,9 @@
           </ng-template>
 
           <div class="photo-upload">
-            <button class="upload-icon-btn" mat-mini-fab color="primary" matTooltip="Upload photos" (click)="togglePhotoUploadExpansion()"><mat-icon>cloud_upload</mat-icon></button>
+            <button class="upload-icon-btn" mat-mini-fab color="primary" matTooltip="Upload photos" (click)="togglePhotoUploadExpansion()">
+              <mat-icon>cloud_upload</mat-icon>
+            </button>
 
             <mat-expansion-panel [expanded]="photoUploadExpansion" class="padding-remove mat-elevation-z0">
               <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
@@ -158,10 +160,10 @@
     </mat-card>
   </mat-tab>
 
-  <mat-tab class="product-supplies-tab">
+  <mat-tab class="products-tab">
     <ng-template mat-tab-label>
       <mat-icon>view_module</mat-icon>
-      Product Supplies
+      Products
     </ng-template>
     <app-supplier-products-added></app-supplier-products-added>
   </mat-tab>

@@ -159,18 +159,21 @@ namespace Shine.Controllers
         public async Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProducts(
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
         {
-            var query = await _repository.GetPagedProductsAsync(
-                supplierId, pagingParams, sortParams, filter);
+            var query = await _repository.GetPagedProductsAsync(supplierId, pagingParams, sortParams, filter);
 
             return new Paged<ProductsBySupplierDto>(query);
         }
 
-        [HttpGet("{supplierId}/products-not-added")]
-        public JsonResult GetProductsNotBySupplier(int supplierId)
+        [HttpGet("{supplierId}/paged-products-not-added")]
+        public async Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsNotAdded(
+            int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
         {
-            var products = _repository.GetProductsNotBySupplier(supplierId);
-            return products;
+            var query = await _repository.GetPagedProductsNotAddedAsync(supplierId, pagingParams, sortParams, filter);
+
+            return new Paged<ProductsBySupplierDto>(query);
         }
+
+
         #endregion
 
         #region Actions

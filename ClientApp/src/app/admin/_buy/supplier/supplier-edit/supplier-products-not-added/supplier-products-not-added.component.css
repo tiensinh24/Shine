@@ -1,0 +1,29 @@
+section.main .search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+section.main .search mat-form-field {
+  width: 50%;
+  margin: auto;
+}
+
+section.main .products div.product img {
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+}
+
+@media only screen and (max-width: 1024) {
+  .search {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .search mat-form-field {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=supplier-products-not-added.component.css.map */

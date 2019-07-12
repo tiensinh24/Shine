@@ -1,15 +1,13 @@
-using System.Collections.Generic;
 using System.Linq;
 
 using Mapster;
-
-using Shine.Data.Dto.Photos;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Dto.SupplierProducts;
 using Shine.Data.Models;
 
-namespace Shine.Data.Dto._Mapster {
+namespace Shine.Data.Dto._Mapster
+{
     public static class ProductBuySetting {
         public static void Setting() {
             TypeAdapterConfig<ProductBuy, ProductBuyListDto>.NewConfig()
@@ -37,6 +35,8 @@ namespace Shine.Data.Dto._Mapster {
                     dest => dest.Remain,
                     src => src.StorageProducts.Sum(sp => sp.Quantity)
                 );
+
+            
         }
     }
 }

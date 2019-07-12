@@ -13,10 +13,11 @@ using Shine.Data.Models;
 
 namespace Shine.Controllers.Interfaces
 {
-    public interface ISupplierController {
-#region Supplier
+    public interface ISupplierController
+    {
+        #region Supplier
 
-#region Get Values
+        #region Get Values
         Task<ActionResult<IEnumerable<SupplierListDto>>> GetSuppliers();
 
         Task<ActionResult<IEnumerable<SupplierSelectDto>>> GetSuppliersSelect();
@@ -25,9 +26,9 @@ namespace Shine.Controllers.Interfaces
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
         Task<ActionResult<SupplierDetailDto>> GetSupplier(int id);
-#endregion
+        #endregion
 
-#region Actions
+        #region Actions
         Task<ActionResult<SupplierDto>> AddSupplier([FromBody] Supplier supplier);
 
         Task<ActionResult<SupplierDto>> UpdateSupplier([FromBody] Supplier supplier);
@@ -36,51 +37,56 @@ namespace Shine.Controllers.Interfaces
 
         Task<bool> DeleteSuppliers(string[] ids);
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
-#region SupplierProduct
+        #region SupplierProduct
 
-#region Get Values
+        #region Get Values
 
         Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProducts(
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-        Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsForSelect(int supplierId);
-#endregion
+        Task<ActionResult<Paged<ProductsBySupplierDto>>> GetPagedProductsNotAdded(
+            int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-#region Actions
+        Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsForSelect(int supplierId);
+
+
+        #endregion
+
+        #region Actions
         Task AddSupplierProduct(PersonProduct model);
 
         Task<ActionResult<PersonProductDto>> DeleteSupplierProduct(PersonProduct model);
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
-#region Orders
+        #region Orders
 
         Task<ActionResult<IEnumerable<SupplierOrdersDto>>> GetOrders(int supplierId);
 
         Task<ActionResult<Paged<SupplierOrdersDto>>> GetPagedOrders(
             int supplierId, [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-#endregion
+        #endregion
 
-#region Reports
-    
-    Task<ActionResult<Paged<SupplierDebtDto>>> GetPagedSupplierDebt(
-            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);    
+        #region Reports
 
-    Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplier(int supplierId);
+        Task<ActionResult<Paged<SupplierDebtDto>>> GetPagedSupplierDebt(
+                [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-    Task<ActionResult<IEnumerable<OrderBySupplierPivotMonthDto>>> GetOrderBySupplierPivotMonth(int year);
+        Task<ActionResult<IEnumerable<OrderDebtDto>>> GetOrderDebtsBySupplier(int supplierId);
 
-    Task<ActionResult<IEnumerable<OrderBySupplierPivotQuarterDto>>> GetOrderBySupplierPivotQuarter(int year);
+        Task<ActionResult<IEnumerable<OrderBySupplierPivotMonthDto>>> GetOrderBySupplierPivotMonth(int year);
 
-    Task<ActionResult<IEnumerable<SupplierDebtDto>>> GetTopSupplierDebt(int numRows);
+        Task<ActionResult<IEnumerable<OrderBySupplierPivotQuarterDto>>> GetOrderBySupplierPivotQuarter(int year);
 
-#endregion
+        Task<ActionResult<IEnumerable<SupplierDebtDto>>> GetTopSupplierDebt(int numRows);
+
+        #endregion
 
     }
 }

@@ -1,18 +1,30 @@
 <mat-progress-bar *ngIf="loading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
 
-<mat-card  class="main" *ngIf="!loading">
-  <div *ngFor="let product of products.items">
-    <div fxLayout="row wrap" fxLayoutGap="1rem">
-      <img src="{{product.photoUrl}}" alt="">
+<mat-card class="main" *ngIf="!loading">
+  <section id="products" *ngIf="!isAddProduct; else addProducts">
+    <button class="add-btn" mat-mini-fab matTooltip="Add products for supplier" (click)="toggleAddProduct()"><mat-icon>add</mat-icon></button>
+
+    <div class="products" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="1rem">
+      <div *ngFor="let product of products.items" class="product">
+        <img src="{{ product.photoUrl ? product.photoUrl : 'assets/default.jpg' }}" alt="product photo" />
+        <h2 class="title">{{ product.productName }}</h2>
+        <p class="body-1">{{ product.specification }}</p>
+      </div>
     </div>
-  </div>
 
-  <!-- Paginator & search -->
-  <div fxLayout="row-reverse" class="mat-paginator-sticky">
-    <mat-paginator fxFlex="70" [length]="products.paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25]" showFirstLastButtons> </mat-paginator>
+    <!-- Paginator & search -->
+    <div fxLayout="row-reverse" class="mat-paginator-sticky">
+      <mat-paginator fxFlex="70" [length]="products.paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25]" showFirstLastButtons> </mat-paginator>
 
-    <mat-form-field fxFlex>
-      <input matInput placeholder="Search products" #input />
-    </mat-form-field>
-  </div>
+      <mat-form-field fxFlex>
+        <input matInput placeholder="Search products" #input />
+      </mat-form-field>
+    </div>
+  </section>
+
+  <section id="add-products">
+    <ng-template #addProducts>
+      <app-supplier-products-not-added></app-supplier-products-not-added>
+    </ng-template>    
+  </section>
 </mat-card>

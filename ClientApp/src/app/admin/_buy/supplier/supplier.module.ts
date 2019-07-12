@@ -17,6 +17,7 @@ import { PersonPhotoGallerySharedModule } from 'src/app/_shared/components/perso
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SupplierProductsAddedComponent } from './supplier-edit/supplier-products-added/supplier-products-added.component';
+import { SupplierProductsNotAddedComponent } from './supplier-edit/supplier-products-not-added/supplier-products-not-added.component';
 
 
 
@@ -32,6 +33,7 @@ import { SupplierProductsAddedComponent } from './supplier-edit/supplier-product
     SupplierListHomeComponent,
     SupplierEditComponent,
     SupplierProductsAddedComponent,
+    SupplierProductsNotAddedComponent,
   ],
   imports: [
     // Shared module

@@ -1,0 +1,22 @@
+<mat-progress-spinner *ngIf="loading"></mat-progress-spinner>
+
+<section class="main">
+  <div class="search">
+    <mat-form-field appearance="outline">
+      <span matPrefix><mat-icon>search</mat-icon></span>
+      <input matInput type="search" placeholder="Search" #input />
+    </mat-form-field>
+  </div>
+
+  <div class="products" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="1rem">
+    <div *ngFor="let product of products?.items" class="product">
+      <img src="{{ product.photoUrl ? product.photoUrl : 'assets/default.jpg' }}" alt="product photo" />
+      <h2 class="title">{{ product.productName }}</h2>
+      <p class="body-1">{{ product.specification }}</p>
+    </div>
+  </div>
+
+  <div class="paginator">
+    <mat-paginator [length]="products?.paging?.totalItems" [pageSize]="10" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</section>

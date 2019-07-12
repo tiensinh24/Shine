@@ -31,16 +31,16 @@ export class ProductsNotAddedComponent implements OnInit {
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params.supplierId;
-    this.getProductsNotAdded(id);
+    // this.getProductsNotAdded(id);
   }
 
-  private getProductsNotAdded(supplierId: number) {
-    if (supplierId > 0) {
-      this.supplierService.getProductsNotAdded(supplierId).subscribe((res: ProductsNotAdded[]) => {
-        this.dataSource = res;
-      });
-    }
-  }
+  // private getProductsNotAdded(supplierId: number) {
+  //   if (supplierId > 0) {
+  //     this.supplierService.getPagedProductsNotAdded(supplierId).subscribe((res: ProductsNotAdded[]) => {
+  //       this.dataSource = res;
+  //     });
+  //   }
+  // }
 
   onAdd(product: ProductBuy) {
     const entity = <SupplierProduct>{

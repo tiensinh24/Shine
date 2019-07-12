@@ -1,4 +1,3 @@
-
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -20,6 +19,7 @@ import { OrderDebt } from '../../intefaces/buy/supplier/report/order-debt';
 import { OrderBySupplierPivotMonth } from '../../intefaces/buy/supplier/report/order-by-supplier-pivot-month';
 import { OrderBySupplierPivotQuarter } from '../../intefaces/buy/supplier/report/order-by-supplier-pivot-quarter';
 import { SupplierDebt } from '../../intefaces/buy/supplier/report/supplier-debt';
+import { PagedProductsBySupplier } from '../../intefaces/buy/supplier/paged-products-by-supplier';
 
 @Injectable({
   providedIn: 'root'
@@ -34,26 +34,17 @@ export class SupplierService {
   }
 
   getSuppliersSelect(): Observable<SupplierSelect[]> {
-    return this.http.get<SupplierSelect[]>(
-      `${this.baseUrl}api/supplier/select`
-    );
+    return this.http.get<SupplierSelect[]>(`${this.baseUrl}api/supplier/select`);
   }
 
-  getPagedSuppliers(
-    pagingParams: PagingParams,
-    sortParams?: SortParams,
-    filter = ''
-  ): Observable<PagedSupplier> {
+  getPagedSuppliers(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedSupplier> {
     let queryParams = new HttpParams()
       .set('pageIndex', `${pagingParams.pageIndex}`)
       .set('pageSize', `${pagingParams.pageSize}`)
       .set('filter', `${filter}`);
 
     if (sortParams !== undefined) {
-      queryParams = queryParams.append(
-        'sortColumn',
-        `${sortParams.sortColumn}`
-      );
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
       queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
@@ -67,17 +58,11 @@ export class SupplierService {
   }
 
   addSupplier(supplier: Supplier): Observable<SupplierList> {
-    return this.http.post<SupplierList>(
-      `${this.baseUrl}api/supplier/`,
-      supplier
-    );
+    return this.http.post<SupplierList>(`${this.baseUrl}api/supplier/`, supplier);
   }
 
   updateSupplier(supplier: Supplier): Observable<SupplierList> {
-    return this.http.put<SupplierList>(
-      `${this.baseUrl}api/supplier/`,
-      supplier
-    );
+    return this.http.put<SupplierList>(`${this.baseUrl}api/supplier/`, supplier);
   }
 
   deleteSupplier(id: number): Observable<number> {
@@ -93,17 +78,10 @@ export class SupplierService {
   // *SupplierProduct
 
   getProductsForSelect(supplierId: number): Observable<ProductSelect[]> {
-    return this.http.get<ProductSelect[]>(
-      `${this.baseUrl}api/supplier/${supplierId}/products-for-select`
-    );
+    return this.http.get<ProductSelect[]>(`${this.baseUrl}api/supplier/${supplierId}/products-for-select`);
   }
 
-  getPagedProducts(
-    supplierId: number,
-    pagingParams: PagingParams,
-    sortParams?: SortParams,
-    filter = ''
-  ): Observable<PagedProductBuy> {
+  getPagedProducts(supplierId: number, pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedProductBuy> {
     let queryParams = new HttpParams()
 
       .set('pageIndex', `${pagingParams.pageIndex}`)
@@ -111,127 +89,90 @@ export class SupplierService {
       .set('filter', `${filter}`);
 
     if (sortParams !== undefined) {
-      queryParams = queryParams.append(
-        'sortColumn',
-        `${sortParams.sortColumn}`
-      );
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
       queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
-    return this.http.get<PagedProductBuy>(
-      `${this.baseUrl}api/supplier/${supplierId}/paged-products`,
-      {
-        params: queryParams
-      }
-    );
+    return this.http.get<PagedProductBuy>(`${this.baseUrl}api/supplier/${supplierId}/paged-products`, {
+      params: queryParams
+    });
   }
 
-  getProductsNotAdded(supplierId: number): Observable<any> {
-    return this.http.get<any>(
-      `${this.baseUrl}api/supplier/${supplierId}/products-not-added`
-    );
+  getPagedProductsNotAdded(supplierId: number, pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedProductsBySupplier> {
+    let queryParams = new HttpParams()
+
+      .set('pageIndex', `${pagingParams.pageIndex}`)
+      .set('pageSize', `${pagingParams.pageSize}`)
+      .set('filter', `${filter}`);
+
+    if (sortParams !== undefined) {
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
+      queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
+    }
+
+    return this.http.get<PagedProductsBySupplier>(`${this.baseUrl}api/supplier/${supplierId}/paged-products-not-added`, {
+      params: queryParams
+    });
   }
 
   addSupplierProduct(suppro: SupplierProduct): Observable<SupplierProduct> {
-    return this.http.post<SupplierProduct>(
-      `${this.baseUrl}api/supplier/product/`,
-      suppro
-    );
+    return this.http.post<SupplierProduct>(`${this.baseUrl}api/supplier/product/`, suppro);
   }
 
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {
-    return this.http.request<SupplierProduct>(
-      'delete',
-      `${this.baseUrl}api/supplier/product/`,
-      { body: supprod }
-    );
+    return this.http.request<SupplierProduct>('delete', `${this.baseUrl}api/supplier/product/`, { body: supprod });
   }
 
   // * Orders
 
   getOrders(supplierId: number): Observable<SupplierOrders[]> {
-    return this.http.get<SupplierOrders[]>(
-      `${this.baseUrl}api/supplier/${supplierId}/orders`
-    );
+    return this.http.get<SupplierOrders[]>(`${this.baseUrl}api/supplier/${supplierId}/orders`);
   }
 
-  getPagedOrders(
-    supplierId: number,
-    pagingParams: PagingParams,
-    sortParams?: SortParams,
-    filter = ''
-  ): Observable<PagedSupplierOrders> {
+  getPagedOrders(supplierId: number, pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedSupplierOrders> {
     let queryParams = new HttpParams()
       .set('pageIndex', `${pagingParams.pageIndex}`)
       .set('pageSize', `${pagingParams.pageSize}`)
       .set('filter', `${filter}`);
 
     if (sortParams !== undefined) {
-      queryParams = queryParams.append(
-        'sortColumn',
-        `${sortParams.sortColumn}`
-      );
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
       queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
-    return this.http.get<PagedSupplierOrders>(
-      `${this.baseUrl}api/supplier/${supplierId}/paged-orders`,
-      {
-        params: queryParams
-      }
-    );
+    return this.http.get<PagedSupplierOrders>(`${this.baseUrl}api/supplier/${supplierId}/paged-orders`, {
+      params: queryParams
+    });
   }
 
   // *Reports
 
-  getPagedSupplierDebts(
-    pagingParams: PagingParams,
-    sortParams?: SortParams,
-    filter = ''
-  ): Observable<PagedSupplierDebts> {
+  getPagedSupplierDebts(pagingParams: PagingParams, sortParams?: SortParams, filter = ''): Observable<PagedSupplierDebts> {
     let queryParams = new HttpParams()
       .set('pageIndex', `${pagingParams.pageIndex}`)
       .set('pageSize', `${pagingParams.pageSize}`)
       .set('filter', `${filter}`);
 
     if (sortParams !== undefined) {
-      queryParams = queryParams.append(
-        'sortColumn',
-        `${sortParams.sortColumn}`
-      );
+      queryParams = queryParams.append('sortColumn', `${sortParams.sortColumn}`);
       queryParams = queryParams.append('sortOrder', `${sortParams.sortOrder}`);
     }
 
-    return this.http.get<PagedSupplierDebts>(
-      `${this.baseUrl}api/supplier/debt`,
-      {
-        params: queryParams
-      }
-    );
+    return this.http.get<PagedSupplierDebts>(`${this.baseUrl}api/supplier/debt`, {
+      params: queryParams
+    });
   }
 
   getOrderDebtsBySupplier(supplierId: number): Observable<OrderDebt> {
-    return this.http.get<OrderDebt>(
-      `${this.baseUrl}api/supplier/${supplierId}/debt`
-    );
+    return this.http.get<OrderDebt>(`${this.baseUrl}api/supplier/${supplierId}/debt`);
   }
 
-  getOrderBySupplierPivotMonth(
-    year: number
-  ): Observable<OrderBySupplierPivotMonth[]> {
-    return this.http.get<OrderBySupplierPivotMonth[]>(
-      `${this.baseUrl}api/supplier/report/pivot-month`,
-      { params: { year: year.toString() } }
-    );
+  getOrderBySupplierPivotMonth(year: number): Observable<OrderBySupplierPivotMonth[]> {
+    return this.http.get<OrderBySupplierPivotMonth[]>(`${this.baseUrl}api/supplier/report/pivot-month`, { params: { year: year.toString() } });
   }
 
-  getOrderBySupplierPivotQuarter(
-    year: number
-  ): Observable<OrderBySupplierPivotQuarter[]> {
-    return this.http.get<OrderBySupplierPivotQuarter[]>(
-      `${this.baseUrl}api/supplier/report/pivot-quarter`,
-      { params: { year: year.toString() } }
-    );
+  getOrderBySupplierPivotQuarter(year: number): Observable<OrderBySupplierPivotQuarter[]> {
+    return this.http.get<OrderBySupplierPivotQuarter[]>(`${this.baseUrl}api/supplier/report/pivot-quarter`, { params: { year: year.toString() } });
   }
 
   getTopSupplierDebt(numRows: number): Observable<SupplierDebt[]> {

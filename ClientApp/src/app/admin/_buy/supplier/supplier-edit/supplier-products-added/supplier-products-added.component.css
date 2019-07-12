@@ -1,18 +1,22 @@
-main .mat-header-cell {
-  color: royalblue;
-  padding: 1rem;
+mat-card.main {
+  height: calc(100vh - (55px + 8rem));
+  overflow: auto;
 }
 
-main .mat-cell {
-  padding: 0 1rem;
+mat-card.main .add-btn {
+  margin-bottom: 1rem;
 }
 
-main .mat-row:hover {
-  cursor: pointer;
-  background-color: aliceblue;
+mat-card.main .product {
+  width: 250px;
 }
 
-main .mat-paginator-sticky {
+mat-card.main .product img {
+  width: 100%;
+  border-radius: 25px;
+}
+
+mat-card.main .mat-paginator-sticky {
   bottom: 0.5px;
   position: -webkit-sticky;
   position: sticky;

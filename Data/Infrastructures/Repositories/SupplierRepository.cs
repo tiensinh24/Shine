@@ -300,30 +300,78 @@ namespace Shine.Data.Infrastructures.Repositories
             return await PagedList<ProductsBySupplierDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public JsonResult GetProductsNotBySupplier(int supplierId)
+
+        public async Task<PagedList<ProductsBySupplierDto>> GetPagedProductsNotAddedAsync(
+            int supplierId, PagingParams pagingParams, SortParams sortParams, string filter)
         {
-            var productsAdded = _context.Set<PersonProduct>()
-                .Include(p => p.Product)
-                .ThenInclude(p => p.Category)
+            var productsAdded = _context.PersonProducts
+                .AsNoTracking()
                 .Where(p => p.PersonId == supplierId)
                 .Select(p => p.ProductId);
 
             var productsNotAdded = _context.Set<ProductBuy>()
-                .Include(p => p.Category)
-                .Where(p => p.Category.CategoryType == true
-                    && !productsAdded.Contains(p.ProductId))
-                .OrderBy(p => p.Category.CategoryName)
-                .ProjectToType<ProductBuyListDto>();
+                .AsNoTracking()
+                .Where(p => !productsAdded.Contains(p.ProductId))
+                .OrderBy(p => p.ProductName)
+                // .ProjectToType<ProductsBySupplierDto>();
+                .Select(p => new ProductsBySupplierDto
+                {
+                    PersonId = supplierId,
+                    ProductId = p.ProductId,
+                    ProductName = p.ProductName,
+                    Specification = p.Specification,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category.CategoryName,
+                    PhotoUrl = p.Photos.FirstOrDefault(pt => pt.ProductId == p.ProductId).PhotoUrl
+                });
 
-            var result = from b in productsNotAdded
-                         group new { b.ProductId, b.ProductName, b.Specification } by b.CategoryName into g
-                         select new
-                         {
-                             Category = g.Key,
-                             Products = g.OrderBy(p => p.ProductName)
-                         };
 
-            return Json(result);
+            switch (sortParams.SortOrder)
+            {
+                case "asc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "productName":
+                            productsNotAdded = productsNotAdded.OrderBy(p => p.ProductName);
+                            break;
+                        case "specification":
+                            productsNotAdded = productsNotAdded.OrderBy(p => p.Specification);
+                            break;
+                        case "categoryName":
+                            productsNotAdded = productsNotAdded.OrderBy(p => p.CategoryName);
+                            break;
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "productName":
+                            productsNotAdded = productsNotAdded.OrderByDescending(p => p.ProductName);
+                            break;
+                        case "specification":
+                            productsNotAdded = productsNotAdded.OrderByDescending(p => p.Specification);
+                            break;
+                        case "categoryName":
+                            productsNotAdded = productsNotAdded.OrderByDescending(p => p.CategoryName);
+                            break;
+                    }
+                    break;
+
+                default:
+                    productsNotAdded = productsNotAdded.OrderBy(c => c.ProductName);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                productsNotAdded = productsNotAdded.Where(p => (p.ProductName + p.CategoryName).ToLower().Contains(filter.ToLower()));
+            }
+
+
+            return await PagedList<ProductsBySupplierDto>.CreateAsync(productsNotAdded, pagingParams.PageIndex, pagingParams.PageSize);
+
+
         }
 
         #endregion
