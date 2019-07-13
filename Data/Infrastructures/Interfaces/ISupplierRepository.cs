@@ -60,7 +60,7 @@ namespace Shine.Data.Infrastructures.Interfaces
         #endregion
 
         #region Actions
-        Task AddSupplierProductAsync(PersonProduct model);
+        Task<bool> AddSupplierProductAsync(PersonProduct model);
 
         Task<PersonProductDto> DeleteSupplierProductAsync(PersonProduct model);
 

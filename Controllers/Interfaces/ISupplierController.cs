@@ -57,7 +57,7 @@ namespace Shine.Controllers.Interfaces
         #endregion
 
         #region Actions
-        Task AddSupplierProduct(PersonProduct model);
+        Task<bool> AddSupplierProduct(PersonProduct model);
 
         Task<ActionResult<PersonProductDto>> DeleteSupplierProduct(PersonProduct model);
         #endregion

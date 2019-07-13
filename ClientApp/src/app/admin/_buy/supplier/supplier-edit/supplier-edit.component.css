@@ -61,8 +61,6 @@ mat-card.main .card-content div.photos div.supplier-photos div.photo:hover img.i
 
 mat-card.main .card-content div.photos div.supplier-photos div.photo:hover div.img-btn {
   padding: 0 1rem;
-  width: auto;
-  height: auto;
   background: white;
   border-radius: 50px;
   opacity: 1;
@@ -89,8 +87,6 @@ mat-card.main .card-content div.photos div.supplier-photos div.photo div.img-btn
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 0;
-  height: 0;
   opacity: 0;
   -webkit-transform: translateY(0);
           transform: translateY(0);
@@ -131,5 +127,10 @@ mat-card.main .card-content div.photos div.no-photo div {
   width: 150px;
   height: 150px;
   opacity: 0.75;
+}
+
+.products-tab {
+  padding: 0;
+  margin: 0;
 }
 /*# sourceMappingURL=supplier-edit.component.css.map */

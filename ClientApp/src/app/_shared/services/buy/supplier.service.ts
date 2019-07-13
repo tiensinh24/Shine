@@ -115,8 +115,8 @@ export class SupplierService {
     });
   }
 
-  addSupplierProduct(suppro: SupplierProduct): Observable<SupplierProduct> {
-    return this.http.post<SupplierProduct>(`${this.baseUrl}api/supplier/product/`, suppro);
+  addSupplierProduct(suppro: SupplierProduct): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}api/supplier/product/`, suppro);
   }
 
   deleteSupplierProduct(supprod: SupplierProduct): Observable<SupplierProduct> {

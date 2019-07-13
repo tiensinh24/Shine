@@ -178,11 +178,17 @@ namespace Shine.Controllers
 
         #region Actions
         [HttpPost("product")]
-        public async Task AddSupplierProduct(PersonProduct model)
+        public async Task<bool> AddSupplierProduct(PersonProduct model)
         {
-            await _repository.AddSupplierProductAsync(model);
+            var rs = await _repository.AddSupplierProductAsync(model);
 
-            await _repository.CommitAsync();
+            if (rs == true)
+            {
+                await _repository.CommitAsync();
+                return true;
+            }
+
+            return false;
 
         }
 

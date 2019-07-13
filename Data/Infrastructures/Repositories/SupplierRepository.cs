@@ -379,9 +379,17 @@ namespace Shine.Data.Infrastructures.Repositories
         #endregion
 
         #region Actions
-        public async Task AddSupplierProductAsync(PersonProduct model)
+        public async Task<bool> AddSupplierProductAsync(PersonProduct model)
         {
-            await _context.PersonProducts.AddAsync(model);
+            try
+            {
+                await _context.PersonProducts.AddAsync(model);
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;                
+            }
         }
 
         public async Task<PersonProductDto> DeleteSupplierProductAsync(PersonProduct model)

@@ -1,20 +1,17 @@
-import { fromEvent, merge, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Subscription, fromEvent } from 'rxjs';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsBySupplierDataSource } from '../../_data-source/products-by-supplier-data-source';
 import { ProductBuyList } from 'src/app/_shared/intefaces/buy/product/product-buy-list';
 import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
 import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
 import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { ConfirmDialogService } from 'src/app/_shared/services/public/confirm-dialog.service';
 import { SupplierProduct } from 'src/app/_shared/intefaces/buy/supplier/supplier-product';
-import { ProductsBySupplier } from 'src/app/_shared/intefaces/buy/supplier/products-by-supplier';
 import { PagedProductBuy } from 'src/app/_shared/intefaces/buy/product/paged-product-buy';
+import { debounceTime, tap, distinctUntilChanged } from 'rxjs/operators';
+import { ProductsBySupplier } from 'src/app/_shared/intefaces/buy/supplier/products-by-supplier';
 
 @Component({
   selector: 'app-supplier-products-added',
@@ -30,13 +27,13 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
   products = <PagedProductBuy>{};
 
   supplierId = +this.route.snapshot.params.supplierId;
+  filter = '';
 
   // boolean
   isAddProduct = false;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild('input', { static: false }) input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -51,49 +48,41 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
   constructor(private supplierService: SupplierService, private route: ActivatedRoute, private snackBar: MatSnackBar, private confirmDialogService: ConfirmDialogService) {}
 
   ngOnInit() {
+    this.getProducts();
   }
 
   ngAfterViewInit(): void {
-    this.loadProductsPage();
-    // // Server-side search
-    // fromEvent(this.input.nativeElement, 'keyup')
-    //   .pipe(
-    //     debounceTime(250),
-    //     distinctUntilChanged(),
-    //     tap(() => {
-    //       this.paginator.pageIndex = 0;
-    //       this.loadProductsPage();
-    //     })
-    //   )
-    //   .subscribe();
+    this.getProducts();
+    // Server-side search
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.filter = this.input.nativeElement.value;
+          this.getProducts();
+        })
+      )
+      .subscribe();
 
-    // // reset the paginator after sorting
-    // this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
-    // // on sort or paginate events, load a new page
-    // merge(this.sort.sortChange, this.paginator.page)
-    //   .pipe(
-    //     tap(() => {
-    //       this.loadProductsPage();
-    //     })
-    //   )
-    //   .subscribe();
+    this.paginator.page
+      .pipe(
+        tap(() => {
+          this.pagingParams.pageIndex = this.paginator.pageIndex;
+          this.pagingParams.pageSize = this.paginator.pageSize;
+          this.getProducts();
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {
     this.products$.unsubscribe();
   }
 
-  loadProductsPage() {
-    // this.pagingParams.pageIndex = this.paginator.pageIndex;
-    // this.pagingParams.pageSize = this.paginator.pageSize;
-
-    // this.sortParams.sortColumn = this.sort.active;
-    // this.sortParams.sortOrder = this.sort.direction;
-
-    // const filter = this.input.nativeElement.value;
-
-    this.products$ = this.supplierService.getPagedProducts(this.supplierId, this.pagingParams, this.sortParams).subscribe((res: PagedProductBuy) => {
+  getProducts() {
+    this.products$ = this.supplierService.getPagedProducts(this.supplierId, this.pagingParams, this.sortParams, this.filter).subscribe((res: PagedProductBuy) => {
       this.products = res;
       this.loading = false;
     });
@@ -109,14 +98,43 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
           productId: product.productId
         };
         this.supplierService.deleteSupplierProduct(delEntity).subscribe(() => {
-          this.loadProductsPage();
+          this.getProducts();
         });
         this.snackBar.open(`${product.productName} deleted`, 'Success');
       }
     });
   }
 
+  addProduct(product: ProductsBySupplier) {
+    this.products.items.unshift(product);
+  }
+
+  removeProduct(product: ProductsBySupplier) {
+    const productToRemove = <SupplierProduct>{
+      personId: this.supplierId,
+      productId: product.productId
+    };
+
+    this.supplierService.deleteSupplierProduct(productToRemove).subscribe((res: SupplierProduct) => {
+      if (res) {
+        // Remove product
+        const index = this.products.items.findIndex(p => p.productId === product.productId);
+
+        this.products.items.splice(index, 1);
+
+        this.snackBar.open(`${product.productName} has been removed`, 'Success');
+      } else {
+        this.snackBar.open(`Can't remove ${product.productName}, please try again`, 'Error');
+      }
+    });
+  }
+
   toggleAddProduct() {
     this.isAddProduct = !this.isAddProduct;
+    console.log(this.isAddProduct);
+  }
+
+  closeAddProduct(event: boolean) {
+    this.isAddProduct = event;
   }
 }

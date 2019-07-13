@@ -1,23 +1,15 @@
-import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductBuy } from 'src/app/_shared/intefaces/buy/product/product-buy';
 import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
-import { ConfirmDialogService } from 'src/app/_shared/services/public/confirm-dialog.service';
 import { SupplierProduct } from 'src/app/_shared/intefaces/buy/supplier/supplier-product';
 import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
 import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
 import { PagedProductsBySupplier } from 'src/app/_shared/intefaces/buy/supplier/paged-products-by-supplier';
-import { ProductsBySupplier } from 'src/app/_shared/intefaces/buy/supplier/products-by-supplier';
-import { Subscription, fromEvent, merge } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { debounceTime, tap, distinctUntilChanged } from 'rxjs/operators';
-
-interface ProductsNotAdded {
-  category: string;
-  products?: ProductBuy[];
-}
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProductsBySupplier } from 'src/app/_shared/intefaces/buy/supplier/products-by-supplier';
 
 @Component({
   selector: 'app-supplier-products-not-added',
@@ -31,6 +23,10 @@ export class SupplierProductsNotAddedComponent implements OnInit, AfterViewInit,
   // Variables
   products: PagedProductsBySupplier;
   loading = true;
+
+  // Output
+  @Output() newProduct = new EventEmitter<ProductsBySupplier>();
+  @Output() isAddProduct = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild('input', { static: false }) input: ElementRef;
@@ -50,7 +46,7 @@ export class SupplierProductsNotAddedComponent implements OnInit, AfterViewInit,
 
   @Input() title: string;
 
-  constructor(private supplierService: SupplierService, private route: ActivatedRoute, private confirmService: ConfirmDialogService, private snackBar: MatSnackBar) {}
+  constructor(private supplierService: SupplierService, private route: ActivatedRoute, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.getProductsNotAdded();
@@ -85,13 +81,38 @@ export class SupplierProductsNotAddedComponent implements OnInit, AfterViewInit,
     this.products$.unsubscribe();
   }
 
-  getProductsNotAdded() {   
-
+  getProductsNotAdded() {
     this.supplierService.getPagedProductsNotAdded(this.supplierId, this.pagingParams, this.sortParams, this.filter).subscribe((res: PagedProductsBySupplier) => {
       this.products = res;
       this.loading = false;
     });
   }
 
-  onAdd(product: ProductBuy) {}
+  addProduct(product: ProductsBySupplier) {
+    const productToAdd = <SupplierProduct>{
+      personId: this.supplierId,
+      productId: product.productId
+    };
+
+    this.supplierService.addSupplierProduct(productToAdd).subscribe((res: boolean) => {
+      if (res) {
+        // Remove added product
+        const index = this.products.items.findIndex(p => p.productId == productToAdd.productId);
+        this.products.items.splice(index, 1);
+
+        // output new product
+        this.outNewProduct(product);
+
+        this.snackBar.open(`${product.productName} has been added`, 'Success');
+      }
+    });
+  }
+
+  outNewProduct(product: ProductsBySupplier) {
+    this.newProduct.emit(product);
+  }
+
+  outIsAddProduct() {
+    this.isAddProduct.emit(false);
+  }
 }

@@ -3,24 +3,79 @@ mat-card.main {
   overflow: auto;
 }
 
-mat-card.main .add-btn {
-  margin-bottom: 1rem;
-}
-
-mat-card.main .product {
-  width: 250px;
-}
-
-mat-card.main .product img {
-  width: 100%;
-  border-radius: 25px;
-}
-
-mat-card.main .mat-paginator-sticky {
-  bottom: 0.5px;
+mat-card.main .add-search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: -webkit-sticky;
   position: sticky;
-  background: white;
+  top: -1rem;
+  left: 0;
   z-index: 1;
+  background: white;
+}
+
+mat-card.main .add-search .search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+mat-card.main .add-search .search mat-form-field {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+mat-card.main .products div.product {
+  cursor: pointer;
+  -webkit-transform: translate();
+          transform: translate();
+  -webkit-transition: ease-out 250ms;
+  transition: ease-out 250ms;
+}
+
+mat-card.main .products div.product:hover {
+  -webkit-transform: translateY(-1rem);
+          transform: translateY(-1rem);
+  -webkit-transition: ease-in 250ms;
+  transition: ease-in 250ms;
+}
+
+mat-card.main .products div.product:hover img {
+  opacity: .75;
+}
+
+mat-card.main .products div.product:hover div.overlay {
+  width: 50%;
+  margin: auto;
+  background: white;
+  border-radius: 50px;
+  -webkit-transform: translateY(-12rem);
+          transform: translateY(-12rem);
+  -webkit-transition: 250ms ease-in;
+  transition: 250ms ease-in;
+  opacity: 1;
+}
+
+mat-card.main .products div.product img {
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+}
+
+mat-card.main .products div.product .overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  opacity: 0;
+  -webkit-transform: translate();
+          transform: translate();
+  -webkit-transition: 250ms ease-out;
+  transition: 250ms ease-out;
 }
 /*# sourceMappingURL=supplier-products-added.component.css.map */

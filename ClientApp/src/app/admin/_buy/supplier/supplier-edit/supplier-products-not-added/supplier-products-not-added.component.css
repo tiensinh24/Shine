@@ -1,12 +1,57 @@
-section.main .search {
+section.main .add-search {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1rem;
+  left: 0;
+  z-index: 1;
+  background: white;
 }
 
-section.main .search mat-form-field {
+section.main .add-search .search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+section.main .add-search .search mat-form-field {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+section.main .products div.product {
+  cursor: pointer;
+  -webkit-transform: translate();
+          transform: translate();
+  -webkit-transition: ease-out 250ms;
+  transition: ease-out 250ms;
+}
+
+section.main .products div.product:hover {
+  -webkit-transform: translateY(-1rem);
+          transform: translateY(-1rem);
+  -webkit-transition: ease-in 250ms;
+  transition: ease-in 250ms;
+}
+
+section.main .products div.product:hover img {
+  opacity: 0.75;
+}
+
+section.main .products div.product:hover div.overlay {
   width: 50%;
   margin: auto;
+  background: white;
+  border-radius: 50px;
+  -webkit-transform: translateY(-12rem);
+          transform: translateY(-12rem);
+  -webkit-transition: 250ms ease-in;
+  transition: 250ms ease-in;
+  opacity: 1;
 }
 
 section.main .products div.product img {
@@ -15,15 +60,17 @@ section.main .products div.product img {
   border-radius: 20px;
 }
 
-@media only screen and (max-width: 1024) {
-  .search {
-    width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-  .search mat-form-field {
-    width: 100%;
-  }
+section.main .products div.product .overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  opacity: 0;
+  -webkit-transform: translate();
+          transform: translate();
+  -webkit-transition: 250ms ease-out;
+  transition: 250ms ease-out;
 }
 /*# sourceMappingURL=supplier-products-not-added.component.css.map */

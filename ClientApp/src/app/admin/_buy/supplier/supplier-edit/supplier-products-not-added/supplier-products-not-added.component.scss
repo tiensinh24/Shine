@@ -1,35 +1,65 @@
 section.main {
-  .search {
+  .add-search {
     display: flex;
+    position: sticky;
+    top: -1rem;
+    left: 0;
+    z-index: 1;
+    background: white;
 
-    mat-form-field {
-      width: 50%;
-      margin: auto;
+    .search {
+      display: flex;
+      width: 100%;
+
+      mat-form-field {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+      }
     }
   }
 
   .products {
     div.product {
+      cursor: pointer;
+      transform: translate();
+      transition: ease-out 250ms;
+
+      &:hover {
+        transform: translateY(-1rem);
+        transition: ease-in 250ms;
+
+        img {
+          opacity: 0.75;
+        }
+
+        div.overlay {
+          width: 50%;
+          margin: auto;
+          background: white;
+          border-radius: 50px;
+          transform: translateY(-12rem);
+          transition: 250ms ease-in;
+          opacity: 1;
+        }
+      }
+
       img {
         width: 250px;
         height: 250px;
         border-radius: 20px;
+      }
+
+      .overlay {
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+        transform: translate();
+        transition: 250ms ease-out;
       }
     }
   }
 
   .paginator {
   }
-}
-
-@media only screen and(max-width: 1024) {
-  .search {
-    width: 100%;
-    display: flex;
-
-    mat-form-field {
-      width: 100%;
-    
-    }
-  } 
 }
