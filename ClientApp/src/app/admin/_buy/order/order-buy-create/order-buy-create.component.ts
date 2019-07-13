@@ -1,12 +1,7 @@
-import { Subscription } from 'rxjs';
-
-
+import { Subscription, fromEvent } from 'rxjs';
 import { Payment } from 'src/app/_shared/intefaces/public/payment';
-
 import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
-
-import { HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -18,28 +13,35 @@ import { OrderBuyProducts } from 'src/app/_shared/intefaces/buy/order/order-buy-
 import { Cost } from 'src/app/_shared/intefaces/public/cost';
 import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
-
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-order-buy-create',
   templateUrl: './order-buy-create.component.html',
   styleUrls: ['./order-buy-create.component.css']
 })
-export class OrderBuyCreateComponent implements OnInit, OnDestroy {
+export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy {
   subscription = new Subscription();
 
   title = 'Add new order';
   orderForms: FormGroup;
   order: OrderBuy;
   suppliers: SupplierSelect[];
+  selectedSupplierId: number;
   employees: EmployeeSelect[];
   supplierName: string;
   orderToAdd: OrderBuyWithNavigations;
+
+  // boolean
+  isDetailStep = false;
 
   // Get from child component
   productsToAdd: OrderBuyProducts[] = [];
   paymentsToAdd: Payment[] = [];
   costsToAdd: Cost[] = [];
+
+  // Viewchild
+  @ViewChild('selectedSupplier', {static: false}) selectedSupplier: MatSelect;
 
   constructor(
     private orderService: OrderBuyService,
@@ -54,6 +56,12 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
     this.createForm();
     this.getSuppliersSelect();
     this.getEmployeesSelect();
+  }
+
+  ngAfterViewInit() {
+    this.selectedSupplier.selectionChange.subscribe(() => {
+      this.isDetailStep = false;
+    })
   }
 
   ngOnDestroy(): void {
@@ -118,7 +126,7 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
     this.orderService.addOrder(this.orderToAdd).subscribe(
       () => {
         this.snackBar.open(`Order ${this.order.orderNumber} added`, 'Success');
-        this.router.navigate(['/order-buy']);
+        this.router.navigate(['/admin/order-buy']);
       },
       error => {
         if (error.status === 409) {
@@ -129,7 +137,13 @@ export class OrderBuyCreateComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['order-buy']);
+    this.router.navigate(['/admin/order-buy']);
+  }
+
+  toDetailStep() {
+    if (this.orderForms.valid) {
+      this.isDetailStep = true;
+    }
   }
 
   get(name: string): AbstractControl {
