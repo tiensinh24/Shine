@@ -27,7 +27,6 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   orderForms: FormGroup;
   order: OrderBuy;
   suppliers: SupplierSelect[];
-  selectedSupplierId: number;
   employees: EmployeeSelect[];
   supplierName: string;
   orderToAdd: OrderBuyWithNavigations;
