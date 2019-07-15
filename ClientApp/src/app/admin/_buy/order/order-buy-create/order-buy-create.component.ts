@@ -1,4 +1,4 @@
-import { Subscription, fromEvent } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Payment } from 'src/app/_shared/intefaces/public/payment';
 import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
@@ -14,6 +14,7 @@ import { Cost } from 'src/app/_shared/intefaces/public/cost';
 import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
 import { MatSelect } from '@angular/material/select';
+import { OrderNumberExistValidator } from './_validators/order-number-exist.validator';
 
 @Component({
   selector: 'app-order-buy-create',
@@ -25,6 +26,7 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
 
   title = 'Add new order';
   orderForms: FormGroup;
+
   order: OrderBuy;
   suppliers: SupplierSelect[];
   employees: EmployeeSelect[];
@@ -32,7 +34,7 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   orderToAdd: OrderBuyWithNavigations;
 
   // boolean
-  isDetailStep = false;
+  orderSubmit = false;
 
   // Get from child component
   productsToAdd: OrderBuyProducts[] = [];
@@ -40,7 +42,7 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   costsToAdd: Cost[] = [];
 
   // Viewchild
-  @ViewChild('selectedSupplier', {static: false}) selectedSupplier: MatSelect;
+  @ViewChild('selectedSupplier', { static: false }) selectedSupplier: MatSelect;
 
   constructor(
     private orderService: OrderBuyService,
@@ -59,8 +61,8 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit() {
     this.selectedSupplier.selectionChange.subscribe(() => {
-      this.isDetailStep = false;
-    })
+      this.orderSubmit = false;
+    });
   }
 
   ngOnDestroy(): void {
@@ -74,6 +76,14 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
       timeForPayment: ['', Validators.required],
       personId: ['', Validators.required],
       employeeId: ['', Validators.required]
+    });
+  }
+
+  checkOrderNumberExist() {
+    this.orderService.isOrderNumberExist(this.orderForms.value.orderNumber).subscribe(res => {
+      if (res) {
+        this.orderForms.get('orderNumber').setErrors({ exist: true });
+      }
     });
   }
 
@@ -139,9 +149,9 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
     this.router.navigate(['/admin/order-buy']);
   }
 
-  toDetailStep() {
+  submitOrder() {
     if (this.orderForms.valid) {
-      this.isDetailStep = true;
+      this.orderSubmit = true;
     }
   }
 
@@ -149,13 +159,9 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
     return this.orderForms.get(name);
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required')
-      ? 'You must enter a value'
-      : formControl.hasError('email')
-      ? 'Not a valid email'
-      : formControl.hasError('pattern')
-      ? 'Please enter a number!'
-      : '';
+  getErrorMessage(name: string, value: string) {
+    const control = this.orderForms.get(name);
+
+    return control.hasError('required') ? `${value} is required` : control.hasError('email') ? 'Not a valid email' : control.hasError('pattern') ? 'Please enter a number!' : control.hasError('exist') ? 'Order number already exist' : '';
   }
 }

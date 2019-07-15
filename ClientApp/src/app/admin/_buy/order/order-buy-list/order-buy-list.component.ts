@@ -283,4 +283,10 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   clearFilterControl(control: string) {
     this.filterForm.controls[control].reset();
   }
+
+  clearSearch() {
+    this.input.nativeElement.value = '';
+    this.queryParams = {};
+    this.loadOrdersPage();
+  }
 }

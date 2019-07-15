@@ -10,21 +10,26 @@ using Shine.Data.Dto.Orders.Buy.Queries;
 using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Models;
 
-namespace Shine.Controllers.Interfaces {
-    public interface IOrderBuyController {
+namespace Shine.Controllers.Interfaces
+{
+    public interface IOrderBuyController
+    {
 
-#region Order
+        #region Order
 
-#region Get Values
+        #region Get Values
         Task<ActionResult<IEnumerable<OrderBuyListDto>>> GetOrders();
 
         Task<ActionResult<Paged<OrderBuyListDto>>> GetPagedOrders(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, [FromQuery] OrderBuyQuery query, string filter);
 
         Task<ActionResult<OrderBuyDetailDto>> GetOrderDetail(int orderId);
-#endregion
 
-#region Actions       
+        Task<bool> IsOrderNumberExist(string orderNumber);
+
+        #endregion
+
+        #region Actions       
 
         Task<ActionResult<OrderBuy>> AddOrder([FromBody] OrderBuy orderBuy);
 
@@ -32,11 +37,11 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<OrderBuyDto>> DeleteOrder(int orderId);
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
-#region LineItems
+        #region LineItems
 
         Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder);
 
@@ -44,14 +49,14 @@ namespace Shine.Controllers.Interfaces {
 
         Task DeleteProductOrder(int orderId, int productId);
 
-#endregion
+        #endregion
 
-#region Reports
+        #region Reports
 
         ActionResult<decimal> GetOrdersSum(int year, int? month);
-        
+
         ActionResult<decimal> GetOrdersCostSum(int year, int? month);
-        
+
         ActionResult<int> GetOrdersCount(int year, int? month);
 
         Task<ActionResult<IEnumerable<OrderAndCostPerMonthDto>>> GetOrderAndCostPerMonth(int year);
@@ -62,7 +67,7 @@ namespace Shine.Controllers.Interfaces {
         ActionResult<decimal> GetTotalOrderDebt();
 
         Task<ActionResult<IEnumerable<OrderValueDto>>> GetTopOrderValue(int numRows, int year, int month, string type);
-    
-#endregion
+
+        #endregion
     }
 }

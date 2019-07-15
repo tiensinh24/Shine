@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
@@ -20,6 +19,7 @@ import { CountryService } from '../services/public/country.service';
 import { EmployeeService } from '../services/public/employee.service';
 import { ConfirmDialogService } from '../services/public/confirm-dialog.service';
 import { ValidateService } from '../services/public/validate.service';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @NgModule({
   declarations: [],
@@ -62,6 +62,10 @@ export class CoreModule {
         {
           provide: MAT_AUTOCOMPLETE_DEFAULT_OPTIONS,
           useValue: { autoActiveFirstOption: true }
+        },
+        {
+          provide: STEPPER_GLOBAL_OPTIONS,
+          useValue: { showError: true }
         }
       ]
     };

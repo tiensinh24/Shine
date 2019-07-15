@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Shine.Data.Dto.Costs;
 using Shine.Data.Dto.Payments;
-using Shine.Data.Dto.Products.Buy;
 
-namespace Shine.Data.Dto.Orders.Buy {
+namespace Shine.Data.Dto.Orders.Buy
+{
 
     public class OrderBuyDetailDto {
         public int OrderId { get; set; }

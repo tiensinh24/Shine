@@ -25,9 +25,9 @@ namespace Shine.Data.Infrastructures.Interfaces
             PagingParams pagingParams, SortParams sortParams, OrderBuyQuery query, string filter
             );
 
-        Task<OrderBuyDto> GetOrderAsync(int orderId);
-
         Task<OrderBuyDetailDto> GetOrderDetailAsync(int orderId);
+
+        Task<bool> IsOrderNumberExistAsync(string orderNumber);
 
 #endregion
 

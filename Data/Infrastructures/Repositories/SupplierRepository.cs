@@ -241,6 +241,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 .Include(p => p.Product)
                 .Where(p => p.PersonId == supplierId)
                 .ProjectToType<ProductSelectDto>()
+                .OrderBy(p => p.ProductName)
                 .ToListAsync();
 
             return query;

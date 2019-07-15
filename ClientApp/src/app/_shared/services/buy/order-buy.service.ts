@@ -1,4 +1,3 @@
-
 import { OrderBuy } from '../../intefaces/buy/order/order-buy';
 import { OrderBuyDetail } from '../../intefaces/buy/order/order-buy-detail';
 import { OrderBuyList } from '../../intefaces/buy/order/order-buy-list';
@@ -65,6 +64,10 @@ export class OrderBuyService {
     });
   }
 
+  isOrderNumberExist(orderNumber: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}api/orderBuy/is-order-number-exist/${orderNumber}`);
+  }
+
   addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {
     return this.http.post<HttpResponse<OrderBuyWithNavigations>>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
   }
@@ -98,10 +101,7 @@ export class OrderBuyService {
   }
 
   updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.put<OrderBuyProducts>(
-      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`,
-      productOrder
-    );
+    return this.http.put<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`, productOrder);
   }
 
   deleteOrderProduct(orderId: number, productId: number): Observable<boolean> {

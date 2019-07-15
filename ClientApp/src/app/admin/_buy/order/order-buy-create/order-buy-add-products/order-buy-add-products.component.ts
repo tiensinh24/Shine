@@ -30,8 +30,6 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.outProductOrders();
-
     this.productsSub.unsubscribe();
   }
 
@@ -39,11 +37,6 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
     this.productsSub = this.supplierService.getProductsForSelect(supplierId).subscribe((products: ProductSelect[]) => {
       this.products = products;
     });
-  }
-
-  // Output productOrders to main component
-  outProductOrders() {
-    this.productOrders.emit(this.productsToAdd);
   }
 
   createForm() {
@@ -68,6 +61,10 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
       });
       if (!this.formDetails.invalid) {
         this.productsToAdd.push(this.formDetails.value);
+
+        // output value
+        this.productOrders.emit(this.productsToAdd);
+
         this.refreshProductSelection(this.formDetails.value.productId);
       }
     }
@@ -87,6 +84,9 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
     if (index > -1) {
       this.productsToAdd.splice(index, 1);
 
+      // output value
+      this.productOrders.emit(this.productsToAdd);
+
       const prod = <ProductSelect>{
         productId: productOrder.productId,
         productName: productOrder.productName
@@ -102,6 +102,12 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required') ? 'You must enter a value' : formControl.hasError('email') ? 'Not a valid email' : formControl.hasError('pattern') ? 'Please enter a number!' : '';
+    return formControl.hasError('required')
+      ? 'You must enter a value'
+      : formControl.hasError('email')
+      ? 'Not a valid email'
+      : formControl.hasError('pattern')
+      ? 'Please enter a number!'
+      : '';
   }
 }

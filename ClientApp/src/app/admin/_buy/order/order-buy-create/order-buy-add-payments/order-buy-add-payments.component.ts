@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Payment } from 'src/app/_shared/intefaces/public/payment';
 
@@ -7,7 +7,7 @@ import { Payment } from 'src/app/_shared/intefaces/public/payment';
   templateUrl: './order-buy-add-payments.component.html',
   styleUrls: ['./order-buy-add-payments.component.scss']
 })
-export class OrderBuyAddPaymentsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class OrderBuyAddPaymentsComponent implements OnInit, OnDestroy {
   paymentForms: FormGroup;
   paymentsToAdd: Payment[] = [];
 
@@ -19,21 +19,14 @@ export class OrderBuyAddPaymentsComponent implements OnInit, AfterViewInit, OnDe
     this.createForm();
   }
 
-  ngAfterViewInit() {
-    this.paymentForms.markAsPristine();
-    this.paymentForms.markAsUntouched();
-  }
-
-  ngOnDestroy() {
-    this.outPayments();
-  }
+  ngOnDestroy() {}
 
   createForm() {
     this.paymentForms = this.fb.group({
-      paymentDate: ['', Validators.required],
-      amount: ['', Validators.required],
-      currency: [true, Validators.required],
-      rate: ['', Validators.required]
+      paymentDate: [''],
+      amount: [''],
+      currency: [true],
+      rate: ['']
     });
   }
 
@@ -46,6 +39,7 @@ export class OrderBuyAddPaymentsComponent implements OnInit, AfterViewInit, OnDe
     };
 
     this.paymentsToAdd.push(payment);
+    this.outPayments();
   }
 
   removePayment(payment: Payment) {
@@ -53,10 +47,11 @@ export class OrderBuyAddPaymentsComponent implements OnInit, AfterViewInit, OnDe
 
     if (index > -1) {
       this.paymentsToAdd.splice(index, 1);
+      this.outPayments();
     }
   }
 
-  outPayments() {
+  private outPayments() {
     this.payments.emit(this.paymentsToAdd);
   }
 }

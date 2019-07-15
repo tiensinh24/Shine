@@ -43,13 +43,7 @@
         <mat-error *ngIf="get('unit').invalid">{{ getErrorMessage(get('unit')) }}</mat-error>
       </mat-form-field>
       <!-- Add icon -->
-      <button
-        mat-mini-fab
-        fxFlexAlign="center"
-        matTooltip="Add product"
-        aria-label="Add product"
-        (click)="addProduct()"
-      >
+      <button mat-mini-fab color="primary" fxFlexAlign="center" matTooltip="Add product" aria-label="Add product" (click)="addProduct()">
         <mat-icon>add</mat-icon>
       </button>
     </form>
@@ -93,7 +87,7 @@
   <ng-template #noProducts>
     <div>
       <h1 class="mat-h1">No products!</h1>
-      <p>Enter values on the left then click Add button to add new product</p>
+      <p>Enter values on the left then click <mat-icon color="primary">add_circle</mat-icon> button to add new product</p>
     </div>
   </ng-template>
 </div>
