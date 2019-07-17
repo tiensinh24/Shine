@@ -24,11 +24,11 @@ export class OrderBuyAddCostsComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.costForm = this.fb.group({
-      costDate: ['', { updateOn: 'submit' }, Validators.required],
-      description: ['', { updateOn: 'submit' }, Validators.required],
-      amount: ['', { updateOn: 'submit' }, Validators.required],
-      currency: [true, { updateOn: 'submit' }, Validators.required],
-      rate: ['', { updateOn: 'submit' }, Validators.required]
+      costDate: ['', { updateOn: 'blur' }, Validators.required],
+      description: ['', { updateOn: 'blur' }, Validators.required],
+      amount: ['', { updateOn: 'blur' }, Validators.required],
+      currency: [true, { updateOn: 'blur' }, Validators.required],
+      rate: ['', { updateOn: 'blur' }, Validators.required]
     });
   }
 
