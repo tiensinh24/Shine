@@ -1,1 +1,31 @@
-/* No CSS *//*# sourceMappingURL=order-buy-add-costs.component.css.map */
+#main {
+  margin-top: 1.5rem;
+}
+
+#main > #form button {
+  margin-top: 2rem;
+}
+
+#main > #form button:hover {
+  -webkit-transition: 150ms;
+  transition: 150ms;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+#main > #table > table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#main > #table > table th {
+  text-align: left;
+  padding-bottom: 1rem;
+  color: royalblue;
+  border-bottom: 1px solid mediumslateblue;
+}
+
+#main > #table > table td {
+  border-bottom: 1px dotted mediumslateblue;
+}
+/*# sourceMappingURL=order-buy-add-costs.component.css.map */

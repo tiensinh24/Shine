@@ -1,20 +1,19 @@
-<!-- Dialog title -->
-<mat-card class="card-title mat-headline mat-elevation-z8">{{ title }}</mat-card>
+<h1 class="mat-h1">{{ title }}</h1>
 
-<mat-horizontal-stepper class="mat-elevation-z8" linear #stepper>
+<mat-horizontal-stepper linear #stepper>
   <!-- Step 1 -->
-  <mat-step [stepControl]="orderForms" label="Order" #order errorMessage="Invalid order">
-    <!-- orderForms -->
-    <form fxLayout="column" [formGroup]="orderForms">
+  <mat-step [stepControl]="orderForm" label="Order" #order>
+    <!-- orderForm -->
+    <form fxLayout="column" [formGroup]="orderForm" novalidate>
       <!-- OrderNumber -->
       <mat-form-field appearance="outline">
         <mat-label>Order Number</mat-label>
-        <input matInput placeholder="Order Number" formControlName="orderNumber" (change)="checkOrderNumberExist()" required autofocus />
+        <input matInput type="text" placeholder="Order Number" formControlName="orderNumber" required />
+        <mat-spinner [diameter]="25" [strokeWidth]="3" matSuffix *ngIf="get('orderNumber').pending"></mat-spinner>
         <mat-error *ngIf="get('orderNumber').invalid">{{ getErrorMessage('orderNumber', 'Order number') }}</mat-error>
-        
       </mat-form-field>
       <!-- DateOfIssue -->
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" hintLabel="Hint: dd/MM/yyyy">
         <mat-label>Date of Issue</mat-label>
         <input matInput [matDatepicker]="issuePicker" placeholder="Choose a date" formControlName="dateOfIssue" required />
         <mat-datepicker-toggle matSuffix [for]="issuePicker"></mat-datepicker-toggle>
@@ -22,12 +21,15 @@
         <mat-error *ngIf="get('dateOfIssue').invalid">{{ getErrorMessage('dateOfIssue', 'Order date') }}</mat-error>
       </mat-form-field>
       <!-- TimeForPayment -->
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" hintLabel="Hint: dd/MM/yyyy">
         <mat-label>Time for Payment</mat-label>
         <input matInput [matDatepicker]="paymentPicker" placeholder="Choose a date" formControlName="timeForPayment" required />
         <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
         <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
-        <mat-error *ngIf="get('timeForPayment').invalid">{{ getErrorMessage('timeForPayment', 'Time for payment') }}</mat-error>
+        <mat-error *ngIf="get('timeForPayment').invalid">
+          <div *ngIf="!get('timeForPayment').hasError('mustAfter')">{{ getErrorMessage('timeForPayment', 'Time for payment') }}</div>
+          <div *ngIf="get('timeForPayment').hasError('mustAfter')">Payment's time must after order date</div>
+        </mat-error>
       </mat-form-field>
       <!-- PersonId -->
       <mat-form-field appearance="outline">
@@ -57,7 +59,11 @@
   </mat-step>
   <!-- Step 2 -->
   <mat-step label="Details" #details [completed]="productsToAdd?.length > 0">
-    <app-order-buy-add-products *ngIf="orderSubmit" [supplierId]="selectedSupplier.value" (productOrders)="getProductsToAddFromChild($event)"></app-order-buy-add-products>
+    <app-order-buy-add-products
+      *ngIf="orderSubmit"
+      [supplierId]="selectedSupplier.value"
+      (productOrders)="getProductsToAddFromChild($event)"
+    ></app-order-buy-add-products>
 
     <div class="step-button">
       <button mat-button matStepperNext (click)="getSupplierName()">Next</button>
@@ -86,16 +92,16 @@
       <table class="order">
         <tr>
           <td><span>Order number</span></td>
-          <td>{{ orderForms.value.orderNumber }}</td>
+          <td>{{ orderForm.value.orderNumber }}</td>
         </tr>
         <tr>
           <td><span>Date of issue</span></td>
-          <td>{{ orderForms.value.dateOfIssue | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ orderForm.value.dateOfIssue | date: 'dd/MM/yyyy' }}</td>
         </tr>
 
         <tr>
           <td><span>Payment's time</span></td>
-          <td>{{ orderForms.value.timeForPayment | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ orderForm.value.timeForPayment | date: 'dd/MM/yyyy' }}</td>
         </tr>
         <tr>
           <td><span>Supplier</span></td>

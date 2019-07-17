@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth/_guards/auth.guard';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { PageNotFoundComponent } from '../_shared/components/page-not-found/page-not-found.component';
 import { AdminComponent } from './admin.component';
 
 // Lazy-load child routes

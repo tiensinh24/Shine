@@ -45,7 +45,12 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
     sortOrder: ''
   };
 
-  constructor(private supplierService: SupplierService, private route: ActivatedRoute, private snackBar: MatSnackBar, private confirmDialogService: ConfirmDialogService) {}
+  constructor(
+    private supplierService: SupplierService,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private confirmDialogService: ConfirmDialogService
+  ) {}
 
   ngOnInit() {
     this.getProducts();
@@ -82,10 +87,12 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
   }
 
   getProducts() {
-    this.products$ = this.supplierService.getPagedProducts(this.supplierId, this.pagingParams, this.sortParams, this.filter).subscribe((res: PagedProductBuy) => {
-      this.products = res;
-      this.loading = false;
-    });
+    this.products$ = this.supplierService
+      .getPagedProducts(this.supplierId, this.pagingParams, this.sortParams, this.filter)
+      .subscribe((res: PagedProductBuy) => {
+        this.products = res;
+        this.loading = false;
+      });
   }
 
   DeleteProductFromSupplier(product: ProductBuyList) {

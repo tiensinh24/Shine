@@ -19,19 +19,14 @@ mat-card.main {
   .card-content {
     width: 100%;
 
-    form.edit-form {
-      width: 100%;
-      margin-bottom: 2rem;
-      h2.title {
-        color: royalblue;
+    div.edit-form {
+      // max-width: 960px;
+      > form {
+        margin-bottom: 2rem;
       }
     }
 
     div.photos {
-      h2.title {
-        color: royalblue;
-      }
-
       div.supplier-photos {
         div.photo {
           display: flex;

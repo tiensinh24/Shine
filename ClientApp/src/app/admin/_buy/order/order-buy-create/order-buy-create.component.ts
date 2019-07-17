@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs';
 import { Payment } from 'src/app/_shared/intefaces/public/payment';
 import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { OrderBuy } from 'src/app/_shared/intefaces/buy/order/order-buy';
@@ -14,7 +14,8 @@ import { Cost } from 'src/app/_shared/intefaces/public/cost';
 import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
 import { MatSelect } from '@angular/material/select';
-import { OrderNumberExistValidator } from './_validators/order-number-exist.validator';
+import { OrderNumberExistValidator } from './_validators/order-number-exist.directive';
+import { MustAfterValidator } from 'src/app/_shared/helpers/validators/must-after.directive';
 
 @Component({
   selector: 'app-order-buy-create',
@@ -22,10 +23,10 @@ import { OrderNumberExistValidator } from './_validators/order-number-exist.vali
   styleUrls: ['./order-buy-create.component.css']
 })
 export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy {
-  subscription = new Subscription();
+  subscription$ = new Subscription();
 
-  title = 'Add new order';
-  orderForms: FormGroup;
+  title = 'New order';
+  orderForm: FormGroup;
 
   order: OrderBuy;
   suppliers: SupplierSelect[];
@@ -50,7 +51,8 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
     private employeeService: EmployeeService,
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private orderNumberExistValidator: OrderNumberExistValidator
   ) {}
 
   ngOnInit() {
@@ -60,47 +62,55 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    this.selectedSupplier.selectionChange.subscribe(() => {
-      this.orderSubmit = false;
-    });
+    this.subscription$.add(
+      this.selectedSupplier.selectionChange.subscribe(() => {
+        this.orderSubmit = false;
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 
   createForm() {
-    this.orderForms = this.fb.group({
-      orderNumber: ['', Validators.required],
-      dateOfIssue: ['', Validators.required],
-      timeForPayment: ['', Validators.required],
-      personId: ['', Validators.required],
-      employeeId: ['', Validators.required]
-    });
-  }
-
-  checkOrderNumberExist() {
-    this.orderService.isOrderNumberExist(this.orderForms.value.orderNumber).subscribe(res => {
-      if (res) {
-        this.orderForms.get('orderNumber').setErrors({ exist: true });
-      }
-    });
+    this.orderForm = this.fb.group(
+      {
+        orderNumber: [
+          '',
+          {
+            validators: [Validators.required],
+            asyncValidators: [this.orderNumberExistValidator.validate.bind(this.orderNumberExistValidator)],
+            updateOn: 'blur'
+          }
+        ],
+        dateOfIssue: ['', { updateOn: 'blur' }, Validators.required],
+        timeForPayment: ['', { updateOn: 'blur' }, Validators.required],
+        personId: ['', { updateOn: 'blur' }, Validators.required],
+        employeeId: ['', { updateOn: 'blur' }, Validators.required]
+      },
+      { validators: MustAfterValidator('dateOfIssue', 'timeForPayment') }
+    );
   }
 
   getSuppliersSelect() {
-    this.subscription = this.supplierService.getSuppliersSelect().subscribe((suppliers: SupplierSelect[]) => {
-      this.suppliers = suppliers;
-    });
+    this.subscription$.add(
+      this.supplierService.getSuppliersSelect().subscribe((suppliers: SupplierSelect[]) => {
+        this.suppliers = suppliers;
+      })
+    );
   }
 
   getEmployeesSelect() {
-    this.subscription = this.employeeService.getEmployeesSelect().subscribe((employees: EmployeeSelect[]) => {
-      this.employees = employees;
-    });
+    this.subscription$.add(
+      this.employeeService.getEmployeesSelect().subscribe((employees: EmployeeSelect[]) => {
+        this.employees = employees;
+      })
+    );
   }
 
   getSupplierName() {
-    const supplier = this.suppliers.find(p => p.personId === this.orderForms.value.personId);
+    const supplier = this.suppliers.find(p => p.personId === this.orderForm.value.personId);
 
     this.supplierName = supplier.fullName;
   }
@@ -118,7 +128,7 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onSubmit() {
-    this.order = this.orderForms.value;
+    this.order = this.orderForm.value;
 
     this.orderToAdd = {
       orderId: 0,
@@ -150,18 +160,18 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   submitOrder() {
-    if (this.orderForms.valid) {
+    if (this.orderForm.valid) {
       this.orderSubmit = true;
     }
   }
 
   get(name: string): AbstractControl {
-    return this.orderForms.get(name);
+    return this.orderForm.get(name);
   }
 
   getErrorMessage(name: string, value: string) {
-    const control = this.orderForms.get(name);
+    const control = this.orderForm.get(name);
 
-    return control.hasError('required') ? `${value} is required` : control.hasError('email') ? 'Not a valid email' : control.hasError('pattern') ? 'Please enter a number!' : control.hasError('exist') ? 'Order number already exist' : '';
+    return control.hasError('required') ? `${value} is required` : control.hasError('exist') ? `${value} already exist` : '';
   }
 }

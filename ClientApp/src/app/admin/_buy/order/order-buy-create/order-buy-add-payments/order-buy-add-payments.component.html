@@ -1,22 +1,25 @@
 <div id="main" fxLayoutGap="32px">
   <div id="form" fxFlex="25">
-    <form [formGroup]="paymentForms" fxLayout="column">
+    <form [formGroup]="paymentForm" fxLayout="column" novalidate>
       <!-- paymentDate -->
       <mat-form-field appearance="outline">
         <mat-label>Payment Date</mat-label>
-        <input matInput [matDatepicker]="paymentPicker" placeholder="Choose a date" formControlName="paymentDate" />
+        <input matInput [matDatepicker]="paymentPicker" placeholder="Choose a date" formControlName="paymentDate" required/>
         <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
         <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
+        <mat-error *ngIf="get('paymentDate').invalid">{{getErrorMessage('paymentDate', 'Payment date')}}</mat-error>
       </mat-form-field>
       <!-- amount -->
       <mat-form-field appearance="outline">
         <mat-label>Amount</mat-label>
-        <input matInput type="number" formControlName="amount" />
+        <input matInput type="number" formControlName="amount" required/>
+        <mat-error *ngIf="get('amount').invalid">{{getErrorMessage('amount', 'Amount')}}</mat-error>
       </mat-form-field>
       <!-- rate -->
       <mat-form-field appearance="outline">
         <mat-label>Rate</mat-label>
-        <input matInput type="number" formControlName="rate" />
+        <input matInput type="number" formControlName="rate" required/>
+        <mat-error *ngIf="get('rate').invalid">{{getErrorMessage('rate', 'Rate')}}</mat-error>
       </mat-form-field>
       <!-- currency -->
       <div fxLayout="column" fxLayoutGap="1rem">

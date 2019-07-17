@@ -1,7 +1,7 @@
 <div id="main" fxLayout="row" fxLayoutGap="2rem">
   <div id="form" fxFlex="25">
-    <!-- formDetails -->
-    <form [formGroup]="formDetails" fxLayout="column" fxLayoutAlign="start stretch">
+    <!-- detailForm -->
+    <form [formGroup]="detailForm" novalidate fxLayout="column" fxLayoutAlign="start stretch">
       <!-- ProductId -->
       <mat-form-field appearance="outline">
         <mat-label>Select a product</mat-label>
@@ -10,37 +10,37 @@
             {{ product.productName }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="get('productId').invalid">{{ getErrorMessage(get('productId')) }}</mat-error>
+        <mat-error *ngIf="get('productId').invalid">{{ getErrorMessage('productId', 'Product') }}</mat-error>
       </mat-form-field>
       <!-- Quantity -->
       <mat-form-field appearance="outline">
         <mat-label>Quantity</mat-label>
-        <input matInput placeholder="Quantity" formControlName="quantity" required />
-        <mat-error *ngIf="get('quantity').invalid">{{ getErrorMessage(get('quantity')) }}</mat-error>
+        <input matInput type="number" placeholder="Quantity" formControlName="quantity" required />
+        <mat-error *ngIf="get('quantity').invalid">{{ getErrorMessage('quantity', 'Quantity') }}</mat-error>
       </mat-form-field>
       <!-- Price -->
       <mat-form-field appearance="outline">
         <mat-label>Price</mat-label>
-        <input matInput placeholder="Price" formControlName="price" required />
-        <mat-error *ngIf="get('price').invalid">{{ getErrorMessage(get('price')) }}</mat-error>
+        <input matInput type="number" placeholder="Price" formControlName="price" required />
+        <mat-error *ngIf="get('price').invalid">{{ getErrorMessage('price', 'Price') }}</mat-error>
       </mat-form-field>
       <!-- Tax -->
       <mat-form-field appearance="outline">
         <mat-label>Tax</mat-label>
-        <input matInput placeholder="Tax" formControlName="tax" required />
-        <mat-error *ngIf="get('tax').invalid">{{ getErrorMessage(get('tax')) }}</mat-error>
+        <input matInput type="number" placeholder="Tax" formControlName="tax" required />
+        <mat-error *ngIf="get('tax').invalid">{{ getErrorMessage('tax', 'Tax') }}</mat-error>
       </mat-form-field>
       <!-- Rate -->
       <mat-form-field appearance="outline">
         <mat-label>Rate</mat-label>
-        <input matInput placeholder="Rate" formControlName="rate" required />
-        <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage(get('rate')) }}</mat-error>
+        <input matInput type="number" placeholder="Rate" formControlName="rate" required />
+        <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage('rate', 'Rate') }}</mat-error>
       </mat-form-field>
       <!-- Unit -->
       <mat-form-field appearance="outline">
         <mat-label>Unit</mat-label>
         <input matInput placeholder="Unit" formControlName="unit" required />
-        <mat-error *ngIf="get('unit').invalid">{{ getErrorMessage(get('unit')) }}</mat-error>
+        <mat-error *ngIf="get('unit').invalid">{{ getErrorMessage('unit', 'Unit') }}</mat-error>
       </mat-form-field>
       <!-- Add icon -->
       <button mat-mini-fab color="primary" fxFlexAlign="center" matTooltip="Add product" aria-label="Add product" (click)="addProduct()">
@@ -50,13 +50,12 @@
   </div>
 
   <!-- Order details table -->
-
   <table id="table" fxFlex *ngIf="productsToAdd?.length > 0; else noProducts">
     <tr>
       <th colspan="7">
-        <mat-card class="table-title">
+        <div class="table-title">
           <h2 class="mat-h2">{{ tableTitle }}</h2>
-        </mat-card>
+        </div>
       </th>
     </tr>
     <tr>

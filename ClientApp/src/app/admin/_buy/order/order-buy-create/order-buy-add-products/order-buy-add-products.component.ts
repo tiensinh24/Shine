@@ -13,7 +13,7 @@ import { OrderBuyProducts } from 'src/app/_shared/intefaces/buy/order/order-buy-
 export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   tableTitle = 'Order Details';
   products: ProductSelect[];
-  formDetails: FormGroup;
+  detailForm: FormGroup;
   productsToAdd: OrderBuyProducts[] = [];
 
   @Output() productOrders = new EventEmitter<OrderBuyProducts[]>();
@@ -40,32 +40,32 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   createForm() {
-    this.formDetails = this.fb.group({
+    this.detailForm = this.fb.group({
       orderId: ['0'],
-      productId: ['', Validators.required],
-      quantity: ['', Validators.required],
-      price: ['', Validators.required],
-      tax: [''],
-      rate: ['', Validators.required],
-      unit: ['', Validators.required],
+      productId: ['', { updateOn: 'blur' }, Validators.required],
+      quantity: ['', { updateOn: 'blur' }, Validators.required],
+      price: ['', { updateOn: 'blur' }, Validators.required],
+      tax: ['', { updateOn: 'blur' }, Validators.required],
+      rate: ['', { updateOn: 'blur' }, Validators.required],
+      unit: ['', { updateOn: 'blur' }, Validators.required],
 
       productName: ['']
     });
   }
 
   addProduct() {
-    if (this.formDetails.valid) {
-      this.formDetails.patchValue({
-        productId: this.formDetails.value.productId.productId,
-        productName: this.formDetails.value.productId.productName
+    if (this.detailForm.valid) {
+      this.detailForm.patchValue({
+        productId: this.detailForm.value.productId.productId,
+        productName: this.detailForm.value.productId.productName
       });
-      if (!this.formDetails.invalid) {
-        this.productsToAdd.push(this.formDetails.value);
+      if (!this.detailForm.invalid) {
+        this.productsToAdd.push(this.detailForm.value);
 
         // output value
         this.productOrders.emit(this.productsToAdd);
 
-        this.refreshProductSelection(this.formDetails.value.productId);
+        this.refreshProductSelection(this.detailForm.value.productId);
       }
     }
   }
@@ -98,16 +98,12 @@ export class OrderBuyAddProductsComponent implements OnInit, OnDestroy {
   }
 
   get(name: string): AbstractControl {
-    return this.formDetails.get(name);
+    return this.detailForm.get(name);
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required')
-      ? 'You must enter a value'
-      : formControl.hasError('email')
-      ? 'Not a valid email'
-      : formControl.hasError('pattern')
-      ? 'Please enter a number!'
-      : '';
+  getErrorMessage(name: string, value: string) {
+    const control = this.detailForm.get(name);
+
+    return control.hasError('required') ? `${value} is required` : '';
   }
 }

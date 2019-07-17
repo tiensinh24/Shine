@@ -21,17 +21,8 @@ mat-card.main .card-content {
   width: 100%;
 }
 
-mat-card.main .card-content form.edit-form {
-  width: 100%;
+mat-card.main .card-content div.edit-form > form {
   margin-bottom: 2rem;
-}
-
-mat-card.main .card-content form.edit-form h2.title {
-  color: royalblue;
-}
-
-mat-card.main .card-content div.photos h2.title {
-  color: royalblue;
 }
 
 mat-card.main .card-content div.photos div.supplier-photos div.photo {

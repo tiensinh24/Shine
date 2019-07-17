@@ -53,6 +53,8 @@ namespace Shine.Data
             modelBuilder.ApplyConfiguration(new OrderConfig());
             modelBuilder.ApplyConfiguration(new OrderBuyConfig());
             modelBuilder.ApplyConfiguration(new OrderSellConfig());
+            modelBuilder.ApplyConfiguration(new PaymentConfig());
+            modelBuilder.ApplyConfiguration(new CostConfig());
             modelBuilder.ApplyConfiguration(new PersonConfig());
             modelBuilder.ApplyConfiguration(new EmployeeConfig());
             modelBuilder.ApplyConfiguration(new PersonProductConfig());

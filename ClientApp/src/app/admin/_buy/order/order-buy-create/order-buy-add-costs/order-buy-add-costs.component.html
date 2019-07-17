@@ -1,3 +1,77 @@
-<p>
-  order-buy-add-costs works!
-</p>
+<div id="main" fxLayoutGap="32px">
+  <div id="form" fxFlex="25">
+    <form [formGroup]="costForm" fxLayout="column" novalidate>
+      <!-- costDate -->
+      <mat-form-field appearance="outline">
+        <mat-label>Cost Date</mat-label>
+        <input matInput [matDatepicker]="costPicker" placeholder="Choose a date" formControlName="costDate" required/>
+        <mat-datepicker-toggle matSuffix [for]="costPicker"></mat-datepicker-toggle>
+        <mat-datepicker locale="en-GB" #costPicker></mat-datepicker>
+        <mat-error *ngIf="get('costDate').invalid">{{getErrorMessage('costDate', 'Cost date')}}</mat-error>
+      </mat-form-field>
+      <!-- description -->
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="description" required>
+        <mat-error *ngIf="get('description').invalid">{{getErrorMessage('description', 'Description')}}</mat-error>
+      </mat-form-field>
+      <!-- amount -->
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" formControlName="amount" required/>
+        <mat-error *ngIf="get('amount').invalid">{{getErrorMessage('amount', 'Amount')}}</mat-error>
+      </mat-form-field>
+      <!-- rate -->
+      <mat-form-field appearance="outline">
+        <mat-label>Rate</mat-label>
+        <input matInput type="number" formControlName="rate" required/>
+        <mat-error *ngIf="get('rate').invalid">{{getErrorMessage('rate', 'Rate')}}</mat-error>
+      </mat-form-field>
+      <!-- currency -->
+      <div fxLayout="column" fxLayoutGap="1rem">
+        <mat-label>Pick a currency</mat-label>
+        <mat-radio-group formControlName="currency" fxLayoutGap="1rem">
+          <mat-radio-button [value]="true">USD</mat-radio-button>
+          <mat-radio-button [value]="false">VND</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <!-- Add cost button -->
+      <button mat-mini-fab color="primary" matTooltip="Add cost" fxFlexAlign="center" (click)="addCost()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </form>
+  </div>
+  <div id="table" fxFlex>
+    <table *ngIf="costsToAdd?.length > 0; else noCosts">
+      <tr>
+        <th>Cost Date</th>
+        <th>Description</th>
+        <th>Amount</th>        
+        <th>Rate</th>
+        <th>Currency</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let cost of costsToAdd">
+        <td>{{ cost?.costDate | date: 'dd/MM/yyyy ' }}</td>
+        <td>{{cost?.description}}</td>
+        <td>{{ cost?.amount | number }}</td>
+        <td>{{ cost?.rate | number }}</td>
+        <td>{{ cost?.currency | customCurrency }}</td>
+        <td>
+          <button mat-icon-button matTooltip="Remove cost" color="warn" (click)="removeCost(cost)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Only show if no cost on table -->
+    <ng-template #noCosts>
+      <div>
+        <h1 class="mat-h1">No costs!</h1>
+        <p>Enter values on the left then click <mat-icon color="primary">add_circle</mat-icon> button to add new cost</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

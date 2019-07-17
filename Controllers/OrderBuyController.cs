@@ -79,7 +79,7 @@ namespace Shine.Controllers
             return Ok(order);
         }
 
-        [HttpGet("is-order-number-exist/{orderNumber}")]
+        [HttpGet("is-order-number-exist")]
         public async Task<bool> IsOrderNumberExist(string orderNumber)
         {
           return await _repository.IsOrderNumberExistAsync(orderNumber);

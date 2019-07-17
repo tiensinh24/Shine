@@ -65,7 +65,9 @@ export class OrderBuyService {
   }
 
   isOrderNumberExist(orderNumber: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}api/orderBuy/is-order-number-exist/${orderNumber}`);
+    const httpParams = new HttpParams().set('orderNumber', `${orderNumber}`);
+
+    return this.http.get<boolean>(`${this.baseUrl}api/orderBuy/is-order-number-exist`, { params: httpParams });
   }
 
   addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {
@@ -101,7 +103,10 @@ export class OrderBuyService {
   }
 
   updateOrderProduct(productOrder: ProductOrder): Observable<OrderBuyProducts> {
-    return this.http.put<OrderBuyProducts>(`${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`, productOrder);
+    return this.http.put<OrderBuyProducts>(
+      `${this.baseUrl}api/orderBuy/${productOrder.orderId}/products/${productOrder.productId}`,
+      productOrder
+    );
   }
 
   deleteOrderProduct(orderId: number, productId: number): Observable<boolean> {

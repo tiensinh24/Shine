@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Payment } from 'src/app/_shared/intefaces/public/payment';
 
 @Component({
@@ -8,7 +8,7 @@ import { Payment } from 'src/app/_shared/intefaces/public/payment';
   styleUrls: ['./order-buy-add-payments.component.scss']
 })
 export class OrderBuyAddPaymentsComponent implements OnInit, OnDestroy {
-  paymentForms: FormGroup;
+  paymentForm: FormGroup;
   paymentsToAdd: Payment[] = [];
 
   @Output() payments = new EventEmitter<Payment[]>();
@@ -22,28 +22,30 @@ export class OrderBuyAddPaymentsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   createForm() {
-    this.paymentForms = this.fb.group({
-      paymentDate: [''],
-      amount: [''],
-      currency: [true],
-      rate: ['']
+    this.paymentForm = this.fb.group({
+      paymentDate: ['', { updateOn: 'blur' }, Validators.required],
+      amount: ['', { updateOn: 'blur' }, Validators.required],
+      currency: [true, { updateOn: 'blur' }, Validators.required],
+      rate: ['', { updateOn: 'blur' }, Validators.required]
     });
   }
 
   addPayment() {
-    const payment = <Payment>{
-      paymentDate: this.paymentForms.value.paymentDate,
-      amount: this.paymentForms.value.amount,
-      currency: this.paymentForms.value.currency,
-      rate: this.paymentForms.value.rate
-    };
+    if (this.paymentForm.valid) {
+      const payment = <Payment>{
+        paymentDate: this.paymentForm.value.paymentDate,
+        amount: this.paymentForm.value.amount,
+        currency: this.paymentForm.value.currency,
+        rate: this.paymentForm.value.rate
+      };
 
-    this.paymentsToAdd.push(payment);
-    this.outPayments();
+      this.paymentsToAdd.push(payment);
+      this.outPayments();
+    }
   }
 
   removePayment(payment: Payment) {
-    const index = this.paymentsToAdd.findIndex(p => p.paymentDate === payment.paymentDate);
+    const index = this.paymentsToAdd.findIndex(p => p === payment);
 
     if (index > -1) {
       this.paymentsToAdd.splice(index, 1);
@@ -53,5 +55,15 @@ export class OrderBuyAddPaymentsComponent implements OnInit, OnDestroy {
 
   private outPayments() {
     this.payments.emit(this.paymentsToAdd);
+  }
+
+  get(name: string): AbstractControl {
+    return this.paymentForm.get(name);
+  }
+
+  getErrorMessage(name: string, value: string) {
+    const control = this.paymentForm.get(name);
+
+    return control.hasError('required') ? `${value} is required` : null;
   }
 }

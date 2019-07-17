@@ -1,0 +1,31 @@
+#main {
+    margin-top: 1.5rem;
+  
+    & > #form {
+      & button {
+        margin-top: 2rem;
+  
+        &:hover {
+          transition: 150ms;
+          transform: rotate(180deg);
+        }
+      }
+    }
+  
+    & > #table > table {
+      width: 100%;
+      border-collapse: collapse;
+  
+      & th {
+        text-align: left;
+        padding-bottom: 1rem;
+        color: royalblue;
+        border-bottom: 1px solid mediumslateblue;
+      }
+  
+      & td {
+        border-bottom: 1px dotted mediumslateblue;
+      }
+    }
+  }
+  
