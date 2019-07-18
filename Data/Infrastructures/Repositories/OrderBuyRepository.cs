@@ -253,12 +253,12 @@ namespace Shine.Data.Infrastructures.Repositories
         #endregion
 
         #region Actions
-        public async Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder)
+        public async Task<OrderBuyProducts> AddProductOrderAsync(ProductOrder productOrder)
         {
             var lineItem = await _context.Set<ProductOrder>()
                 .AddAsync(productOrder);
 
-            return lineItem.Entity;
+            return lineItem.Entity.Adapt<OrderBuyProducts>();
         }
 
         public async Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders)
@@ -266,7 +266,7 @@ namespace Shine.Data.Infrastructures.Repositories
             await _context.Set<ProductOrder>().AddRangeAsync(productOrders);
         }
 
-        public async Task<ProductOrderDto> UpdateProductOrderAsync(ProductOrder productOrder)
+        public async Task<OrderBuyProducts> UpdateProductOrderAsync(ProductOrder productOrder)
         {
             var dbItem = await _context.ProductOrders
                 .FirstOrDefaultAsync(p => p.ProductId == productOrder.ProductId
@@ -282,7 +282,7 @@ namespace Shine.Data.Infrastructures.Repositories
                 dbItem.Unit = productOrder.Unit;
             }
 
-            return dbItem.Adapt<ProductOrderDto>();
+            return dbItem.Adapt<OrderBuyProducts>();
         }
 
         public async Task DeleteProductOrderAsync(int orderId, int productId)

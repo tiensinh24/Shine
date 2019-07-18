@@ -1,40 +1,44 @@
-.step-button > button {
+main#main {
+  padding-top: 1rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+main#main mat-horizontal-stepper .step-button > button {
   margin-top: 1rem;
   float: right;
 }
 
-.prod-detail {
+main#main mat-horizontal-stepper .prod-detail {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
 }
 
-.order-review table.order {
+main#main mat-horizontal-stepper .order-review table.order {
+  text-align: left;
   margin: 1rem 0 2rem 0;
 }
 
-.order-review table.order td > span {
+main#main mat-horizontal-stepper .order-review table.order td > span {
   color: royalblue;
   line-height: 1.5rem;
   margin-right: 2rem;
 }
 
-.order-review table.line-items {
+main#main mat-horizontal-stepper .order-review table.line-items {
   width: 100%;
   border-collapse: collapse;
 }
 
-.order-review table.line-items .table-title {
-  font: xx-large bolder;
-  color: yellowgreen;
-  background-color: cornsilk;
+main#main mat-horizontal-stepper .order-review table.line-items .table-title {
+  color: royalblue;
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.order-review table.line-items tr.header > th {
-  font: 400 bolder;
-  color: steelblue;
+main#main mat-horizontal-stepper .order-review table.line-items tr.header td {
+  color: royalblue;
   text-align: left;
   height: auto;
   padding: 1rem;
@@ -42,35 +46,32 @@
   border-bottom: 1px solid lightsalmon;
 }
 
-.order-review table.line-items tr.row-content:hover {
+main#main mat-horizontal-stepper .order-review table.line-items tr.row-content:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }
 
-.order-review table.line-items tr.row-content td {
+main#main mat-horizontal-stepper .order-review table.line-items tr.row-content td {
   height: auto;
   padding: 1rem;
   border-collapse: collapse;
   border-bottom: 1px dotted lightsalmon;
 }
 
-.order-review table.payments {
+main#main mat-horizontal-stepper .order-review table.payments {
   margin-top: 3rem;
   border-collapse: collapse;
   width: 100%;
 }
 
-.order-review table.payments .table-title {
-  font: xx-large bolder;
-  color: yellowgreen;
-  background-color: cornsilk;
+main#main mat-horizontal-stepper .order-review table.payments .table-title {
+  color: royalblue;
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.order-review table.payments tr.header > th {
-  font: 400 bolder;
-  color: steelblue;
+main#main mat-horizontal-stepper .order-review table.payments tr.header td {
+  color: royalblue;
   text-align: left;
   height: auto;
   padding: 1rem;
@@ -78,12 +79,45 @@
   border-bottom: 1px solid lightsalmon;
 }
 
-.order-review table.payments tr.row-content:hover {
+main#main mat-horizontal-stepper .order-review table.payments tr.row-content:hover {
   cursor: pointer;
   background-color: whitesmoke;
 }
 
-.order-review table.payments tr.row-content td {
+main#main mat-horizontal-stepper .order-review table.payments tr.row-content td {
+  height: auto;
+  padding: 1rem;
+  border-collapse: collapse;
+  border-bottom: 1px dotted lightsalmon;
+}
+
+main#main mat-horizontal-stepper .order-review table.costs {
+  margin-top: 3rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+main#main mat-horizontal-stepper .order-review table.costs .table-title {
+  color: royalblue;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+main#main mat-horizontal-stepper .order-review table.costs tr.header td {
+  color: royalblue;
+  text-align: left;
+  height: auto;
+  padding: 1rem;
+  border-collapse: collapse;
+  border-bottom: 1px solid lightsalmon;
+}
+
+main#main mat-horizontal-stepper .order-review table.costs tr.row-content:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+main#main mat-horizontal-stepper .order-review table.costs tr.row-content td {
   height: auto;
   padding: 1rem;
   border-collapse: collapse;

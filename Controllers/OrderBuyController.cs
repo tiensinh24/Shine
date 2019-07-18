@@ -155,7 +155,7 @@ namespace Shine.Controllers
 
         [HttpPost("{orderId}/add-item")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder)
+        public async Task<ActionResult<OrderBuyProducts>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder)
         {
             var lineItem = await _repository.AddProductOrderAsync(productOrder);
 
@@ -164,11 +164,11 @@ namespace Shine.Controllers
                 await _repository.CommitAsync();
             }
 
-            return lineItem.Adapt<ProductOrderDto>();
+            return lineItem;
         }
 
         [HttpPut("{orderId}/products/{productId}")]
-        public async Task<ActionResult<ProductOrderDto>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder)
+        public async Task<ActionResult<OrderBuyProducts>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder)
         {
             var lineItem = await _repository.UpdateProductOrderAsync(productOrder);
 

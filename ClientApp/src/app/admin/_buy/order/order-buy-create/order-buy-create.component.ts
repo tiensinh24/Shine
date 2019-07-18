@@ -2,10 +2,9 @@ import { Subscription } from 'rxjs';
 import { Payment } from 'src/app/_shared/intefaces/public/payment';
 import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { OrderBuy } from 'src/app/_shared/intefaces/buy/order/order-buy';
 import { SupplierSelect } from 'src/app/_shared/intefaces/buy/supplier/supplier-select';
 import { EmployeeSelect } from 'src/app/_shared/intefaces/public/employee-select';
 import { OrderBuyWithNavigations } from 'src/app/_shared/intefaces/buy/order/order-buy-with-details-to-add-dto';
@@ -28,10 +27,8 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   title = 'New order';
   orderForm: FormGroup;
 
-  order: OrderBuy;
   suppliers: SupplierSelect[];
   employees: EmployeeSelect[];
-  supplierName: string;
   orderToAdd: OrderBuyWithNavigations;
 
   // boolean
@@ -86,8 +83,9 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
         ],
         dateOfIssue: ['', { updateOn: 'blur' }, Validators.required],
         timeForPayment: ['', { updateOn: 'blur' }, Validators.required],
-        personId: ['', { updateOn: 'blur' }, Validators.required],
-        employeeId: ['', { updateOn: 'blur' }, Validators.required]
+        supplier: ['', { updateOn: 'blur' }, Validators.required],
+        employee: ['', { updateOn: 'blur' }, Validators.required],
+        rating: [0]
       },
       { validators: MustAfterValidator('dateOfIssue', 'timeForPayment') }
     );
@@ -109,12 +107,6 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
     );
   }
 
-  getSupplierName() {
-    const supplier = this.suppliers.find(p => p.personId === this.orderForm.value.personId);
-
-    this.supplierName = supplier.fullName;
-  }
-
   getProductsToAddFromChild($event: OrderBuyProducts[]) {
     this.productsToAdd = $event;
   }
@@ -128,24 +120,27 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onSubmit() {
-    this.order = this.orderForm.value;
+    const order = this.orderForm.value;
 
     this.orderToAdd = {
       orderId: 0,
-      orderNumber: this.order.orderNumber,
-      dateOfIssue: this.order.dateOfIssue,
-      timeForPayment: this.order.timeForPayment,
-      personId: this.order.personId,
-      employeeId: this.order.employeeId,
+      orderNumber: order.orderNumber,
+      dateOfIssue: order.dateOfIssue,
+      timeForPayment: order.timeForPayment,
+      personId: order.supplier.personId,
+      employeeId: order.employee.employeeId,
+      rating: order.rating,
 
       productOrders: this.productsToAdd,
       payments: this.paymentsToAdd,
       costs: this.costsToAdd
     };
     this.orderService.addOrder(this.orderToAdd).subscribe(
-      () => {
-        this.snackBar.open(`Order ${this.order.orderNumber} added`, 'Success');
-        this.router.navigate(['/admin/order-buy']);
+      (res: OrderBuyWithNavigations) => {
+        if (res) {
+          this.snackBar.open(`Order ${order.orderNumber} added`, 'Success');
+          this.router.navigate([`/admin/order-buy/${res.orderId}/edit`]);
+        }
       },
       error => {
         if (error.status === 409) {

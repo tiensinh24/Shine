@@ -53,11 +53,11 @@ namespace Shine.Data.Infrastructures.Interfaces
 #endregion
 
 #region Actions
-        Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder);
+        Task<OrderBuyProducts> AddProductOrderAsync(ProductOrder productOrder);
 
         Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders);
 
-        Task<ProductOrderDto> UpdateProductOrderAsync(ProductOrder productOrder);
+        Task<OrderBuyProducts> UpdateProductOrderAsync(ProductOrder productOrder);
 
         Task DeleteProductOrderAsync(int orderId, int productId);
 

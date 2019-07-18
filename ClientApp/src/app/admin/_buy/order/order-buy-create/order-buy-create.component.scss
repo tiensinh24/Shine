@@ -1,98 +1,132 @@
-.step-button > button {
-  margin-top: 1rem;
-  float: right;
-}
+main#main {
+  padding-top: 1rem;
+  max-width: 1200px;
+  margin: auto;
 
-.prod-detail {
-  flex: 1 1 auto;
-}
-
-.order-review {
-  & table.order {
-    margin: 1rem 0 2rem 0;
-
-    & td > span {
-      color: royalblue;
-      line-height: 1.5rem;
-      margin-right: 2rem;
-    }
-  }
-
-  & table.line-items {
-    width: 100%;
-    border-collapse: collapse;
-
-    & .table-title {
-      font: xx-large bolder;
-      color: yellowgreen;
-      background-color: cornsilk;
-      text-align: center;
-      margin-bottom: 1rem;
+  mat-horizontal-stepper {
+    .step-button > button {
+      margin-top: 1rem;
+      float: right;
     }
 
-    & tr.header {
-      & > th {
-        font: 400 bolder;
-        color: steelblue;
+    .prod-detail {
+      flex: 1 1 auto;
+    }
+
+    .order-review {
+      & table.order {
         text-align: left;
-        height: auto;
-        padding: 1rem;
+        margin: 1rem 0 2rem 0;
+
+        & td > span {
+          color: royalblue;
+          line-height: 1.5rem;
+          margin-right: 2rem;
+        }
+      }
+
+      & table.line-items {
+        width: 100%;
         border-collapse: collapse;
-        border-bottom: 1px solid lightsalmon;
-      }
-    }
 
-    & tr.row-content {
-      &:hover {
-        cursor: pointer;
-        background-color: whitesmoke;
+        & .table-title {
+          color: royalblue;
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+
+        & tr.header td {
+          color: royalblue;
+          text-align: left;
+          height: auto;
+          padding: 1rem;
+          border-collapse: collapse;
+          border-bottom: 1px solid lightsalmon;
+        }
+
+        & tr.row-content {
+          &:hover {
+            cursor: pointer;
+            background-color: whitesmoke;
+          }
+
+          & td {
+            height: auto;
+            padding: 1rem;
+            border-collapse: collapse;
+            border-bottom: 1px dotted lightsalmon;
+          }
+        }
       }
 
-      & td {
-        height: auto;
-        padding: 1rem;
+      & table.payments {
+        margin-top: 3rem;
         border-collapse: collapse;
-        border-bottom: 1px dotted lightsalmon;
+        width: 100%;
+
+        & .table-title {
+          color: royalblue;
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+
+        & tr.header td {
+          color: royalblue;
+          text-align: left;
+          height: auto;
+          padding: 1rem;
+          border-collapse: collapse;
+          border-bottom: 1px solid lightsalmon;
+        }
+
+        & tr.row-content {
+          &:hover {
+            cursor: pointer;
+            background-color: whitesmoke;
+          }
+
+          & td {
+            height: auto;
+            padding: 1rem;
+            border-collapse: collapse;
+            border-bottom: 1px dotted lightsalmon;
+          }
+        }
       }
-    }
-  }
 
-  & table.payments {
-    margin-top: 3rem;
-    border-collapse: collapse;
-    width: 100%;
-
-    & .table-title {
-      font: xx-large bolder;
-      color: yellowgreen;
-      background-color: cornsilk;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    & tr.header {
-      & > th {
-        font: 400 bolder;
-        color: steelblue;
-        text-align: left;
-        height: auto;
-        padding: 1rem;
+      & table.costs {
+        margin-top: 3rem;
         border-collapse: collapse;
-        border-bottom: 1px solid lightsalmon;
-      }
-    }
+        width: 100%;
 
-    & tr.row-content {
-      &:hover {
-        cursor: pointer;
-        background-color: whitesmoke;
-      }
+        & .table-title {
+          color: royalblue;
+          text-align: center;
+          margin-bottom: 1rem;
+        }
 
-      & td {
-        height: auto;
-        padding: 1rem;
-        border-collapse: collapse;
-        border-bottom: 1px dotted lightsalmon;
+        & tr.header td {
+          color: royalblue;
+          text-align: left;
+          height: auto;
+          padding: 1rem;
+          border-collapse: collapse;
+          border-bottom: 1px solid lightsalmon;
+        }
+
+        & tr.row-content {
+          &:hover {
+            cursor: pointer;
+            background-color: whitesmoke;
+          }
+
+          & td {
+            height: auto;
+            padding: 1rem;
+            border-collapse: collapse;
+            border-bottom: 1px dotted lightsalmon;
+          }
+        }
       }
     }
   }

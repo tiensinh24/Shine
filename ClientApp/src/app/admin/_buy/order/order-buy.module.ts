@@ -13,6 +13,8 @@ import { OrderBuyCreateComponent } from './order-buy-create/order-buy-create.com
 import { OrderBuyAddProductsComponent } from './order-buy-create/order-buy-add-products/order-buy-add-products.component';
 import { OrderBuyAddPaymentsComponent } from './order-buy-create/order-buy-add-payments/order-buy-add-payments.component';
 import { OrderBuyAddCostsComponent } from './order-buy-create/order-buy-add-costs/order-buy-add-costs.component';
+import { StarRatingModule } from 'angular-star-rating';
+import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { OrderBuyAddCostsComponent } from './order-buy-create/order-buy-add-cost
     OrderBuyCreateComponent,
     OrderBuyAddProductsComponent,
     OrderBuyAddPaymentsComponent,
-    OrderBuyAddCostsComponent
+    OrderBuyAddCostsComponent,
+    OrderBuyEditComponent
   ],
   imports: [
     // Shared
@@ -36,6 +39,9 @@ import { OrderBuyAddCostsComponent } from './order-buy-create/order-buy-add-cost
 
     // Material
     MaterialSharedModule,
+
+    // Star rating
+    StarRatingModule,
 
     // Routing
     OrderBuyRoutingModule

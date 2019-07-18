@@ -77,7 +77,7 @@ export class OrderBuyDetailComponent implements OnInit, OnDestroy {
         timeForPayment: this.order.timeForPayment,
         personId: this.order.personId,
         employeeId: this.order.employeeId,
-        employeeName: this.order.employeeName,
+        employeeName: this.order.employee.fullName,
         rating: this.order.rating
       };
 

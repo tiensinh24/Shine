@@ -72,7 +72,7 @@ export class OrderBuyDetailCardComponent implements OnInit, OnDestroy {
       this.costDataSource = new MatTableDataSource<Cost>(res.costs);
 
       this.pieChartData.shift();
-      this.pieChartData.push(['Value', res.orderTotal], ['Cost', res.totalCost]);
+      this.pieChartData.push(['Value', res.orderTotal], ['Cost', res.costTotal]);
     });
   }
 

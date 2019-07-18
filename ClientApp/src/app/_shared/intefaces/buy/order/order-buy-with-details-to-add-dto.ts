@@ -10,6 +10,8 @@ export interface OrderBuyWithNavigations {
   timeForPayment: Date;
   personId: number;
   employeeId: number;
+  rating: number;
+
   productOrders: ProductOrder[];
   payments: Payment[];
   costs: Cost[];

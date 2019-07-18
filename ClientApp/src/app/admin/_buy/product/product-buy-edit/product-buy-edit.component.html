@@ -1,11 +1,12 @@
 <main id="main" class="mat-typography">
   <mat-card class="main mat-elevation-z0">
     <div fxLayout="column">
-      <button mat-icon-button matTooltip="Go back" class="back-btn" [routerLink]="['/admin/product-buy']"><mat-icon>arrow_back</mat-icon></button>
-
-      <span
-        ><h1 class="title">{{ title }}</h1></span
-      >
+      <div class="title-group" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+        <button mat-icon-button matTooltip="Go back" class="back-btn" [routerLink]="['/admin/product-buy']">
+          <mat-icon>arrow_back</mat-icon>
+          {{ title }}
+        </button>
+      </div>
 
       <div class="card-content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="2rem">
         <div fxFlex="30" class="product-info">
@@ -26,13 +27,28 @@
             <!-- Specification -->
             <mat-form-field appearance="outline">
               <mat-label>Specification</mat-label>
-              <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="20" placeholder="Specification" formControlName="specification" required></textarea>
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="20"
+                placeholder="Specification"
+                formControlName="specification"
+                required
+              ></textarea>
               <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage(get('specification')) }}</mat-error>
             </mat-form-field>
             <!-- CategoryId -->
             <mat-form-field appearance="outline">
               <mat-label>Enter or select category</mat-label>
-              <input appMatAutocompleteTriggerEnforceSelection matInput formControlName="category" [matAutocomplete]="autoCategory" #categoryInput required />
+              <input
+                appMatAutocompleteTriggerEnforceSelection
+                matInput
+                formControlName="category"
+                [matAutocomplete]="autoCategory"
+                #categoryInput
+                required
+              />
 
               <mat-error *ngIf="get('category').invalid">{{ getErrorMessage(get('category')) }}</mat-error>
             </mat-form-field>
@@ -69,8 +85,12 @@
 
                 <!-- Img relay -->
                 <div class="img-btn">
-                  <button mat-icon-button matTooltip="Delete photo" color="warn" (click)="deletePhoto(photo.photoId)"><mat-icon>delete</mat-icon></button>
-                  <button mat-icon-button matTooltip="Set main photo" color="primary" (click)="setMainPhoto(photo)"><mat-icon>check_circle_outline</mat-icon></button>
+                  <button mat-icon-button matTooltip="Delete photo" color="warn" (click)="deletePhoto(photo.photoId)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Set main photo" color="primary" (click)="setMainPhoto(photo)">
+                    <mat-icon>check_circle_outline</mat-icon>
+                  </button>
                 </div>
               </div>
             </div>
@@ -85,7 +105,9 @@
           </ng-template>
 
           <div class="photo-upload">
-            <button class="upload-icon-btn" mat-mini-fab color="primary" matTooltip="Upload photos" (click)="togglePhotoUploadExpansion()"><mat-icon>cloud_upload</mat-icon></button>
+            <button class="upload-icon-btn" mat-mini-fab color="primary" matTooltip="Upload photos" (click)="togglePhotoUploadExpansion()">
+              <mat-icon>cloud_upload</mat-icon>
+            </button>
 
             <mat-expansion-panel [expanded]="photoUploadExpansion" class="padding-remove mat-elevation-z0">
               <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>

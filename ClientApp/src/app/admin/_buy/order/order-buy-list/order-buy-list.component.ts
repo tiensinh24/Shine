@@ -25,7 +25,10 @@ import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/_buy/ord
   styleUrls: ['./order-buy-list.component.css'],
   animations: [
     trigger('flyInOutHoz', [
-      transition(':enter', [style({ opacity: 0, transform: 'translateX(100px)' }), animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))]),
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(100px)' }),
+        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
+      ]),
       transition(':leave', [animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 0, transform: 'translateX(100px)' }))])
     ])
   ]
@@ -44,7 +47,18 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     { key: 'rating', value: 'Rating' },
     { key: 'actions', value: 'Actions' }
   ];
-  columnsToDisplay = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'supplierName', 'employeeName', 'value', 'cost', 'rating', 'actions'];
+  columnsToDisplay = [
+    'select',
+    'orderNumber',
+    'dateOfIssue',
+    'timeForPayment',
+    'supplierName',
+    'employeeName',
+    'value',
+    'cost',
+    'rating',
+    'actions'
+  ];
 
   selection = new SelectionModel<OrderBuyList>(true, []);
   title = 'Order List';
@@ -158,7 +172,7 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   }
 
   onEdit(orderBuy: OrderBuy) {
-    this.openDialog(orderBuy.orderId);
+    this.router.navigate([`/admin/order-buy/${orderBuy.orderId}/edit`]);
   }
 
   onDelete(orderBuy: OrderBuy) {
@@ -202,52 +216,53 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // *Using router instead of dialog, uncomment this if use dialog
   // Open order-buy-edit-dialog
-  openDialog(orderId?: number) {
-    // Find order in dataSource
-    let orderEdit: OrderBuyList = null;
+  // openDialog(orderId?: number) {
+  //   // Find order in dataSource
+  //   let orderEdit: OrderBuyList = null;
 
-    this.dataSource.data.subscribe(res => {
-      orderEdit = res.find(c => c.orderId === orderId);
-    });
+  //   this.dataSource.data.subscribe(res => {
+  //     orderEdit = res.find(c => c.orderId === orderId);
+  //   });
 
-    const dialogConfig = <MatDialogConfig>{
-      disableClose: true,
-      autoFocus: false,
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      width: '800px',
-      height: '675px',
-      panelClass: 'custom-dialog'
-    };
+  //   const dialogConfig = <MatDialogConfig>{
+  //     disableClose: true,
+  //     autoFocus: false,
+  //     maxWidth: '100vw',
+  //     maxHeight: '100vh',
+  //     width: '800px',
+  //     height: '675px',
+  //     panelClass: 'custom-dialog'
+  //   };
 
-    if (orderId > 0) {
-      dialogConfig.data = {
-        rating: orderEdit.rating,
-        orderId: orderEdit.orderId,
-        orderNumber: orderEdit.orderNumber,
-        dateOfIssue: orderEdit.dateOfIssue,
-        timeForPayment: orderEdit.timeForPayment,
-        personId: orderEdit.personId,
-        supplierName: orderEdit.supplierName,
-        employeeId: orderEdit.employeeId,
-        employeeName: orderEdit.employeeName
-      };
-    }
+  //   if (orderId > 0) {
+  //     dialogConfig.data = {
+  //       rating: orderEdit.rating,
+  //       orderId: orderEdit.orderId,
+  //       orderNumber: orderEdit.orderNumber,
+  //       dateOfIssue: orderEdit.dateOfIssue,
+  //       timeForPayment: orderEdit.timeForPayment,
+  //       personId: orderEdit.personId,
+  //       supplierName: orderEdit.supplierName,
+  //       employeeId: orderEdit.employeeId,
+  //       employeeName: orderEdit.employeeName
+  //     };
+  //   }
 
-    // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(OrderBuyEditDialogComponent, dialogConfig);
+  //   // Open dialog with config & passed data
+  //   const dialogRef = this.dialog.open(OrderBuyEditDialogComponent, dialogConfig);
 
-    // Pass data from dialog in to main component
-    dialogRef.afterClosed().subscribe((data: OrderBuyList) => {
-      if (data) {
-        this.loadOrdersPage();
-        this.snackBar.open(`Order ${data.orderNumber} updated`, 'Success');
-      }
+  //   // Pass data from dialog in to main component
+  //   dialogRef.afterClosed().subscribe((data: OrderBuyList) => {
+  //     if (data) {
+  //       this.loadOrdersPage();
+  //       this.snackBar.open(`Order ${data.orderNumber} updated`, 'Success');
+  //     }
 
-      this.selection.clear();
-    });
-  }
+  //     this.selection.clear();
+  //   });
+  // }
 
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;

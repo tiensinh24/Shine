@@ -14,23 +14,6 @@ main#main mat-card.main button.back-btn {
   z-index: 1;
 }
 
-main#main mat-card.main button.back-btn .mat-icon {
-  font-size: 32px;
-}
-
-main#main mat-card.main h1.title {
-  margin-bottom: 2rem;
-  color: royalblue;
-}
-
-main#main mat-card.main .card-content div.product-info h2.title {
-  color: royalblue;
-}
-
-main#main mat-card.main .card-content div.photos h2.title {
-  color: royalblue;
-}
-
 main#main mat-card.main .card-content div.photos div.product-photos div.photo {
   display: -webkit-box;
   display: -ms-flexbox;

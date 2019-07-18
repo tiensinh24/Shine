@@ -10,29 +10,10 @@ main#main {
       margin-bottom: 1rem;
       align-self: flex-start;
       z-index: 1;
-
-      .mat-icon {
-        font-size: 32px;
-      }
-    }
-
-    h1.title {
-      margin-bottom: 2rem;
-      color: royalblue;
     }
 
     .card-content {
-      div.product-info {
-        h2.title {
-          color: royalblue;
-        }
-      }
-
       div.photos {
-        h2.title {
-          color: royalblue;
-        }
-
         div.product-photos {
           div.photo {
             display: flex;

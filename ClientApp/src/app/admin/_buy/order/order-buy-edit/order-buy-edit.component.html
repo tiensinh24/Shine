@@ -1,0 +1,48 @@
+<div class="title-group" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+  <button mat-icon-button matTooltip="Go back" class="back-btn" [routerLink]="['/admin/order-buy']">
+    <mat-icon>arrow_back</mat-icon>
+    {{ title }}
+  </button>
+</div>
+
+<div class="main">
+  <div class="order">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ order.orderNumber }}</mat-card-title>
+        <mat-card-subtitle>
+          {{ order.dateOfIssue | date: 'dd/MM/yyyy' }}
+          <star-rating-control [starType]="'svg'" [rating]="order.rating" [readOnly]="true"></star-rating-control>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="due">
+          <button mat-button mat-icon-button><mat-icon>date_range</mat-icon></button>
+          <span>Due</span>
+          <h1>{{ order.timeForPayment | date: 'dd/MM/yyyy' }}</h1>
+        </div>
+
+        <div class="supplier">
+          <button mat-button mat-icon-button><mat-icon>person</mat-icon></button>
+          <span>Supplier</span>
+          <h1>{{ order.supplier.fullName }}</h1>
+        </div>
+
+        <div class="purchaser">
+          <button mat-button mat-icon-button><mat-icon>person</mat-icon></button>
+          <span>Purchaser</span>
+          <h1>{{ order.employee.fullName }}</h1>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Ok</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="value"></div>
+
+  <div class="payment"></div>
+
+  <div class="cost"></div>
+</div>

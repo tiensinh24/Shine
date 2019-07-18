@@ -70,8 +70,8 @@ export class OrderBuyService {
     return this.http.get<boolean>(`${this.baseUrl}api/orderBuy/is-order-number-exist`, { params: httpParams });
   }
 
-  addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<HttpResponse<OrderBuyWithNavigations>> {
-    return this.http.post<HttpResponse<OrderBuyWithNavigations>>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
+  addOrder(orderWithDetails: OrderBuyWithNavigations): Observable<OrderBuyWithNavigations> {
+    return this.http.post<OrderBuyWithNavigations>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
   }
 
   updateOrder(orderbuy: OrderBuy): Observable<OrderBuyList> {

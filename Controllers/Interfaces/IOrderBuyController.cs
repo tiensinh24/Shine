@@ -43,9 +43,9 @@ namespace Shine.Controllers.Interfaces
 
         #region LineItems
 
-        Task<ActionResult<ProductOrderDto>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder);
+        Task<ActionResult<OrderBuyProducts>> AddProductOrder(int orderId, [FromBody] ProductOrder productOrder);
 
-        Task<ActionResult<ProductOrderDto>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder);
+        Task<ActionResult<OrderBuyProducts>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder);
 
         Task DeleteProductOrder(int orderId, int productId);
 
