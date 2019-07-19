@@ -14,6 +14,7 @@ namespace Shine.Data.Models {
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Telephone { get; set; }
+        public string Address { get; set; }
 
 #endregion
 

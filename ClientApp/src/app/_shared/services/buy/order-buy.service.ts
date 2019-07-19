@@ -74,8 +74,8 @@ export class OrderBuyService {
     return this.http.post<OrderBuyWithNavigations>(`${this.baseUrl}api/orderBuy/`, orderWithDetails);
   }
 
-  updateOrder(orderbuy: OrderBuy): Observable<OrderBuyList> {
-    return this.http.put<OrderBuyList>(`${this.baseUrl}api/orderBuy/`, orderbuy);
+  updateOrder(orderbuy: OrderBuy): Observable<OrderBuy> {
+    return this.http.put<OrderBuy>(`${this.baseUrl}api/orderBuy/`, orderbuy);
   }
 
   deleteOrder(orderId: number): Observable<number> {

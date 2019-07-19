@@ -3,7 +3,7 @@
 
 <mat-dialog-content>
   <!-- Formgroup -->
-  <form class="edit-form" fxLayout="column" [formGroup]="formGroup">
+  <form class="edit-form" fxLayout="column" [formGroup]="formGroup" novalidate>
     <!-- Rating -->
     <star-rating-control formControlName="rating" [starType]="'svg'" labelText="Rating"></star-rating-control>
 
@@ -11,37 +11,25 @@
     <mat-form-field appearance="outline">
       <mat-label>Order Number</mat-label>
       <input matInput placeholder="Order Number" formControlName="orderNumber" autofocus required />
-      <mat-error *ngIf="get('orderNumber').invalid">{{ getErrorMessage(get('orderNumber')) }}</mat-error>
+      <mat-error *ngIf="get('orderNumber').invalid">{{ getErrorMessage(get('orderNumber', 'Order number')) }}</mat-error>
     </mat-form-field>
 
     <!-- DateOfIssue -->
     <mat-form-field appearance="outline">
       <mat-label>Date of Issue</mat-label>
-      <input
-        matInput
-        [matDatepicker]="issuePicker"
-        placeholder="Choose a date"
-        formControlName="dateOfIssue"
-        required
-      />
+      <input matInput [matDatepicker]="issuePicker" placeholder="Choose a date" formControlName="dateOfIssue" required />
       <mat-datepicker-toggle matSuffix [for]="issuePicker"></mat-datepicker-toggle>
       <mat-datepicker locale="en-GB" #issuePicker></mat-datepicker>
-      <mat-error *ngIf="get('dateOfIssue').invalid">{{ getErrorMessage(get('dateOfIssue')) }}</mat-error>
+      <mat-error *ngIf="get('dateOfIssue').invalid">{{ getErrorMessage(get('dateOfIssue', 'Order date')) }}</mat-error>
     </mat-form-field>
 
     <!-- TimeForPayment -->
     <mat-form-field appearance="outline">
       <mat-label>Time for Payment</mat-label>
-      <input
-        matInput
-        [matDatepicker]="paymentPicker"
-        placeholder="Choose a date"
-        formControlName="timeForPayment"
-        required
-      />
+      <input matInput [matDatepicker]="paymentPicker" placeholder="Choose a date" formControlName="timeForPayment" required />
       <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
       <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
-      <mat-error *ngIf="get('timeForPayment').invalid">{{ getErrorMessage(get('timeForPayment')) }}</mat-error>
+      <mat-error *ngIf="get('timeForPayment').invalid">{{ getErrorMessage(get('timeForPayment', 'Time for payment')) }}</mat-error>
     </mat-form-field>
 
     <!-- EmployeeId -->
@@ -55,7 +43,7 @@
         #employeeInput
         required
       />
-      <mat-error *ngIf="get('employee').invalid">{{ getErrorMessage(get('employee')) }}</mat-error>
+      <!-- <mat-error *ngIf="get('employee').invalid">{{ getErrorMessage(get('employee', 'Employee')) }}</mat-error> -->
     </mat-form-field>
 
     <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayFn">
@@ -69,23 +57,17 @@
         <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
           {{ supplier.fullName }}
         </mat-option>
-      </mat-select>
-      <mat-error *ngIf="get('personId').invalid">{{ getErrorMessage(get('personId')) }}</mat-error>
+      </mat-select>      
     </mat-form-field>
   </form>
 </mat-dialog-content>
 
 <!-- Action Buttons -->
-<mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
-  <div fxFlex></div>
+<mat-dialog-actions align="center">
   <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
     Submit
   </button>
   <button mat-button (click)="onCancel()">
     Cancel
-  </button>
-  <div fxFlex></div>
-  <button mat-icon-button color="primary" matTooltip="More detail" (click)="goToDetail()">
-    <mat-icon>list_alt</mat-icon>
   </button>
 </mat-dialog-actions>

@@ -15,6 +15,7 @@ import { OrderBuyAddPaymentsComponent } from './order-buy-create/order-buy-add-p
 import { OrderBuyAddCostsComponent } from './order-buy-create/order-buy-add-costs/order-buy-add-costs.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,9 @@ import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component
 
     // Star rating
     StarRatingModule,
+
+    // Google charts
+    GoogleChartsModule,
 
     // Routing
     OrderBuyRoutingModule

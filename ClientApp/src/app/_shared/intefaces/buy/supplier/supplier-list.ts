@@ -10,6 +10,7 @@ export interface SupplierList {
   dateOfBirth: Date;
   telephone: string;
   fax: string;
+  address: string;
   countryId: number;
   rating: number;
 

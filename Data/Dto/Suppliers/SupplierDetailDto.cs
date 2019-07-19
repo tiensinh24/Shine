@@ -16,6 +16,7 @@ namespace Shine.Data.Dto.Suppliers {
         public DateTime DateOfBirth { get; set; }
         public string Telephone { get; set; }
         public string Fax { get; set; }
+        public string Address { get; set; }
         public int CountryId { get; set; }
         public Single Rating { get; set; }
 

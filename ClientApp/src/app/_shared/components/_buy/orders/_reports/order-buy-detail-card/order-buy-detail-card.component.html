@@ -89,7 +89,7 @@
       <div class="cost-expand-group">
         <p>Cosst</p>
         <div fxLayout="row" fxLayoutAlign="start center">
-          <h1>{{ order?.totalCost | currency }}</h1>
+          <h1>{{ order?.costTotal | currency }}</h1>
           <h1>
             <button mat-icon-button (click)="toggleCostExpansion()">
               <mat-icon matTooltip="Collapse" *ngIf="costExpand">expand_less</mat-icon>

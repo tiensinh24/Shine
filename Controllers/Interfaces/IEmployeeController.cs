@@ -14,6 +14,8 @@ namespace Shine.Controllers.Interfaces {
 
         Task<ActionResult<IEnumerable<EmployeeSelectDto>>> GetEmployeesSelect();
 
+        Task<ActionResult<EmployeeListDto>> GetEmployee(int employeeId);
+
 #endregion
 
 #region Actions

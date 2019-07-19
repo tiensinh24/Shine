@@ -1,0 +1,95 @@
+.main {
+  padding: 0;
+  min-height: calc(100vh - 60px);
+
+  .title-group {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 200px;
+    background: white;
+    z-index: 1;
+  }
+
+  .main-container {
+    .order {
+      mat-card.order-card {
+        mat-card-header {
+          justify-content: flex-end;
+          text-align: right;
+        }
+
+        mat-card-content {
+          .due {
+            .content {
+              padding-left: 2rem;
+            }
+          }
+
+          .supplier {
+            img.avatar {
+              width: 40px;
+              height: 40px;
+              border-radius: 50px;
+              vertical-align: middle;
+            }
+            .content {
+              padding-left: 2rem;
+
+              mat-icon {
+                vertical-align: middle;
+              }
+            }
+          }
+          .purchaser {
+            img.avatar {
+              width: 40px;
+              height: 40px;
+              border-radius: 50px;
+              vertical-align: middle;
+            }
+            .content {
+              padding-left: 2rem;
+
+              mat-icon {
+                vertical-align: middle;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .childs {
+      .value {
+        .content {
+          padding-left: 2rem;
+
+          mat-expansion-panel table.value-table {
+            width: 100%;
+          }
+        }
+      }
+
+      .cost {
+        .content {
+          padding-left: 2rem;
+
+          mat-expansion-panel table.cost-table {
+            width: 100%;
+          }
+        }
+      }
+
+      .payment {
+        .content {
+          padding-left: 2rem;
+
+          mat-expansion-panel table.payment-table {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

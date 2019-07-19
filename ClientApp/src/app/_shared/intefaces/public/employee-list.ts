@@ -6,6 +6,7 @@ export interface EmployeeList {
     fullName: string;
     dateOfBirth: Date;
     telephone: string;
+    address: string;
     countryId: number;
     countryName: string;
     departmentId: number;

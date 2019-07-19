@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using Microsoft.AspNetCore.Identity;
-
 using Shine.Data.Models.Interfaces;
 
-namespace Shine.Data.Models {
+namespace Shine.Data.Models
+{
 
     public abstract class Person : IAuditedEntityBase, ISoftDelete {
 #region Properties
@@ -15,16 +14,15 @@ namespace Shine.Data.Models {
         public string PersonNumber { get; set; }
         public bool Gender { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+        [Required]       
         public string FirstName { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+        [Required]        
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Telephone { get; set; }
         public string Fax { get; set; }
+        public string Address { get; set; }
 #endregion
 
 #region FK

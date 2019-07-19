@@ -7,5 +7,6 @@ export interface Supplier {
     dateOfBirth: Date;
     telephone: string;
     fax: string;
+    address: string;
     countryId: number;
 }

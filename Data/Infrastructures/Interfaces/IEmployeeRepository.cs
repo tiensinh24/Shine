@@ -12,6 +12,8 @@ namespace Shine.Data.Infrastructures.Interfaces {
 
         Task<IEnumerable<EmployeeSelectDto>> GetEmployeesSelectAsync();
 
+        Task<EmployeeListDto> GetEmployeeAsync(int employeeId);
+
 #endregion
 
 #region Actions

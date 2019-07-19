@@ -45,6 +45,14 @@ namespace Shine.Controllers {
             return Ok(query);
         }
 
+        [HttpGet("{employeeId}")]
+        public async Task<ActionResult<EmployeeListDto>> GetEmployee(int employeeId) 
+        {
+            var employee = await _repository.GetEmployeeAsync(employeeId);
+
+            return employee;
+        }
+
 #endregion
 
 #region Actions        

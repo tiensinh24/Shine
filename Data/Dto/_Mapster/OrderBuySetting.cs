@@ -43,6 +43,7 @@ namespace Shine.Data.Dto._Mapster
                         DateOfBirth = src.Person.DateOfBirth,
                         Telephone = src.Person.Telephone,
                         Fax = src.Person.Fax,
+                        Address = src.Person.Address,
                         CountryId = src.Person.Country.CountryId,
                         CountryName = src.Person.Country.CountryName,
                         ContinentName = src.Person.Country.ContinentName,
@@ -60,6 +61,7 @@ namespace Shine.Data.Dto._Mapster
                         FullName = src.Employee.FirstName + " " + src.Employee.LastName,
                         DateOfBirth = src.Employee.DateOfBirth,
                         Telephone = src.Employee.Telephone,
+                        Address = src.Employee.Address,
                         CountryId = src.Employee.CountryId,
                         CountryName = src.Employee.Country.CountryName,
                         DepartmentId = src.Employee.DepartmentId,
@@ -112,9 +114,12 @@ namespace Shine.Data.Dto._Mapster
                     dest => dest.Costs,
                     src => src.Costs.Select(c => new
                     {
+                        c.CostId,
                         c.Description,
                         c.Amount,
-                        c.Currency
+                        c.Currency,
+                        c.CostDate,
+                        c.Rate
                     })
                 )
                 .Map(

@@ -1,4 +1,3 @@
-import { ClickEvent } from 'angular-star-rating';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { OrderBuy } from 'src/app/_shared/intefaces/buy/order/order-buy';
@@ -8,12 +7,12 @@ import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { environment } from 'src/environments/environment';
 
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { SupplierSelect } from 'src/app/_shared/intefaces/buy/supplier/supplier-select';
 import { EmployeeSelect } from 'src/app/_shared/intefaces/public/employee-select';
 import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
+import { OrderBuyList } from 'src/app/_shared/intefaces/buy/order/order-buy-list';
 
 @Component({
   selector: 'app-order-buy-edit-dialog',
@@ -34,17 +33,16 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   // Star rating
   rating: number;
 
-  subscription: Subscription;
+  sub$ = new Subscription();
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private orderBuyService: OrderBuyService,
     private supplierService: SupplierService,
     private employeeService: EmployeeService,
     private dialogRef: MatDialogRef<OrderBuyEditDialogComponent>,
-    // Inject data from supplier-list component
-    @Inject(MAT_DIALOG_DATA) public dataFromDetail
+    // Inject data from parent component
+    @Inject(MAT_DIALOG_DATA) public parentData
   ) {}
 
   ngOnInit() {
@@ -52,16 +50,16 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.sub$.unsubscribe();
   }
 
   initialize() {
-    this.title = `Edit ${this.dataFromDetail.orderNumber}`;
+    this.title = `Edit ${this.parentData.orderNumber}`;
     this.createForm();
 
     this.updateForm();
 
-    this.getEmployees();
+    this.getEmployeesSelect();
 
     // Disable edit supplier because order lineitems will...
     this.getSuppliersSelect();
@@ -80,10 +78,20 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  getEmployees() {
-    this.subscription = this.employeeService.getEmployeesSelect().subscribe((employees: EmployeeSelect[]) => {
-      this.employees = this.filteredEmployees = employees;
-    });
+  getEmployeesSelect() {
+    this.sub$.add(
+      this.employeeService.getEmployeesSelect().subscribe((employees: EmployeeSelect[]) => {
+        this.employees = this.filteredEmployees = employees;
+      })
+    );
+  }
+
+  getSuppliersSelect() {
+    this.sub$.add(
+      this.supplierService.getSuppliersSelect().subscribe(res => {
+        this.suppliers = res;
+      })
+    );
   }
 
   createForm() {
@@ -93,35 +101,29 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       timeForPayment: ['', Validators.required],
       personId: ['', Validators.required],
       employee: [''],
-      rating: ['']
+      rating: [0]
     });
   }
 
   updateForm() {
-    this.rating = this.dataFromDetail.rating;
+    this.rating = this.parentData.rating;
 
     this.formGroup.setValue({
-      orderNumber: this.dataFromDetail.orderNumber,
-      dateOfIssue: this.dataFromDetail.dateOfIssue,
-      timeForPayment: this.dataFromDetail.timeForPayment,
-      personId: this.dataFromDetail.personId,
+      orderNumber: this.parentData.orderNumber,
+      dateOfIssue: this.parentData.dateOfIssue,
+      timeForPayment: this.parentData.timeForPayment,
+      personId: this.parentData.personId,
       employee: <EmployeeSelect>{
-        employeeId: this.dataFromDetail.employeeId,
-        fullName: this.dataFromDetail.employeeName
+        employeeId: this.parentData.employeeId,
+        fullName: this.parentData.employeeName
       },
-      rating: this.dataFromDetail.rating
-    });
-  }
-
-  getSuppliersSelect() {
-    this.subscription = this.supplierService.getSuppliersSelect().subscribe(res => {
-      this.suppliers = res;
+      rating: this.parentData.rating
     });
   }
 
   onSubmit() {
     const tempOrder = <OrderBuy>{
-      orderId: this.dataFromDetail.orderId,
+      orderId: this.parentData.orderId,
       orderNumber: this.formGroup.value.orderNumber,
       dateOfIssue: this.formGroup.value.dateOfIssue,
       timeForPayment: this.formGroup.value.timeForPayment,
@@ -130,32 +132,29 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       rating: this.formGroup.value.rating
     };
 
-    this.subscription = this.orderBuyService.updateOrder(tempOrder).subscribe(res => {
-      this.dialogRef.close(res);
-    });
+    this.sub$.add(
+      this.orderBuyService.updateOrder(tempOrder).subscribe((res: OrderBuy) => {
+        if (res) {
+          this.dialogRef.close(res);
+        } else {
+          this.dialogRef.close();
+        }
+      })
+    );
   }
 
   onCancel() {
     this.dialogRef.close();
   }
 
-  goToDetail() {
-    this.dialogRef.close();
-    this.router.navigate([`order-buy/${this.dataFromDetail.orderId}`]);
-  }
-
   get(name: string): AbstractControl {
     return this.formGroup.get(name);
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required')
-      ? 'You must enter a value'
-      : formControl.hasError('email')
-      ? 'Not a valid email'
-      : formControl.hasError('pattern')
-      ? 'Please enter a number!'
-      : '';
+  getErrorMessage(name: string, value: string) {
+    const control = this.formGroup.get(name);
+
+    return control.hasError('required') ? `${value} is required` : null;
   }
 
   displayFn(employee: EmployeeSelect): string | undefined {
