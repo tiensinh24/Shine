@@ -245,20 +245,30 @@ namespace Shine.Data.Infrastructures.Repositories
                         .Where(po => po.OrderId == orderId)
                         .Select(po => po.ProductId)).Contains(p.ProductId))
                 .ProjectToType<ProductSelectDto>()
+                .OrderBy(p => p.ProductName)
                 .ToListAsync();
 
             return products;
         }
 
+        public async Task<OrderBuyProducts> GetOrderProductAsync(ProductOrder productOrder){
+            var item = await _context.ProductOrders
+                .AsNoTracking()
+                .ProjectToType<OrderBuyProducts>()
+                .FirstOrDefaultAsync(i => i.OrderId == productOrder.OrderId && i.ProductId == productOrder.ProductId);
+
+            return item;
+        }
+
         #endregion
 
         #region Actions
-        public async Task<OrderBuyProducts> AddProductOrderAsync(ProductOrder productOrder)
+        public async Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder)
         {
             var lineItem = await _context.Set<ProductOrder>()
                 .AddAsync(productOrder);
 
-            return lineItem.Entity.Adapt<OrderBuyProducts>();
+            return lineItem.Entity;
         }
 
         public async Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders)
@@ -266,7 +276,7 @@ namespace Shine.Data.Infrastructures.Repositories
             await _context.Set<ProductOrder>().AddRangeAsync(productOrders);
         }
 
-        public async Task<OrderBuyProducts> UpdateProductOrderAsync(ProductOrder productOrder)
+        public async Task<ProductOrder> UpdateProductOrderAsync(ProductOrder productOrder)
         {
             var dbItem = await _context.ProductOrders
                 .FirstOrDefaultAsync(p => p.ProductId == productOrder.ProductId
@@ -282,17 +292,20 @@ namespace Shine.Data.Infrastructures.Repositories
                 dbItem.Unit = productOrder.Unit;
             }
 
-            return dbItem.Adapt<OrderBuyProducts>();
+            return dbItem;
         }
 
-        public async Task DeleteProductOrderAsync(int orderId, int productId)
+        public async Task<bool> DeleteProductOrderAsync(int orderId, int productId)
         {
             var productOrder = await _context.Set<ProductOrder>()
                 .FirstOrDefaultAsync(p => p.OrderId == orderId && p.ProductId == productId);
             if (productOrder != null)
             {
                 _context.Set<ProductOrder>().Remove(productOrder);
+
+                return true;
             }
+            return false;
         }
 
         #endregion

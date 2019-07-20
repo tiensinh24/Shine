@@ -1,5 +1,5 @@
-import { fromEvent, merge, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { fromEvent, merge, Subscription, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap, catchError } from 'rxjs/operators';
 import { OrderBuy } from 'src/app/_shared/intefaces/buy/order/order-buy';
 import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 
@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SupplierSelect } from 'src/app/_shared/intefaces/buy/supplier/supplier-select';
 import { EmployeeSelect } from 'src/app/_shared/intefaces/public/employee-select';
 import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
-import { OrderBuyList } from 'src/app/_shared/intefaces/buy/order/order-buy-list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-order-buy-edit-dialog',
@@ -38,7 +38,6 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private orderBuyService: OrderBuyService,
-    private supplierService: SupplierService,
     private employeeService: EmployeeService,
     private dialogRef: MatDialogRef<OrderBuyEditDialogComponent>,
     // Inject data from parent component
@@ -60,9 +59,6 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
     this.updateForm();
 
     this.getEmployeesSelect();
-
-    // Disable edit supplier because order lineitems will...
-    this.getSuppliersSelect();
 
     // Filter employee autocomplete
     merge(fromEvent(this.employeeInput.nativeElement, 'keyup'), fromEvent(this.employeeInput.nativeElement, 'click'))
@@ -86,20 +82,12 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
     );
   }
 
-  getSuppliersSelect() {
-    this.sub$.add(
-      this.supplierService.getSuppliersSelect().subscribe(res => {
-        this.suppliers = res;
-      })
-    );
-  }
-
   createForm() {
     this.formGroup = this.fb.group({
       orderNumber: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       timeForPayment: ['', Validators.required],
-      personId: ['', Validators.required],
+      supplierName: [{ value: '', disabled: true }],
       employee: [''],
       rating: [0]
     });
@@ -112,7 +100,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: this.parentData.orderNumber,
       dateOfIssue: this.parentData.dateOfIssue,
       timeForPayment: this.parentData.timeForPayment,
-      personId: this.parentData.personId,
+      supplierName: this.parentData.supplierName,
       employee: <EmployeeSelect>{
         employeeId: this.parentData.employeeId,
         fullName: this.parentData.employeeName
@@ -127,7 +115,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: this.formGroup.value.orderNumber,
       dateOfIssue: this.formGroup.value.dateOfIssue,
       timeForPayment: this.formGroup.value.timeForPayment,
-      personId: this.formGroup.value.personId,
+      personId: this.parentData.personId,
       employeeId: this.formGroup.value.employee.employeeId,
       rating: this.formGroup.value.rating
     };
@@ -139,12 +127,12 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
         } else {
           this.dialogRef.close();
         }
-      })
+      }, catchError(error => of([error])))
     );
   }
 
   onCancel() {
-    this.dialogRef.close();
+    this.dialogRef.close('cancel');
   }
 
   get(name: string): AbstractControl {

@@ -5,7 +5,6 @@ using Shine.Data.Dto.Employees;
 using Shine.Data.Dto.Orders.Buy;
 using Shine.Data.Dto.Orders.Buy.Reports;
 using Shine.Data.Dto.Suppliers;
-using Shine.Data.Dto.Suppliers.Reports;
 using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster
@@ -91,7 +90,7 @@ namespace Shine.Data.Dto._Mapster
                         Tax = p.Tax,
                         Rate = p.Rate,
                         Unit = p.Unit,
-                        Total = p.Price * p.Quantity * (1 + p.Tax) * p.Rate
+                        Total = p.Price * p.Quantity * (1 + p.Tax) 
                     })
                 )
                 .Map(
@@ -114,6 +113,7 @@ namespace Shine.Data.Dto._Mapster
                     dest => dest.Costs,
                     src => src.Costs.Select(c => new
                     {
+                        c.OrderId,
                         c.CostId,
                         c.Description,
                         c.Amount,

@@ -9,4 +9,4 @@ import { SharedModule } from '../../shared.module';
   exports: [OrderProductsEditDialogComponent],
   imports: [SharedModule, MaterialSharedModule]
 })
-export class OrderProductsEditDialogSharedModule {}
+export class OrderProductsEditDialogModule {}

@@ -5,6 +5,7 @@ namespace Shine.Data.Dto.Costs
     public class CostDto
     {
         public int CostId { get; set; }
+        public int OrderId { get; set; }
         public DateTime CostDate { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }

@@ -50,16 +50,18 @@ namespace Shine.Data.Infrastructures.Interfaces
 
         Task<IEnumerable<ProductSelectDto>> GetProductsNotAddedToOrderBySupplierForSelect(int orderId, int supplierId);
 
+        Task<OrderBuyProducts> GetOrderProductAsync(ProductOrder productOrder);
+
 #endregion
 
 #region Actions
-        Task<OrderBuyProducts> AddProductOrderAsync(ProductOrder productOrder);
+        Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder);
 
         Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders);
 
-        Task<OrderBuyProducts> UpdateProductOrderAsync(ProductOrder productOrder);
+        Task<ProductOrder> UpdateProductOrderAsync(ProductOrder productOrder);
 
-        Task DeleteProductOrderAsync(int orderId, int productId);
+        Task<bool> DeleteProductOrderAsync(int orderId, int productId);
 
 #endregion
 

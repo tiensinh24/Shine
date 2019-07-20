@@ -82,7 +82,7 @@ namespace Shine.Controllers
         [HttpGet("is-order-number-exist")]
         public async Task<bool> IsOrderNumberExist(string orderNumber)
         {
-          return await _repository.IsOrderNumberExistAsync(orderNumber);
+            return await _repository.IsOrderNumberExistAsync(orderNumber);
         }
 
         #endregion
@@ -164,26 +164,36 @@ namespace Shine.Controllers
                 await _repository.CommitAsync();
             }
 
-            return lineItem;
+            var rs = await _repository.GetOrderProductAsync(lineItem);
+            return rs;
         }
 
         [HttpPut("{orderId}/products/{productId}")]
         public async Task<ActionResult<OrderBuyProducts>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder)
         {
-            var lineItem = await _repository.UpdateProductOrderAsync(productOrder);
+            var updateItem = await _repository.UpdateProductOrderAsync(productOrder);
 
-            if (lineItem == null) return NotFound();
+            if (updateItem == null) return NotFound();
 
             await _repository.CommitAsync();
 
-            return lineItem;
+            var itemReturn = await _repository.GetOrderProductAsync(updateItem);
+
+            return itemReturn;
         }
 
         [HttpDelete("{orderId}/delete/{productId}")]
-        public async Task DeleteProductOrder(int orderId, int productId)
+        public async Task<bool> DeleteProductOrder(int orderId, int productId)
         {
-            await _repository.DeleteProductOrderAsync(orderId, productId);
-            await _repository.CommitAsync();
+            var isSuccess = await _repository.DeleteProductOrderAsync(orderId, productId);
+
+            if (isSuccess == true)
+            {
+                await _repository.CommitAsync();
+            }
+
+            return isSuccess;
+
         }
 
         #endregion

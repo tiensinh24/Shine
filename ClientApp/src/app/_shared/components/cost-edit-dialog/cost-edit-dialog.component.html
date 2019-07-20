@@ -1,0 +1,52 @@
+<!-- Dialog title -->
+<h1 mat-dialog-title class="mat-display-1">{{ title }}</h1>
+
+<mat-dialog-content>
+  <form class="edit-form" [formGroup]="costForm" fxLayout="column" novalidate>
+    <!-- Cost Date -->
+    <mat-form-field appearance="outline">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="costPicker" placeholder="Choose a date" formControlName="costDate" required />
+      <mat-datepicker-toggle matSuffix [for]="costPicker"></mat-datepicker-toggle>
+      <mat-datepicker locale="en-GB" #costPicker></mat-datepicker>
+      <mat-error *ngIf="get('costDate').invalid">{{ getErrorMessage('costDate', 'Date') }}</mat-error>
+    </mat-form-field>
+    <!-- Description -->
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput type="text" placeholder="Description" formControlName="description" required />
+      <mat-error *ngIf="get('description').invalid">{{ getErrorMessage('description', 'Description') }}</mat-error>
+    </mat-form-field>
+    <!-- Amount -->
+    <mat-form-field>
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" placeholder="Amount" formControlName="amount" required />
+      <mat-error *ngIf="get('amount').invalid">{{ getErrorMessage('amount', 'Amount') }}</mat-error>
+    </mat-form-field>
+    <!-- Rate -->
+    <mat-form-field>
+      <mat-label>Rate</mat-label>
+      <input matInput type="number" placeholder="Rate" formControlName="rate" required />
+      <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage('rate', 'Rate') }}</mat-error>
+    </mat-form-field>
+    <!-- Currency -->
+    <div class="gender-group" fxLayout="row" fxLayoutGap="32px" fxFlex="50">
+      <mat-label>Currency</mat-label>
+      <mat-radio-group fxLayoutGap="32px" formControlName="currency">
+        <mat-radio-button [value]="true">USD</mat-radio-button>
+        <mat-radio-button [value]="false">VND</mat-radio-button>
+      </mat-radio-group>
+      <mat-error *ngIf="get('currency').invalid">{{ getErrorMessage(get('currency', 'Currency')) }}</mat-error>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<!-- Action Buttons -->
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!costForm.valid">
+    Submit
+  </button>
+  <button mat-button (click)="onCancel()">
+    Cancel
+  </button>
+</mat-dialog-actions>

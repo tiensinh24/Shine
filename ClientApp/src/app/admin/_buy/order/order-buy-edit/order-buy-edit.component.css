@@ -77,4 +77,8 @@
 .main .main-container .childs .payment .content mat-expansion-panel table.payment-table {
   width: 100%;
 }
+
+.main .main-container .childs .debt .content {
+  padding-left: 2rem;
+}
 /*# sourceMappingURL=order-buy-edit.component.css.map */

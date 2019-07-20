@@ -10,9 +10,18 @@ import { CustomCurrencyPipe } from './pipes/custom-currency.pipe';
 import { GenderPipe } from './pipes/gender.pipe';
 import { ImportPipe } from './pipes/import.pipe';
 import { MonthPipe } from './pipes/month.pipe';
+import { DisableControlDirective } from './directives/disable-control.directive';
 
 @NgModule({
-  declarations: [GenderPipe, AgePipe, CustomCurrencyPipe, ImportPipe, MonthPipe, MatAutocompleteTriggerEnforceSelectionDirective],
+  declarations: [
+    GenderPipe,
+    AgePipe,
+    CustomCurrencyPipe,
+    ImportPipe,
+    MonthPipe,
+    MatAutocompleteTriggerEnforceSelectionDirective,
+    DisableControlDirective
+  ],
   imports: [
     CommonModule,
 
@@ -36,6 +45,7 @@ import { MonthPipe } from './pipes/month.pipe';
     CustomCurrencyPipe,
     ImportPipe,
     MatAutocompleteTriggerEnforceSelectionDirective,
+    DisableControlDirective,
 
     CommonModule,
 

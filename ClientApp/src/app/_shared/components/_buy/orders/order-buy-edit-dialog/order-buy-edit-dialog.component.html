@@ -43,7 +43,7 @@
         #employeeInput
         required
       />
-      <!-- <mat-error *ngIf="get('employee').invalid">{{ getErrorMessage(get('employee', 'Employee')) }}</mat-error> -->
+      <mat-error *ngIf="get('employee').invalid">Employee is required</mat-error>
     </mat-form-field>
 
     <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayFn">
@@ -53,11 +53,7 @@
     <!-- PersonId -->
     <mat-form-field appearance="outline">
       <mat-label>Supplier</mat-label>
-      <mat-select placeholder="Select a supplier" formControlName="personId" disabled>
-        <mat-option *ngFor="let supplier of suppliers" [value]="supplier.personId">
-          {{ supplier.fullName }}
-        </mat-option>
-      </mat-select>      
+      <input matInput formControlName="supplierName" />
     </mat-form-field>
   </form>
 </mat-dialog-content>

@@ -1,3 +1,4 @@
+using System.Linq;
 using Mapster;
 
 using Shine.Data.Dto.Orders.Buy;
@@ -12,6 +13,7 @@ namespace Shine.Data.Dto._Mapster
         {
             TypeAdapterConfig<ProductOrder, OrderBuyProducts>.NewConfig()
                 .Map(dest => dest.ProductName, src => src.Product.ProductName)
+                .Map(dest => dest.ProductPhotoUrl, src => src.Product.Photos.FirstOrDefault(pt => pt.IsMain == true).PhotoUrl)
                 .Map(dest => dest.Specification, src => src.Product.Specification)
                 .Map(dest => dest.Total, src => src.Quantity * src.Price * (1 + src.Tax));
         }

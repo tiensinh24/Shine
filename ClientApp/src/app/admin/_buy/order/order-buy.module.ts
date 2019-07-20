@@ -5,7 +5,7 @@ import { OrderBuyRoutingModule } from './order-buy-routing.module';
 import { OrderBuyComponent } from './order-buy.component';
 import { NgModule } from '@angular/core';
 import { OrderBuyEditDialogSharedModule } from 'src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog-shared.module';
-import { OrderProductsEditDialogSharedModule } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog-shared.module';
+import { OrderProductsEditDialogModule } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.module';
 import { PaymentEditDialogSharedModule } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog-shared.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';
@@ -16,6 +16,7 @@ import { OrderBuyAddCostsComponent } from './order-buy-create/order-buy-add-cost
 import { StarRatingModule } from 'angular-star-rating';
 import { OrderBuyEditComponent } from './order-buy-edit/order-buy-edit.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { CostEditDialogModule } from 'src/app/_shared/components/cost-edit-dialog/cost-edit-dialog.module';
 
 @NgModule({
   declarations: [
@@ -35,8 +36,9 @@ import { GoogleChartsModule } from 'angular-google-charts';
 
     // Dialog
     OrderBuyEditDialogSharedModule,
-    OrderProductsEditDialogSharedModule,
+    OrderProductsEditDialogModule,
     PaymentEditDialogSharedModule,
+    CostEditDialogModule,
 
     // Material
     MaterialSharedModule,

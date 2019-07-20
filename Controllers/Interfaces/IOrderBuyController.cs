@@ -47,7 +47,7 @@ namespace Shine.Controllers.Interfaces
 
         Task<ActionResult<OrderBuyProducts>> UpdateProductOrder(int orderId, int productId, [FromBody] ProductOrder productOrder);
 
-        Task DeleteProductOrder(int orderId, int productId);
+        Task<bool> DeleteProductOrder(int orderId, int productId);
 
         #endregion
 

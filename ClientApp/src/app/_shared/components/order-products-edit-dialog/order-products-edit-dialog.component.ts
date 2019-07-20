@@ -59,7 +59,7 @@ export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.formGroup = this.fb.group({
-      orderId: [{ value: '', disabled: true }],
+      orderId: [''],
       productId: ['', Validators.required],
       quantity: ['', Validators.required],
       price: ['', Validators.required],
@@ -79,11 +79,14 @@ export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
       rate: this.parentData.rate,
       unit: this.parentData.unit
     });
+
+    if (this.parentData.edit) {
+      this.formGroup.controls.productId.disable();
+    }
   }
 
   onSubmit() {
     const productOrder = <ProductOrder>{
-      orderId: this.parentData.orderId,
       productId: this.formGroup.value.productId,
       quantity: this.formGroup.value.quantity,
       price: this.formGroup.value.price,
@@ -93,10 +96,15 @@ export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
     };
 
     if (this.parentData.edit) {
+      productOrder.orderId = this.parentData.orderId;
+      productOrder.productId = this.parentData.productId;
+
       this.subscription = this.orderService.updateOrderProduct(productOrder).subscribe(res => {
         this.dialogRef.close(res);
       });
     } else {
+      productOrder.orderId = this.parentData.orderId;
+
       this.subscription = this.orderService.addOrderProduct(productOrder).subscribe(res => {
         this.dialogRef.close(res);
       });
@@ -104,20 +112,16 @@ export class OrderProductsEditDialogComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.dialogRef.close();
+    this.dialogRef.close('cancel');
   }
 
   get(name: string): AbstractControl {
     return this.formGroup.get(name);
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required')
-      ? 'You must enter a value'
-      : formControl.hasError('email')
-      ? 'Not a valid email'
-      : formControl.hasError('pattern')
-      ? 'Please enter a number!'
-      : '';
+  getErrorMessage(name: string, value: string) {
+    const control = this.formGroup.get(name);
+
+    return control.hasError('required') ? `${value} is required` : null;
   }
 }
