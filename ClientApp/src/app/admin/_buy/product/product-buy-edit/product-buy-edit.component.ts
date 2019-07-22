@@ -192,8 +192,12 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCancel() {
-    this.updateForm(this.product);
+  resetForm() {
+    if (this.product) {
+      this.updateForm(this.product);
+    } else {
+      this.formGroup.reset();
+    }
   }
 
   deletePhoto(photoId: number) {
@@ -228,8 +232,11 @@ export class ProductBuyEditComponent implements OnInit, OnDestroy {
     return this.formGroup.get(name);
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required') ? 'You must enter a value' : formControl.hasError('email') ? 'Not a valid email' : formControl.hasError('pattern') ? 'Please enter a number!' : '';
+  getErrorMessage(name: string, value: string) {
+    const control = this.formGroup.get(name);
+
+    return control.hasError('required') ? `${value} is required` : null;
+    
   }
 
   displayFn(category: CategoryBuy): string | undefined {

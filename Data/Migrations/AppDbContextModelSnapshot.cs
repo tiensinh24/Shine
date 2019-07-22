@@ -364,6 +364,8 @@ namespace Shine.Data.Migrations
 
                     b.Property<int>("DepartmentId");
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("FirstName");
 
                     b.Property<bool>("Gender");
@@ -515,6 +517,8 @@ namespace Shine.Data.Migrations
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("date");
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("Fax");
 

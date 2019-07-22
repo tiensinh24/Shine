@@ -1,13 +1,16 @@
 using System.Linq;
 
 using Mapster;
+using Shine.Data.Dto.Photos;
 using Shine.Data.Dto.Suppliers;
 using Shine.Data.Models;
 
 namespace Shine.Data.Dto._Mapster
 {
-    public static class SupplierSetting {
-        public static void Setting() {
+    public static class SupplierSetting
+    {
+        public static void Setting()
+        {
             TypeAdapterConfig<Supplier, SupplierListDto>.NewConfig()
                 .Map(
                     dest => dest.FullName, src => src.FirstName + " " + src.LastName
@@ -39,8 +42,7 @@ namespace Shine.Data.Dto._Mapster
                 )
                 .Map(
                     dest => dest.Photos,
-                    src => src.Photos.Select(p => new { p.PersonId, p.PhotoId, p.PhotoUrl, p.IsMain })
-                    .OrderByDescending(p => p.IsMain)
+                    src => src.Photos.OrderByDescending(p => p.IsMain).Adapt<PhotoForPersonDto>()
                 ).Map(
                     dest => dest.Rating,
                     src => src.Orders.Count() > 0 ? src.Orders.Average(o => o.Rating) : 0
@@ -51,8 +53,8 @@ namespace Shine.Data.Dto._Mapster
                     dest => dest.FullName, src => src.FirstName + " " + src.LastName
                 );
 
-            
-          
+
+
 
         }
     }

@@ -61,42 +61,53 @@
       </ng-container>
       <!-- fullName Column -->
       <ng-container matColumnDef="fullName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>FullName</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>FullName</th>
         <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
       </ng-container>
       <!-- Gender Column -->
       <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Gender</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
         <td mat-cell *matCellDef="let row">{{ row.gender | gender }}</td>
       </ng-container>
       <!-- dateOfBirth Column -->
       <ng-container matColumnDef="dateOfBirth">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Birthday</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Birthday</th>
         <td mat-cell *matCellDef="let row">{{ row.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
       </ng-container>
       <!-- personNumber Column -->
       <ng-container matColumnDef="personNumber">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Supplier Number</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplier Number</th>
         <td mat-cell *matCellDef="let row">{{ row.personNumber }}</td>
       </ng-container>
       <!-- telephone Column -->
       <ng-container matColumnDef="telephone">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Telephone</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Telephone</th>
         <td mat-cell *matCellDef="let row">{{ row.telephone }}</td>
       </ng-container>     
+     
       <!-- countryName Column -->
       <ng-container matColumnDef="countryName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Country</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
         <td mat-cell *matCellDef="let row">{{ row.countryName }}</td>
       </ng-container>
       <!-- continentName Column -->
       <ng-container matColumnDef="continentName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Continent</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Continent</th>
         <td mat-cell *matCellDef="let row">{{ row.continentName }}</td>
+      </ng-container>
+       <!-- email column -->
+       <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+        </ng-container> 
+      <!-- address column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef> Address </th>
+        <td mat-cell *matCellDef="let row"> {{row.address}} </td>
       </ng-container>
       <!-- rating Collumn -->
       <ng-container matColumnDef="rating">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
         <td mat-cell *matCellDef="let row">
           <star-rating [rating]="row.rating" [showHalfStars]="true" [readOnly]="true"></star-rating>
         </td>
@@ -149,8 +160,11 @@
       ></mat-paginator>
 
       <mat-form-field style="padding: 0 1rem;" fxFlex>
-        <span matPrefix><mat-icon>search</mat-icon></span>
-        <input matInput type="search" placeholder="Search suppliers" #input />
+          <span matPrefix><mat-icon>search</mat-icon></span>
+          <span matSuffix matTooltip="Clear" (click)="clearFilter()" *ngIf="input.value"
+          ><button mat-button mat-icon-button><mat-icon>clear</mat-icon></button></span
+          >
+          <input matInput type="search" placeholder="Search suppliers" #input />
       </mat-form-field>
     </div>
   </mat-card>

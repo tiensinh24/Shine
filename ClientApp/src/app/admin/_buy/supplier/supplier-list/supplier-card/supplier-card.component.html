@@ -8,8 +8,8 @@
 
       <mat-form-field fxFlex>
         <span matPrefix><mat-icon>search</mat-icon></span>
-        <span matSuffix matTooltip="Clear" class="clear-filter-icon" (click)="clearFilter()" *ngIf="input.value"
-          ><mat-icon>clear</mat-icon></span
+        <span matSuffix matTooltip="Clear" (click)="clearFilter()" *ngIf="input.value"
+          ><button mat-button mat-icon-button><mat-icon>clear</mat-icon></button></span
         >
         <input matInput type="search" placeholder="Search suppliers" #input />
       </mat-form-field>
@@ -59,9 +59,22 @@
           </tr>
           <tr>
             <td>
+              <span><mat-icon>email</mat-icon></span>
+            </td>
+            <td>{{ supplier.email }}</td>
+          </tr>
+
+          <tr>
+            <td>
               <span><mat-icon>language</mat-icon></span>
             </td>
             <td>{{ supplier.countryName }} - {{ supplier.continentName }}</td>
+          </tr>
+          <tr>
+            <td>
+              <span><mat-icon>my_location</mat-icon></span>
+            </td>
+            <td>{{ supplier.address }}</td>
           </tr>
         </table>
       </mat-card-content>

@@ -7,7 +7,7 @@ using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Employees;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -47,11 +47,76 @@ namespace Shine.Data.Infrastructures.Repositories
             return employees;
         }
 
+        public async Task<PagedList<EmployeeListDto>> GetPagedEmployeeAsync(PagingParams pagingParams, SortParams sortParams, string filter)
+        {
+            var source = _repository
+                .AsNoTracking()
+                .ProjectToType<EmployeeListDto>();
+
+            switch (sortParams.SortOrder)
+            {
+                case "asc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "fullName":
+                            source = source.OrderBy(e => e.FullName);
+                            break;
+                        case "dateOfBirth":
+                            source = source.OrderBy(e => e.DateOfBirth);
+                            break;
+                        case "countryName":
+                            source = source.OrderBy(e => e.CountryName);
+                            break;
+                        
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn)
+                    {
+                        case "fullName":
+                            source = source.OrderByDescending(e => e.FullName);
+                            break;
+                        case "dateOfBirth":
+                            source = source.OrderByDescending(e => e.DateOfBirth);
+                            break;
+                        case "countryName":
+                            source = source.OrderByDescending(e => e.CountryName);
+                            break;
+                        
+                    }
+                    break;
+
+                default:
+                    source = source.OrderBy(e => e.FullName);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                source = source.Where(s => s.FullName.ToLower().Contains(filter.ToLower()));
+            }
+
+            return await PagedList<EmployeeListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
+
+
+        }
+
         public async Task<EmployeeListDto> GetEmployeeAsync(int employeeId)
         {
             var employee = await _repository
                 .AsNoTracking()
                 .ProjectToType<EmployeeListDto>()
+                .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
+
+            return employee;
+        }
+
+        public async Task<EmployeeDetailDto> GetEmployeeDetailAsync(int employeeId)
+        {
+            var employee = await _repository
+                .AsNoTracking()
+                .ProjectToType<EmployeeDetailDto>()
                 .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
 
             return employee;
@@ -80,6 +145,21 @@ namespace Shine.Data.Infrastructures.Repositories
             return employee.Adapt<EmployeeDto>();
         }
 
+        public async Task<bool> DeleteEmployeesAsync(string[] ids)
+        {
+            var employees = await _context.Set<Employee>()
+                .Where(s => ids.Contains(s.EmployeeId.ToString()))
+                .ToListAsync();
+
+            if (employees != null)
+            {
+                _context.Set<Employee>().RemoveRange(employees);
+
+                return true;
+            }
+            return false;
+        }
+
         public async Task<EmployeeDto> UpdateEmployeeAsync(Employee employee)
         {
             var query = await _repository
@@ -98,6 +178,8 @@ namespace Shine.Data.Infrastructures.Repositories
 
             return query.Adapt<EmployeeDto>();
         }
+
+
 
         #endregion
 

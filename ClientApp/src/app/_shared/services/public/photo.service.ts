@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Photo } from '../../intefaces/public/photo';
 import { PhotoForPerson } from '../../intefaces/public/photo-for-person';
 import { PhotoForProduct } from '../../intefaces/public/photo-for-product';
+import { PhotoForEmployee } from '../../intefaces/public/photo-for-employee';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class PhotoService {
     return this.http.get<PhotoForPerson[]>(`${this.baseUrl}api/photo/person/${personId}`);
   }
 
+  getPhotosForEmployee(employeeId: number): Observable<PhotoForEmployee[]> {
+    return this.http.get<PhotoForEmployee[]>(`${this.baseUrl}api/photo/employee/${employeeId}`);
+  }
+
   getPhotosForProduct(productId: number): Observable<PhotoForProduct[]> {
     return this.http.get<PhotoForProduct[]>(`${this.baseUrl}api/photo/product/${productId}`);
   }
@@ -28,6 +33,10 @@ export class PhotoService {
 
   setMainPhotoForPerson(photo: PhotoForPerson): Observable<PhotoForPerson> {
     return this.http.put<PhotoForPerson>(`${this.baseUrl}api/photo/person/set-main`, photo);
+  }
+
+  setMainPhotoForEmployee(photo: PhotoForEmployee): Observable<PhotoForEmployee> {
+    return this.http.put<PhotoForEmployee>(`${this.baseUrl}api/photo/employee/set-main`, photo);
   }
 
   setMainPhotoForProduct(photo: PhotoForProduct): Observable<PhotoForProduct> {

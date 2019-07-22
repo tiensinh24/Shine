@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Shine.Controllers.Interfaces;
 using Shine.Data;
+using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Employees;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
@@ -45,10 +46,31 @@ namespace Shine.Controllers {
             return Ok(query);
         }
 
+        [HttpGet("paged")]
+        public async Task<ActionResult<Paged<EmployeeListDto>>> GetPagedEmployees(
+            [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter)
+        {
+            var query = await _repository.GetPagedEmployeeAsync(pagingParams, sortParams, filter);
+
+            return new Paged<EmployeeListDto>(query);
+        }
+
+        
+
         [HttpGet("{employeeId}")]
         public async Task<ActionResult<EmployeeListDto>> GetEmployee(int employeeId) 
         {
             var employee = await _repository.GetEmployeeAsync(employeeId);
+
+            return employee;
+        }
+
+        [HttpGet("{employeeId}/detail")]
+        public async Task<ActionResult<EmployeeDetailDto>> GetEmployeeDetail(int employeeId)
+        {
+            var employee = await _repository.GetEmployeeDetailAsync(employeeId);
+
+            if (employee == null) return NotFound();
 
             return employee;
         }
@@ -91,8 +113,21 @@ namespace Shine.Controllers {
             return employee;
         }
 
-#endregion
+        [HttpDelete("delete-all")]
+        public async Task<bool> DeleteEmployees([FromHeader] string[] ids)
+        {
+            var query = await _repository.DeleteEmployeesAsync(ids);
 
-#endregion
+            if (query)
+            {
+                await _repository.CommitAsync();
+            }
+
+            return query;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

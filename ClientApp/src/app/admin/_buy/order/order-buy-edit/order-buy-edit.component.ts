@@ -18,6 +18,7 @@ import { CostEditDialogComponent } from 'src/app/_shared/components/cost-edit-di
 import { CostService } from 'src/app/_shared/services/public/cost.service';
 import { PaymentService } from 'src/app/_shared/services/public/payment.service';
 import { GoogleChartComponent } from 'angular-google-charts';
+import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
 
 @Component({
   selector: 'app-order-buy-edit',
@@ -28,7 +29,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   // Subsctiptions
   sub$ = new Subscription();
 
-  @ViewChild('chart', {static: false}) chart: GoogleChartComponent;
+  @ViewChild('chart', { static: false }) chart: GoogleChartComponent;
 
   // Variables
   order: OrderBuyDetail;
@@ -254,16 +255,11 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
   private refreshOrderValue() {
     this.order.orderTotal = this.order.products.reduce((a, b) => a + b.total, 0);
+    this.refreshPieChart();
   }
 
   toggleValueExpansion() {
     this.showValueExpansion = !this.showValueExpansion;
-  }
-
-  // *Payments
-
-  togglePaymentExpansion() {
-    this.showPaymentExpansion = !this.showPaymentExpansion;
   }
 
   // *Costs
@@ -309,7 +305,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
           // Add new
           if (cost === undefined) {
             this.order.costs.push(res);
-            this.order.costs.sort((a, b) => (a.costDate > b.costDate ? 1 : -1));
+            this.order.costs.sort((a, b) => (a.costDate > b.costDate ? -1 : 1));
 
             this.snackBar.open('Cost has been added', 'Success');
           } else {
@@ -325,10 +321,6 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
           // Refresh order value
           this.refreshTotalCost();
-
-          this.pieChartData.shift();
-          this.pieChartData.push(['Value', this.order.orderTotal], ['Cost', this.order.costTotal]);
-          
         } else {
           this.snackBar.open('An error has occurred, please try again', 'Error');
         }
@@ -352,7 +344,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
           this.snackBar.open('Cost deleted', 'Success');
         } else {
-          this.snackBar.open(`Can't delete cost, please try again`, 'Success');
+          this.snackBar.open(`Can't delete cost, please try again`, 'Error');
         }
       })
     );
@@ -360,9 +352,111 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
   private refreshTotalCost() {
     this.order.costTotal = this.order.costs.reduce((a, b) => a + b.amount, 0);
+    this.refreshPieChart();
   }
 
   toggleCostExpansion() {
     this.showCostExpansion = !this.showCostExpansion;
+  }
+
+  // *Payments
+  // No parameter mean add and other is for edit
+  addEditPayment(payment?: Payment) {
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      minWidth: '800px',
+      minHeight: '560px',
+      panelClass: 'custom-dialog'
+    };
+
+    // Edit mode
+    if (payment !== undefined) {
+      dialogConfig.data = {
+        paymentId: payment.paymentId,
+        orderId: payment.orderId,
+        orderNumber: this.order.orderNumber,
+        paymentDate: payment.paymentDate,
+        amount: payment.amount,
+        currency: payment.currency,
+        rate: payment.rate,
+        edit: true
+      };
+    } else {
+      dialogConfig.data = {
+        orderId: this.order.orderId,
+        orderNumber: this.order.orderNumber,
+        edit: false
+      };
+    }
+
+    const dialogRef = this.dialog.open(PaymentEditDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(res => {
+      // 'cancel' is a string return from dialog when cancel button is clicked
+      if (res !== 'cancel') {
+        if (res) {
+          // Add new
+          if (payment === undefined) {
+            this.order.payments.push(res);
+            this.order.payments.sort((a, b) => (a.paymentDate > b.paymentDate ? -1 : 1));
+
+            this.snackBar.open('Payment has been added', 'Success');
+          } else {
+            // Remove & add new updated payment
+            const index = this.order.payments.findIndex(c => c.paymentId === res.paymentId);
+            this.order.payments.splice(index, 1, res);
+
+            this.snackBar.open('Payment has been udpated', 'Success');
+          }
+
+          // Refresh mat-table data
+          this.paymentDataSource._updateChangeSubscription();
+
+          // Refresh total payment
+          this.refreshTotalPayment();
+        } else {
+          this.snackBar.open('An error has occurred, please try again', 'Error');
+        }
+      }
+    });
+  }
+
+  deletePayment(payment: Payment) {
+    this.sub$.add(
+      this.paymentService.deletePayment(payment.paymentId).subscribe((res: boolean) => {
+        if (res) {
+          // Remove payment
+          const index = this.order.payments.findIndex(c => c.paymentId === payment.paymentId);
+          this.order.payments.splice(index, 1);
+
+          // Refresh mat-table data
+          this.paymentDataSource._updateChangeSubscription();
+
+          // Update total payment
+          this.refreshTotalPayment();
+
+          this.snackBar.open('Payment deleted', 'Success');
+        } else {
+          this.snackBar.open(`Can't delete payment, please try again`, 'Error');
+        }
+      })
+    );
+  }
+
+  private refreshTotalPayment() {
+    this.order.paymentTotal = this.order.payments.reduce((a, b) => a + b.amount, 0);
+  }
+
+  togglePaymentExpansion() {
+    this.showPaymentExpansion = !this.showPaymentExpansion;
+  }
+
+  // *Chart
+
+  private refreshPieChart() {
+    this.pieChartData = Object.assign([[]], [['Value', this.order.orderTotal], ['Cost', this.order.costTotal]]);
   }
 }

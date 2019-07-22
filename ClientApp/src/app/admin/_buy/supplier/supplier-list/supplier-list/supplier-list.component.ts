@@ -31,12 +31,29 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     { key: 'fullName', value: 'Full Name' },
     { key: 'dateOfBirth', value: 'Birthday' },
     { key: 'telephone', value: 'Telephone' },
+    
     { key: 'countryName', value: 'Country' },
     { key: 'continentName', value: 'Continent' },
+    {key: 'email', value: 'Email'},
+    {key: 'address', value: 'Address'},
     { key: 'rating', value: 'Rating' },
     { key: 'actions', value: 'Actions' }
   ];
-  columnsToDisplay = ['select', 'photo', 'personNumber', 'gender', 'fullName', 'dateOfBirth', 'telephone', 'countryName', 'continentName', 'rating', 'actions'];
+  columnsToDisplay = [
+    'select',
+    'photo',
+    'personNumber',
+    'gender',
+    'fullName',
+    'dateOfBirth',
+    'telephone',    
+    'countryName',
+    'continentName',
+    'email',
+    'address',
+    'rating',
+    'actions'
+  ];
   selection = new SelectionModel<SupplierList>(true, []);
   numRows: number;
 
@@ -117,7 +134,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   }
 
   onEdit(supplier: Supplier) {
-    this.router.navigate(['/admin/supplier/edit', supplier.personId]);
+    this.router.navigate([`/admin/supplier/${supplier.personId}/edit`]);
   }
 
   onDelete(supplier: Supplier) {
@@ -228,5 +245,10 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     } else {
       this.selectAll();
     }
+  }
+
+  clearFilter() {
+    this.input.nativeElement.value = null;
+    this.loadSuppliersPage();
   }
 }

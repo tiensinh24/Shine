@@ -1,0 +1,101 @@
+mat-card.main {
+  height: calc(100vh - (55px + 8rem));
+  overflow: auto;
+
+  .title-group {
+    padding: 0;
+    margin-bottom: 1rem;
+
+    .mat-icon {
+      font-size: 32px;
+    }
+
+    h1.title {
+      margin-bottom: 2rem;
+      color: royalblue;
+    }
+  }
+
+  .card-content {
+    width: 100%;
+
+    div.edit-form {
+      // max-width: 960px;
+      > form {
+        margin-bottom: 2rem;
+      }
+    }
+
+    div.photos {
+      div.employee-photos {
+        div.photo {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          &:hover {
+            cursor: pointer;
+
+            img.image {
+              opacity: 0.75;
+              transition: 250ms ease-out;
+              transform: scale(1.2);
+            }
+
+            div.img-btn {
+              padding: 0 1rem;
+              background: white;
+              border-radius: 50px;
+              opacity: 1;
+              transform: translateY(-5rem);
+              transition: 250ms ease-in;
+            }
+          }
+
+          img.image {
+            border-radius: 20px;
+            width: 150px;
+            height: 150px;
+            transition: 200ms ease-in;
+            transform: scale(1);
+          }
+
+          div.img-btn {
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(0);
+            transition: 200ms ease-out;
+          }
+        }
+      }
+
+      div.photo-upload {
+        margin-top: 2rem;
+
+        button.upload-icon-btn {
+          transform: scale(1);
+          transition: 200ms ease-in;
+
+          &:hover {
+            transform: scale(1.2);
+            transition: 200ms ease-out;
+          }
+        }
+      }
+
+      div.no-photo {
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 10px;
+          background: whitesmoke;
+          width: 150px;
+          height: 150px;
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+}

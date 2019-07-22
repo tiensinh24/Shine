@@ -112,6 +112,34 @@ namespace Shine.Controllers
 
         #endregion
 
+        #region Employee
+
+        [HttpPost("employee/{employeeId}")]
+        public async Task<ActionResult<PhotoForEmployeeDto>> AddPhotoForEmployee(int employeeId, [FromForm] IFormFile file)
+        {
+            var photo = await _repository.AddPhotoForEmployeeAsync(employeeId, file);
+
+            if (photo != null)
+                await _repository.CommitAsync();
+
+            return CreatedAtAction(nameof(GetPhoto), new { photoId = photo.PhotoId }, photo.Adapt<PhotoForEmployeeDto>());
+
+        }
+
+        [HttpPut("employee/set-main")]
+        public async Task<ActionResult<PhotoForEmployeeDto>> SetMainPhotoForEmployee(PhotoForEmployeeDto photo)
+        {
+            var photoToSet = await _repository.SetMainPhotoForEmployeeAsync(photo);
+
+            if (photoToSet == null) return NotFound();
+
+            await _repository.CommitAsync();
+
+            return photoToSet;
+        }
+
+        #endregion
+
         #region Product
 
         [HttpPost("product/{productId}")]

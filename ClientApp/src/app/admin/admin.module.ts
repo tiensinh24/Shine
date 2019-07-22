@@ -19,7 +19,6 @@ import { MaterialSharedModule } from '../_shared/material-shared.module';
     MaterialSharedModule,
 
     AdminRoutingModule
-  ],
-           
+  ]
 })
 export class AdminModule {}

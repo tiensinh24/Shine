@@ -41,7 +41,13 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     sortOrder: ''
   };
 
-  constructor(private productBuyService: ProductBuyService, private router: Router, private dialog: MatDialog, private confirmService: ConfirmDialogService, private snackBar: MatSnackBar) {}
+  constructor(
+    private productBuyService: ProductBuyService,
+    private router: Router,
+    private dialog: MatDialog,
+    private confirmService: ConfirmDialogService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.dataSource = new ProductBuyDataSource(this.productBuyService);
@@ -202,5 +208,10 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
     } else {
       this.selectAll();
     }
+  }
+
+  clearFilter() {
+    this.input.nativeElement.value = null;
+    this.loadProductsPage();
   }
 }

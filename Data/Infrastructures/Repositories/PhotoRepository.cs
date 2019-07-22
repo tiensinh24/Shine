@@ -128,6 +128,53 @@ namespace Shine.Data.Infrastructures.Repositories {
         }
 #endregion
 
+#region Employee
+
+    public async Task<Photo> AddPhotoForEmployeeAsync(int employeeId, IFormFile file) {
+            var mainPhoto = await _context.Photos
+                .FirstOrDefaultAsync(p => p.IsMain == true && p.EmployeeId == employeeId);
+
+            var uploadResult = this.UploadPhoto(file);
+            Photo photoToAdd = null;
+
+            if (uploadResult != null) {
+                photoToAdd = new Photo() {
+                EmployeeId = employeeId,
+                PublicId = uploadResult.PublicId,
+                PhotoUrl = uploadResult.SecureUri.ToString(),
+                };
+            }
+
+            if (mainPhoto == null) {
+                photoToAdd.IsMain = true;
+            }
+
+            await _context.Photos.AddAsync(photoToAdd);
+
+            return photoToAdd;
+
+        }
+
+        public async Task<PhotoForEmployeeDto> SetMainPhotoForEmployeeAsync(PhotoForEmployeeDto photo) {
+            var currentMain = await _context.Photos
+                .Where(p => p.IsMain == true && p.EmployeeId == photo.EmployeeId)
+                .FirstOrDefaultAsync();
+
+            var photoToSet = await _context.Photos
+                .FirstOrDefaultAsync(p => p.PhotoId == photo.PhotoId);
+
+            if (photoToSet != null) {
+                if (currentMain != null) {
+                    currentMain.IsMain = false;
+                }
+                photoToSet.IsMain = true;
+            }
+
+            return photoToSet.Adapt<PhotoForEmployeeDto>();
+        }
+    
+#endregion
+
 #region Product
 
         public async Task<Photo> AddPhotoForProductAsync(int productId, IFormFile file) {

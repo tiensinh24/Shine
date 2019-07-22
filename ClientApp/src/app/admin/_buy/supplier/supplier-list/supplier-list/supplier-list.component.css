@@ -41,4 +41,12 @@ main > .content table.main-table .mat-row .avatar > img {
   height: 40px;
   border-radius: 15px;
 }
+
+main > .content .mat-paginator-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: white;
+}
 /*# sourceMappingURL=supplier-list.component.css.map */

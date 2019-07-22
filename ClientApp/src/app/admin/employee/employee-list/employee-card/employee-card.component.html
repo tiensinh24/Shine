@@ -1,0 +1,82 @@
+<main class="mat-typography">
+  <!-- Title, paginator & filter -->
+  <div class="title mat-paginator-sticky" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="64px">
+    <h1>Employees</h1>
+
+    <div class="search" fxFlex fxLayout="row-reverse">
+      <mat-paginator [length]="paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 12, 24, 100]" showFirstLastButtons></mat-paginator>
+
+      <mat-form-field fxFlex>
+        <span matPrefix><mat-icon>search</mat-icon></span>
+        <span matSuffix matTooltip="Clear" (click)="clearFilter()" *ngIf="input.value"
+          ><button mat-button mat-icon-button><mat-icon>clear</mat-icon></button></span
+        >
+        <input matInput type="search" placeholder="Search employees" #input />
+      </mat-form-field>
+    </div>
+    <div></div>
+  </div>
+
+  <!-- Loading progress bar -->
+  <mat-progress-bar *ngIf="loading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+
+  <div *ngIf="!loading" @flyInVez #mainSection class="content" fxLayout="row wrap" fxLayoutAlign="center stretch">
+    <mat-card fxFlex="22" *ngFor="let employee of employees" class="card">
+      <mat-card-header>
+        <img mat-card-avatar src="{{ mainPhotoUrl }}" />
+
+        <mat-card-title>{{ employee.fullName }}</mat-card-title>
+        <mat-card-subtitle
+          ><div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <div>{{ employee.gender | gender }}</div>
+          </div>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <table>
+          <tr>
+            <td>
+              <span><mat-icon>group</mat-icon></span>
+            </td>
+            <td>{{ employee.departmentName }}</td>
+          </tr>
+          <tr></tr>
+          <tr>
+            <td>
+              <span><mat-icon>cake</mat-icon></span>
+            </td>
+            <td>{{ employee.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+          <tr>
+            <td>
+              <span><mat-icon>phone</mat-icon></span>
+            </td>
+            <td>{{ employee.telephone }}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <span><mat-icon>language</mat-icon></span>
+            </td>
+            <td>{{ employee.countryName }}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <span><mat-icon>email</mat-icon></span>
+            </td>
+            <td>{{ employee.email }}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <span><mat-icon>my_location</mat-icon></span>
+            </td>
+            <td>{{ employee.address }}</td>
+          </tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</main>

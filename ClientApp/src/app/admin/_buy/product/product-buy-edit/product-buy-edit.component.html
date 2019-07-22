@@ -22,7 +22,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Product Name</mat-label>
               <input matInput placeholder="Product Name" formControlName="productName" required />
-              <mat-error *ngIf="get('productName').invalid">{{ getErrorMessage(get('productName')) }}</mat-error>
+              <mat-error *ngIf="get('productName').invalid">{{ getErrorMessage('productName', 'Product name') }}</mat-error>
             </mat-form-field>
             <!-- Specification -->
             <mat-form-field appearance="outline">
@@ -36,7 +36,7 @@
                 formControlName="specification"
                 required
               ></textarea>
-              <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage(get('specification')) }}</mat-error>
+              <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage('specification', 'Specification') }}</mat-error>
             </mat-form-field>
             <!-- CategoryId -->
             <mat-form-field appearance="outline">
@@ -50,7 +50,7 @@
                 required
               />
 
-              <mat-error *ngIf="get('category').invalid">{{ getErrorMessage(get('category')) }}</mat-error>
+              <mat-error *ngIf="get('category').invalid">{{ getErrorMessage('category', 'Category') }}</mat-error>
             </mat-form-field>
 
             <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayFn">
@@ -62,12 +62,8 @@
           </form>
 
           <!-- Action Buttons -->
-          <button mat-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
-            Submit
-          </button>
-          <button mat-button (click)="onCancel()">
-            Cancel
-          </button>
+          <button mat-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">Submit</button>
+          <button mat-button (click)="resetForm()">Reset</button>
         </div>
 
         <div class="photos" fxFlex *ngIf="productId > 0">

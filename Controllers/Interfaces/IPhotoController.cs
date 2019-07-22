@@ -33,6 +33,13 @@ namespace Shine.Controllers.Interfaces {
 
 #endregion
 
+#region Employee
+        Task<ActionResult<PhotoForEmployeeDto>> AddPhotoForEmployee(int employeeId, [FromForm] IFormFile file);
+
+        Task<ActionResult<PhotoForEmployeeDto>> SetMainPhotoForEmployee(PhotoForEmployeeDto photo);
+
+#endregion
+
 #region Product
         Task<ActionResult<PhotoForProductDto>> AddPhotoForProduct(int productId, [FromForm] IFormFile file);
 

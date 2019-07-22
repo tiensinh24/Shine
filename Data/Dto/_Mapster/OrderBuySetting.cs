@@ -42,6 +42,7 @@ namespace Shine.Data.Dto._Mapster
                         DateOfBirth = src.Person.DateOfBirth,
                         Telephone = src.Person.Telephone,
                         Fax = src.Person.Fax,
+                        Email = src.Person.Email,
                         Address = src.Person.Address,
                         CountryId = src.Person.Country.CountryId,
                         CountryName = src.Person.Country.CountryName,
@@ -60,6 +61,7 @@ namespace Shine.Data.Dto._Mapster
                         FullName = src.Employee.FirstName + " " + src.Employee.LastName,
                         DateOfBirth = src.Employee.DateOfBirth,
                         Telephone = src.Employee.Telephone,
+                        Email = src.Employee.Email,
                         Address = src.Employee.Address,
                         CountryId = src.Employee.CountryId,
                         CountryName = src.Employee.Country.CountryName,
@@ -90,7 +92,7 @@ namespace Shine.Data.Dto._Mapster
                         Tax = p.Tax,
                         Rate = p.Rate,
                         Unit = p.Unit,
-                        Total = p.Price * p.Quantity * (1 + p.Tax) 
+                        Total = p.Price * p.Quantity * (1 + p.Tax)
                     })
                 )
                 .Map(
@@ -120,7 +122,7 @@ namespace Shine.Data.Dto._Mapster
                         c.Currency,
                         c.CostDate,
                         c.Rate
-                    })
+                    }).OrderByDescending(c => c.CostDate)
                 )
                 .Map(
                     dest => dest.CostTotal,

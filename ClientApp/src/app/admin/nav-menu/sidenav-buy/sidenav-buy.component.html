@@ -14,12 +14,17 @@
     <a matLine>Supplier</a>
   </mat-list-item>
 
+  <mat-list-item [routerLink]="['/admin/employee/home']" routerLinkActive="active">
+    <mat-icon matListIcon>group</mat-icon>
+    <a matLine>Employee</a>
+  </mat-list-item>
+
   <mat-list-item [routerLink]="['/admin/order-buy/home']" routerLinkActive="active">
     <mat-icon matListIcon class="fas fa-donate"></mat-icon>
     <a matLine>Order</a>
   </mat-list-item>
 
-  <mat-list-item [routerLink]="['/admin/storage/home']" routerLinkActive="active" >
+  <mat-list-item [routerLink]="['/admin/storage/home']" routerLinkActive="active">
     <mat-icon matListIcon>storage</mat-icon>
     <a matLine>Storage</a>
   </mat-list-item>

@@ -4,39 +4,32 @@
 
   <mat-dialog-content>
     <!-- Formgroup -->
-    <form class="edit-form" fxLayout="column" [formGroup]="formGroup">
+    <form class="edit-form" fxLayout="column" [formGroup]="paymentForm">
       <!-- OrderId -->
       <mat-form-field appearance="outline">
         <mat-label>OrderId</mat-label>
-        <input matInput placeholder="OrderId" formControlName="orderId" />
-        <mat-error *ngIf="get('orderId').invalid">{{ getErrorMessage(get('orderId')) }}</mat-error>
+        <input matInput placeholder="OrderId" formControlName="orderId" />        
       </mat-form-field>
       <!-- Payment Date -->
       <mat-form-field appearance="outline">
         <mat-label>Payment Date</mat-label>
-        <input
-          matInput
-          [matDatepicker]="paymentPicker"
-          placeholder="Choose a date"
-          formControlName="paymentDate"
-          required
-        />
+        <input matInput [matDatepicker]="paymentPicker" placeholder="Choose a date" formControlName="paymentDate" required />
         <mat-datepicker-toggle matSuffix [for]="paymentPicker"></mat-datepicker-toggle>
         <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
-        <mat-error *ngIf="get('paymentDate').invalid">{{ getErrorMessage(get('paymentDate')) }}</mat-error>
+        <mat-error *ngIf="get('paymentDate').invalid">{{ getErrorMessage('paymentDate', 'Payment date') }}</mat-error>
       </mat-form-field>
       <!-- Amount -->
       <mat-form-field appearance="outline">
         <mat-label>Amount</mat-label>
         <input matInput placeholder="amount" formControlName="amount" required />
-        <mat-error *ngIf="get('amount').invalid">{{ getErrorMessage(get('amount')) }}</mat-error>
+        <mat-error *ngIf="get('amount').invalid">{{ getErrorMessage('amount', 'Amount') }}</mat-error>
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
         <!-- Rate -->
         <mat-form-field appearance="outline" fxFlex>
           <mat-label>Rate</mat-label>
           <input matInput placeholder="rate" formControlName="rate" required />
-          <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage(get('rate')) }}</mat-error>
+          <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage('rate', 'Rate') }}</mat-error>
         </mat-form-field>
         <!-- Currency -->
         <div class="gender-group" fxLayout="row" fxLayoutGap="32px" fxFlex="50">
@@ -45,7 +38,7 @@
             <mat-radio-button [value]="true">USD</mat-radio-button>
             <mat-radio-button [value]="false">VND</mat-radio-button>
           </mat-radio-group>
-          <mat-error *ngIf="get('currency').invalid">{{ getErrorMessage(get('currency')) }}</mat-error>
+          <mat-error *ngIf="get('currency').invalid">{{ getErrorMessage('currency', 'Currency') }}</mat-error>
         </div>
       </div>
     </form>
@@ -53,7 +46,7 @@
 
   <!-- Action Buttons -->
   <mat-dialog-actions align="center">
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!paymentForm.valid">
       Submit
     </button>
     <button mat-button (click)="onCancel()">

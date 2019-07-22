@@ -22,16 +22,14 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
   baseUrl = environment.URL;
 
   // Subscriptions
-  countries$ = new Subscription();
-  supplier$ = new Subscription();
-  photo$ = new Subscription();
+  sub$ = new Subscription();
 
   // Variables
   countries: CountrySelect[];
   supplier: SupplierDetail;
 
   // Form
-  formGroup: FormGroup;
+  supplierForm: FormGroup;
 
   supplierId = +this.route.snapshot.params.supplierId;
   editMode: boolean;
@@ -66,9 +64,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.countries$.unsubscribe();
-    this.supplier$.unsubscribe();
-    this.photo$.unsubscribe();
+    this.sub$.unsubscribe();
   }
 
   getCountrySelect() {
@@ -78,16 +74,18 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
   }
 
   getSupplier(supplierId: number) {
-    this.supplier$ = this.supplierService.getSupplier(supplierId).subscribe((res: SupplierDetail) => {
-      this.supplier = res;
+    this.sub$.add(
+      this.supplierService.getSupplier(supplierId).subscribe((res: SupplierDetail) => {
+        this.supplier = res;
 
-      this.title = `Edit ${res.fullName}`;
-      this.updateForm(res);
-    });
+        this.title = `Edit ${res.fullName}`;
+        this.updateForm(res);
+      })
+    );
   }
 
   createForm() {
-    this.formGroup = this.fb.group({
+    this.supplierForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: [true, [Validators.required]],
@@ -100,7 +98,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
   }
 
   updateForm(supplier: SupplierDetail) {
-    this.formGroup.setValue({
+    this.supplierForm.setValue({
       firstName: supplier.firstName,
       lastName: supplier.lastName,
       gender: supplier.gender,
@@ -113,20 +111,20 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const tempSupplier = <Supplier>{};
+    const supplier = <Supplier>{};
 
-    tempSupplier.firstName = this.formGroup.value.firstName;
-    tempSupplier.lastName = this.formGroup.value.lastName;
-    tempSupplier.gender = this.formGroup.value.gender;
-    tempSupplier.dateOfBirth = this.formGroup.value.dateOfBirth;
-    tempSupplier.personNumber = this.formGroup.value.personNumber;
-    tempSupplier.telephone = this.formGroup.value.telephone;
-    tempSupplier.fax = this.formGroup.value.fax;
-    tempSupplier.countryId = this.formGroup.value.countryId;
+    supplier.firstName = this.supplierForm.value.firstName;
+    supplier.lastName = this.supplierForm.value.lastName;
+    supplier.gender = this.supplierForm.value.gender;
+    supplier.dateOfBirth = this.supplierForm.value.dateOfBirth;
+    supplier.personNumber = this.supplierForm.value.personNumber;
+    supplier.telephone = this.supplierForm.value.telephone;
+    supplier.fax = this.supplierForm.value.fax;
+    supplier.countryId = this.supplierForm.value.countryId;
 
     if (this.editMode) {
-      tempSupplier.personId = this.supplierId;
-      this.supplierService.updateSupplier(tempSupplier).subscribe((res: Supplier) => {
+      supplier.personId = this.supplierId;
+      this.supplierService.updateSupplier(supplier).subscribe((res: Supplier) => {
         if (res) {
           this.snackBar.open('Supplier has been updated', 'Success');
         } else {
@@ -134,9 +132,9 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      this.supplierService.addSupplier(tempSupplier).subscribe((res: Supplier) => {
+      this.supplierService.addSupplier(supplier).subscribe((res: Supplier) => {
         if (res) {
-          this.router.navigate(['/admin/supplier/edit', res.personId]);
+          this.router.navigate([`/admin/supplier/${res.personId}/edit`]);
           this.snackBar.open('Supplier has been created', 'Success');
         } else {
           this.snackBar.open(`Can't create supplier, please try again`, 'Error');
@@ -145,44 +143,54 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCancel() {
-    this.updateForm(this.supplier);
+  resetForm() {
+    if (this.supplier) {
+      this.updateForm(this.supplier);
+    } else {
+      this.supplierForm.reset();
+    }
   }
 
   deletePhoto(photoId: number) {
-    this.photo$ = this.photoService.deletePhoto(photoId).subscribe((res: Photo) => {
-      if (res) {
-        const index = this.supplier.photos.findIndex(p => p.photoId === photoId);
-        this.supplier.photos.splice(index, 1);
+    this.sub$.add(
+      this.photoService.deletePhoto(photoId).subscribe((res: Photo) => {
+        if (res) {
+          const index = this.supplier.photos.findIndex(p => p.photoId === photoId);
+          this.supplier.photos.splice(index, 1);
 
-        this.snackBar.open('Photo deleted', 'Success');
-      } else {
-        this.snackBar.open(`Can't delete photo, please try again`, 'Error');
-      }
-    });
+          this.snackBar.open('Photo deleted', 'Success');
+        } else {
+          this.snackBar.open(`Can't delete photo, please try again`, 'Error');
+        }
+      })
+    );
   }
 
   setMainPhoto(photo: PhotoForPerson) {
-    this.photo$ = this.photoService.setMainPhotoForPerson(photo).subscribe((res: PhotoForPerson) => {
-      if (res) {
-        const index = this.supplier.photos.findIndex(p => p.photoId === photo.photoId);
+    this.sub$.add(
+      this.photoService.setMainPhotoForPerson(photo).subscribe((res: PhotoForPerson) => {
+        if (res) {
+          const index = this.supplier.photos.findIndex(p => p.photoId === photo.photoId);
 
-        this.supplier.photos.splice(index, 1);
-        this.supplier.photos.unshift(res);
+          this.supplier.photos.splice(index, 1);
+          this.supplier.photos.unshift(res);
 
-        this.snackBar.open('Main photo has been set', 'Success');
-      } else {
-        this.snackBar.open(`Can't set main photo, please try again`, 'Error');
-      }
-    });
+          this.snackBar.open('Main photo has been set', 'Success');
+        } else {
+          this.snackBar.open(`Can't set main photo, please try again`, 'Error');
+        }
+      })
+    );
   }
 
   get(name: string): AbstractControl {
-    return this.formGroup.get(name);
+    return this.supplierForm.get(name);
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required') ? 'You must enter a value' : formControl.hasError('email') ? 'Not a valid email' : formControl.hasError('pattern') ? 'Please enter a number!' : '';
+  getErrorMessage(name: string, value: string) {
+    const control = this.supplierForm.get(name);
+
+    return control.getError('required') ? `${value} is required` : control.getError('email') ? 'Not a valid email address' : null;
   }
 
   refreshPhotoUpload(event: Photo) {

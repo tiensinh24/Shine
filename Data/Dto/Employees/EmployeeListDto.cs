@@ -9,6 +9,7 @@ namespace Shine.Data.Dto.Employees {
         public string FullName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Telephone { get; set; }
+        public string Email { get; set; }
         public string Address { get; set; }
 
         public int CountryId { get; set; }

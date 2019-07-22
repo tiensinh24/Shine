@@ -13,7 +13,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/admin/supplier/home', pathMatch: 'full' },
       { path: 'home', component: SupplierListHomeComponent },
       { path: 'create', component: SupplierEditComponent },
-      { path: 'edit/:supplierId', component: SupplierEditComponent },
+      { path: ':supplierId/edit', component: SupplierEditComponent },
       { path: ':supplierId', component: SupplierDetailComponent }
     ]
   }

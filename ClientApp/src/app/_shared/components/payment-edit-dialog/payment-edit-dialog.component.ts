@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Payment } from 'src/app/_shared/intefaces/public/payment';
@@ -12,45 +12,39 @@ import { PaymentService } from 'src/app/_shared/services/public/payment.service'
   styleUrls: ['./payment-edit-dialog.component.scss']
 })
 export class PaymentEditDialogComponent implements OnInit, OnDestroy {
-  title: string;
-  editMode: boolean;
-  payment: Payment;
-  formGroup: FormGroup;
+  // Subscription
+  sub$ = new Subscription();
 
-  subscription = new Subscription();
+  title: string;
+  payment: Payment;
+  paymentForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private paymentService: PaymentService,
     private dialogRef: MatDialogRef<PaymentEditDialogComponent>,
     // Inject data from main component
-    @Inject(MAT_DIALOG_DATA) public parentData: Payment
+    @Inject(MAT_DIALOG_DATA) public parentData
   ) {}
 
   ngOnInit() {
     this.createForm();
 
-    // Check if data isn't null (edit mode)
-    if (this.parentData.paymentId > 0) {
-      this.editMode = true;
+    if (this.parentData.edit) {
       this.title = 'Edit payment on ' + formatDate(this.parentData.paymentDate, 'dd/MM/yyyy', 'en-GB');
       this.updateForm();
       // Create mode
     } else {
-      this.formGroup.patchValue({
-        orderId: this.parentData.orderId
-      });
-      this.editMode = false;
-      this.title = 'Add new payment';
+      this.title = 'New payment';
     }
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.sub$.unsubscribe();
   }
 
   createForm() {
-    this.formGroup = this.fb.group({
+    this.paymentForm = this.fb.group({
       orderId: [{ value: '', disabled: true }, Validators.required],
       paymentDate: ['', Validators.required],
       amount: ['', Validators.required],
@@ -60,7 +54,7 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
   }
 
   updateForm() {
-    this.formGroup.setValue({
+    this.paymentForm.setValue({
       orderId: this.parentData.orderId,
       paymentDate: this.parentData.paymentDate,
       amount: this.parentData.amount,
@@ -70,45 +64,40 @@ export class PaymentEditDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const tempPayment = <Payment>{};
-
-    tempPayment.orderId = this.parentData.orderId;
-    tempPayment.paymentDate = this.formGroup.value.paymentDate;
-    tempPayment.amount = this.formGroup.value.amount;
-    tempPayment.currency = this.formGroup.value.currency;
-    tempPayment.rate = this.formGroup.value.rate;
+    const payment = <Payment>{
+      orderId: this.parentData.orderId,
+      paymentDate: this.paymentForm.value.paymentDate,
+      amount: this.paymentForm.value.amount,
+      currency: this.paymentForm.value.currency,
+      rate: this.paymentForm.value.rate
+    };
 
     // Add new payment
-    if (!this.editMode) {
-      this.subscription = this.paymentService.addPayment(tempPayment).subscribe((payment: Payment) => {
-        this.dialogRef.close(payment);
+    if (!this.parentData.edit) {
+      this.sub$ = this.paymentService.addPayment(payment).subscribe((res: Payment) => {
+        this.dialogRef.close(res);
       });
-    }
-    if (this.editMode) {
-      tempPayment.paymentId = this.parentData.paymentId;
+    } else {
+      payment.paymentId = this.parentData.paymentId;
 
       // Update payment
-      this.subscription = this.paymentService.updatePayment(tempPayment).subscribe((payment: Payment) => {
-        this.dialogRef.close(payment);
+      this.sub$ = this.paymentService.updatePayment(payment).subscribe((res: Payment) => {
+        this.dialogRef.close(res);
       });
     }
   }
 
   onCancel() {
-    this.dialogRef.close();
+    this.dialogRef.close('cancel');
   }
 
   get(name: string): AbstractControl {
-    return this.formGroup.get(name);
+    return this.paymentForm.get(name);
   }
 
-  getErrorMessage(formControl: FormControl) {
-    return formControl.hasError('required')
-      ? 'You must enter a value'
-      : formControl.hasError('email')
-      ? 'Not a valid email'
-      : formControl.hasError('pattern')
-      ? 'Please enter a number!'
-      : '';
+  getErrorMessage(name: string, value: string) {
+    const control = this.paymentForm.get(name);
+
+    return control.hasError('required') ? `${value} is required` : null;
   }
 }

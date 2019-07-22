@@ -1,3 +1,160 @@
-<p>
-  employee-edit works!
-</p>
+<div class="title-group" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+  <button mat-icon-button matTooltip="Go back" class="back-btn" [routerLink]="['/admin/employee']">
+    <mat-icon>arrow_back</mat-icon>
+    {{ title }}
+  </button>
+</div>
+
+<mat-card class="main mat-elevation-z0">
+  <div class="card-content">
+    <div class="edit-form">
+      <!-- Formgroup -->
+      <form [formGroup]="employeeForm">
+        <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="1rem">
+          <div class="employee-info" fxLayout="column" fxFlex="50">
+            <div class="group-title" fxLayout="row" fxLayoutAlign="start center">
+              <h2>
+                <button mat-icon-button><mat-icon>info</mat-icon></button>
+              </h2>
+              <h2 class="title">General</h2>
+            </div>
+
+            <!-- FirstName -->
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput placeholder="FirstName" formControlName="firstName" required />
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-error *ngIf="get('firstName').invalid">{{ getErrorMessage('firstName', 'Firstname') }}</mat-error>
+            </mat-form-field>
+
+            <!-- LastName -->
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput placeholder="LastName" formControlName="lastName" required />
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-error *ngIf="get('lastName').invalid">{{ getErrorMessage('lastName', 'Lastname') }}</mat-error>
+            </mat-form-field>
+
+            <!-- DateOfBirth -->
+            <mat-form-field appearance="outline">
+              <mat-label>Date Of Birth</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="dateOfBirth" required />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker locale="en-GB" #picker></mat-datepicker>
+              <mat-error *ngIf="get('dateOfBirth').invalid">{{ getErrorMessage('dateOfBirth', 'Date of birth') }}</mat-error>
+            </mat-form-field>
+
+            <!-- DepartmentId -->
+            <mat-form-field appearance="outline">
+              <mat-label>Department</mat-label>
+              <mat-select placeholder="Select department" formControlName="departmentId" required>
+                <mat-option *ngFor="let department of departments" [value]="department.departmentId">
+                  {{ department.departmentName }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="get('departmentId').invalid">{{ getErrorMessage('departmentId', 'Department') }}</mat-error>
+            </mat-form-field>
+
+            <!-- Gender -->
+            <div class="gender-group" fxLayout="row" fxLayoutGap="32px">
+              <mat-radio-group fxLayoutGap="32px" formControlName="gender">
+                <mat-radio-button [value]="true">Male</mat-radio-button>
+                <mat-radio-button [value]="false">Female</mat-radio-button>
+              </mat-radio-group>
+              <mat-error *ngIf="get('gender').invalid">{{ getErrorMessage('gender', 'Gender') }}</mat-error>
+            </div>
+          </div>
+
+          <div class="contact-info" fxLayout="column" fxFlex>
+            <div class="group-title" fxLayout="row" fxLayoutAlign="start center">
+              <h2>
+                <button mat-icon-button><mat-icon>contacts</mat-icon></button>
+              </h2>
+              <h2 class="title">Contact</h2>
+            </div>
+
+            <!-- Telephone -->
+            <mat-form-field appearance="outline">
+              <mat-label>Telephone</mat-label>
+              <input matInput placeholder="Telephone" formControlName="telephone" required />
+              <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field>
+
+            <!-- Address -->
+            <mat-form-field appearance="outline">
+              <mat-label>Address</mat-label>
+              <input matInput placeholder="Address" formControlName="address" required />
+              <mat-icon matSuffix>my_location</mat-icon>
+            </mat-form-field>
+
+            <!-- CountryId -->
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <mat-select placeholder="Select country" formControlName="countryId" required>
+                <mat-option *ngFor="let country of countries" [value]="country.countryId">
+                  {{ country.countryName }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="get('countryId').invalid">{{ getErrorMessage('countryId', 'Country') }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+
+      <!-- Action Buttons -->
+      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="1rem">
+        <button mat-button color="primary" (click)="onSubmit()" [disabled]="!employeeForm.valid">
+          Submit
+        </button>
+        <button mat-button (click)="resetForm()">
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <div class="photos" *ngIf="employeeId > 0">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <h2>
+          <button mat-icon-button><mat-icon>photo_album</mat-icon></button>
+        </h2>
+        <h2 class="title">Photos</h2>
+      </div>
+
+      <div *ngIf="employee?.photos.length > 0; else noPhoto" fxLayout="row wrap" fxLayoutGap="1rem grid">
+        <div class="employee-photos" *ngFor="let photo of employee.photos">
+          <div class="photo">
+            <img class="image" src="{{ photo.photoUrl }}" alt="" />
+
+            <!-- Img relay -->
+            <div class="img-btn">
+              <button mat-icon-button matTooltip="Delete photo" color="warn" (click)="deletePhoto(photo.photoId)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Set main photo" color="primary" (click)="setMainPhoto(photo)">
+                <mat-icon>check_circle_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noPhoto>
+        <div fxLayout="row" class="no-photo" fxLayoutAlign="center">
+          <div>
+            <h1>No photo</h1>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="photo-upload">
+        <button class="upload-icon-btn" mat-mini-fab color="primary" matTooltip="Upload photos" (click)="togglePhotoUploadExpansion()">
+          <mat-icon>cloud_upload</mat-icon>
+        </button>
+
+        <mat-expansion-panel [expanded]="photoUploadExpansion" class="padding-remove mat-elevation-z0">
+          <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </div>
+</mat-card>
