@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "",
+    "mappings": "AAAA,AACI,OADG,CACH,QAAQ,CAAC;EACP,KAAK,EAAE,eAAe;CACvB",
     "sources": [
         "sidenav-sell.component.scss"
     ],

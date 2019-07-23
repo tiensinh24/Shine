@@ -80,14 +80,14 @@
                 <!-- Telephone -->
                 <mat-form-field appearance="outline">
                   <mat-label>Telephone</mat-label>
-                  <input matInput placeholder="Telephone" formControlName="telephone" required />
+                  <input matInput placeholder="Telephone" formControlName="telephone" />
                   <mat-icon matSuffix>phone</mat-icon>
                 </mat-form-field>
 
                 <!-- Fax -->
                 <mat-form-field appearance="outline">
                   <mat-label>Fax</mat-label>
-                  <input matInput placeholder="Fax" formControlName="fax" required />
+                  <input matInput placeholder="Fax" formControlName="fax" />
                   <mat-icon matSuffix>print</mat-icon>
                 </mat-form-field>
 
@@ -114,7 +114,7 @@
               Reset
             </button>
           </div>
-          
+
         </div>
 
         <div class="photos" *ngIf="supplierId > 0">

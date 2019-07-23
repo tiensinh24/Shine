@@ -118,9 +118,6 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/admin/employee/create']);
   }
 
-  onDetail(employee: EmployeeList) {
-    this.router.navigate(['/admin/employee', employee.employeeId]);
-  }
 
   onEdit(employee: EmployeeList) {
     this.router.navigate([`/admin/employee/${employee.employeeId}/edit`]);

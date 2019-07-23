@@ -76,7 +76,7 @@
             <!-- Telephone -->
             <mat-form-field appearance="outline">
               <mat-label>Telephone</mat-label>
-              <input matInput placeholder="Telephone" formControlName="telephone" required />
+              <input matInput placeholder="Telephone" formControlName="telephone" />
               <mat-icon matSuffix>phone</mat-icon>
             </mat-form-field>
 
@@ -85,6 +85,7 @@
               <mat-label>Address</mat-label>
               <input matInput placeholder="Address" formControlName="address" required />
               <mat-icon matSuffix>my_location</mat-icon>
+              <mat-error *ngIf="get('address').invalid">{{ getErrorMessage('address', 'Address') }}</mat-error>
             </mat-form-field>
 
             <!-- CountryId -->

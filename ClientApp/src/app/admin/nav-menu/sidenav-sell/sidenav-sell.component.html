@@ -1,3 +1,32 @@
-<p>
-  sidenav-sell works!
-</p>
+<mat-nav-list>
+    <mat-list-item [routerLink]="['/admin/home']" routerLinkActive="active">
+      <mat-icon matListIcon class="fas fa-home"></mat-icon>
+      <a matLine>Home</a>
+    </mat-list-item>
+  
+    <mat-list-item [routerLink]="['/admin/product-sell/home']" routerLinkActive="active">
+      <mat-icon matListIcon class="fas fa-cookie-bite"></mat-icon>
+      <a matLine>Product</a>
+    </mat-list-item>
+  
+    <mat-list-item [routerLink]="['/admin/customer/home']" routerLinkActive="active">
+      <mat-icon matListIcon class="fas fa-diagnoses"></mat-icon>
+      <a matLine>Customer</a>
+    </mat-list-item>
+  
+    <mat-list-item [routerLink]="['/admin/employee/home']" routerLinkActive="active">
+      <mat-icon matListIcon>group</mat-icon>
+      <a matLine>Employee</a>
+    </mat-list-item>
+  
+    <mat-list-item [routerLink]="['/admin/order-sell/home']" routerLinkActive="active">
+      <mat-icon matListIcon class="fas fa-donate"></mat-icon>
+      <a matLine>Order</a>
+    </mat-list-item>
+  
+    <mat-list-item [routerLink]="['/admin/storage/home']" routerLinkActive="active">
+      <mat-icon matListIcon>storage</mat-icon>
+      <a matLine>Storage</a>
+    </mat-list-item>
+  </mat-nav-list>
+  
