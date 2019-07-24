@@ -156,14 +156,14 @@ namespace Shine.Data.Infrastructures.Repositories
 
         }
 
-        public async Task<SupplierDetailDto> GetSupplierAsync(int id)
+        public async Task<SupplierDetailDto> GetSupplierAsync(int supplierId)
         {
             var query = await _context.Set<Supplier>()
                 .AsNoTracking()
                 .Include(s => s.Country)
                 .Include(s => s.Photos)
                 .Include(s => s.Orders)
-                .FirstOrDefaultAsync(s => s.PersonId == id);
+                .FirstOrDefaultAsync(s => s.PersonId == supplierId);
 
             return query.Adapt<SupplierDetailDto>();
         }

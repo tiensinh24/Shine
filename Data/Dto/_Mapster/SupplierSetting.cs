@@ -41,12 +41,10 @@ namespace Shine.Data.Dto._Mapster
                     dest => dest.ContinentName, src => src.Country.ContinentName
                 )
                 .Map(
-                    dest => dest.Photos,
-                    src => src.Photos.OrderByDescending(p => p.IsMain).Adapt<PhotoForPersonDto>()
-                ).Map(
                     dest => dest.Rating,
                     src => src.Orders.Count() > 0 ? src.Orders.Average(o => o.Rating) : 0
-                );
+                ).Map(dest => dest.Photos,
+                    src => src.Photos.OrderByDescending(p => p.IsMain)).Adapt<PhotoForPersonDto>(); ;
 
             TypeAdapterConfig<Supplier, SupplierSelectDto>.NewConfig()
                 .Map(
