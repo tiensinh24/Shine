@@ -33,9 +33,7 @@
       </mat-form-field>
 
       <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayFn">
-        <mat-option *ngFor="let category of filteredCategories" [value]="category">{{
-          category.categoryName
-        }}</mat-option>
+        <mat-option *ngFor="let category of filteredCategories" [value]="category">{{ category.categoryName }}</mat-option>
         <mat-option>
           <button mat-button color="primary" (click)="openDialog()">Add New Category</button>
         </mat-option>

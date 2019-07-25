@@ -1,0 +1,23 @@
+<!-- Dialog title -->
+<h1 mat-dialog-title class="mat-display-1">{{ title }}</h1>
+
+<mat-dialog-content>
+  <form class="edit-form" [formGroup]="departmentForm" fxLayout="column" novalidate>
+    <!-- DepartmentName -->
+    <mat-form-field>
+      <mat-label>Department Name</mat-label>
+      <input matInput type="text" placeholder="Department name" formControlName="departmentName" required />
+      <mat-error *ngIf="get('departmentName').invalid">{{ getErrorMessage('departmentName', 'Department name') }}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<!-- Action Buttons -->
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!departmentForm.valid">
+    Submit
+  </button>
+  <button mat-button (click)="onCancel()">
+    Cancel
+  </button>
+</mat-dialog-actions>

@@ -14,6 +14,7 @@ import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PhotoUploadSharedModule } from 'src/app/_shared/components/photo-upload/photo-upload-shared.module';
 import { EmployeeRoutingModule } from './employee-routing.module';
+import { DepartmentEditDialogModule } from 'src/app/_shared/components/department-edit-dialog/department-edit-dialog.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { EmployeeRoutingModule } from './employee-routing.module';
     MatTabsModule,
 
     // Dialog
+    DepartmentEditDialogModule,
 
     // Photo upload
     PhotoUploadSharedModule,

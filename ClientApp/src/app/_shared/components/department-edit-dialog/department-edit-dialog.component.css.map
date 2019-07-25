@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACP,MAAM,EAAE,MAAM;CACf",
+    "sources": [
+        "department-edit-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "department-edit-dialog.component.css"
+}

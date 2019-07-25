@@ -14,6 +14,9 @@ import { CountryService } from 'src/app/_shared/services/public/country.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DepartmentService } from 'src/app/_shared/services/public/department.service';
 import { DepartmentSelect } from 'src/app/_shared/intefaces/public/department/department-select';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DepartmentEditDialogComponent } from 'src/app/_shared/components/department-edit-dialog/department-edit-dialog.component';
+import { Department } from 'src/app/_shared/intefaces/public/department/department';
 
 @Component({
   selector: 'app-employee-edit',
@@ -29,6 +32,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
   // Variables
   countries: CountrySelect[];
   departments: DepartmentSelect[];
+  deptSelected: DepartmentSelect;
   employee: EmployeeDetail;
 
   // Form
@@ -50,7 +54,8 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
     private employeeService: EmployeeService,
     private countryService: CountryService,
     private departmentService: DepartmentService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -104,9 +109,10 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       gender: [true, [Validators.required]],
       dateOfBirth: ['', Validators.required],
       telephone: [''],
+      email: [''],
       address: [''],
       countryId: ['', Validators.required],
-      departmentId: ['', Validators.required]
+      department: ['', Validators.required]
     });
   }
 
@@ -117,9 +123,13 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
       gender: employee.gender,
       dateOfBirth: employee.dateOfBirth,
       telephone: employee.telephone,
+      email: employee.email,
       address: employee.address,
       countryId: employee.countryId,
-      departmentId: employee.departmentId
+      department: <DepartmentSelect>{
+        departmentId: employee.departmentId,
+        departmentName: employee.departmentName
+      }
     });
   }
 
@@ -133,7 +143,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
     employee.telephone = this.employeeForm.value.telephone;
     employee.address = this.employeeForm.value.address;
     employee.countryId = this.employeeForm.value.countryId;
-    employee.departmentId = this.employeeForm.value.departmentId;
+    employee.departmentId = this.employeeForm.value.department.departmentId;
 
     if (this.editMode) {
       employee.employeeId = this.employeeId;
@@ -162,6 +172,32 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
     } else {
       this.employeeForm.reset();
     }
+  }
+
+  openDepartmentEditDialog() {
+    const dialogConfig = <MatDialogConfig>{
+      disableClose: true,
+      autoFocus: true,
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      minWidth: '400px',
+      minHeight: '250px',
+      panelClass: 'custom-dialog',
+      data: { edit: false }
+    };
+
+    const dialogRef = this.dialog.open(DepartmentEditDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(res => {
+      // 'cancel' is a string return from dialog when click on Cancel button
+      if (res !== 'cancel') {
+        if (res) {
+          this.departments.push(res);
+          this.departments.sort((a, b) => (a.departmentName > b.departmentName ? 1 : -1));
+          this.employeeForm.patchValue({ department: res });
+        }
+      }
+    });
   }
 
   deletePhoto(photoId: number) {
@@ -204,6 +240,10 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
     const control = this.employeeForm.get(name);
 
     return control.getError('required') ? `${value} is required` : control.getError('email') ? 'Not a valid email address' : null;
+  }
+
+  compareDepartment(e1: Department, e2: Department) {
+    return e1.departmentId === e2.departmentId && e1.departmentName === e2.departmentName;
   }
 
   refreshPhotoUpload(event: PhotoForEmployee) {

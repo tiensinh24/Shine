@@ -37,7 +37,7 @@ main .card > div.supplier {
   color: royalblue;
 }
 
-main .card > div.customer {
+main .card > div.employee {
   color: cornflowerblue;
 }
 
@@ -47,10 +47,6 @@ main .card > div.order {
 
 main .card > div.storage {
   color: mediumpurple;
-}
-
-main .card > div.report {
-  color: mediumslateblue;
 }
 
 main .card i {
@@ -66,4 +62,4 @@ img.page-bg {
   opacity: 0.1;
   z-index: -1;
 }
-/*# sourceMappingURL=admin-dashboard.component.css.map */
+/*# sourceMappingURL=admin-buy-home.component.css.map */

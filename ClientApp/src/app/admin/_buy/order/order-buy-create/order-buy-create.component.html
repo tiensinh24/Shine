@@ -57,7 +57,7 @@
         <star-rating-control formControlName="rating" [starType]="'svg'" labelText="Rating"></star-rating-control>
         <div class="step-button">
           <button mat-button matStepperNext (click)="submitOrder()">Next</button>
-          <button mat-button [routerLink]="['/admin/order-buy']">Cancel</button>
+          <button mat-button (click)="onCancel()">Cancel</button>
         </div>
       </form>
     </mat-step>

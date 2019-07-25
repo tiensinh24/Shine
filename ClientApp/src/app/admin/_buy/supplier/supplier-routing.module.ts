@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: SupplierComponent,
     children: [
-      { path: '', redirectTo: '/admin/supplier/home', pathMatch: 'full' },
+      { path: '', redirectTo: '/admin/buy/supplier/home', pathMatch: 'full' },
       { path: 'home', component: SupplierListHomeComponent },
       { path: 'create', component: SupplierEditComponent },
       { path: ':supplierId/edit', component: SupplierEditComponent },

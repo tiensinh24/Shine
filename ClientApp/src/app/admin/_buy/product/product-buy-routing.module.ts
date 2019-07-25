@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: ProductBuyComponent,
     children: [
-      { path: '', redirectTo: '/admin/product-buy/home', pathMatch: 'full' },
+      { path: '', redirectTo: '/admin/buy/product/home', pathMatch: 'full' },
       { path: 'home', component: ProductBuyListComponent },
       { path: 'create', component: ProductBuyEditComponent },
       {

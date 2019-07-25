@@ -1,0 +1,20 @@
+.toolbar {
+  box-shadow: 5px 2px 15px 2px grey;
+  position: sticky;
+  top: 0;
+  left: 0;  
+
+  
+  .home-logo {
+    font-size: larger;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-image: url("https://picsum.photos/50");
+    background-position: center;
+    background-size: cover;
+  }
+}

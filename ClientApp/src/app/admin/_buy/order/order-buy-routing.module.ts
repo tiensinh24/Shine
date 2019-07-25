@@ -13,7 +13,7 @@ const routes: Routes = [
     path: '',
     component: OrderBuyComponent,
     children: [
-      { path: '', redirectTo: '/admin/order-buy/home', pathMatch: 'full' },
+      { path: '', redirectTo: '/admin/buy/order/home', pathMatch: 'full' },
       { path: 'home', component: OrderBuyHomeComponent },
       { path: 'create', component: OrderBuyCreateComponent },
       { path: 'report', loadChildren: () => import('../../../main/_reports/order-buy-report.module').then(m => m.OrderBuyReportModule) },

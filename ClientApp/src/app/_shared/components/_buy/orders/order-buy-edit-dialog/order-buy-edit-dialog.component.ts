@@ -3,7 +3,6 @@ import { debounceTime, distinctUntilChanged, tap, catchError } from 'rxjs/operat
 import { OrderBuy } from 'src/app/_shared/intefaces/buy/order/order-buy';
 import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 
-import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
 import { environment } from 'src/environments/environment';
 
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -12,7 +11,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SupplierSelect } from 'src/app/_shared/intefaces/buy/supplier/supplier-select';
 import { EmployeeSelect } from 'src/app/_shared/intefaces/public/employee-select';
 import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-order-buy-edit-dialog',
@@ -53,7 +51,7 @@ export class OrderBuyEditDialogComponent implements OnInit, OnDestroy {
   }
 
   initialize() {
-    this.title = `Edit ${this.parentData.orderNumber}`;
+    this.title = `Edit order ${this.parentData.orderNumber}`;
     this.createForm();
 
     this.updateForm();

@@ -93,6 +93,8 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
       personNumber: [],
       telephone: [],
       fax: [],
+      email: [],
+      address: [],
       countryId: ['', Validators.required]
     });
   }
@@ -106,6 +108,8 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
       personNumber: supplier.personNumber,
       telephone: supplier.telephone,
       fax: supplier.fax,
+      email: supplier.email,
+      address: supplier.address,
       countryId: supplier.countryId
     });
   }
@@ -120,6 +124,8 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
     supplier.personNumber = this.supplierForm.value.personNumber;
     supplier.telephone = this.supplierForm.value.telephone;
     supplier.fax = this.supplierForm.value.fax;
+    supplier.email = this.supplierForm.value.email;
+    supplier.address = this.supplierForm.value.address;
     supplier.countryId = this.supplierForm.value.countryId;
 
     if (this.editMode) {

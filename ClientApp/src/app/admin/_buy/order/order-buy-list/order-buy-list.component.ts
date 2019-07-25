@@ -164,15 +164,15 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   }
 
   onCreate() {
-    this.router.navigate(['/admin/order-buy/create']);
+    this.router.navigate(['/admin/buy/order/create']);
   }
 
   onDetail(orderBuy: OrderBuy) {
-    this.router.navigate(['/admin/order-buy', orderBuy.orderId]);
+    this.router.navigate(['/admin/buy/order', orderBuy.orderId]);
   }
 
   onEdit(orderBuy: OrderBuy) {
-    this.router.navigate([`/admin/order-buy/${orderBuy.orderId}/edit`]);
+    this.router.navigate([`/admin/buy/order/${orderBuy.orderId}/edit`]);
   }
 
   onDelete(orderBuy: OrderBuy) {

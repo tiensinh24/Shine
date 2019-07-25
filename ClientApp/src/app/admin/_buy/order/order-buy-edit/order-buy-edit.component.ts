@@ -173,8 +173,8 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       autoFocus: true,
       maxWidth: '100vw',
       maxHeight: '100vh',
-      minWidth: '800px',
-      minHeight: '565px',
+      width: '800px',
+      height: '565px',
       panelClass: 'custom-dialog'
     };
 
@@ -270,8 +270,8 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       autoFocus: true,
       maxWidth: '100vw',
       maxHeight: '100vh',
-      minWidth: '800px',
-      minHeight: '500px',
+      width: '800px',
+      height: '560px',
       panelClass: 'custom-dialog'
     };
 
@@ -367,8 +367,8 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       autoFocus: true,
       maxWidth: '100vw',
       maxHeight: '100vh',
-      minWidth: '800px',
-      minHeight: '560px',
+      width: '800px',
+      height: '560px',
       panelClass: 'custom-dialog'
     };
 

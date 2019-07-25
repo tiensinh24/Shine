@@ -191,6 +191,8 @@ namespace Shine.Data.Infrastructures.Repositories
                 sup.DateOfBirth = supplier.DateOfBirth;
                 sup.Telephone = supplier.Telephone;
                 sup.Fax = supplier.Fax;
+                sup.Email = supplier.Email;
+                sup.Address = supplier.Address;
                 sup.CountryId = supplier.CountryId;
             }
 

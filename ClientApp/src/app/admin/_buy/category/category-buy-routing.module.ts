@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '', component: CategoryBuyComponent, children:
       [
-        { path: '', redirectTo: '/admin/category-buy/home', pathMatch: 'full' },
+        { path: '', redirectTo: '/admin/buy/category/home', pathMatch: 'full' },
         { path: 'home', component: CategoryBuyHomeComponent },
         { path: 'create', component: CategoryBuyEditComponent },
         { path: 'edit/:categoryId', component: CategoryBuyEditComponent },

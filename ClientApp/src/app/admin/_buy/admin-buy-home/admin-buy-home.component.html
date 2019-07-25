@@ -1,0 +1,34 @@
+<main fxLayout="row wrap" class="mat-typography">
+    <div class="card" @flyInVez fxLayout="row wrap" fxLayoutAlign="space-around">
+      <div class="product" [routerLink]="['/admin/buy/product']" fxLayout="column" fxLayoutAlign="center center">
+        <i class="fas fa-cookie-bite"></i>
+        <h2>Products</h2>
+        <p>Add or manager products</p>
+      </div>
+      <div class="supplier" [routerLink]="['/admin/buy/supplier']" fxLayout="column" fxLayoutAlign="center center">
+        <i class="fas fa-diagnoses"></i>
+        <h2>Suppliers</h2>
+        <p>Add or manager suppliers</p>
+      </div>      
+      <div class="employee" [routerLink]="['/admin/employee']" fxLayout="column" fxLayoutAlign="center center">
+        <i class="fas fa-user"></i>
+        <h2>Employees</h2>
+        <p>Add or manager employees</p>
+      </div>      
+      <div class="order" [routerLink]="['/admin/buy/order']" fxLayout="column" fxLayoutAlign="center center">
+        <i class="fas fa-donate"></i>
+        <h2>Orders</h2>
+        <p>Add or manager orders</p>
+      </div>
+      <div class="storage" [routerLink]="['/admin/storage']" fxLayout="column" fxLayoutAlign="center center">
+        <i class="fas fa-dolly"></i>
+        <h2>Storages</h2>
+        <p>Add or manager storages</p>
+      </div>     
+      
+    </div>
+  </main>
+  
+  <img src="../../assets/images/home-bg.png" class="page-bg" />
+  
+  

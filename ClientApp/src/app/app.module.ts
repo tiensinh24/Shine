@@ -8,12 +8,9 @@ import { MaterialSharedModule } from './_shared/material-shared.module';
 import { SharedModule } from './_shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { LogInComponent } from './_shared/components/log-in/log-in.component';
 import { PageNotFoundComponent } from './_shared/components/page-not-found/page-not-found.component';
-import { NavMenuComponent } from './admin/nav-menu/nav-menu.component';
-import { SidenavBuyComponent } from './admin/nav-menu/sidenav-buy/sidenav-buy.component';
-import { SidenavSellComponent } from './admin/nav-menu/sidenav-sell/sidenav-sell.component';
+
 import { HomeComponent } from './main/home/home.component';
 
 @NgModule({

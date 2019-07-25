@@ -95,16 +95,16 @@ export class ProductBuyListComponent implements OnInit, AfterViewInit {
 
   onCreate() {
     // this.openDialog(0);
-    this.router.navigate(['/admin/product-buy/create']);
+    this.router.navigate(['/admin/buy/product/create']);
   }
 
   onDetail(productBuy: ProductBuy) {
-    this.router.navigate(['/admin/product-buy', productBuy.productId]);
+    this.router.navigate(['/admin/buy/product', productBuy.productId]);
   }
 
   onEdit(productBuy: ProductBuy) {
     // this.openDialog(productBuy.productId);
-    this.router.navigate(['/admin/product-buy/edit/', productBuy.productId]);
+    this.router.navigate(['/admin/buy/product/edit/', productBuy.productId]);
   }
 
   onDelete(productBuy: ProductBuy) {

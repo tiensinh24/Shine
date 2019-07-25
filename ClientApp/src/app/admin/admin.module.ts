@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { SidenavBuyComponent } from './nav-menu/sidenav-buy/sidenav-buy.component';
-import { SidenavSellComponent } from './nav-menu/sidenav-sell/sidenav-sell.component';
 import { AdminComponent } from './admin.component';
 import { SharedModule } from '../_shared/shared.module';
 import { MaterialSharedModule } from '../_shared/material-shared.module';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 @NgModule({
-  declarations: [AdminComponent, AdminDashboardComponent, NavMenuComponent, SidenavBuyComponent, SidenavSellComponent],
+  declarations: [AdminComponent, AdminHomeComponent],
   imports: [
     // rwa modules
     SharedModule,

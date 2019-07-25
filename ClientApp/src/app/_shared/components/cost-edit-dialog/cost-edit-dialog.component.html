@@ -12,19 +12,19 @@
       <mat-error *ngIf="get('costDate').invalid">{{ getErrorMessage('costDate', 'Date') }}</mat-error>
     </mat-form-field>
     <!-- Description -->
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <input matInput type="text" placeholder="Description" formControlName="description" required />
       <mat-error *ngIf="get('description').invalid">{{ getErrorMessage('description', 'Description') }}</mat-error>
     </mat-form-field>
     <!-- Amount -->
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Amount</mat-label>
       <input matInput type="number" placeholder="Amount" formControlName="amount" required />
       <mat-error *ngIf="get('amount').invalid">{{ getErrorMessage('amount', 'Amount') }}</mat-error>
     </mat-form-field>
     <!-- Rate -->
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Rate</mat-label>
       <input matInput type="number" placeholder="Rate" formControlName="rate" required />
       <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage('rate', 'Rate') }}</mat-error>

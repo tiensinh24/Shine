@@ -33,12 +33,23 @@ namespace Shine.Controllers
         #endregion
 
         #region Get Values
+
+
+
         [HttpGet("select")]
         public async Task<ActionResult<IEnumerable<DepartmentSelectDto>>> GetDepartmentsSelect()
         {
             var query = await _repository.GetDepartmentsSelectAsync();
 
             return Ok(query);
+        }
+
+        [HttpGet("departmentId")]
+        public async Task<ActionResult<DepartmentDto>> GetDepartment(int departmentId)
+        {
+            var query = await _repository.GetDepartmentAsync(departmentId);
+
+            return query;
         }
 
 
@@ -49,10 +60,10 @@ namespace Shine.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<DepartmentDto>> AddDepartment([FromBody] Department department)
         {
-            var query = await _repository.AddDepartmentAsync(department);
+            await _repository.AddDepartmentAsync(department);
             await _repository.CommitAsync();
 
-            return query;
+            return CreatedAtAction(nameof(GetDepartment), new { departmentId = department.DepartmentId }, department.Adapt<DepartmentDto>());
         }
 
         [HttpPut]

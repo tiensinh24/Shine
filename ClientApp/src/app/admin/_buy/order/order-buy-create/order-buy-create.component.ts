@@ -139,7 +139,7 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
       (res: OrderBuyWithNavigations) => {
         if (res) {
           this.snackBar.open(`Order ${order.orderNumber} added`, 'Success');
-          this.router.navigate([`/admin/order-buy/${res.orderId}/edit`]);
+          this.router.navigate([`/admin/buy/order/${res.orderId}/edit`]);
         }
       },
       error => {
@@ -151,7 +151,7 @@ export class OrderBuyCreateComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onCancel() {
-    this.router.navigate(['/admin/order-buy']);
+    this.router.navigate(['/admin/buy/order']);
   }
 
   submitOrder() {

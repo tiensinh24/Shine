@@ -172,6 +172,8 @@ namespace Shine.Data.Infrastructures.Repositories
                 query.LastName = employee.LastName;
                 query.DateOfBirth = employee.DateOfBirth;
                 query.Telephone = employee.Telephone;
+                query.Email = employee.Email;
+                query.Address = employee.Address;
                 query.CountryId = employee.CountryId;
                 query.DepartmentId = employee.DepartmentId;
             }

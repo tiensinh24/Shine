@@ -47,12 +47,15 @@
             <!-- DepartmentId -->
             <mat-form-field appearance="outline">
               <mat-label>Department</mat-label>
-              <mat-select placeholder="Select department" formControlName="departmentId" required>
-                <mat-option *ngFor="let department of departments" [value]="department.departmentId">
+              <mat-select placeholder="Select department" formControlName="department" [compareWith]="compareDepartment" required>
+                <mat-option *ngFor="let department of departments" [value]="department">
                   {{ department.departmentName }}
                 </mat-option>
+                <mat-option>
+                  <button mat-button color="primary" (click)="openDepartmentEditDialog()">Add new department</button>
+                </mat-option>
               </mat-select>
-              <mat-error *ngIf="get('departmentId').invalid">{{ getErrorMessage('departmentId', 'Department') }}</mat-error>
+              <mat-error *ngIf="get('department').invalid">{{ getErrorMessage('department', 'Department') }}</mat-error>
             </mat-form-field>
 
             <!-- Gender -->
@@ -80,10 +83,26 @@
               <mat-icon matSuffix>phone</mat-icon>
             </mat-form-field>
 
+            <!-- Email -->
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Address" formControlName="email" />
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+
             <!-- Address -->
             <mat-form-field appearance="outline">
               <mat-label>Address</mat-label>
-              <input matInput placeholder="Address" formControlName="address" required />
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                placeholder="Address"
+                formControlName="address"
+                required
+              ></textarea>
               <mat-icon matSuffix>my_location</mat-icon>
               <mat-error *ngIf="get('address').invalid">{{ getErrorMessage('address', 'Address') }}</mat-error>
             </mat-form-field>

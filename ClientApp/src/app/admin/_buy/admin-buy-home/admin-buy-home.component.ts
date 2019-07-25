@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css'],
+  selector: 'app-admin-buy-home',
+  templateUrl: './admin-buy-home.component.html',
+  styleUrls: ['./admin-buy-home.component.scss'],
   animations: [
     trigger('flyInVez', [
       transition(':enter', [
@@ -21,4 +21,11 @@ import { trigger, transition, query, style, stagger, animate } from '@angular/an
     ])
   ]
 })
-export class AdminDashboardComponent {}
+export class AdminBuyHomeComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

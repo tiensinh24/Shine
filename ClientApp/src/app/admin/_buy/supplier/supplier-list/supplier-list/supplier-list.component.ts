@@ -126,11 +126,11 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   }
 
   onCreate() {
-    this.router.navigate(['/admin/supplier/create']);
+    this.router.navigate(['/admin/buy/supplier/create']);
   }
 
   onEdit(supplier: Supplier) {
-    this.router.navigate([`/admin/supplier/${supplier.personId}/edit`]);
+    this.router.navigate([`/admin/buy/supplier/${supplier.personId}/edit`]);
   }
 
   onDelete(supplier: Supplier) {
