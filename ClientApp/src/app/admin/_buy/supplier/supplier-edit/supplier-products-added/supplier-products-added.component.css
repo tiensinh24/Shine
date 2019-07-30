@@ -1,5 +1,4 @@
 mat-card.main {
-  height: calc(100vh - (55px + 8rem));
   overflow: auto;
 }
 

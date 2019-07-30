@@ -1,10 +1,12 @@
 .toolbar {
-  -webkit-box-shadow: 5px 2px 15px 2px grey;
-          box-shadow: 5px 2px 15px 2px grey;
+  height: 60px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 10;
+  -webkit-box-shadow: 5px 2px 15px 2px grey;
+          box-shadow: 5px 2px 15px 2px grey;
 }
 
 .toolbar .home-logo {

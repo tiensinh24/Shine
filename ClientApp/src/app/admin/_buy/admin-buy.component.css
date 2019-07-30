@@ -1,1 +1,8 @@
-/* No CSS *//*# sourceMappingURL=admin-buy.component.css.map */
+.mat-sidenav-container {
+  height: calc(100vh - 64px);
+}
+
+.mat-sidenav-container .mat-sidenav {
+  min-width: 250px;
+}
+/*# sourceMappingURL=admin-buy.component.css.map */

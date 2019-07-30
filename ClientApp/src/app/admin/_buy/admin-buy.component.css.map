@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "",
+    "mappings": "AAAA,AAAA,sBAAsB,CAAC;EAErB,MAAM,EAAE,kBAAkB;CAM3B;;AARD,AAIE,sBAJoB,CAIpB,YAAY,CAAC;EACX,SAAS,EAAE,KAAK;CACjB",
     "sources": [
         "admin-buy.component.scss"
     ],

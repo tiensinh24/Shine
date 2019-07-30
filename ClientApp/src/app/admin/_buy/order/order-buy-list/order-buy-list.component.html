@@ -10,7 +10,12 @@
     <form class="filter-form" @flyInOutHoz [formGroup]="filterForm" *ngIf="showFilter" fxLayout="row" fxLayoutAlign="start center">
       <mat-form-field>
         <input matInput formControlName="fromDate" [matDatepicker]="fromDate" (click)="fromDate.open()" placeholder="From..." />
-        <mat-datepicker-toggle matSuffix matTooltip="Clear" *ngIf="filterForm.controls['fromDate'].value" (click)="clearFilterControl('fromDate')">
+        <mat-datepicker-toggle
+          matSuffix
+          matTooltip="Clear"
+          *ngIf="filterForm.controls['fromDate'].value"
+          (click)="clearFilterControl('fromDate')"
+        >
           <mat-icon matDatepickerToggleIcon>clear</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker-toggle *ngIf="!filterForm.controls['fromDate'].value" matSuffix [for]="fromDate"></mat-datepicker-toggle>
@@ -18,7 +23,12 @@
       </mat-form-field>
       <mat-form-field>
         <input matInput formControlName="toDate" [matDatepicker]="toDate" (click)="toDate.open()" placeholder="To..." />
-        <mat-datepicker-toggle matSuffix matTooltip="Clear" *ngIf="filterForm.controls['toDate'].value" (click)="clearFilterControl('toDate')">
+        <mat-datepicker-toggle
+          matSuffix
+          matTooltip="Clear"
+          *ngIf="filterForm.controls['toDate'].value"
+          (click)="clearFilterControl('toDate')"
+        >
           <mat-icon matDatepickerToggleIcon>clear</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker-toggle *ngIf="!filterForm.controls['toDate'].value" matSuffix [for]="toDate"></mat-datepicker-toggle>
@@ -70,7 +80,8 @@
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="masterToggle()" [checked]="isAllSelected()" [indeterminate]="!isAllSelected() && selection.hasValue()"> </mat-checkbox>
+          <mat-checkbox (change)="masterToggle()" [checked]="isAllSelected()" [indeterminate]="!isAllSelected() && selection.hasValue()">
+          </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
           <mat-checkbox (click)="selection.toggle(row)" [checked]="selection.isSelected(row)"> </mat-checkbox>
@@ -167,12 +178,19 @@
 
     <!-- Paginator & filter -->
     <div fxLayout="row-reverse" class="mat-paginator-sticky">
-      <mat-paginator [length]="(dataSource.paging | async)?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 16, 25, 100]" showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="(dataSource.paging | async)?.totalItems"
+        [pageSize]="8"
+        [pageSizeOptions]="[8, 16, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
 
       <mat-form-field fxFlex>
         <span matPrefix><mat-icon>search</mat-icon></span>
         <input matInput type="search" placeholder="Search orders" #input />
-        <button mat-button mat-icon-button matSuffix *ngIf="input.value.length > 0" (click)="clearSearch()"><mat-icon>clear</mat-icon></button>
+        <button mat-button mat-icon-button matSuffix *ngIf="input.value.length > 0" (click)="clearSearch()">
+          <mat-icon>clear</mat-icon>
+        </button>
       </mat-form-field>
     </div>
   </mat-card>

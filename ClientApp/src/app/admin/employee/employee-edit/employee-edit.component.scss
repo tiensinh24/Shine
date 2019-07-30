@@ -1,5 +1,4 @@
 mat-card.main {
-  height: calc(100vh - (55px + 8rem));
   overflow: auto;
 
   .title-group {
@@ -20,7 +19,6 @@ mat-card.main {
     width: 100%;
 
     div.edit-form {
-      // max-width: 960px;
       > form {
         margin-bottom: 2rem;
       }

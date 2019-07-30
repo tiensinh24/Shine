@@ -1,15 +1,16 @@
 main {
   padding: 1rem;
+  
 
   mat-progress-bar {
-    margin-bottom: 8px;
+    margin-bottom: 2rem;
   }
 
-  >h1.title {    
+  > h1.title {
       color: royalblue;
     }  
 
-  >.content {
+  > .content {
     padding: 0;
 
     table.main-table {

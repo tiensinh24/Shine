@@ -1,31 +1,26 @@
-mat-card.main {
-  height: calc(100vh - (55px + 8rem));
-  overflow: auto;
-}
-
-mat-card.main .title-group {
+.title-group {
   padding: 0;
   margin-bottom: 1rem;
 }
 
-mat-card.main .title-group .mat-icon {
+.title-group .mat-icon {
   font-size: 32px;
 }
 
-mat-card.main .title-group h1.title {
+.title-group h1.title {
   margin-bottom: 2rem;
   color: royalblue;
 }
 
-mat-card.main .card-content {
+mat-tab-group .card-content {
   width: 100%;
 }
 
-mat-card.main .card-content div.edit-form > form {
+mat-tab-group .card-content div.edit-form > form {
   margin-bottom: 2rem;
 }
 
-mat-card.main .card-content div.photos div.supplier-photos div.photo {
+mat-tab-group .card-content div.photos div.supplier-photos div.photo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -38,11 +33,11 @@ mat-card.main .card-content div.photos div.supplier-photos div.photo {
           align-items: center;
 }
 
-mat-card.main .card-content div.photos div.supplier-photos div.photo:hover {
+mat-tab-group .card-content div.photos div.supplier-photos div.photo:hover {
   cursor: pointer;
 }
 
-mat-card.main .card-content div.photos div.supplier-photos div.photo:hover img.image {
+mat-tab-group .card-content div.photos div.supplier-photos div.photo:hover img.image {
   opacity: 0.75;
   -webkit-transition: 250ms ease-out;
   transition: 250ms ease-out;
@@ -50,7 +45,7 @@ mat-card.main .card-content div.photos div.supplier-photos div.photo:hover img.i
           transform: scale(1.2);
 }
 
-mat-card.main .card-content div.photos div.supplier-photos div.photo:hover div.img-btn {
+mat-tab-group .card-content div.photos div.supplier-photos div.photo:hover div.img-btn {
   padding: 0 1rem;
   background: white;
   border-radius: 50px;
@@ -61,7 +56,7 @@ mat-card.main .card-content div.photos div.supplier-photos div.photo:hover div.i
   transition: 250ms ease-in;
 }
 
-mat-card.main .card-content div.photos div.supplier-photos div.photo img.image {
+mat-tab-group .card-content div.photos div.supplier-photos div.photo img.image {
   border-radius: 20px;
   width: 150px;
   height: 150px;
@@ -71,7 +66,7 @@ mat-card.main .card-content div.photos div.supplier-photos div.photo img.image {
           transform: scale(1);
 }
 
-mat-card.main .card-content div.photos div.supplier-photos div.photo div.img-btn {
+mat-tab-group .card-content div.photos div.supplier-photos div.photo div.img-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -85,25 +80,25 @@ mat-card.main .card-content div.photos div.supplier-photos div.photo div.img-btn
   transition: 200ms ease-out;
 }
 
-mat-card.main .card-content div.photos div.photo-upload {
+mat-tab-group .card-content div.photos div.photo-upload {
   margin-top: 2rem;
 }
 
-mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn {
+mat-tab-group .card-content div.photos div.photo-upload button.upload-icon-btn {
   -webkit-transform: scale(1);
           transform: scale(1);
   -webkit-transition: 200ms ease-in;
   transition: 200ms ease-in;
 }
 
-mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn:hover {
+mat-tab-group .card-content div.photos div.photo-upload button.upload-icon-btn:hover {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
   -webkit-transition: 200ms ease-out;
   transition: 200ms ease-out;
 }
 
-mat-card.main .card-content div.photos div.no-photo div {
+mat-tab-group .card-content div.photos div.no-photo div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -120,7 +115,7 @@ mat-card.main .card-content div.photos div.no-photo div {
   opacity: 0.75;
 }
 
-.products-tab {
+mat-tab-group mat-tab.products-tab {
   padding: 0;
   margin: 0;
 }

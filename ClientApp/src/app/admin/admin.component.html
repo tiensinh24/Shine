@@ -1,91 +1,140 @@
 <!-- Toolbar -->
-<mat-toolbar color="primary" class="toolbar">
-    <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
-      <button mat-icon-button>
-        <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+<mat-toolbar color="primary" aria-label="toolbar" class="toolbar">
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button>
+      <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
 
-      <div fxLayout="row" fxLayoutAlign="start center" [routerLink]="['/admin/home']" matTooltip="Home">
-        <mat-icon svgIcon="logo" style="width:40px; height:40px"></mat-icon>
-        <button class="home-logo" mat-button>Shine</button>
-      </div>
+    <div fxLayout="row" fxLayoutAlign="start center" [routerLink]="['/admin/home']" matTooltip="Home">
+      <mat-icon svgIcon="logo" style="width:40px; height:40px"></mat-icon>
+      <button class="home-logo" mat-button>Shine</button>
+    </div>
 
-      <span fxFlex></span>
+    <span fxFlex></span>
 
-      <!-- Apps menu -->
-      <button mat-icon-button [matMenuTriggerFor]="apps" matTooltip="Apps">
-        <mat-icon>apps</mat-icon>
-      </button>
-      <mat-menu #apps="matMenu">
-        <!-- Row 1 -->
-        <div fxLayout="row">
-          <!-- Category -->
-          <button [routerLink]="['/admin/category-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">category</mat-icon>
-            <span>Category</span>
-          </button>
-          <!-- Product -->
-          <button [routerLink]="['/admin/product-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">shopping_cart</mat-icon>
-            <span>Product</span>
-          </button>
-          <!-- suppliers -->
-          <button mat-menu-item [routerLink]="['/admin/supplier']" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">account_circle</mat-icon>
-            <span>Supplier</span>
-          </button>
-        </div>
-        <!-- Row 2 -->
-        <div fxLayout="row">
-          <!-- Customer -->
-          <button [routerLink]="['/admin/customer']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">supervised_user_circle</mat-icon>
-            <span>Customer</span>
-          </button>
-
-          <!-- Storage -->
-          <button [routerLink]="['/admin/storage']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">storage</mat-icon>
-            <span>Storage</span>
-          </button>
-
-          <!-- Order -->
-          <button [routerLink]="['/admin/order-buy']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">receipt</mat-icon>
-            <span>Order</span>
-          </button>
-        </div>
-        <!-- Row 3 -->
-        <div fxLayout="row">
-          <button [routerLink]="['/admin']" mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">dashboard</mat-icon>
-            <span>Admin</span>
-          </button>
-
-          <button mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
-            <mat-icon style="font-size: 48px" color="primary">store</mat-icon>
-            <span>Store</span>
-          </button>
-        </div>
-      </mat-menu>
-
-      <!-- Account menu -->
-      <div [matMenuTriggerFor]="account" matTooltip="Welcome {{ user }}">
-        <mat-icon *ngIf="!isLoggedIn()">lock</mat-icon>
-
-        <div *ngIf="isLoggedIn()" class="user-avatar"></div>
-      </div>
-      <mat-menu #account="matMenu">
-        <button *ngIf="!isLoggedIn()" mat-menu-item (click)="login()">
-          <mat-icon aria-label="Login">account_circle</mat-icon>
-          Login
+    <!-- Apps menu -->
+    <button mat-icon-button [matMenuTriggerFor]="apps" matTooltip="Apps">
+      <mat-icon>apps</mat-icon>
+    </button>
+    <mat-menu #apps="matMenu">
+      <!-- Row 1 -->
+      <div fxLayout="row">
+        <!-- Category -->
+        <button
+          [routerLink]="['/admin/category-buy']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">category</mat-icon>
+          <span>Category</span>
         </button>
-        <button *ngIf="isLoggedIn()" mat-menu-item (click)="logout()">
-          <mat-icon aria-label="Login">exit_to_app</mat-icon>
-          Logout
+        <!-- Product -->
+        <button
+          [routerLink]="['/admin/product-buy']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">shopping_cart</mat-icon>
+          <span>Product</span>
         </button>
-      </mat-menu>
-    </mat-toolbar-row>
-  </mat-toolbar>
+        <!-- suppliers -->
+        <button
+          mat-menu-item
+          [routerLink]="['/admin/supplier']"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">account_circle</mat-icon>
+          <span>Supplier</span>
+        </button>
+      </div>
+      <!-- Row 2 -->
+      <div fxLayout="row">
+        <!-- Customer -->
+        <button
+          [routerLink]="['/admin/customer']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">supervised_user_circle</mat-icon>
+          <span>Customer</span>
+        </button>
+
+        <!-- Storage -->
+        <button
+          [routerLink]="['/admin/storage']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">storage</mat-icon>
+          <span>Storage</span>
+        </button>
+
+        <!-- Order -->
+        <button
+          [routerLink]="['/admin/order-buy']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">receipt</mat-icon>
+          <span>Order</span>
+        </button>
+      </div>
+      <!-- Row 3 -->
+      <div fxLayout="row">
+        <button
+          [routerLink]="['/admin']"
+          mat-menu-item
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
+          style="height: 100%;"
+        >
+          <mat-icon style="font-size: 48px" color="primary">dashboard</mat-icon>
+          <span>Admin</span>
+        </button>
+
+        <button mat-menu-item fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px" style="height: 100%;">
+          <mat-icon style="font-size: 48px" color="primary">store</mat-icon>
+          <span>Store</span>
+        </button>
+      </div>
+    </mat-menu>
+
+    <!-- Account menu -->
+    <div [matMenuTriggerFor]="account" matTooltip="Welcome {{ user }}">
+      <mat-icon *ngIf="!isLoggedIn()">lock</mat-icon>
+
+      <div *ngIf="isLoggedIn()" class="user-avatar"></div>
+    </div>
+    <mat-menu #account="matMenu">
+      <button *ngIf="!isLoggedIn()" mat-menu-item (click)="login()">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+        Login
+      </button>
+      <button *ngIf="isLoggedIn()" mat-menu-item (click)="logout()">
+        <mat-icon aria-label="Login">exit_to_app</mat-icon>
+        Logout
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
 
 <router-outlet></router-outlet>

@@ -3,7 +3,7 @@ main {
 }
 
 main mat-progress-bar {
-  margin-bottom: 8px;
+  margin-bottom: 2rem;
 }
 
 main > h1.title {

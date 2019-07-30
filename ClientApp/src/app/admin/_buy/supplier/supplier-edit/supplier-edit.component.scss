@@ -1,26 +1,22 @@
-mat-card.main {
-  height: calc(100vh - (55px + 8rem));
-  overflow: auto;
+.title-group {
+  padding: 0;
+  margin-bottom: 1rem;
 
-  .title-group {
-    padding: 0;
-    margin-bottom: 1rem;
-
-    .mat-icon {
-      font-size: 32px;
-    }
-
-    h1.title {
-      margin-bottom: 2rem;
-      color: royalblue;
-    }
+  .mat-icon {
+    font-size: 32px;
   }
 
+  h1.title {
+    margin-bottom: 2rem;
+    color: royalblue;
+  }
+}
+
+mat-tab-group {
   .card-content {
     width: 100%;
 
     div.edit-form {
-      // max-width: 960px;
       > form {
         margin-bottom: 2rem;
       }
@@ -98,9 +94,9 @@ mat-card.main {
       }
     }
   }
-}
 
-.products-tab {
-  padding: 0;
-  margin: 0;
+  mat-tab.products-tab {
+    padding: 0;
+    margin: 0;
+  }
 }
