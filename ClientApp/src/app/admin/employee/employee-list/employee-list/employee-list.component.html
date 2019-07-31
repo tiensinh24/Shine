@@ -9,7 +9,7 @@
 
     <!-- Dynamic columns menu -->
     <section>
-      <button class="more-setting" mat-icon-button matTooltip="more settings" [matMenuTriggerFor]="dynamicCols">
+      <button mat-icon-button matTooltip="Settings" [matMenuTriggerFor]="dynamicCols">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu class="dynamic-cols-menu" [overlapTrigger]="false" #dynamicCols="matMenu">
@@ -30,6 +30,9 @@
         </div>
       </mat-menu>
     </section>
+
+    <!-- Change display mode -->
+    <button mat-icon-button matTooltip="Card view" color="primary" (click)="outDisplayMode()"><mat-icon>view_module</mat-icon></button>
   </div>
 
   <!-- content -->

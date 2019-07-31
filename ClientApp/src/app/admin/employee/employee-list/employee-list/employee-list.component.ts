@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
@@ -52,6 +52,9 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('input', { static: true }) input: ElementRef;
+
+  // Output
+  @Output() displayMode = new EventEmitter<boolean>();
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -188,5 +191,10 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   clearFilter() {
     this.input.nativeElement.value = null;
     this.loadEmployeesPage();
+  }
+
+  // *Output
+  outDisplayMode() {
+    this.displayMode.emit(false);
   }
 }

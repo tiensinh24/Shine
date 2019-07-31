@@ -1,7 +1,7 @@
 <!-- Toolbar -->
 <mat-toolbar color="primary" aria-label="toolbar" class="toolbar">
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
-    <button mat-icon-button>
+    <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon matTooltip="Toggle Side Menu" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
@@ -137,4 +137,94 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<!-- Sidenav & outlet content -->
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened #sidenav>    
+    <mat-nav-list dense>
+      <mat-list-item [routerLink]="['/admin/home']" routerLinkActive="active" >
+        <mat-icon matListIcon>home</mat-icon>
+        <a matLine>Home</a>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="['/admin/employee/home']" routerLinkActive="active">
+        <mat-icon matListIcon>person</mat-icon>
+        <a matLine>Employee</a>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="['/admin/storage/home']" routerLinkActive="active">
+        <mat-icon matListIcon>storage</mat-icon>
+        <a matLine>Storage</a>
+      </mat-list-item>
+    </mat-nav-list>
+
+    <mat-divider></mat-divider>
+
+    <mat-accordion class="main-accordion" multi="true" displayMode="flat">
+      <!-- Buy group -->
+      <mat-expansion-panel class="mat-elevation-z0" #buyPanel expanded>
+        <mat-expansion-panel-header>
+          <mat-icon matListIcon [ngClass]="{ expand: buyPanel.expanded }" class="fas fa-shopping-bag"></mat-icon>
+          <span>Buy</span>
+        </mat-expansion-panel-header>
+        <!-- Expand list -->
+        <mat-nav-list dense>
+          <mat-list-item [routerLink]="['/admin/buy/home']" routerLinkActive="active">
+            <mat-icon matListIcon>home</mat-icon>
+            <a matLine>Home</a>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['/admin/buy/product/home']" routerLinkActive="active">
+            <mat-icon matListIcon>donut_small</mat-icon>
+            <a matLine>Product</a>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['/admin/buy/supplier/home']" routerLinkActive="active">
+            <mat-icon matListIcon>people</mat-icon>
+            <a matLine>Supplier</a>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['/admin/buy/order/home']" routerLinkActive="active">
+            <mat-icon matListIcon>receipt</mat-icon>
+            <a matLine>Order</a>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-divider></mat-divider>
+
+      <!-- Sell group -->
+      <mat-expansion-panel class="mat-elevation-z0" #sellPanel>
+        <mat-expansion-panel-header>
+          <mat-icon matListIcon [ngClass]="{ expand: sellPanel.expanded }" class="fab fa-sellcast"></mat-icon>
+          <span>Sell</span>
+        </mat-expansion-panel-header>
+        <!-- Expand list -->
+        <mat-nav-list dense>
+          <mat-list-item [routerLink]="['/admin/sell/home']" routerLinkActive="active">
+            <mat-icon matListIcon>home</mat-icon>
+            <a matLine>Home</a>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['/admin/sell/product/home']" routerLinkActive="active">
+            <mat-icon matListIcon>donut_small</mat-icon>
+            <a matLine>Product</a>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['/admin/sell/customer/home']" routerLinkActive="active">
+            <mat-icon matListIcon class="fas fa-diagnoses"></mat-icon>
+            <a matLine>Customer</a>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['/admin/sell/order/home']" routerLinkActive="active">
+            <mat-icon matListIcon class="fas fa-donate"></mat-icon>
+            <a matLine>Order</a>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

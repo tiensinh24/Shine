@@ -12,7 +12,10 @@
   }
 }
 
-mat-tab-group {
+mat-tab-group.tab-group {
+  height: calc(100vh - (64px + 3.5rem));
+  overflow: auto;
+
   .card-content {
     width: 100%;
 

@@ -3,9 +3,7 @@
   <div class="title mat-paginator-sticky" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="64px">
     <h1>Employees</h1>
 
-    <div class="search" fxFlex fxLayout="row-reverse">
-      <mat-paginator [length]="paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 12, 24, 100]" showFirstLastButtons></mat-paginator>
-
+    <div class="search" fxFlex fxLayout="row">
       <mat-form-field fxFlex>
         <span matPrefix><mat-icon>search</mat-icon></span>
         <span matSuffix matTooltip="Clear" (click)="clearFilter()" *ngIf="input.value"
@@ -13,8 +11,12 @@
         >
         <input matInput type="search" placeholder="Search employees" #input />
       </mat-form-field>
+
+      <mat-paginator [length]="paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 12, 24, 100]" showFirstLastButtons></mat-paginator>
     </div>
-    <div></div>
+
+    <!-- Change display mode -->
+    <button mat-icon-button matTooltip="List view" color="primary" (click)="outDisplayMode()"><mat-icon>view_list</mat-icon></button>
   </div>
 
   <!-- Loading progress bar -->

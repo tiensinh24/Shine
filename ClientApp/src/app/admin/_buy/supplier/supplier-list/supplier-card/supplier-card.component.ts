@@ -1,5 +1,5 @@
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fromEvent, of } from 'rxjs';
@@ -42,6 +42,9 @@ export class SupplierCardComponent implements OnInit, AfterViewInit {
   @ViewChild('input', { static: true }) input: ElementRef;
 
   @ViewChild('mainSection', { static: true }) mainSection: ElementRef;
+
+  // Output
+  @Output() displayMode = new EventEmitter<boolean>();
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -121,5 +124,10 @@ export class SupplierCardComponent implements OnInit, AfterViewInit {
   clearFilter() {
     this.input.nativeElement.value = null;
     this.loadSuppliersPage();
+  }
+
+  // *Output
+  outDisplayMode() {
+    this.displayMode.emit(true);
   }
 }

@@ -256,6 +256,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   private refreshOrderValue() {
     this.order.orderTotal = this.order.products.reduce((a, b) => a + b.total, 0);
     this.refreshPieChart();
+    this.refreshDebt();
   }
 
   toggleValueExpansion() {
@@ -448,6 +449,11 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
   private refreshTotalPayment() {
     this.order.paymentTotal = this.order.payments.reduce((a, b) => a + b.amount, 0);
+    this.refreshDebt();
+  }
+
+  private refreshDebt() {
+    this.order.debt = this.order.orderTotal - this.order.paymentTotal;
   }
 
   togglePaymentExpansion() {

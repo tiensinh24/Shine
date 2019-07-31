@@ -1,6 +1,6 @@
 import { SupplierDataSource } from '../../_data-source/supplier-data-source';
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,11 +31,10 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     { key: 'fullName', value: 'Full Name' },
     { key: 'dateOfBirth', value: 'Birthday' },
     { key: 'telephone', value: 'Telephone' },
-    
     { key: 'countryName', value: 'Country' },
     { key: 'continentName', value: 'Continent' },
-    {key: 'email', value: 'Email'},
-    {key: 'address', value: 'Address'},
+    { key: 'email', value: 'Email' },
+    { key: 'address', value: 'Address' },
     { key: 'rating', value: 'Rating' },
     { key: 'actions', value: 'Actions' }
   ];
@@ -46,7 +45,7 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
     'gender',
     'fullName',
     'dateOfBirth',
-    'telephone',    
+    'telephone',
     'countryName',
     'continentName',
     'email',
@@ -58,6 +57,9 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   numRows: number;
 
   title = 'Suppliers List';
+
+  // @Output
+  @Output() displayMode = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -246,5 +248,10 @@ export class SupplierListComponent implements OnInit, AfterViewInit {
   clearFilter() {
     this.input.nativeElement.value = null;
     this.loadSuppliersPage();
+  }
+
+  // *Output
+  outDisplayMode() {
+    this.displayMode.emit(false);
   }
 }

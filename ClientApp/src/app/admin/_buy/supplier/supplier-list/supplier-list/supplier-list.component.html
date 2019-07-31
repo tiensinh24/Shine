@@ -1,7 +1,6 @@
 <main class="mat-typography">
   <!-- Loading progress bar -->
-  <mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer">
-  </mat-progress-bar>
+  <mat-progress-bar *ngIf="dataSource.isLoading | async" color="accent" aria-label="Progress bar" mode="buffer"> </mat-progress-bar>
 
   <!-- title -->
   <div class="title" fxLayout="row">
@@ -10,7 +9,7 @@
 
     <!-- Dynamic columns menu -->
     <section>
-      <button class="more-setting" mat-icon-button matTooltip="more settings" [matMenuTriggerFor]="dynamicCols">
+      <button mat-icon-button matTooltip="Settings" [matMenuTriggerFor]="dynamicCols">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu class="dynamic-cols-menu" [overlapTrigger]="false" #dynamicCols="matMenu">
@@ -31,6 +30,9 @@
         </div>
       </mat-menu>
     </section>
+
+    <!-- Change display mode -->
+    <button mat-icon-button color="primary" matTooltip="Card view" (click)="outDisplayMode()"><mat-icon>view_module</mat-icon></button>
   </div>
 
   <!-- content -->
@@ -40,11 +42,7 @@
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox
-            (change)="masterToggle()"
-            [checked]="isAllSelected()"
-            [indeterminate]="!isAllSelected() && selection.hasValue()"
-          >
+          <mat-checkbox (change)="masterToggle()" [checked]="isAllSelected()" [indeterminate]="!isAllSelected() && selection.hasValue()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
@@ -83,8 +81,8 @@
       <ng-container matColumnDef="telephone">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Telephone</th>
         <td mat-cell *matCellDef="let row">{{ row.telephone }}</td>
-      </ng-container>     
-     
+      </ng-container>
+
       <!-- countryName Column -->
       <ng-container matColumnDef="countryName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
@@ -95,15 +93,15 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Continent</th>
         <td mat-cell *matCellDef="let row">{{ row.continentName }}</td>
       </ng-container>
-       <!-- email column -->
-       <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef> Email </th>
-          <td mat-cell *matCellDef="let row"> {{row.email}} </td>
-        </ng-container> 
+      <!-- email column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+      </ng-container>
       <!-- address column -->
       <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef> Address </th>
-        <td mat-cell *matCellDef="let row"> {{row.address}} </td>
+        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <td mat-cell *matCellDef="let row">{{ row.address }}</td>
       </ng-container>
       <!-- rating Collumn -->
       <ng-container matColumnDef="rating">
@@ -131,7 +129,6 @@
 
         <td mat-cell *matCellDef="let row">
           <div fxLayout="row" fxLayoutAlign="flex-end center">
-            
             <button matTooltip="Edit supplier" mat-icon-button color="accent" (click)="onEdit(row)">
               <mat-icon aria-label="Edit">edit</mat-icon>
             </button>
@@ -157,11 +154,11 @@
       ></mat-paginator>
 
       <mat-form-field style="padding: 0 1rem;" fxFlex>
-          <span matPrefix><mat-icon>search</mat-icon></span>
-          <span matSuffix matTooltip="Clear" (click)="clearFilter()" *ngIf="input.value"
+        <span matPrefix><mat-icon>search</mat-icon></span>
+        <span matSuffix matTooltip="Clear" (click)="clearFilter()" *ngIf="input.value"
           ><button mat-button mat-icon-button><mat-icon>clear</mat-icon></button></span
-          >
-          <input matInput type="search" placeholder="Search suppliers" #input />
+        >
+        <input matInput type="search" placeholder="Search suppliers" #input />
       </mat-form-field>
     </div>
   </mat-card>

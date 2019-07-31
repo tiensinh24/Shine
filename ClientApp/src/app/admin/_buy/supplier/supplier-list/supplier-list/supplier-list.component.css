@@ -10,10 +10,6 @@ main > .title > h1 {
   color: royalblue;
 }
 
-main > .title button.more-setting {
-  padding-right: 4rem;
-}
-
 main > .content {
   padding: 0;
 }

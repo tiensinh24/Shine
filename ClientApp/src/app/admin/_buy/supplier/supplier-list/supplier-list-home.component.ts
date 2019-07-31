@@ -12,7 +12,7 @@ export class SupplierListHomeComponent implements OnInit {
 
   ngOnInit() {}
 
-  toggleDisplay() {
-    this.displayMode = !this.displayMode;
+  toggleDisplay($event: boolean) {
+    this.displayMode = $event;
   }
 }

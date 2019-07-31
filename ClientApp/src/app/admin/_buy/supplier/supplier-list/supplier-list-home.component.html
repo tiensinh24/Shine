@@ -1,10 +1,5 @@
-<button mat-icon-button class="toggleMode" (click)="toggleDisplay()">
-  <mat-icon matTooltip="List view" color="primary" *ngIf="!displayMode">view_list</mat-icon>
-  <mat-icon matTooltip="Card view" color="primary" *ngIf="displayMode">view_module</mat-icon>
-</button>
-
-<app-supplier-list *ngIf="displayMode; else supplierCard"></app-supplier-list>
+<app-supplier-list *ngIf="displayMode; else supplierCard" (displayMode)="toggleDisplay($event)"></app-supplier-list>
 
 <ng-template #supplierCard>
-  <app-supplier-card></app-supplier-card>
+  <app-supplier-card (displayMode)="toggleDisplay($event)"></app-supplier-card>
 </ng-template>

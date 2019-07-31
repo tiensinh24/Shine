@@ -1,5 +1,4 @@
 .toolbar {
-  height: 60px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -20,5 +19,38 @@
   background-image: url("https://picsum.photos/50");
   background-position: center;
   background-size: cover;
+}
+
+.mat-sidenav-container {
+  height: calc(100vh - 64px);
+}
+
+.mat-sidenav-container .mat-sidenav {
+  min-width: 250px;
+}
+
+.mat-sidenav-container .mat-sidenav .active mat-icon {
+  color: #ff4081;
+}
+
+.mat-sidenav-container .mat-sidenav .main-accordion .mat-expansion-panel-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.mat-sidenav-container .mat-sidenav .main-accordion .mat-expansion-panel-header mat-icon {
+  padding-right: 1rem;
+}
+
+.mat-sidenav-container .mat-sidenav .main-accordion .mat-expansion-panel-header mat-icon.expand {
+  color: #3f51b5;
+}
+
+.mat-sidenav-container .mat-sidenav .main-accordion .active mat-icon {
+  color: #ff4081;
 }
 /*# sourceMappingURL=admin.component.css.map */

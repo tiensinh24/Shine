@@ -1,6 +1,5 @@
 .toolbar {
-  height: 60px;
-  position: sticky;  
+  position: sticky;
   top: 0;
   left: 0;
   z-index: 10;
@@ -17,5 +16,39 @@
     background-image: url("https://picsum.photos/50");
     background-position: center;
     background-size: cover;
+  }
+}
+
+.mat-sidenav-container {
+  height: calc(100vh - 64px);
+
+  .mat-sidenav {
+    min-width: 250px;
+
+    .active {
+      mat-icon {
+        color: #ff4081;
+      }
+    }
+
+    .main-accordion {
+      .mat-expansion-panel-header {
+        display: flex;
+        align-items: center;
+
+        mat-icon {
+          padding-right: 1rem;
+          &.expand {
+            color: #3f51b5;
+          }
+        }
+      }
+
+      .active {
+        mat-icon {
+          color: #ff4081;
+        }
+      }
+    }
   }
 }

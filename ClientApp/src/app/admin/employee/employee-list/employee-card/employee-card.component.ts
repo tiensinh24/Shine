@@ -1,5 +1,5 @@
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fromEvent, of } from 'rxjs';
@@ -40,8 +40,10 @@ export class EmployeeCardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('input', { static: true }) input: ElementRef;
-
   @ViewChild('mainSection', { static: true }) mainSection: ElementRef;
+
+  // Output
+  @Output() displayMode = new EventEmitter<boolean>();
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -121,5 +123,10 @@ export class EmployeeCardComponent implements OnInit, AfterViewInit {
   clearFilter() {
     this.input.nativeElement.value = null;
     this.loadEmployeesPage();
+  }
+
+  // *Output
+  outDisplayMode($event: boolean) {
+    this.displayMode.emit($event);
   }
 }
