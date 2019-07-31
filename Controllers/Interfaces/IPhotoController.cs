@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Shine.Data.Dto.Photos;
-using Shine.Data.Models;
 
-namespace Shine.Controllers.Interfaces {
+namespace Shine.Controllers.Interfaces
+{
     public interface IPhotoController {
 
 #region Get Values

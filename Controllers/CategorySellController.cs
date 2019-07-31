@@ -1,12 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shine.Data;
 using Shine.Data.Infrastructures.Interfaces;
-using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
 namespace Shine.Controllers

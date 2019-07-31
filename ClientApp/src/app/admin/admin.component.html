@@ -139,23 +139,25 @@
 
 <!-- Sidenav & outlet content -->
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened #sidenav>    
-    <mat-nav-list dense>
-      <mat-list-item [routerLink]="['/admin/home']" routerLinkActive="active" >
-        <mat-icon matListIcon>home</mat-icon>
-        <a matLine>Home</a>
-      </mat-list-item>
+  <mat-sidenav mode="side" opened #sidenav>
+    <div class="common">
+      <mat-nav-list>
+        <mat-list-item [routerLink]="['/admin/home']" routerLinkActive="active">
+          <mat-icon matListIcon>home</mat-icon>
+          <a matLine>Home</a>
+        </mat-list-item>
 
-      <mat-list-item [routerLink]="['/admin/employee/home']" routerLinkActive="active">
-        <mat-icon matListIcon>person</mat-icon>
-        <a matLine>Employee</a>
-      </mat-list-item>
+        <mat-list-item [routerLink]="['/admin/employee/home']" routerLinkActive="active">
+          <mat-icon matListIcon>person</mat-icon>
+          <a matLine>Employee</a>
+        </mat-list-item>
 
-      <mat-list-item [routerLink]="['/admin/storage/home']" routerLinkActive="active">
-        <mat-icon matListIcon>storage</mat-icon>
-        <a matLine>Storage</a>
-      </mat-list-item>
-    </mat-nav-list>
+        <mat-list-item [routerLink]="['/admin/storage/home']" routerLinkActive="active">
+          <mat-icon matListIcon>storage</mat-icon>
+          <a matLine>Storage</a>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
 
     <mat-divider></mat-divider>
 
@@ -167,7 +169,7 @@
           <span>Buy</span>
         </mat-expansion-panel-header>
         <!-- Expand list -->
-        <mat-nav-list dense>
+        <mat-nav-list>
           <mat-list-item [routerLink]="['/admin/buy/home']" routerLinkActive="active">
             <mat-icon matListIcon>home</mat-icon>
             <a matLine>Home</a>
@@ -199,7 +201,7 @@
           <span>Sell</span>
         </mat-expansion-panel-header>
         <!-- Expand list -->
-        <mat-nav-list dense>
+        <mat-nav-list>
           <mat-list-item [routerLink]="['/admin/sell/home']" routerLinkActive="active">
             <mat-icon matListIcon>home</mat-icon>
             <a matLine>Home</a>

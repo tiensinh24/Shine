@@ -1,31 +1,31 @@
-using System;
-
 using Shine.Data.Models.Interfaces;
 
-namespace Shine.Data.Models {
-    public class Photo : IAuditedEntityBase, ISoftDelete {
+namespace Shine.Data.Models
+{
+    public class Photo : IAuditedEntityBase, ISoftDelete
+    {
 
-#region Properties
+        #region Properties
         public int PhotoId { get; set; }
 
-        // Use by cloudinary
+        // Used by cloudinary
         public string PublicId { get; set; }
         public string PhotoUrl { get; set; }
         public string Description { get; set; }
         public bool IsMain { get; set; }
 
-#endregion
+        #endregion
 
-#region FK
+        #region FK
         public int? PersonId { get; set; }
         public int? EmployeeId { get; set; }
         public int? ProductId { get; set; }
-#endregion
+        #endregion
 
-#region Navigation Properties
+        #region Navigation Properties
         public Person Person { get; set; }
         public Employee Employee { get; set; }
         public Product Product { get; set; }
-#endregion
+        #endregion
     }
 }

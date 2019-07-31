@@ -24,6 +24,7 @@
 
   .mat-sidenav {
     min-width: 250px;
+    background: cornsilk;
 
     .active {
       mat-icon {
@@ -32,9 +33,11 @@
     }
 
     .main-accordion {
+
       .mat-expansion-panel-header {
         display: flex;
         align-items: center;
+        
 
         mat-icon {
           padding-right: 1rem;

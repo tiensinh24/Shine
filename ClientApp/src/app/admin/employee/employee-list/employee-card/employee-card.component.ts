@@ -126,7 +126,7 @@ export class EmployeeCardComponent implements OnInit, AfterViewInit {
   }
 
   // *Output
-  outDisplayMode($event: boolean) {
-    this.displayMode.emit($event);
+  outDisplayMode() {
+    this.displayMode.emit(true);
   }
 }

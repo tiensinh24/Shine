@@ -27,6 +27,7 @@
 
 .mat-sidenav-container .mat-sidenav {
   min-width: 250px;
+  background: cornsilk;
 }
 
 .mat-sidenav-container .mat-sidenav .active mat-icon {

@@ -1,9 +1,5 @@
 using System.Collections.Generic;
 
-using Microsoft.AspNetCore.Mvc;
-
-using Shine.Data.Models;
-
 namespace Shine.Data.Dto._Paging
 {
     public class Paged<T> where T : class

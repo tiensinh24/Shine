@@ -251,7 +251,8 @@ namespace Shine.Data.Infrastructures.Repositories
             return products;
         }
 
-        public async Task<OrderBuyProducts> GetOrderProductAsync(ProductOrder productOrder){
+        public async Task<OrderBuyProducts> GetOrderProductAsync(ProductOrder productOrder)
+        {
             var item = await _context.ProductOrders
                 .AsNoTracking()
                 .ProjectToType<OrderBuyProducts>()

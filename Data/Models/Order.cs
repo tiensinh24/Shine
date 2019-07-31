@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 using Shine.Data.Models.Interfaces;
 
-namespace Shine.Data.Models {
+namespace Shine.Data.Models
+{
     public abstract class Order : IAuditedEntityBase, ISoftDelete {
 #region Properties
         public int OrderId { get; set; }
