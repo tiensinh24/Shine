@@ -1,10 +1,8 @@
-mat-card.main {  
-  overflow: auto;
-
+mat-card.main {
   .add-search {
     display: flex;
     position: sticky;
-    top: -1rem;
+    top: 0;
     left: 0;
     z-index: 1;
     background: white;
@@ -23,6 +21,7 @@ mat-card.main {
 
   .products {
     div.product {
+      width: 250px;
       cursor: pointer;
       transform: translate();
       transition: ease-out 250ms;
@@ -32,7 +31,7 @@ mat-card.main {
         transition: ease-in 250ms;
 
         img {
-          opacity: .75;
+          opacity: 0.75;
         }
 
         div.overlay {
@@ -60,5 +59,11 @@ mat-card.main {
         transition: 250ms ease-out;
       }
     }
+  }
+
+  .paginator {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
   }
 }

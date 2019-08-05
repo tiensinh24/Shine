@@ -102,7 +102,7 @@ namespace Shine.Controllers {
             return query;
         }
 
-        [HttpDelete("employeeId")]
+        [HttpDelete("{employeeId}")]
         public async Task<ActionResult<EmployeeDto>> DeleteEmployee(int employeeId) {
             var employee = await _repository.DeleteEmployeeAsync(employeeId);
 

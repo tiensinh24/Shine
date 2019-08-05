@@ -1,35 +1,36 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
-import { Subscription } from 'rxjs';
-import { OrderBuyDetail } from 'src/app/_shared/intefaces/buy/order/order-buy-detail';
-import { ActivatedRoute } from '@angular/router';
-import { OrderBuyProducts } from 'src/app/_shared/intefaces/buy/order/order-buy-products';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
-import { Payment } from 'src/app/_shared/intefaces/public/payment';
-import { Cost } from 'src/app/_shared/intefaces/public/cost';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog.component';
-import { OrderBuy } from 'src/app/_shared/intefaces/buy/order/order-buy';
-import { EmployeeService } from 'src/app/_shared/services/public/employee.service';
-import { EmployeeList } from 'src/app/_shared/intefaces/public/employee-list';
-import { OrderProductsEditDialogComponent } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component';
-import { CostEditDialogComponent } from 'src/app/_shared/components/cost-edit-dialog/cost-edit-dialog.component';
-import { CostService } from 'src/app/_shared/services/public/cost.service';
-import { PaymentService } from 'src/app/_shared/services/public/payment.service';
-import { GoogleChartComponent } from 'angular-google-charts';
-import { PaymentEditDialogComponent } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component';
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { OrderBuyService } from "src/app/_shared/services/buy/order-buy.service";
+import { Subscription } from "rxjs";
+import { OrderBuyDetail } from "src/app/_shared/intefaces/buy/order/order-buy-detail";
+import { ActivatedRoute } from "@angular/router";
+import { OrderBuyProducts } from "src/app/_shared/intefaces/buy/order/order-buy-products";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
+import { Payment } from "src/app/_shared/intefaces/public/payment";
+import { Cost } from "src/app/_shared/intefaces/public/cost";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { OrderBuyEditDialogComponent } from "src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog.component";
+import { OrderBuy } from "src/app/_shared/intefaces/buy/order/order-buy";
+import { EmployeeService } from "src/app/_shared/services/public/employee.service";
+import { EmployeeList } from "src/app/_shared/intefaces/public/employee-list";
+import { OrderProductsEditDialogComponent } from "src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component";
+import { CostEditDialogComponent } from "src/app/_shared/components/cost-edit-dialog/cost-edit-dialog.component";
+import { CostService } from "src/app/_shared/services/public/cost.service";
+import { PaymentService } from "src/app/_shared/services/public/payment.service";
+import { GoogleChartComponent } from "angular-google-charts";
+import { PaymentEditDialogComponent } from "src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component";
+import { ConfirmDialogService } from "src/app/_shared/services/public/confirm-dialog.service";
 
 @Component({
-  selector: 'app-order-buy-edit',
-  templateUrl: './order-buy-edit.component.html',
-  styleUrls: ['./order-buy-edit.component.scss']
+  selector: "app-order-buy-edit",
+  templateUrl: "./order-buy-edit.component.html",
+  styleUrls: ["./order-buy-edit.component.scss"]
 })
 export class OrderBuyEditComponent implements OnInit, OnDestroy {
   // Subsctiptions
   sub$ = new Subscription();
 
-  @ViewChild('chart', { static: false }) chart: GoogleChartComponent;
+  @ViewChild("chart", { static: false }) chart: GoogleChartComponent;
 
   // Variables
   order: OrderBuyDetail;
@@ -40,21 +41,36 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   costDataSource = new MatTableDataSource<Cost>();
 
   // Table columns
-  valueColumns = ['productName', 'quantity', 'price', 'tax', 'rate', 'unit', 'actions'];
-  paymentColumns = ['paymentDate', 'amount', 'currency', 'rate', 'actions'];
-  costColumns = ['costDate', 'description', 'amount', 'currency', 'rate', 'actions'];
+  valueColumns = [
+    "productName",
+    "quantity",
+    "price",
+    "tax",
+    "rate",
+    "unit",
+    "actions"
+  ];
+  paymentColumns = ["paymentDate", "amount", "currency", "rate", "actions"];
+  costColumns = [
+    "costDate",
+    "description",
+    "amount",
+    "currency",
+    "rate",
+    "actions"
+  ];
 
   orderId = +this.route.snapshot.params.orderId;
-  title = '';
+  title = "";
 
   // Google pie chart
   pieChartData = [[]];
-  columnNames = ['Value', 'Cost'];
+  columnNames = ["Value", "Cost"];
   options = {
     width: 300,
     height: 300,
     pieHole: 0.4,
-    legend: { position: 'top', maxLines: 3 }
+    legend: { position: "top", maxLines: 3 }
   };
 
   // Expansion boolean
@@ -69,7 +85,8 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private confirmService: ConfirmDialogService
   ) {}
 
   ngOnInit() {
@@ -82,20 +99,25 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
   initialize() {
     this.sub$.add(
-      this.orderService.getOrderDetail(this.orderId).subscribe((res: OrderBuyDetail) => {
-        this.order = res;
+      this.orderService
+        .getOrderDetail(this.orderId)
+        .subscribe((res: OrderBuyDetail) => {
+          this.order = res;
 
-        // Set childs data source
-        this.valueDataSource = new MatTableDataSource(res.products);
-        this.paymentDataSource = new MatTableDataSource(res.payments);
-        this.costDataSource = new MatTableDataSource(res.costs);
+          // Set childs data source
+          this.valueDataSource = new MatTableDataSource(res.products);
+          this.paymentDataSource = new MatTableDataSource(res.payments);
+          this.costDataSource = new MatTableDataSource(res.costs);
 
-        // Set data for pie chart
-        this.pieChartData.shift();
-        this.pieChartData.push(['Value', res.orderTotal], ['Cost', res.costTotal]);
+          // Set data for pie chart
+          this.pieChartData.shift();
+          this.pieChartData.push(
+            ["Value", res.orderTotal],
+            ["Cost", res.costTotal]
+          );
 
-        this.title = `Edit order ${res.orderNumber}`;
-      })
+          this.title = `Edit order ${res.orderNumber}`;
+        })
     );
   }
 
@@ -105,11 +127,11 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: false,
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      width: '800px',
-      height: '675px',
-      panelClass: 'custom-dialog',
+      maxWidth: "100vw",
+      maxHeight: "100vh",
+      width: "800px",
+      height: "675px",
+      panelClass: "custom-dialog",
       data: {
         rating: this.order.rating,
         orderId: this.order.orderId,
@@ -124,17 +146,20 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     };
 
     // Open dialog with config & passed data
-    const dialogRef = this.dialog.open(OrderBuyEditDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      OrderBuyEditDialogComponent,
+      dialogConfig
+    );
 
     // Pass data from dialog in to main component
     dialogRef.afterClosed().subscribe((data: any) => {
       // Cancel is a string return from dialog when cancel button press
-      if (data !== 'cancel') {
+      if (data !== "cancel") {
         if (data) {
           this.refreshOrder(data);
-          this.snackBar.open(`Order ${data.orderNumber} updated`, 'Success');
+          this.snackBar.open(`Order ${data.orderNumber} updated`, "Success");
         } else {
-          this.snackBar.open(`Can't update order, please try again`, 'Error');
+          this.snackBar.open(`Can't update order, please try again`, "Error");
         }
       }
     });
@@ -156,11 +181,13 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
   private refreshEmployee(employeeId: number) {
     this.sub$.add(
-      this.employeeService.getEmployee(employeeId).subscribe((res: EmployeeList) => {
-        if (res) {
-          this.order.employee = res;
-        }
-      })
+      this.employeeService
+        .getEmployee(employeeId)
+        .subscribe((res: EmployeeList) => {
+          if (res) {
+            this.order.employee = res;
+          }
+        })
     );
   }
 
@@ -171,11 +198,11 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      width: '800px',
-      height: '565px',
-      panelClass: 'custom-dialog'
+      maxWidth: "100vw",
+      maxHeight: "100vh",
+      width: "800px",
+      height: "565px",
+      panelClass: "custom-dialog"
     };
 
     if (lineItem !== undefined) {
@@ -199,24 +226,31 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       };
     }
 
-    const dialogRef = this.dialog.open(OrderProductsEditDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      OrderProductsEditDialogComponent,
+      dialogConfig
+    );
 
     dialogRef.afterClosed().subscribe(res => {
       // 'cancel' is a string return from dialog when cancel button is clicked
-      if (res !== 'cancel') {
+      if (res !== "cancel") {
         if (res) {
           // Add new
           if (lineItem === undefined) {
             this.order.products.push(res);
-            this.order.products.sort((a, b) => (a.productName > b.productName ? 1 : -1));
+            this.order.products.sort((a, b) =>
+              a.productName > b.productName ? 1 : -1
+            );
 
-            this.snackBar.open('Line item has been added', 'Success');
+            this.snackBar.open("Line item has been added", "Success");
           } else {
             // Remove & add new updated line item
-            const index = this.order.products.findIndex(p => p.productId === res.productId);
+            const index = this.order.products.findIndex(
+              p => p.productId === res.productId
+            );
             this.order.products.splice(index, 1, res);
 
-            this.snackBar.open('Line item has been udpated', 'Success');
+            this.snackBar.open("Line item has been udpated", "Success");
           }
 
           // Refresh mat-table data
@@ -225,36 +259,57 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
           // Refresh order value
           this.refreshOrderValue();
         } else {
-          this.snackBar.open('An error has occurred, please try again', 'Error');
+          this.snackBar.open(
+            "An error has occurred, please try again",
+            "Error"
+          );
         }
       }
     });
   }
 
   deleteLineItem(lineItem: OrderBuyProducts) {
-    this.sub$.add(
-      this.orderService.deleteOrderProduct(lineItem.orderId, lineItem.productId).subscribe((res: boolean) => {
-        if (res) {
-          // Remove line item
-          const index = this.order.products.findIndex(p => p.productId === lineItem.productId);
-          this.order.products.splice(index, 1);
-
-          // Refresh mat-table data
-          this.valueDataSource._updateChangeSubscription();
-
-          // Update order value
-          this.refreshOrderValue();
-
-          this.snackBar.open('Line item deleted', 'Success');
-        } else {
-          this.snackBar.open(`Can't delete line item, please try again`, 'Success');
-        }
-      })
+    const dialogRef = this.confirmService.openDialog(
+      "Are you sure to remove this line?"
     );
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        this.sub$.add(
+          this.orderService
+            .deleteOrderProduct(lineItem.orderId, lineItem.productId)
+            .subscribe((res: boolean) => {
+              if (res) {
+                // Remove line item
+                const index = this.order.products.findIndex(
+                  p => p.productId === lineItem.productId
+                );
+                this.order.products.splice(index, 1);
+
+                // Refresh mat-table data
+                this.valueDataSource._updateChangeSubscription();
+
+                // Update order value
+                this.refreshOrderValue();
+
+                this.snackBar.open("Line item deleted", "Success");
+              } else {
+                this.snackBar.open(
+                  `Can't delete line item, please try again`,
+                  "Success"
+                );
+              }
+            })
+        );
+      }
+    });
   }
 
   private refreshOrderValue() {
-    this.order.orderTotal = this.order.products.reduce((a, b) => a + b.total, 0);
+    this.order.orderTotal = this.order.products.reduce(
+      (a, b) => a + b.total,
+      0
+    );
     this.refreshPieChart();
     this.refreshDebt();
   }
@@ -269,11 +324,11 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      width: '800px',
-      height: '560px',
-      panelClass: 'custom-dialog'
+      maxWidth: "100vw",
+      maxHeight: "100vh",
+      width: "800px",
+      height: "560px",
+      panelClass: "custom-dialog"
     };
 
     // Edit mode
@@ -301,20 +356,22 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(res => {
       // 'cancel' is a string return from dialog when cancel button is clicked
-      if (res !== 'cancel') {
+      if (res !== "cancel") {
         if (res) {
           // Add new
           if (cost === undefined) {
             this.order.costs.push(res);
             this.order.costs.sort((a, b) => (a.costDate > b.costDate ? -1 : 1));
 
-            this.snackBar.open('Cost has been added', 'Success');
+            this.snackBar.open("Cost has been added", "Success");
           } else {
             // Remove & add new updated cost
-            const index = this.order.costs.findIndex(c => c.costId === res.costId);
+            const index = this.order.costs.findIndex(
+              c => c.costId === res.costId
+            );
             this.order.costs.splice(index, 1, res);
 
-            this.snackBar.open('Cost has been udpated', 'Success');
+            this.snackBar.open("Cost has been udpated", "Success");
           }
 
           // Refresh mat-table data
@@ -323,32 +380,48 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
           // Refresh order value
           this.refreshTotalCost();
         } else {
-          this.snackBar.open('An error has occurred, please try again', 'Error');
+          this.snackBar.open(
+            "An error has occurred, please try again",
+            "Error"
+          );
         }
       }
     });
   }
 
   deleteCost(cost: Cost) {
-    this.sub$.add(
-      this.costService.deleteCost(cost.costId).subscribe((res: boolean) => {
-        if (res) {
-          // Remove cost
-          const index = this.order.costs.findIndex(c => c.costId === cost.costId);
-          this.order.costs.splice(index, 1);
-
-          // Refresh mat-table data
-          this.costDataSource._updateChangeSubscription();
-
-          // Update total cost
-          this.refreshTotalCost();
-
-          this.snackBar.open('Cost deleted', 'Success');
-        } else {
-          this.snackBar.open(`Can't delete cost, please try again`, 'Error');
-        }
-      })
+    const dialogRef = this.confirmService.openDialog(
+      "Are you sure to remove this line?"
     );
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        this.sub$.add(
+          this.costService.deleteCost(cost.costId).subscribe((res: boolean) => {
+            if (res) {
+              // Remove cost
+              const index = this.order.costs.findIndex(
+                c => c.costId === cost.costId
+              );
+              this.order.costs.splice(index, 1);
+
+              // Refresh mat-table data
+              this.costDataSource._updateChangeSubscription();
+
+              // Update total cost
+              this.refreshTotalCost();
+
+              this.snackBar.open("Cost deleted", "Success");
+            } else {
+              this.snackBar.open(
+                `Can't delete cost, please try again`,
+                "Error"
+              );
+            }
+          })
+        );
+      }
+    });
   }
 
   private refreshTotalCost() {
@@ -366,11 +439,11 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
     const dialogConfig = <MatDialogConfig>{
       disableClose: true,
       autoFocus: true,
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      width: '800px',
-      height: '560px',
-      panelClass: 'custom-dialog'
+      maxWidth: "100vw",
+      maxHeight: "100vh",
+      width: "800px",
+      height: "560px",
+      panelClass: "custom-dialog"
     };
 
     // Edit mode
@@ -393,24 +466,31 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
       };
     }
 
-    const dialogRef = this.dialog.open(PaymentEditDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      PaymentEditDialogComponent,
+      dialogConfig
+    );
 
     dialogRef.afterClosed().subscribe(res => {
       // 'cancel' is a string return from dialog when cancel button is clicked
-      if (res !== 'cancel') {
+      if (res !== "cancel") {
         if (res) {
           // Add new
           if (payment === undefined) {
             this.order.payments.push(res);
-            this.order.payments.sort((a, b) => (a.paymentDate > b.paymentDate ? -1 : 1));
+            this.order.payments.sort((a, b) =>
+              a.paymentDate > b.paymentDate ? -1 : 1
+            );
 
-            this.snackBar.open('Payment has been added', 'Success');
+            this.snackBar.open("Payment has been added", "Success");
           } else {
             // Remove & add new updated payment
-            const index = this.order.payments.findIndex(c => c.paymentId === res.paymentId);
+            const index = this.order.payments.findIndex(
+              c => c.paymentId === res.paymentId
+            );
             this.order.payments.splice(index, 1, res);
 
-            this.snackBar.open('Payment has been udpated', 'Success');
+            this.snackBar.open("Payment has been udpated", "Success");
           }
 
           // Refresh mat-table data
@@ -419,36 +499,57 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
           // Refresh total payment
           this.refreshTotalPayment();
         } else {
-          this.snackBar.open('An error has occurred, please try again', 'Error');
+          this.snackBar.open(
+            "An error has occurred, please try again",
+            "Error"
+          );
         }
       }
     });
   }
 
   deletePayment(payment: Payment) {
-    this.sub$.add(
-      this.paymentService.deletePayment(payment.paymentId).subscribe((res: boolean) => {
-        if (res) {
-          // Remove payment
-          const index = this.order.payments.findIndex(c => c.paymentId === payment.paymentId);
-          this.order.payments.splice(index, 1);
-
-          // Refresh mat-table data
-          this.paymentDataSource._updateChangeSubscription();
-
-          // Update total payment
-          this.refreshTotalPayment();
-
-          this.snackBar.open('Payment deleted', 'Success');
-        } else {
-          this.snackBar.open(`Can't delete payment, please try again`, 'Error');
-        }
-      })
+    const dialogRef = this.confirmService.openDialog(
+      "Are you sure to remove this line?"
     );
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        this.sub$.add(
+          this.paymentService
+            .deletePayment(payment.paymentId)
+            .subscribe((res: boolean) => {
+              if (res) {
+                // Remove payment
+                const index = this.order.payments.findIndex(
+                  c => c.paymentId === payment.paymentId
+                );
+                this.order.payments.splice(index, 1);
+
+                // Refresh mat-table data
+                this.paymentDataSource._updateChangeSubscription();
+
+                // Update total payment
+                this.refreshTotalPayment();
+
+                this.snackBar.open("Payment deleted", "Success");
+              } else {
+                this.snackBar.open(
+                  `Can't delete payment, please try again`,
+                  "Error"
+                );
+              }
+            })
+        );
+      }
+    });
   }
 
   private refreshTotalPayment() {
-    this.order.paymentTotal = this.order.payments.reduce((a, b) => a + b.amount, 0);
+    this.order.paymentTotal = this.order.payments.reduce(
+      (a, b) => a + b.amount,
+      0
+    );
     this.refreshDebt();
   }
 
@@ -463,6 +564,9 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
   // *Chart
 
   private refreshPieChart() {
-    this.pieChartData = Object.assign([[]], [['Value', this.order.orderTotal], ['Cost', this.order.costTotal]]);
+    this.pieChartData = Object.assign(
+      [[]],
+      [["Value", this.order.orderTotal], ["Cost", this.order.costTotal]]
+    );
   }
 }

@@ -14,12 +14,6 @@ import { ConfirmDialogSharedModule } from '../../components/confirm-dialog/confi
 export class ConfirmDialogService {
   constructor(private dialog: MatDialog) {}
 
-  // confirm(message?: string): Observable<boolean> {
-  //   const confirmation = window.confirm(message || 'Is it OK?');
-
-  //   return of(confirmation);
-  // }
-
   openDialog(msg: string) {
     return this.dialog.open(ConfirmDialogComponent, {
       width: '390px',

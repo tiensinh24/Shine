@@ -1,14 +1,10 @@
-mat-card.main {
-  overflow: auto;
-}
-
 mat-card.main .add-search {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   position: -webkit-sticky;
   position: sticky;
-  top: -1rem;
+  top: 0;
   left: 0;
   z-index: 1;
   background: white;
@@ -28,6 +24,7 @@ mat-card.main .add-search .search mat-form-field {
 }
 
 mat-card.main .products div.product {
+  width: 250px;
   cursor: pointer;
   -webkit-transform: translate();
           transform: translate();
@@ -43,7 +40,7 @@ mat-card.main .products div.product:hover {
 }
 
 mat-card.main .products div.product:hover img {
-  opacity: .75;
+  opacity: 0.75;
 }
 
 mat-card.main .products div.product:hover div.overlay {
@@ -76,5 +73,12 @@ mat-card.main .products div.product .overlay {
           transform: translate();
   -webkit-transition: 250ms ease-out;
   transition: 250ms ease-out;
+}
+
+mat-card.main .paginator {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
 }
 /*# sourceMappingURL=supplier-products-added.component.css.map */

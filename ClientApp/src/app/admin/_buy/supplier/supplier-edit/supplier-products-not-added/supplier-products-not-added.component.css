@@ -4,7 +4,7 @@ section.main .add-search {
   display: flex;
   position: -webkit-sticky;
   position: sticky;
-  top: -1rem;
+  top: 0;
   left: 0;
   z-index: 1;
   background: white;
@@ -24,6 +24,7 @@ section.main .add-search .search mat-form-field {
 }
 
 section.main .products div.product {
+  width: 250px;
   cursor: pointer;
   -webkit-transform: translate();
           transform: translate();
@@ -72,5 +73,12 @@ section.main .products div.product .overlay {
           transform: translate();
   -webkit-transition: 250ms ease-out;
   transition: 250ms ease-out;
+}
+
+section.main .paginator {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
 }
 /*# sourceMappingURL=supplier-products-not-added.component.css.map */

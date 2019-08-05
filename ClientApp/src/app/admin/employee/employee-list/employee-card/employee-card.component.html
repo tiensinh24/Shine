@@ -1,28 +1,78 @@
 <main class="mat-typography">
   <!-- Title, paginator & filter -->
-  <div class="title mat-paginator-sticky" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="64px">
+  <div
+    class="title mat-paginator-sticky"
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="64px"
+  >
     <h1>Employees</h1>
 
     <div class="search" fxFlex fxLayout="row">
       <mat-form-field fxFlex>
         <span matPrefix><mat-icon>search</mat-icon></span>
-        <span matSuffix matTooltip="Clear" (click)="clearFilter()" *ngIf="input.value"
-          ><button mat-button mat-icon-button><mat-icon>clear</mat-icon></button></span
+        <span
+          matSuffix
+          matTooltip="Clear"
+          (click)="clearFilter()"
+          *ngIf="input.value"
+          ><button mat-button mat-icon-button>
+            <mat-icon>clear</mat-icon>
+          </button></span
         >
         <input matInput type="search" placeholder="Search employees" #input />
       </mat-form-field>
 
-      <mat-paginator [length]="paging?.totalItems" [pageSize]="8" [pageSizeOptions]="[8, 12, 24, 100]" showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="paging?.totalItems"
+        [pageSize]="8"
+        [pageSizeOptions]="[8, 12, 24, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
 
-    <!-- Change display mode -->
-    <button mat-button mat-icon-button matTooltip="List view" color="primary" (click)="outDisplayMode()"><mat-icon>view_list</mat-icon></button>
+    <div class="action-btns">
+      <!-- New employee -->
+      <button
+        mat-button
+        mat-icon-button
+        matTooltip="New employee"
+        color="primary"
+        (click)="onCreate()"
+      >
+        <mat-icon>add_circle</mat-icon>
+      </button>
+
+      <!-- Change display mode -->
+      <button
+        mat-button
+        mat-icon-button
+        matTooltip="List view"
+        color="primary"
+        (click)="outDisplayMode()"
+      >
+        <mat-icon>view_list</mat-icon>
+      </button>
+    </div>
   </div>
 
   <!-- Loading progress bar -->
-  <mat-progress-bar *ngIf="loading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+  <mat-progress-bar
+    *ngIf="loading"
+    color="accent"
+    aria-label="Progress bar"
+    mode="buffer"
+  ></mat-progress-bar>
 
-  <div *ngIf="!loading" @flyInVez #mainSection class="content" fxLayout="row wrap" fxLayoutAlign="center stretch">
+  <!-- Main content -->
+  <div
+    *ngIf="!loading"
+    @flyInVez
+    #mainSection
+    class="content"
+    fxLayout="row wrap"
+    fxLayoutAlign="center stretch"
+  >
     <mat-card fxFlex="22" *ngFor="let employee of employees" class="card">
       <mat-card-header>
         <img mat-card-avatar src="{{ mainPhotoUrl }}" />
@@ -48,7 +98,7 @@
             <td>
               <span><mat-icon>cake</mat-icon></span>
             </td>
-            <td>{{ employee.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ employee.dateOfBirth | date: "dd/MM/yyyy" }}</td>
           </tr>
           <tr>
             <td>
@@ -78,6 +128,28 @@
             <td>{{ employee.address }}</td>
           </tr>
         </table>
+
+        <!-- Relay buttons -->
+        <div class="relay-btns">
+          <button
+            mat-button
+            mat-icon-button
+            matTooltip="Edit employee"
+            color="accent"
+            (click)="onEdit(employee)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-button
+            mat-icon-button
+            matTooltip="Delete employee"
+            color="warn"
+            (click)="onDelete(employee)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

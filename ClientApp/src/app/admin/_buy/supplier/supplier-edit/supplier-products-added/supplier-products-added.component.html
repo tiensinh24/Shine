@@ -1,5 +1,10 @@
 <mat-card class="main">
-  <mat-progress-bar *ngIf="loading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+  <mat-progress-bar
+    *ngIf="loading"
+    color="accent"
+    aria-label="Progress bar"
+    mode="buffer"
+  ></mat-progress-bar>
 
   <section id="products">
     <div class="add-search" [fxHide]="loading || isAddProduct">
@@ -25,12 +30,20 @@
       *ngIf="!loading && !isAddProduct; else addProducts"
     >
       <div *ngFor="let product of products.items" class="product">
-        <img src="{{ product.photoUrl ? product.photoUrl : 'assets/default.jpg' }}" alt="product photo" />
+        <img
+          src="{{ product.photoUrl ? product.photoUrl : 'assets/default.jpg' }}"
+          alt="product photo"
+        />
         <h2 class="title">{{ product.productName }}</h2>
         <p class="body-1">{{ product.specification }}</p>
 
         <div class="overlay">
-          <button mat-icon-button color="warn" matTooltip="Remove product from supplier" (click)="removeProduct(product)">
+          <button
+            mat-icon-button
+            color="warn"
+            matTooltip="Remove product from supplier"
+            (click)="removeProduct(product)"
+          >
             <mat-icon>remove</mat-icon>
           </button>
         </div>

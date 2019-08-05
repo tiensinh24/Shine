@@ -1,27 +1,47 @@
 .title-group {
   padding: 0;
-  margin-bottom: 1rem;
-}
-
-.title-group h1.title {
-  margin-bottom: 2rem;
-  color: royalblue;
 }
 
 mat-tab-group.tab-group {
-  height: calc(100vh - (64px + 3.5rem));
-  overflow: auto;
+  height: calc(100vh - (64px + 3rem));
 }
 
-mat-tab-group.tab-group .card-content {
+mat-tab-group.tab-group mat-tab-body {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 100%;
+}
+
+mat-tab-group.tab-group mat-tab.main-tab div.main {
+  height: 100%;
+  background: white;
+  padding: 0 1rem;
+}
+
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content {
   width: 100%;
 }
 
-mat-tab-group.tab-group .card-content div.edit-form > form {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.edit-form > form {
   margin-bottom: 2rem;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.edit-form > div.submit-btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 1rem;
+}
+
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos {
+  padding-top: 1rem;
+}
+
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.supplier-photos div.photo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -34,11 +54,11 @@ mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo {
           align-items: center;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo:hover {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.supplier-photos div.photo:hover {
   cursor: pointer;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo:hover img.image {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.supplier-photos div.photo:hover img.image {
   opacity: 0.75;
   -webkit-transition: 250ms ease-out;
   transition: 250ms ease-out;
@@ -46,7 +66,7 @@ mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo:h
           transform: scale(1.2);
 }
 
-mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo:hover div.img-btn {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.supplier-photos div.photo:hover div.img-btn {
   padding: 0 1rem;
   background: white;
   border-radius: 50px;
@@ -57,7 +77,7 @@ mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo:h
   transition: 250ms ease-in;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo img.image {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.supplier-photos div.photo img.image {
   border-radius: 20px;
   width: 150px;
   height: 150px;
@@ -67,7 +87,7 @@ mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo i
           transform: scale(1);
 }
 
-mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo div.img-btn {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.supplier-photos div.photo div.img-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -81,25 +101,25 @@ mat-tab-group.tab-group .card-content div.photos div.supplier-photos div.photo d
   transition: 200ms ease-out;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.photo-upload {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.photo-upload {
   margin-top: 2rem;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.photo-upload button.upload-icon-btn {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.photo-upload button.upload-icon-btn {
   -webkit-transform: scale(1);
           transform: scale(1);
   -webkit-transition: 200ms ease-in;
   transition: 200ms ease-in;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.photo-upload button.upload-icon-btn:hover {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.photo-upload button.upload-icon-btn:hover {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
   -webkit-transition: 200ms ease-out;
   transition: 200ms ease-out;
 }
 
-mat-tab-group.tab-group .card-content div.photos div.no-photo div {
+mat-tab-group.tab-group mat-tab.main-tab div.main .card-content div.photos div.no-photo div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

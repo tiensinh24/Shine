@@ -1,5 +1,15 @@
-<div class="title-group mat-typograpy" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-  <button mat-icon-button matTooltip="Go back" class="back-btn" [routerLink]="['/admin/buy/supplier']">
+<div
+  class="title-group mat-typograpy"
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  fxLayoutGap="1rem"
+>
+  <button
+    mat-icon-button
+    matTooltip="Go back"
+    class="back-btn"
+    [routerLink]="['/admin/buy/supplier']"
+  >
     <mat-icon>arrow_back</mat-icon>
     {{ title }}
   </button>
@@ -12,14 +22,23 @@
       Supplier Info
     </ng-template>
 
-    <mat-card class="main mat-elevation-z0">
+    <div class="main mat-elevation-z0">
       <div class="card-content">
         <div class="edit-form">
           <!-- Formgroup -->
           <form [formGroup]="supplierForm">
-            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="1rem">
+            <div
+              fxLayout="row"
+              fxLayout.xs="column"
+              fxLayout.sm="column"
+              fxLayoutGap="1rem"
+            >
               <div class="supplier-info" fxLayout="column" fxFlex="50">
-                <div class="group-title" fxLayout="row" fxLayoutAlign="start center">
+                <div
+                  class="group-title"
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                >
                   <h2>
                     <button mat-icon-button><mat-icon>info</mat-icon></button>
                   </h2>
@@ -29,34 +48,66 @@
                 <!-- PersonNumber -->
                 <mat-form-field appearance="outline">
                   <mat-label>Person Number</mat-label>
-                  <input matInput placeholder="PersonNumber" formControlName="personNumber" required />
+                  <input
+                    matInput
+                    placeholder="PersonNumber"
+                    formControlName="personNumber"
+                    required
+                  />
                   <mat-icon matSuffix>perm_identity</mat-icon>
-                  <mat-error *ngIf="get('personNumber').invalid">{{ getErrorMessage('personNumber', 'Person number') }}</mat-error>
+                  <mat-error *ngIf="get('personNumber').invalid">{{
+                    getErrorMessage("personNumber", "Person number")
+                  }}</mat-error>
                 </mat-form-field>
 
                 <!-- FirstName -->
                 <mat-form-field appearance="outline">
                   <mat-label>First Name</mat-label>
-                  <input matInput placeholder="FirstName" formControlName="firstName" required />
+                  <input
+                    matInput
+                    placeholder="FirstName"
+                    formControlName="firstName"
+                    required
+                  />
                   <mat-icon matSuffix>person</mat-icon>
-                  <mat-error *ngIf="get('firstName').invalid">{{ getErrorMessage('firstName', 'Firstname') }}</mat-error>
+                  <mat-error *ngIf="get('firstName').invalid">{{
+                    getErrorMessage("firstName", "Firstname")
+                  }}</mat-error>
                 </mat-form-field>
 
                 <!-- LastName -->
                 <mat-form-field appearance="outline">
                   <mat-label>Last Name</mat-label>
-                  <input matInput placeholder="LastName" formControlName="lastName" required />
+                  <input
+                    matInput
+                    placeholder="LastName"
+                    formControlName="lastName"
+                    required
+                  />
                   <mat-icon matSuffix>person</mat-icon>
-                  <mat-error *ngIf="get('lastName').invalid">{{ getErrorMessage('lastName', 'Lastname') }}</mat-error>
+                  <mat-error *ngIf="get('lastName').invalid">{{
+                    getErrorMessage("lastName", "Lastname")
+                  }}</mat-error>
                 </mat-form-field>
 
                 <!-- DateOfBirth -->
                 <mat-form-field appearance="outline">
                   <mat-label>Date Of Birth</mat-label>
-                  <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="dateOfBirth" required />
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    placeholder="Choose a date"
+                    formControlName="dateOfBirth"
+                    required
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker locale="en-GB" #picker></mat-datepicker>
-                  <mat-error *ngIf="get('dateOfBirth').invalid">{{ getErrorMessage('dateOfBirth', 'Date of birth') }}</mat-error>
+                  <mat-error *ngIf="get('dateOfBirth').invalid">{{
+                    getErrorMessage("dateOfBirth", "Date of birth")
+                  }}</mat-error>
                 </mat-form-field>
 
                 <!-- Gender -->
@@ -65,14 +116,22 @@
                     <mat-radio-button [value]="true">Male</mat-radio-button>
                     <mat-radio-button [value]="false">Female</mat-radio-button>
                   </mat-radio-group>
-                  <mat-error *ngIf="get('gender').invalid">{{ getErrorMessage('gender', 'Gender') }}</mat-error>
+                  <mat-error *ngIf="get('gender').invalid">{{
+                    getErrorMessage("gender", "Gender")
+                  }}</mat-error>
                 </div>
               </div>
 
               <div class="contact-info" fxLayout="column" fxFlex>
-                <div class="group-title" fxLayout="row" fxLayoutAlign="start center">
+                <div
+                  class="group-title"
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                >
                   <h2>
-                    <button mat-icon-button><mat-icon>contacts</mat-icon></button>
+                    <button mat-icon-button>
+                      <mat-icon>contacts</mat-icon>
+                    </button>
                   </h2>
                   <h2 class="title">Contact</h2>
                 </div>
@@ -80,7 +139,11 @@
                 <!-- Telephone -->
                 <mat-form-field appearance="outline">
                   <mat-label>Telephone</mat-label>
-                  <input matInput placeholder="Telephone" formControlName="telephone" />
+                  <input
+                    matInput
+                    placeholder="Telephone"
+                    formControlName="telephone"
+                  />
                   <mat-icon matSuffix>phone</mat-icon>
                 </mat-form-field>
 
@@ -112,26 +175,42 @@
                     required
                   ></textarea>
                   <mat-icon matSuffix>my_location</mat-icon>
-                  <mat-error *ngIf="get('address').invalid">{{ getErrorMessage('address', 'Address') }}</mat-error>
+                  <mat-error *ngIf="get('address').invalid">{{
+                    getErrorMessage("address", "Address")
+                  }}</mat-error>
                 </mat-form-field>
 
                 <!-- CountryId -->
                 <mat-form-field appearance="outline">
                   <mat-label>Country</mat-label>
-                  <mat-select placeholder="Select country" formControlName="countryId" required>
-                    <mat-option *ngFor="let country of countries" [value]="country.countryId">
+                  <mat-select
+                    placeholder="Select country"
+                    formControlName="countryId"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let country of countries"
+                      [value]="country.countryId"
+                    >
                       {{ country.countryName }}
                     </mat-option>
                   </mat-select>
-                  <mat-error *ngIf="get('countryId').invalid">{{ getErrorMessage('countryId', 'Country') }}</mat-error>
+                  <mat-error *ngIf="get('countryId').invalid">{{
+                    getErrorMessage("countryId", "Country")
+                  }}</mat-error>
                 </mat-form-field>
               </div>
             </div>
           </form>
 
           <!-- Action Buttons -->
-          <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="1rem">
-            <button mat-button color="primary" (click)="onSubmit()" [disabled]="!supplierForm.valid">
+          <div class="submit-btns">
+            <button
+              mat-button
+              color="primary"
+              (click)="onSubmit()"
+              [disabled]="!supplierForm.valid"
+            >
               Submit
             </button>
             <button mat-button (click)="resetForm()">
@@ -139,6 +218,8 @@
             </button>
           </div>
         </div>
+
+        <mat-divider></mat-divider>
 
         <div class="photos" *ngIf="supplierId > 0">
           <div fxLayout="row" fxLayoutAlign="start center">
@@ -148,17 +229,31 @@
             <h2 class="title">Photos</h2>
           </div>
 
-          <div *ngIf="supplier?.photos.length > 0; else noPhoto" fxLayout="row wrap" fxLayoutGap="1rem grid">
+          <div
+            *ngIf="supplier?.photos.length > 0; else noPhoto"
+            fxLayout="row wrap"
+            fxLayoutGap="1rem grid"
+          >
             <div class="supplier-photos" *ngFor="let photo of supplier.photos">
               <div class="photo">
-                <img class="image"  src="{{ photo.photoUrl }}" alt="" />
+                <img class="image" src="{{ photo.photoUrl }}" alt="" />
 
                 <!-- Img relay -->
                 <div class="img-btn">
-                  <button mat-icon-button matTooltip="Delete photo" color="warn" (click)="deletePhoto(photo.photoId)">
+                  <button
+                    mat-icon-button
+                    matTooltip="Delete photo"
+                    color="warn"
+                    (click)="deletePhoto(photo.photoId)"
+                  >
                     <mat-icon>delete</mat-icon>
                   </button>
-                  <button mat-icon-button matTooltip="Set main photo" color="primary" (click)="setMainPhoto(photo)">
+                  <button
+                    mat-icon-button
+                    matTooltip="Set main photo"
+                    color="primary"
+                    (click)="setMainPhoto(photo)"
+                  >
                     <mat-icon>check_circle_outline</mat-icon>
                   </button>
                 </div>
@@ -175,17 +270,29 @@
           </ng-template>
 
           <div class="photo-upload">
-            <button class="upload-icon-btn" mat-mini-fab color="primary" matTooltip="Upload photos" (click)="togglePhotoUploadExpansion()">
+            <button
+              class="upload-icon-btn"
+              mat-mini-fab
+              color="primary"
+              matTooltip="Upload photos"
+              (click)="togglePhotoUploadExpansion()"
+            >
               <mat-icon>cloud_upload</mat-icon>
             </button>
 
-            <mat-expansion-panel [expanded]="photoUploadExpansion" class="padding-remove mat-elevation-z0">
-              <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
+            <mat-expansion-panel
+              [expanded]="photoUploadExpansion"
+              class="padding-remove mat-elevation-z0"
+            >
+              <app-photo-upload
+                [uploadUrl]="photoUploadUrl"
+                (newPhoto)="refreshPhotoUpload($event)"
+              ></app-photo-upload>
             </mat-expansion-panel>
           </div>
         </div>
       </div>
-    </mat-card>
+    </div>
   </mat-tab>
 
   <mat-tab class="products-tab" *ngIf="supplier">
@@ -193,6 +300,8 @@
       <mat-icon>view_module</mat-icon>
       Products
     </ng-template>
-    <app-supplier-products-added></app-supplier-products-added>
+    <div>
+      <app-supplier-products-added></app-supplier-products-added>
+    </div>
   </mat-tab>
 </mat-tab-group>

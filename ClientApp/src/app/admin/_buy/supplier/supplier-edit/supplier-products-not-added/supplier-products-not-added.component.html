@@ -1,5 +1,10 @@
 <section class="main">
-  <mat-progress-bar *ngIf="loading" color="accent" aria-label="Progress bar" mode="buffer"></mat-progress-bar>
+  <mat-progress-bar
+    *ngIf="loading"
+    color="accent"
+    aria-label="Progress bar"
+    mode="buffer"
+  ></mat-progress-bar>
 
   <div class="add-search" [fxHide]="loading">
     <button class="add-btn" mat-icon-button (click)="outIsAddProduct()">
@@ -15,20 +20,43 @@
   </div>
 
   <section id="products">
-    <div class="products" fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="1rem" fxLayoutAlign.xs="center center" fxLayoutAlign.sm="center center" *ngIf="!loading">
+    <div
+      class="products"
+      fxLayout="row wrap"
+      fxLayoutAlign="center stretch"
+      fxLayoutGap="1rem"
+      fxLayoutAlign.xs="center center"
+      fxLayoutAlign.sm="center center"
+      *ngIf="!loading"
+    >
       <div *ngFor="let product of products?.items" class="product">
-        <img src="{{ product.photoUrl ? product.photoUrl : 'assets/default.jpg' }}" alt="product photo" />
+        <img
+          src="{{ product.photoUrl ? product.photoUrl : 'assets/default.jpg' }}"
+          alt="product photo"
+        />
         <h2 class="title">{{ product.productName }}</h2>
         <p class="body-1">{{ product.specification }}</p>
 
         <div class="overlay">
-          <button mat-icon-button color="primary" matTooltip="Add product to supplier" (click)="addProduct(product)"><mat-icon>add</mat-icon></button>
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Add product to supplier"
+            (click)="addProduct(product)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
       </div>
     </div>
 
     <div class="paginator" [fxHide]="loading">
-      <mat-paginator [length]="products?.paging?.totalItems" [pageSize]="10" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="products?.paging?.totalItems"
+        [pageSize]="10"
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </section>
 </section>

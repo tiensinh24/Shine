@@ -2,7 +2,7 @@ section.main {
   .add-search {
     display: flex;
     position: sticky;
-    top: -1rem;
+    top: 0;
     left: 0;
     z-index: 1;
     background: white;
@@ -21,6 +21,7 @@ section.main {
 
   .products {
     div.product {
+      width: 250px;
       cursor: pointer;
       transform: translate();
       transition: ease-out 250ms;
@@ -61,5 +62,8 @@ section.main {
   }
 
   .paginator {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
   }
 }

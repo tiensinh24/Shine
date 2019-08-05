@@ -16,7 +16,7 @@
 
 main > .content mat-card.card {
   margin: 1rem;
-  min-width: 230px;
+  min-width: 250px;
   -webkit-transform: translateY(0);
           transform: translateY(0);
   -webkit-transition: 250ms ease-out;
@@ -29,14 +29,32 @@ main > .content mat-card.card mat-card-content table td > span {
   padding-right: 1rem;
 }
 
+main > .content mat-card.card mat-card-content .relay-btns {
+  opacity: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transition: 250ms ease-in-out;
+  transition: 250ms ease-in-out;
+}
+
 main > .content mat-card.card:hover {
   cursor: pointer;
-  -webkit-transform: translate(1rem, -1rem);
-          transform: translate(1rem, -1rem);
+  -webkit-transform: translateY(-1rem);
+          transform: translateY(-1rem);
   -webkit-transition: 250ms ease-in;
   transition: 250ms ease-in;
-  background: honeydew;
   -webkit-box-shadow: 1px 1px 10px 1px gray;
           box-shadow: 1px 1px 10px 1px gray;
+  background: azure;
+}
+
+main > .content mat-card.card:hover mat-card-content .relay-btns {
+  opacity: 1;
+  -webkit-transition: 250ms ease-in-out;
+  transition: 250ms ease-in-out;
 }
 /*# sourceMappingURL=employee-card.component.css.map */

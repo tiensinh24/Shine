@@ -54,6 +54,15 @@
   vertical-align: middle;
 }
 
+.main .main-container .order mat-card.order-card mat-card-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .main .main-container .childs .value .content {
   padding-left: 2rem;
 }

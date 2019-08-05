@@ -43,7 +43,6 @@ import { SupplierProductsNotAddedComponent } from './supplier-edit/supplier-prod
     MaterialSharedModule,
 
     MatTabsModule,
-    
 
     // Dialog
     SupplierEditDialogSharedModule,

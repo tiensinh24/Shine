@@ -17,7 +17,7 @@ main {
   > .content {
     mat-card.card {
       margin: 1rem;
-      min-width: 230px;
+      min-width: 250px;
       transform: translateY(0);
       transition: 250ms ease-out;
 
@@ -31,14 +31,26 @@ main {
             }
           }
         }
+
+        .relay-btns {
+          opacity: 0;
+          display: flex;
+          justify-content: center;   
+          transition: 250ms ease-in-out;
+        }
       }
 
       &:hover {
         cursor: pointer;
-        transform: translate(1rem, -1rem);
+        transform: translateY(-1rem);
         transition: 250ms ease-in;
-        background: honeydew;
         box-shadow: 1px 1px 10px 1px gray;
+        background: azure;
+
+        mat-card-content .relay-btns {
+          opacity: 1;
+          transition: 250ms ease-in-out;
+        }
       }
     }
   }
