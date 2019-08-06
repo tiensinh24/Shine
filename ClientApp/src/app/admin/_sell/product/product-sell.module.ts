@@ -8,6 +8,7 @@ import { PhotoUploadSharedModule } from "src/app/_shared/components/photo-upload
 import { ProductPhotoGallerySharedModule } from "src/app/_shared/components/product-photo-gallery/product-photo-gallery-shared.module";
 import { MaterialSharedModule } from "src/app/_shared/material-shared.module";
 import { SharedModule } from "src/app/_shared/shared.module";
+import { CategorySellDialogModule } from "src/app/_shared/components/_sell/categories/category-sell-dialog/category-sell-dialog.module";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { SharedModule } from "src/app/_shared/shared.module";
     MaterialSharedModule,
 
     // Dialog
-    // CategorySellDialogSharedModule,
+    CategorySellDialogModule,
 
     // Photo-Gallery
     ProductPhotoGallerySharedModule,
