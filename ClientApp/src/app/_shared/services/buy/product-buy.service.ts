@@ -20,10 +20,6 @@ export class ProductBuyService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<ProductBuyList[]> {
-    return this.http.get<ProductBuyList[]>(this.baseUrl + 'api/productBuy/');
-  }
-
   getProduct(productId: number): Observable<ProductBuyDetail> {
     return this.http.get<ProductBuyDetail>(this.baseUrl + 'api/productBuy/' + productId);
   }

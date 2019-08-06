@@ -10,8 +10,6 @@ using Shine.Data.Models;
 namespace Shine.Controllers.Interfaces {
     public interface IProductBuyController {
 #region Get Values
-        Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProducts();
-
         Task<ActionResult<Paged<ProductBuyListDto>>> GetPagedProducts(
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 

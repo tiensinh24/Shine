@@ -138,7 +138,6 @@ export class SupplierProductsAddedComponent implements OnInit, AfterViewInit, On
 
   toggleAddProduct() {
     this.isAddProduct = !this.isAddProduct;
-    console.log(this.isAddProduct);
   }
 
   closeAddProduct(event: boolean) {

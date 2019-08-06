@@ -25,12 +25,7 @@ const routes: Routes = [
         path: 'product',
         canActivate: [AuthGuard],
         loadChildren: () => import('./product/product-buy.module').then(m => m.ProductBuyModule)
-      },
-      {
-        path: 'category',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./category/category-buy.module').then(m => m.CategoryBuyModule)
-      }
+      },      
     ]
   }
 ];

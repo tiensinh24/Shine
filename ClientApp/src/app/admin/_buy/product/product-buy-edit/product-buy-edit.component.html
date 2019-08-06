@@ -9,7 +9,7 @@
       </div>
 
       <div class="card-content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="2rem">
-        <div fxFlex="30" class="product-info">
+        <div class="product-info">
           <div fxLayout="row" fxLayoutAlign="start center">
             <h2>
               <button mat-icon-button><mat-icon>info</mat-icon></button>
@@ -66,7 +66,7 @@
           <button mat-button (click)="resetForm()">Reset</button>
         </div>
 
-        <div class="photos" fxFlex *ngIf="productId > 0">
+        <div class="photos" *ngIf="productId > 0">
           <div fxLayout="row" fxLayoutAlign="start center">
             <h2>
               <button mat-icon-button><mat-icon>photo_album</mat-icon></button>

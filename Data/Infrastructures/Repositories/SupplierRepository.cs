@@ -149,7 +149,7 @@ namespace Shine.Data.Infrastructures.Repositories
 
             if (!string.IsNullOrEmpty(filter))
             {
-                source = source.Where(s => (s.FullName + s.PersonNumber).ToLower().Contains(filter.ToLower()));
+                source = source.Where(s => (s.FirstName + s.LastName + s.PersonNumber).ToLower().Contains(filter.ToLower()));
             }
 
             return await PagedList<SupplierListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);

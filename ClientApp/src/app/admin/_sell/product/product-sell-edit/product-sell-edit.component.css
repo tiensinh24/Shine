@@ -1,17 +1,115 @@
-mat-card {
-  margin: 1em;
+main#main mat-card.main {
+  min-height: calc(100vh - 100px);
 }
 
-.card-title {
-  background-color: royalblue;
-  margin-bottom: -15px;
-  text-align: center;
-  color: white;
+main#main mat-card.main button.back-btn {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin-bottom: 1rem;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  z-index: 1;
 }
 
-.fill {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+main#main mat-card.main .card-content div.photos div.product-photos div.photo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main#main mat-card.main .card-content div.photos div.product-photos div.photo:hover {
+  cursor: pointer;
+}
+
+main#main mat-card.main .card-content div.photos div.product-photos div.photo:hover img.image {
+  opacity: 0.75;
+  -webkit-transition: 250ms ease-out;
+  transition: 250ms ease-out;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+main#main mat-card.main .card-content div.photos div.product-photos div.photo:hover div.img-btn {
+  padding: 0 1rem;
+  width: auto;
+  height: auto;
+  background: white;
+  border-radius: 50px;
+  opacity: 1;
+  -webkit-transform: translateY(-5rem);
+          transform: translateY(-5rem);
+  -webkit-transition: 250ms ease-in;
+  transition: 250ms ease-in;
+}
+
+main#main mat-card.main .card-content div.photos div.product-photos div.photo img.image {
+  border-radius: 20px;
+  width: 150px;
+  height: 150px;
+  -webkit-transition: 200ms ease-in;
+  transition: 200ms ease-in;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+main#main mat-card.main .card-content div.photos div.product-photos div.photo div.img-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-transition: 200ms ease-out;
+  transition: 200ms ease-out;
+}
+
+main#main mat-card.main .card-content div.photos div.no-photo div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 10px;
+  background: whitesmoke;
+  width: 150px;
+  height: 150px;
+  opacity: 0.75;
+}
+
+main#main mat-card.main .card-content div.photos div.photo-upload {
+  margin-top: 2rem;
+}
+
+main#main mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: 200ms ease-in;
+  transition: 200ms ease-in;
+}
+
+main#main mat-card.main .card-content div.photos div.photo-upload button.upload-icon-btn:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: 200ms ease-out;
+  transition: 200ms ease-out;
 }
 /*# sourceMappingURL=product-sell-edit.component.css.map */

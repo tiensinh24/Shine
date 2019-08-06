@@ -5,29 +5,12 @@
 mat-tab-group.tab-group {
   height: calc(100vh - (64px + 3rem));
 
-  mat-tab-body {
-    flex-grow: 1;
-    height: 100%;
-  }
-
   mat-tab.main-tab {
-    div.main {
-      height: 100%;
-      background: white;
-      padding: 0 1rem;
-
+    .main {
       .card-content {
-        width: 100%;
-
-        div.edit-form {
-          > form {
+        .edit-form {
+          form {
             margin-bottom: 2rem;
-          }
-
-          > div.submit-btns {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
           }
         }
 

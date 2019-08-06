@@ -22,7 +22,7 @@
       Supplier Info
     </ng-template>
 
-    <div class="main mat-elevation-z0">
+    <mat-card class="main mat-elevation-z0">
       <div class="card-content">
         <div class="edit-form">
           <!-- Formgroup -->
@@ -204,7 +204,7 @@
           </form>
 
           <!-- Action Buttons -->
-          <div class="submit-btns">
+          <div class="submit-btns" fxLayout="row" fxLayoutAlign="center center">
             <button
               mat-button
               color="primary"
@@ -292,7 +292,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </mat-card>
   </mat-tab>
 
   <mat-tab class="products-tab" *ngIf="supplier">

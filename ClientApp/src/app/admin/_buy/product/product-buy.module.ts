@@ -3,7 +3,7 @@ import { ProductBuyEditComponent } from './product-buy-edit/product-buy-edit.com
 import { ProductBuyRoutingModule } from './product-buy-routing.module';
 import { ProductBuyComponent } from './product-buy.component';
 import { NgModule } from '@angular/core';
-import { CategoryBuyDialogSharedModule } from 'src/app/_shared/components/_buy/categories/category-buy-dialog/category-buy-dialog-shared.module';
+import { CategoryBuyDialogModule } from 'src/app/_shared/components/_buy/categories/category-buy-dialog/category-buy-dialog.module';
 import { ProductBuyEditDialogSharedModule } from 'src/app/_shared/components/_buy/products/product-buy-edit-dialog/product-buy-edit-dialog-shared.module';
 import { PhotoUploadSharedModule } from 'src/app/_shared/components/photo-upload/photo-upload-shared.module';
 import { ProductPhotoGallerySharedModule } from 'src/app/_shared/components/product-photo-gallery/product-photo-gallery-shared.module';
@@ -25,8 +25,7 @@ import { ProductBuyListComponent } from './product-buy-list/product-buy-list.com
     MaterialSharedModule,
 
     // Dialog
-    ProductBuyEditDialogSharedModule,
-    CategoryBuyDialogSharedModule,
+    CategoryBuyDialogModule,
 
     // Photo-Gallery
     ProductPhotoGallerySharedModule,

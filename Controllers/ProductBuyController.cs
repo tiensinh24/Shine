@@ -1,140 +1,126 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
 using Mapster;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 using Shine.Controllers.Interfaces;
-using Shine.Data;
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Products;
 using Shine.Data.Dto.Products.Buy;
 using Shine.Data.Infrastructures.Interfaces;
-using Shine.Data.Infrastructures.Repositories;
 using Shine.Data.Models;
 
 namespace Shine.Controllers {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Produces ("application/json")]
+    [Route ("api/[controller]")]
     [ApiController]
     [Authorize]
     public class ProductBuyController : ControllerBase, IProductBuyController {
-#region Private Field
+        #region Private Field
         private readonly IProductBuyRepository _repository;
-#endregion        
+        #endregion        
 
-#region Constructor
-        public ProductBuyController(IProductBuyRepository repository) {
+        #region Constructor
+        public ProductBuyController (IProductBuyRepository repository) {
 
             this._repository = repository;
         }
-#endregion
+        #endregion
 
-#region Product
+        #region Product
 
-#region Get Values
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductBuyListDto>>> GetProducts() {
-            var query = await _repository.GetProductsAsync(p => p.ProductId, "asc");
+        #region Get Values       
 
-            return Ok(query);
-        }
-
-        [HttpGet("paged")]
-        public async Task<ActionResult<Paged<ProductBuyListDto>>> GetPagedProducts(
+        [HttpGet ("paged")]
+        public async Task<ActionResult<Paged<ProductBuyListDto>>> GetPagedProducts (
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
-            var query = await _repository.GetPagedProductsAsync(pagingParams, sortParams, filter, null);
+            var query = await _repository.GetPagedProductsAsync (pagingParams, sortParams, filter);
 
-            return new Paged<ProductBuyListDto>(query);
+            return new Paged<ProductBuyListDto> (query);
         }
 
-        [HttpGet("{productId}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ProductBuyDetailDto>> GetProduct(int productId) {
-            var product = await _repository.GetProductAsync(productId);
+        [HttpGet ("{productId}")]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ProductBuyDetailDto>> GetProduct (int productId) {
+            var product = await _repository.GetProductAsync (productId);
 
             if (product == null) {
-                return NotFound();
+                return NotFound ();
             }
 
             return product;
         }
-#endregion
+        #endregion
 
-#region Actions
+        #region Actions
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ProductBuyDto>> AddProduct([FromBody] ProductBuy productBuy) {
-            await _repository.AddProductAsync(productBuy);
-            await _repository.CommitAsync();
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ProductBuyDto>> AddProduct ([FromBody] ProductBuy productBuy) {
+            await _repository.AddProductAsync (productBuy);
+            await _repository.CommitAsync ();
 
-            return CreatedAtAction(nameof(GetProduct),
+            return CreatedAtAction (nameof (GetProduct),
                 new { productId = productBuy.ProductId },
-                productBuy.Adapt<ProductBuyDto>());
+                productBuy.Adapt<ProductBuyDto> ());
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ProductBuyDto>> UpdateProduct([FromBody] ProductBuy productBuy) {
-            var product = await _repository.UpdateProductAsync(productBuy);
+        [ProducesResponseType (StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ProductBuyDto>> UpdateProduct ([FromBody] ProductBuy productBuy) {
+            var product = await _repository.UpdateProductAsync (productBuy);
 
-            if (product == null) return NotFound();
+            if (product == null) return NotFound ();
 
-            await _repository.CommitAsync();
-
-            return product;
-        }
-
-        [HttpDelete("{productId}")]
-        public async Task<ActionResult<ProductBuyDto>> DeleteProduct(int productId) {
-            var product = await _repository.DeleteProductAsync(productId);
-
-            if (product == null) return NotFound();
-
-            await _repository.CommitAsync();
+            await _repository.CommitAsync ();
 
             return product;
         }
 
-        [HttpDelete("delete-all")]
-        public async Task<bool> DeleteProducts([FromHeader] string[] ids) {
-            var query = await _repository.DeleteProductsAsync(ids);
+        [HttpDelete ("{productId}")]
+        public async Task<ActionResult<ProductBuyDto>> DeleteProduct (int productId) {
+            var product = await _repository.DeleteProductAsync (productId);
+
+            if (product == null) return NotFound ();
+
+            await _repository.CommitAsync ();
+
+            return product;
+        }
+
+        [HttpDelete ("delete-all")]
+        public async Task<bool> DeleteProducts ([FromHeader] string[] ids) {
+            var query = await _repository.DeleteProductsAsync (ids);
 
             if (query) {
-                await _repository.CommitAsync();
+                await _repository.CommitAsync ();
             }
 
             return query;
         }
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
-#region StorageProduct
+        #region StorageProduct
 
-        [HttpGet("remain/paged")]
-        public async Task<ActionResult<Paged<ProductRemainDto>>> GetPagedProductRemains(
+        [HttpGet ("remain/paged")]
+        public async Task<ActionResult<Paged<ProductRemainDto>>> GetPagedProductRemains (
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter) {
-            var query = await _repository.GetPagedProductRemainsAsync(pagingParams, sortParams, filter);
+            var query = await _repository.GetPagedProductRemainsAsync (pagingParams, sortParams, filter);
 
-            return new Paged<ProductRemainDto>(query);
+            return new Paged<ProductRemainDto> (query);
         }
 
-        [HttpGet("{productId}/storage/remain")]
-        public async Task<IEnumerable<ProductStorageRemainDto>> GetProductRemainPerStorages(int productId) {
-            var products = await _repository.GetProductRemainPerStoragesAsync(productId);
+        [HttpGet ("{productId}/storage/remain")]
+        public async Task<IEnumerable<ProductStorageRemainDto>> GetProductRemainPerStorages (int productId) {
+            var products = await _repository.GetProductRemainPerStoragesAsync (productId);
 
             return products;
         }
 
-#endregion
+        #endregion
 
     }
 }

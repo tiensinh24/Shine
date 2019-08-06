@@ -1,12 +1,24 @@
-.mat-elevation-z8 {
-  margin: 1rem;
+.main-container .card {
+  width: 250px;
+  margin-top: 2rem;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-transition: 250ms ease-out;
+  transition: 250ms ease-out;
 }
 
-.card:hover {
+.main-container .card .mat-card-content {
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.main-container .card:hover {
   cursor: pointer;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
-  -webkit-transition: 200ms;
-  transition: 200ms;
+  -webkit-box-shadow: 2px 2px 5px 2px gray;
+          box-shadow: 2px 2px 5px 2px gray;
+  -webkit-transform: translateY(-1.5rem);
+          transform: translateY(-1.5rem);
+  -webkit-transition: 250ms ease-in;
+  transition: 250ms ease-in;
 }
 /*# sourceMappingURL=storage-list.component.css.map */

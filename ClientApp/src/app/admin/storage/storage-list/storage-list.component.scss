@@ -1,11 +1,19 @@
-.mat-elevation-z8 {
-  margin: 1rem;
-}
+.main-container {
+  .card {
+    width: 250px;
+    margin-top: 2rem;
+    transform: translateY(0);
+    transition: 250ms ease-out;
 
-.card {
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    transition: 200ms;
+    .mat-card-content{  
+      align-content: center;
+    }
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 2px 2px 5px 2px gray;
+      transform: translateY(-1.5rem);
+      transition: 250ms ease-in;
+    }
   }
 }

@@ -13,4 +13,4 @@ import { NgModule } from '@angular/core';
     MaterialSharedModule,
   ]
 })
-export class CategoryBuyDialogSharedModule { }
+export class CategoryBuyDialogModule { }

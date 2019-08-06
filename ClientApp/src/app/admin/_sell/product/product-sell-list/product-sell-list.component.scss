@@ -1,50 +1,48 @@
-.fill {
-  flex: 1 1 auto;
-}
+main {
+  padding: 1rem;
 
-mat-progress-bar {
-  margin-bottom: 8px;
-}
+  mat-progress-bar {
+    margin-bottom: 2rem;
+  }
 
-.mat-paginator-sticky {
-  bottom: 0px;
-  position: sticky;
-  z-index: 10;
-}
+  > h1.title {
+    color: royalblue;
+  }
 
-button[mat-mini-fab] {
-  align-self: center;
-}
+  > .content {
+    padding: 0;
 
-.card-title {
-  background-color: royalblue;
-  margin-bottom: -15px;
-  text-align: center;
-  color: white;
-  height: 60px;
-}
+    table.main-table {
+      width: 100%;
 
-div>table[mat-table] {
-  margin: 1em;
-  width: 97.5%;
-}
+      th {
+        color: royalblue;
+        padding: 0 0.5rem;
+      }
 
-[mat-sort-header] {
-  color: royalblue;
-}
+      td {
+        padding: 0 0.5rem;
+      }
 
-tr.mat-footer-row {
-  font-weight: bold;
-}
+      .mat-row {
+        &:hover {
+          cursor: pointer;
+          background-color: whitesmoke;
+        }
 
-mat-card.row-reverse {
-  height: 30px;
-}
+        .avatar > img {
+          width: 40px;
+          height: 40px;
+          border-radius: 15px;
+        }
+      }
+    }
 
-.mat-row {
-  height: auto;
-}
-
-.mat-cell {
-  padding: 0 4px;
+    .mat-paginator-sticky {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      background: white;
+    }
+  }
 }
