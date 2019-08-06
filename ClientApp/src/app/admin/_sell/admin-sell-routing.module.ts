@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ProductSellListComponent } from "./product/product-sell-list/product-sell-list.component";
 import { AdminSellComponent } from "./admin-sell.component";
 import { AuthGuard } from "src/app/auth/_guards/auth.guard";
 import { AdminSellHomeComponent } from "./admin-sell-home/admin-sell-home.component";
