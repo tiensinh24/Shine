@@ -1,19 +1,21 @@
 mat-card.main {
-  min-height: calc(100vh - 100px);
-  overflow: auto;
+  padding: 0 1rem;
+  min-height: calc(100vh - 64px);
 
   .title-group {
-    padding: 0;
-    margin-bottom: 1rem;
-   
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 200px;
+    background: white;
+    z-index: 1;
   }
-
-  .card-content {
-    width: 100%;
-
+  div.card-content {
     div.edit-form {
+      margin-bottom: 1rem;
+
       > form {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
       }
 
       h2.title {
@@ -22,6 +24,8 @@ mat-card.main {
     }
 
     div.photos {
+      margin-top: 2rem;
+
       div.employee-photos {
         div.photo {
           display: flex;

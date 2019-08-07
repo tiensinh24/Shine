@@ -1,39 +1,43 @@
-import { fromEvent, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-
-import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
-
-import { SelectionModel } from '@angular/cdk/collections';
+import { fromEvent, merge } from "rxjs";
+import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
+import { OrderBuyService } from "src/app/_shared/services/buy/order-buy.service";
+import { SelectionModel } from "@angular/cdk/collections";
 import {
   AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild
-} from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute, Router } from '@angular/router';
+} from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatSort } from "@angular/material/sort";
+import { ActivatedRoute } from "@angular/router";
 
-import { SupplierOrdersDataSource } from '../../_data-source/supplier-orders-data-source';
-import { SupplierOrders } from 'src/app/_shared/intefaces/buy/supplier/supplier-orders';
-import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
-import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
-import { SupplierService } from 'src/app/_shared/services/buy/supplier.service';
-import { ConfirmDialogService } from 'src/app/_shared/services/public/confirm-dialog.service';
+import { SupplierOrdersDataSource } from "../../_data-source/supplier-orders-data-source";
+import { SupplierOrders } from "src/app/_shared/intefaces/buy/supplier/supplier-orders";
+import { PagingParams } from "src/app/_shared/intefaces/public/paging-params";
+import { SortParams } from "src/app/_shared/intefaces/public/sort-params";
+import { SupplierService } from "src/app/_shared/services/buy/supplier.service";
+import { ConfirmDialogService } from "src/app/_shared/services/public/confirm-dialog.service";
 
 @Component({
-  selector: 'app-supplier-orders',
-  templateUrl: './supplier-orders.component.html',
-  styleUrls: ['./supplier-orders.component.scss']
+  selector: "app-supplier-orders",
+  templateUrl: "./supplier-orders.component.html",
+  styleUrls: ["./supplier-orders.component.scss"]
 })
 export class SupplierOrdersComponent implements OnInit, AfterViewInit {
   dataSource: SupplierOrdersDataSource;
-  displayedColumns = ['select', 'orderNumber', 'dateOfIssue', 'timeForPayment', 'rating', 'actions'];
+  displayedColumns = [
+    "select",
+    "orderNumber",
+    "dateOfIssue",
+    "timeForPayment",
+    "rating",
+    "actions"
+  ];
   selection = new SelectionModel<SupplierOrders>(true, []);
   supplierId = +this.route.snapshot.params.supplierId;
 
@@ -41,7 +45,7 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator = <MatPaginator>{};
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('input', { static: false }) input: ElementRef;
+  @ViewChild("input", { static: false }) input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -49,8 +53,8 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
   };
 
   sortParams = <SortParams>{
-    sortColumn: '',
-    sortOrder: ''
+    sortColumn: "",
+    sortOrder: ""
   };
 
   constructor(
@@ -59,17 +63,20 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private confirmDialogService: ConfirmDialogService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.dataSource = new SupplierOrdersDataSource(this.supplierService);
-    this.dataSource.loadData(this.supplierId, this.pagingParams, this.sortParams);
+    this.dataSource.loadData(
+      this.supplierId,
+      this.pagingParams,
+      this.sortParams
+    );
   }
 
   ngAfterViewInit(): void {
-
     // Server-side search
-    fromEvent(this.input.nativeElement, 'keyup')
+    fromEvent(this.input.nativeElement, "keyup")
       .pipe(
         debounceTime(250),
         distinctUntilChanged(),
@@ -93,7 +100,6 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe();
-
   }
 
   loadOrdersPage() {
@@ -105,11 +111,18 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
 
     const filter = this.input.nativeElement.value;
 
-    this.dataSource.loadData(this.supplierId, this.pagingParams, this.sortParams, filter);
+    this.dataSource.loadData(
+      this.supplierId,
+      this.pagingParams,
+      this.sortParams,
+      filter
+    );
   }
 
   deleteOrder(order: SupplierOrders) {
-    const dialogRef = this.confirmDialogService.openDialog(`Are you sure to delete order ${order.orderNumber}?`);
+    const dialogRef = this.confirmDialogService.openDialog(
+      `Are you sure to delete order ${order.orderNumber}?`
+    );
 
     dialogRef.afterClosed().subscribe((resp: boolean) => {
       if (resp) {
@@ -119,7 +132,7 @@ export class SupplierOrdersComponent implements OnInit, AfterViewInit {
             this.outRating();
           }
         });
-        this.snackBar.open(`${order.orderNumber} deleted`, 'Success');
+        this.snackBar.open(`${order.orderNumber} deleted`, "Success");
       }
     });
   }

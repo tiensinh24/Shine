@@ -1,0 +1,56 @@
+.title.mat-paginator-sticky {
+  box-shadow: 0 2px 8px grey;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  margin-bottom: 1rem;
+
+  > h1 {
+    padding: 1rem 0 0 1rem;
+    color: royalblue;
+  }
+}
+
+main {
+  > .content {
+    mat-card.card {
+      margin: 1rem;
+      min-width: 250px;
+      transform: translateY(0);
+      transition: 250ms ease-out;
+
+      mat-card-content {
+        table {
+          td {
+            > span {
+              color: royalblue;
+              text-align: left;
+              padding-right: 1rem;
+            }
+          }
+        }
+
+        .relay-btns {
+          opacity: 0;
+          display: flex;
+          justify-content: center;
+          transition: 250ms ease-in-out;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+        transform: translateY(-1rem);
+        transition: 250ms ease-in;
+        box-shadow: 1px 1px 10px 1px gray;
+        background: azure;
+
+        mat-card-content .relay-btns {
+          opacity: 1;
+          transition: 250ms ease-in-out;
+        }
+      }
+    }
+  }
+}

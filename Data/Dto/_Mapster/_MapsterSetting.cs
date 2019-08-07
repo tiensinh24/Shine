@@ -8,6 +8,7 @@ namespace Shine.Data.Dto._Mapster {
             EmployeeSetting.Setting ();
             SupplierSetting.Setting ();
             SupplierProductSetting.Setting ();
+            CustomerSetting.Setting();
             OrderBuySetting.Setting ();
             ProductOrderSetting.Setting ();
             StorageSetting.Setting ();

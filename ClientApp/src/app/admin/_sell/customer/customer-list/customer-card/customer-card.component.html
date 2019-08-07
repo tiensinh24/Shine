@@ -1,0 +1,156 @@
+<main class="mat-typography">
+  <!-- Title, paginator & filter -->
+  <div
+    class="title mat-paginator-sticky"
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="64px"
+  >
+    <h1>Customers</h1>
+
+    <div class="search" fxFlex fxLayout="row">
+      <mat-form-field fxFlex>
+        <span matPrefix><mat-icon>search</mat-icon></span>
+        <span
+          matSuffix
+          matTooltip="Clear"
+          (click)="clearFilter()"
+          *ngIf="input.value"
+          ><button mat-button mat-icon-button>
+            <mat-icon>clear</mat-icon>
+          </button></span
+        >
+        <input matInput type="search" placeholder="Search customers" #input />
+      </mat-form-field>
+
+      <mat-paginator
+        [length]="paging?.totalItems"
+        [pageSize]="8"
+        [pageSizeOptions]="[8, 12, 24, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+
+    <div class="action-btns">
+      <!-- New customer -->
+      <button
+        mat-button
+        mat-icon-button
+        matTooltip="New customer"
+        color="primary"
+        (click)="onCreate()"
+      >
+        <mat-icon>add_circle</mat-icon>
+      </button>
+
+      <!-- Change display mode -->
+      <button
+        mat-button
+        mat-icon-button
+        matTooltip="List view"
+        color="primary"
+        (click)="outDisplayMode()"
+      >
+        <mat-icon>view_list</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading progress bar -->
+  <mat-progress-bar
+    *ngIf="loading"
+    color="accent"
+    aria-label="Progress bar"
+    mode="buffer"
+  ></mat-progress-bar>
+
+  <!-- Main content -->
+  <div
+    *ngIf="!loading"
+    @flyInVez
+    #mainSection
+    class="content"
+    fxLayout="row wrap"
+    fxLayoutAlign="center stretch"
+  >
+    <mat-card fxFlex="22" *ngFor="let customer of customers" class="card">
+      <mat-card-header>
+        <img mat-card-avatar src="{{ mainPhotoUrl }}" />
+
+        <mat-card-title>{{ customer.fullName }}</mat-card-title>
+        <mat-card-subtitle
+          ><div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <div>{{ customer.gender | gender }}</div>
+          </div>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <table>
+          <tr>
+            <td>
+              <span><mat-icon>group</mat-icon></span>
+            </td>
+            <td>{{ customer.personNumber }}</td>
+          </tr>
+          <tr></tr>
+          <tr>
+            <td>
+              <span><mat-icon>cake</mat-icon></span>
+            </td>
+            <td>{{ customer.dateOfBirth | date: "dd/MM/yyyy" }}</td>
+          </tr>
+          <tr>
+            <td>
+              <span><mat-icon>phone</mat-icon></span>
+            </td>
+            <td>{{ customer.telephone }}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <span><mat-icon>language</mat-icon></span>
+            </td>
+            <td>{{ customer.countryName }}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <span><mat-icon>email</mat-icon></span>
+            </td>
+            <td>{{ customer.email }}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <span><mat-icon>my_location</mat-icon></span>
+            </td>
+            <td>{{ customer.address }}</td>
+          </tr>
+        </table>
+
+        <!-- Relay buttons -->
+        <div class="relay-btns">
+          <button
+            mat-button
+            mat-icon-button
+            matTooltip="Edit customer"
+            color="accent"
+            (click)="onEdit(customer)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-button
+            mat-icon-button
+            matTooltip="Delete customer"
+            color="warn"
+            (click)="onDelete(customer)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</main>

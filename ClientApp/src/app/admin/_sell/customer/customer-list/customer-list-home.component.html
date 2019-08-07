@@ -1,0 +1,8 @@
+<app-customer-list
+  *ngIf="displayMode; else customerCard"
+  (displayMode)="toggleDisplay($event)"
+></app-customer-list>
+
+<ng-template #customerCard>
+  <app-customer-card (displayMode)="toggleDisplay($event)"></app-customer-card>
+</ng-template>

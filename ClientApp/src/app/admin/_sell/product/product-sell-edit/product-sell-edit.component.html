@@ -1,114 +1,183 @@
 <main id="main" class="mat-typography">
   <mat-card class="main mat-elevation-z0">
-    <div fxLayout="column">
-      <div class="title-group" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-        <button mat-icon-button matTooltip="Go back" class="back-btn" [routerLink]="['/admin/sell/product']">
-          <mat-icon>arrow_back</mat-icon>
-          {{ title }}
-        </button>
-      </div>
+    <div
+      class="title-group"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="1rem"
+    >
+      <button
+        mat-icon-button
+        matTooltip="Go back"
+        class="back-btn"
+        [routerLink]="['/admin/sell/product']"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        {{ title }}
+      </button>
+    </div>
 
-      <div class="card-content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="2rem">
-        <div class="product-info">
-          <div fxLayout="row" fxLayoutAlign="start center">
-            <h2>
-              <button mat-icon-button><mat-icon>info</mat-icon></button>
-            </h2>
-            <h2 class="title">Product Info</h2>
-          </div>
-          <!-- Formgroup -->
-          <form class="edit-form" fxLayout="column" [formGroup]="formGroup">
-            <!-- Product Name -->
-            <mat-form-field appearance="outline">
-              <mat-label>Product Name</mat-label>
-              <input matInput placeholder="Product Name" formControlName="productName" required />
-              <mat-error *ngIf="get('productName').invalid">{{ getErrorMessage('productName', 'Product name') }}</mat-error>
-            </mat-form-field>
-            <!-- Specification -->
-            <mat-form-field appearance="outline">
-              <mat-label>Specification</mat-label>
-              <textarea
-                matInput
-                cdkTextareaAutosize
-                cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="20"
-                placeholder="Specification"
-                formControlName="specification"
-                required
-              ></textarea>
-              <mat-error *ngIf="get('specification').invalid">{{ getErrorMessage('specification', 'Specification') }}</mat-error>
-            </mat-form-field>
-            <!-- CategoryId -->
-            <mat-form-field appearance="outline">
-              <mat-label>Enter or select category</mat-label>
-              <input
-                appMatAutocompleteTriggerEnforceSelection
-                matInput
-                formControlName="category"
-                [matAutocomplete]="autoCategory"
-                #categoryInput
-                required
-              />
+    <div
+      class="card-content"
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayout.sm="column"
+      fxLayoutGap="2rem"
+    >
+      <div class="product-info" fxFlex="40" fxFlex.xs fxFlex.sm>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <h2>
+            <button mat-icon-button><mat-icon>info</mat-icon></button>
+          </h2>
+          <h2 class="title">Product Info</h2>
+        </div>
+        <!-- Formgroup -->
+        <form class="edit-form" fxLayout="column" [formGroup]="formGroup">
+          <!-- Product Name -->
+          <mat-form-field appearance="outline">
+            <mat-label>Product Name</mat-label>
+            <input
+              matInput
+              placeholder="Product Name"
+              formControlName="productName"
+              required
+            />
+            <mat-error *ngIf="get('productName').invalid">{{
+              getErrorMessage("productName", "Product name")
+            }}</mat-error>
+          </mat-form-field>
+          <!-- Specification -->
+          <mat-form-field appearance="outline">
+            <mat-label>Specification</mat-label>
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="20"
+              placeholder="Specification"
+              formControlName="specification"
+              required
+            ></textarea>
+            <mat-error *ngIf="get('specification').invalid">{{
+              getErrorMessage("specification", "Specification")
+            }}</mat-error>
+          </mat-form-field>
+          <!-- CategoryId -->
+          <mat-form-field appearance="outline">
+            <mat-label>Enter or select category</mat-label>
+            <input
+              appMatAutocompleteTriggerEnforceSelection
+              matInput
+              formControlName="category"
+              [matAutocomplete]="autoCategory"
+              #categoryInput
+              required
+            />
 
-              <mat-error *ngIf="get('category').invalid">{{ getErrorMessage('category', 'Category') }}</mat-error>
-            </mat-form-field>
+            <mat-error *ngIf="get('category').invalid">{{
+              getErrorMessage("category", "Category")
+            }}</mat-error>
+          </mat-form-field>
 
-            <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let category of filteredCategories" [value]="category">{{ category.categoryName }}</mat-option>
-              <mat-option>
-                <button mat-button color="primary" (click)="openDialog()">Add New Category</button>
-              </mat-option>
-            </mat-autocomplete>
-          </form>
+          <mat-autocomplete
+            #autoCategory="matAutocomplete"
+            [displayWith]="displayFn"
+          >
+            <mat-option
+              *ngFor="let category of filteredCategories"
+              [value]="category"
+              >{{ category.categoryName }}</mat-option
+            >
+            <mat-option>
+              <button mat-button color="primary" (click)="openDialog()">
+                Add New Category
+              </button>
+            </mat-option>
+          </mat-autocomplete>
+        </form>
 
-          <!-- Action Buttons -->
-          <button mat-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">Submit</button>
+        <!-- Action Buttons -->
+        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="1rem">
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="onSubmit()"
+            [disabled]="!formGroup.valid"
+          >
+            Submit
+          </button>
           <button mat-button (click)="resetForm()">Reset</button>
         </div>
+      </div>
 
-        <div class="photos" *ngIf="productId > 0">
-          <div fxLayout="row" fxLayoutAlign="start center">
-            <h2>
-              <button mat-icon-button><mat-icon>photo_album</mat-icon></button>
-            </h2>
-            <h2 class="title">Product Photos</h2>
-          </div>
+      <div class="photos" *ngIf="productId > 0" fxFlex>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <h2>
+            <button mat-icon-button><mat-icon>photo_album</mat-icon></button>
+          </h2>
+          <h2 class="title">Product Photos</h2>
+        </div>
 
-          <div *ngIf="product?.photos.length > 0; else noPhoto" fxLayout="row wrap" fxLayoutGap="1rem grid">
-            <div class="product-photos" *ngFor="let photo of product?.photos">
-              <div class="photo">
-                <img class="image" src="{{ photo.photoUrl }}" alt="" />
+        <div
+          *ngIf="product?.photos.length > 0; else noPhoto"
+          fxLayout="row wrap"
+          fxLayoutGap="1rem grid"
+        >
+          <div class="product-photos" *ngFor="let photo of product?.photos">
+            <div class="photo">
+              <img class="image" src="{{ photo.photoUrl }}" alt="" />
 
-                <!-- Img relay -->
-                <div class="img-btn">
-                  <button mat-icon-button matTooltip="Delete photo" color="warn" (click)="deletePhoto(photo.photoId)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                  <button mat-icon-button matTooltip="Set main photo" color="primary" (click)="setMainPhoto(photo)">
-                    <mat-icon>check_circle_outline</mat-icon>
-                  </button>
-                </div>
+              <!-- Img relay -->
+              <div class="img-btn">
+                <button
+                  mat-icon-button
+                  matTooltip="Delete photo"
+                  color="warn"
+                  (click)="deletePhoto(photo.photoId)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  matTooltip="Set main photo"
+                  color="primary"
+                  (click)="setMainPhoto(photo)"
+                >
+                  <mat-icon>check_circle_outline</mat-icon>
+                </button>
               </div>
             </div>
           </div>
+        </div>
 
-          <ng-template #noPhoto>
-            <div fxLayout="row" class="no-photo" fxLayoutAlign="center">
-              <div>
-                <h1>No photo</h1>
-              </div>
+        <ng-template #noPhoto>
+          <div fxLayout="row" class="no-photo" fxLayoutAlign="center">
+            <div>
+              <h1>No photo</h1>
             </div>
-          </ng-template>
-
-          <div class="photo-upload">
-            <button class="upload-icon-btn" mat-mini-fab color="primary" matTooltip="Upload photos" (click)="togglePhotoUploadExpansion()">
-              <mat-icon>cloud_upload</mat-icon>
-            </button>
-
-            <mat-expansion-panel [expanded]="photoUploadExpansion" class="padding-remove mat-elevation-z0">
-              <app-photo-upload [uploadUrl]="photoUploadUrl" (newPhoto)="refreshPhotoUpload($event)"></app-photo-upload>
-            </mat-expansion-panel>
           </div>
+        </ng-template>
+
+        <div class="photo-upload">
+          <button
+            class="upload-icon-btn"
+            mat-mini-fab
+            color="primary"
+            matTooltip="Upload photos"
+            (click)="togglePhotoUploadExpansion()"
+          >
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
+
+          <mat-expansion-panel
+            [expanded]="photoUploadExpansion"
+            class="padding-remove mat-elevation-z0"
+          >
+            <app-photo-upload
+              [uploadUrl]="photoUploadUrl"
+              (newPhoto)="refreshPhotoUpload($event)"
+            ></app-photo-upload>
+          </mat-expansion-panel>
         </div>
       </div>
     </div>

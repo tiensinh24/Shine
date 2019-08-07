@@ -1,5 +1,7 @@
-
-<app-employee-list *ngIf="displayMode; else employeeCard" (displayMode)="toggleDisplay($event)"></app-employee-list>
+<app-employee-list
+  *ngIf="displayMode; else employeeCard"
+  (displayMode)="toggleDisplay($event)"
+></app-employee-list>
 
 <ng-template #employeeCard>
   <app-employee-card (displayMode)="toggleDisplay($event)"></app-employee-card>

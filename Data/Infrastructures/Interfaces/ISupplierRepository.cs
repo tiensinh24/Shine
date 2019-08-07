@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +18,7 @@ namespace Shine.Data.Infrastructures.Interfaces
         #region Supplier
 
         #region Get Values
-        Task<IEnumerable<SupplierListDto>> GetSuppliersAsync(
-            Expression<Func<SupplierListDto, object>> sortColumn, string sortOrder);
-
-        Task<IEnumerable<SupplierSelectDto>> GetSuppliersSelectAsync(
-            Expression<Func<SupplierSelectDto, object>> sortColumn, string sortOrder);
+        Task<IEnumerable<SupplierSelectDto>> GetSuppliersSelectAsync();
 
         Task<PagedList<SupplierListDto>> GetPagedSuppliersAsync(
             PagingParams pagingParams, SortParams sortParams, string filter);
@@ -71,9 +66,8 @@ namespace Shine.Data.Infrastructures.Interfaces
 
         Task<IEnumerable<SupplierOrdersDto>> GetOrdersAsync(int supplierId);
 
-        Task<PagedList<SupplierOrdersDto>> GetPagedOrdersAsync(
-            PagingParams pagingParams, SortParams sortParams, string filter,
-            Expression<Func<SupplierOrdersDto, bool>> condition);
+        Task<PagedList<SupplierOrdersDto>> GetPagedOrdersBySupplierAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter, int supplierId);
 
         #endregion
 

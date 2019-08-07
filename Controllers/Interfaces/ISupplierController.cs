@@ -18,7 +18,6 @@ namespace Shine.Controllers.Interfaces
         #region Supplier
 
         #region Get Values
-        Task<ActionResult<IEnumerable<SupplierListDto>>> GetSuppliers();
 
         Task<ActionResult<IEnumerable<SupplierSelectDto>>> GetSuppliersSelect();
 

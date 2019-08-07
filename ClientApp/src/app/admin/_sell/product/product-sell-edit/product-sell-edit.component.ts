@@ -14,13 +14,13 @@ import { environment } from "src/environments/environment";
 import { ProductSellService } from "../../../../_shared/services/sell/product-sell.service";
 import { CategorySell } from "src/app/_shared/intefaces/sell/category/category-sell";
 import { CategorySellService } from "src/app/_shared/services/sell/category-sell.service";
-import { CategorySellDialogComponent } from "../../category/_dialogs/category-sell-dialog/category-sell-dialog.component";
 import { ProductSellDetail } from "src/app/_shared/intefaces/sell/product/ProductSellDetail";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { PhotoService } from "src/app/_shared/services/public/photo.service";
 import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
 import { Photo } from "src/app/_shared/intefaces/public/photo";
 import { PhotoForProduct } from "src/app/_shared/intefaces/public/photo-for-product";
+import { CategorySellDialogComponent } from "src/app/_shared/components/_sell/categories/category-sell-dialog/category-sell-dialog.component";
 
 @Component({
   selector: "app-product-sell-edit",

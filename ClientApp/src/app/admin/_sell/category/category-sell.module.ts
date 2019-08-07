@@ -10,12 +10,13 @@ import { CategorySellRoutingModule } from './category-sell-routing.module';
 import { CategorySellComponent } from './category-sell.component';
 import { CategorySellHomeComponent } from './category-sell-home/category-sell-home.component';
 import { CategorySellEditComponent } from './category-sell-edit/category-sell-edit.component';
+import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 
 @NgModule({
   declarations: [
     CategorySellComponent,
     CategorySellHomeComponent,
-    CategorySellEditComponent,
+    CategorySellEditComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +26,7 @@ import { CategorySellEditComponent } from './category-sell-edit/category-sell-ed
     MatDialogModule,
     MatExpansionModule,
     CategorySellRoutingModule,
+    MaterialSharedModule
   ],
 })
 export class CategorySellModule {}
