@@ -1,18 +1,39 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter } from "@angular/core";
-import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
-import { CustomerList } from 'src/app/_shared/intefaces/sell/customer/customer-list';
-import { Paging } from 'src/app/_shared/intefaces/public/paging';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
-import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
-import { CustomerService } from 'src/app/_shared/services/sell/customer.service';
-import { Router } from '@angular/router';
-import { ConfirmDialogService } from 'src/app/_shared/services/public/confirm-dialog.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { fromEvent, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, catchError, finalize } from 'rxjs/operators';
-import { PagedCustomer } from 'src/app/_shared/intefaces/sell/customer/paged-customer';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter
+} from "@angular/core";
+import {
+  trigger,
+  transition,
+  query,
+  style,
+  stagger,
+  animate
+} from "@angular/animations";
+import { CustomerList } from "src/app/_shared/intefaces/sell/customer/customer-list";
+import { Paging } from "src/app/_shared/intefaces/public/paging";
+import { MatSort } from "@angular/material/sort";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { PagingParams } from "src/app/_shared/intefaces/public/paging-params";
+import { SortParams } from "src/app/_shared/intefaces/public/sort-params";
+import { CustomerService } from "src/app/_shared/services/sell/customer.service";
+import { Router } from "@angular/router";
+import { ConfirmDialogService } from "src/app/_shared/services/public/confirm-dialog.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { fromEvent, of } from "rxjs";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+  catchError,
+  finalize
+} from "rxjs/operators";
+import { PagedCustomer } from "src/app/_shared/intefaces/sell/customer/paged-customer";
 
 @Component({
   selector: "app-customer-card",
@@ -135,12 +156,10 @@ export class CustomerCardComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.customerService
-          .deleteCustomer(customer.personId)
-          .subscribe(() => {
-            this.loadCustomersPage();
-            this.snackBar.open(`${customer.fullName} deleted`, "Success");
-          });
+        this.customerService.deleteCustomer(customer.personId).subscribe(() => {
+          this.loadCustomersPage();
+          this.snackBar.open(`${customer.fullName} deleted`, "Success");
+        });
       }
     });
   }

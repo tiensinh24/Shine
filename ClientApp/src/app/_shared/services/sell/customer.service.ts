@@ -50,8 +50,8 @@ export class CustomerService {
     });
   }
 
-  getCustomer(id: number): Observable<CustomerDetail> {
-    return this.http.get<CustomerDetail>(`${this.baseUrl}api/customer/${id}`);
+  getCustomer(customerId: number): Observable<CustomerDetail> {
+    return this.http.get<CustomerDetail>(`${this.baseUrl}api/customer/${customerId}`);
   }
 
   addCustomer(customer: Customer): Observable<CustomerList> {

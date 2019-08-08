@@ -35,10 +35,11 @@ export class CustomerListComponent implements OnInit {
     { key: "fullName", value: "Full Name" },
     { key: "dateOfBirth", value: "Birthday" },
     { key: "telephone", value: "Telephone" },
-    { key: "fax", value: "Fax"},
+    { key: "fax", value: "Fax" },
     { key: "countryName", value: "Country" },
     { key: "email", value: "Email" },
     { key: "address", value: "Address" },
+    { key: "rating", value: "Rating" },
     { key: "actions", value: "Actions" }
   ];
   columnsToDisplay = [
@@ -53,6 +54,7 @@ export class CustomerListComponent implements OnInit {
     "countryName",
     "email",
     "address",
+    "rating",
     "actions"
   ];
   selection = new SelectionModel<CustomerList>(true, []);

@@ -32,5 +32,14 @@ namespace Shine.Data.Infrastructures.Interfaces
         #endregion
 
         #endregion
+
+        #region Orders
+
+        Task<IEnumerable<CustomerOrdersDto>> GetOrdersAsync(int customerId);
+
+        Task<PagedList<CustomerOrdersDto>> GetPagedOrdersByCustomerAsync(
+            PagingParams pagingParams, SortParams sortParams, string filter, int customerId);
+
+        #endregion
     }
 }

@@ -162,5 +162,68 @@ namespace Shine.Data.Infrastructures.Repositories {
         #endregion
 
         #endregion
+
+        #region Orders
+
+        public async Task<IEnumerable<CustomerOrdersDto>> GetOrdersAsync (int customerId) {
+            var orders = await _context.Set<OrderSell> ()
+                .AsNoTracking ()
+                .Where (o => o.PersonId == customerId)
+                .ProjectToType<CustomerOrdersDto> ()
+                .ToListAsync ();
+
+            return orders;
+        }
+
+        public async Task<PagedList<CustomerOrdersDto>> GetPagedOrdersByCustomerAsync (PagingParams pagingParams, SortParams sortParams, string filter, int customerId) {
+            var source = _context.Set<OrderSell> ()
+                .AsNoTracking ()
+                .ProjectToType<CustomerOrdersDto> ()
+                .Where (s => s.PersonId == customerId);
+
+            switch (sortParams.SortOrder) {
+                case "asc":
+                    switch (sortParams.SortColumn) {
+                        case "orderNumber":
+                            source = source.OrderBy (p => p.OrderNumber);
+                            break;
+                        case "dateOfIssue":
+                            source = source.OrderBy (p => p.DateOfIssue);
+                            break;
+                        case "rating":
+                            source = source.OrderBy (p => p.Rating);
+                            break;
+                    }
+                    break;
+
+                case "desc":
+                    switch (sortParams.SortColumn) {
+                        case "orderNumber":
+                            source = source.OrderByDescending (p => p.OrderNumber);
+                            break;
+                        case "dateOfIssue":
+                            source = source.OrderByDescending (p => p.DateOfIssue);
+                            break;
+                        case "rating":
+                            source = source.OrderByDescending (p => p.Rating);
+                            break;
+                    }
+                    break;
+
+                default:
+                    source = source.OrderByDescending (c => c.DateOfIssue);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty (filter)) {
+                source = source.Where (p => (p.OrderNumber + p.DateOfIssue).ToLower ().Contains (filter.ToLower ()));
+            }
+
+            return await PagedList<CustomerOrdersDto>.CreateAsync (source, pagingParams.PageIndex, pagingParams.PageSize);
+
+        }
+
+        #endregion
+
     }
 }
