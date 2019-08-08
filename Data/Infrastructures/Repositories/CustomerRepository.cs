@@ -102,6 +102,7 @@ namespace Shine.Data.Infrastructures.Repositories {
                 .AsNoTracking ()
                 .Include (c => c.Country)
                 .Include (c => c.Photos)
+                .Include (c => c.Orders)
                 .FirstOrDefaultAsync (s => s.PersonId == customerId);
 
             return query.Adapt<CustomerDetailDto> ();

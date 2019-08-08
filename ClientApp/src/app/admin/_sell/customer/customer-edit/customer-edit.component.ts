@@ -112,6 +112,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
 
   updateForm(customer: CustomerDetail) {
     this.customerForm.setValue({
+      personNumber: customer.personNumber,
       firstName: customer.firstName,
       lastName: customer.lastName,
       gender: customer.gender,
