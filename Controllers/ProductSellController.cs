@@ -39,6 +39,13 @@ namespace Shine.Controllers {
             return new Paged<ProductSellListDto> (query);
         }
 
+        [HttpGet ("select")]
+        public async Task<ActionResult<IEnumerable<ProductSelectDto>>> GetProductsSelect () {
+            var products = await _repository.GetProductsSelectAsync ();
+
+            return Ok (products);
+        }
+
         [HttpGet ("{productId}")]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductSellDetailDto>> GetProduct (int productId) {

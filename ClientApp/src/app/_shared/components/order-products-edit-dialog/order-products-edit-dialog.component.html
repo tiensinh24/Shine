@@ -6,49 +6,98 @@
     <!-- ProductId -->
     <mat-form-field>
       <mat-label>Select a product</mat-label>
-      <mat-select placeholder="Select a product" formControlName="productId" required>
-        <mat-option *ngFor="let product of productsNotAddedSelect" [value]="product.productId">
+      <mat-select
+        placeholder="Select a product"
+        formControlName="productId"
+        
+        required
+      >
+        <mat-option
+          *ngFor="let product of productsSelect"
+          [value]="product.productId"
+        >
           {{ product.productName }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="get('productId').invalid">{{ getErrorMessage('productId', 'Product') }}</mat-error>
+      <mat-error *ngIf="get('productId').invalid">{{
+        getErrorMessage("productId", "Product")
+      }}</mat-error>
     </mat-form-field>
     <!-- Quantity -->
     <mat-form-field>
       <mat-label>Quantity</mat-label>
-      <input matInput type="number" placeholder="Quantity" formControlName="quantity" required />
-      <mat-error *ngIf="get('quantity').invalid">{{ getErrorMessage('quantity', 'Quantity') }}</mat-error>
+      <input
+        matInput
+        type="number"
+        placeholder="Quantity"
+        formControlName="quantity"
+        required
+      />
+      <mat-error *ngIf="get('quantity').invalid">{{
+        getErrorMessage("quantity", "Quantity")
+      }}</mat-error>
     </mat-form-field>
     <!-- Price -->
     <mat-form-field>
       <mat-label>Price</mat-label>
-      <input matInput type="number" placeholder="Price" formControlName="price" required />
-      <mat-error *ngIf="get('price').invalid">{{ getErrorMessage('price', 'Price') }}</mat-error>
+      <input
+        matInput
+        type="number"
+        placeholder="Price"
+        formControlName="price"
+        required
+      />
+      <mat-error *ngIf="get('price').invalid">{{
+        getErrorMessage("price", "Price")
+      }}</mat-error>
     </mat-form-field>
     <!-- Tax -->
     <mat-form-field>
       <mat-label>Tax</mat-label>
-      <input matInput type="number" placeholder="Tax" formControlName="tax" required />
-      <mat-error *ngIf="get('tax').invalid">{{ getErrorMessage('tax', 'Tax') }}</mat-error>
+      <input
+        matInput
+        type="number"
+        placeholder="Tax"
+        formControlName="tax"
+        required
+      />
+      <mat-error *ngIf="get('tax').invalid">{{
+        getErrorMessage("tax", "Tax")
+      }}</mat-error>
     </mat-form-field>
     <!-- Rate -->
     <mat-form-field>
       <mat-label>Rate</mat-label>
-      <input matInput type="number" placeholder="Rate" formControlName="rate" required />
-      <mat-error *ngIf="get('rate').invalid">{{ getErrorMessage('rate', 'Rate') }}</mat-error>
+      <input
+        matInput
+        type="number"
+        placeholder="Rate"
+        formControlName="rate"
+        required
+      />
+      <mat-error *ngIf="get('rate').invalid">{{
+        getErrorMessage("rate", "Rate")
+      }}</mat-error>
     </mat-form-field>
     <!-- Unit -->
     <mat-form-field>
       <mat-label>Unit</mat-label>
       <input matInput placeholder="Unit" formControlName="unit" required />
-      <mat-error *ngIf="get('unit').invalid">{{ getErrorMessage('unit', 'Unit') }}</mat-error>
+      <mat-error *ngIf="get('unit').invalid">{{
+        getErrorMessage("unit", "Unit")
+      }}</mat-error>
     </mat-form-field>
   </form>
 </mat-dialog-content>
 
 <!-- Action Buttons -->
 <mat-dialog-actions align="center">
-  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formGroup.valid">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="!formGroup.valid"
+  >
     Submit
   </button>
   <button mat-button (click)="onCancel()">

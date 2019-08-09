@@ -1,0 +1,114 @@
+<!-- Dialog title -->
+<h1 mat-dialog-title class="mat-display-1">{{ title }}</h1>
+
+<mat-dialog-content>
+  <!-- Formgroup -->
+  <form class="edit-form" fxLayout="column" [formGroup]="formGroup" novalidate>
+    <!-- Rating -->
+    <star-rating-control
+      formControlName="rating"
+      [starType]="'svg'"
+      labelText="Rating"
+    ></star-rating-control>
+
+    <!-- OrderNumber -->
+    <mat-form-field appearance="outline">
+      <mat-label>Order Number</mat-label>
+      <input
+        matInput
+        placeholder="Order Number"
+        formControlName="orderNumber"
+        autofocus
+        required
+      />
+      <mat-error *ngIf="get('orderNumber').invalid">{{
+        getErrorMessage(get("orderNumber", "Order number"))
+      }}</mat-error>
+    </mat-form-field>
+
+    <!-- DateOfIssue -->
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Issue</mat-label>
+      <input
+        matInput
+        [matDatepicker]="issuePicker"
+        placeholder="Choose a date"
+        formControlName="dateOfIssue"
+        required
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="issuePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker locale="en-GB" #issuePicker></mat-datepicker>
+      <mat-error *ngIf="get('dateOfIssue').invalid">{{
+        getErrorMessage(get("dateOfIssue", "Order date"))
+      }}</mat-error>
+    </mat-form-field>
+
+    <!-- TimeForPayment -->
+    <mat-form-field appearance="outline">
+      <mat-label>Time for Payment</mat-label>
+      <input
+        matInput
+        [matDatepicker]="paymentPicker"
+        placeholder="Choose a date"
+        formControlName="timeForPayment"
+        required
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="paymentPicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker locale="en-GB" #paymentPicker></mat-datepicker>
+      <mat-error *ngIf="get('timeForPayment').invalid">{{
+        getErrorMessage(get("timeForPayment", "Time for payment"))
+      }}</mat-error>
+    </mat-form-field>
+
+    <!-- EmployeeId -->
+    <mat-form-field appearance="outline">
+      <mat-label>Employee</mat-label>
+      <input
+        appMatAutocompleteTriggerEnforceSelection
+        matInput
+        formControlName="employee"
+        [matAutocomplete]="autoEmployee"
+        #employeeInput
+        required
+      />
+      <mat-error *ngIf="get('employee').invalid"
+        >Employee is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayFn">
+      <mat-option
+        *ngFor="let employee of filteredEmployees"
+        [value]="employee"
+        >{{ employee.fullName }}</mat-option
+      >
+    </mat-autocomplete>
+
+    <!-- PersonId -->
+    <mat-form-field appearance="outline">
+      <mat-label>Customer</mat-label>
+      <input matInput formControlName="customerName" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<!-- Action Buttons -->
+<mat-dialog-actions fxLayoutAlign="center">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="!formGroup.valid"
+  >
+    Submit
+  </button>
+  <button mat-button (click)="onCancel()">
+    Cancel
+  </button>
+</mat-dialog-actions>

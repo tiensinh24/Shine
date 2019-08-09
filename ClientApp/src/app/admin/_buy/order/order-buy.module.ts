@@ -4,9 +4,9 @@ import { OrderBuyListComponent } from './order-buy-list/order-buy-list.component
 import { OrderBuyRoutingModule } from './order-buy-routing.module';
 import { OrderBuyComponent } from './order-buy.component';
 import { NgModule } from '@angular/core';
-import { OrderBuyEditDialogSharedModule } from 'src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog-shared.module';
+import { OrderBuyEditDialogModule as OrderBuyEditDialogModule } from 'src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog.module';
 import { OrderProductsEditDialogModule } from 'src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.module';
-import { PaymentEditDialogSharedModule } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog-shared.module';
+import { PaymentEditDialogModule } from 'src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.module';
 import { MaterialSharedModule } from 'src/app/_shared/material-shared.module';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { OrderBuyCreateComponent } from './order-buy-create/order-buy-create.component';
@@ -35,9 +35,9 @@ import { CostEditDialogModule } from 'src/app/_shared/components/cost-edit-dialo
     SharedModule,
 
     // Dialog
-    OrderBuyEditDialogSharedModule,
+    OrderBuyEditDialogModule,
     OrderProductsEditDialogModule,
-    PaymentEditDialogSharedModule,
+    PaymentEditDialogModule,
     CostEditDialogModule,
 
     // Material

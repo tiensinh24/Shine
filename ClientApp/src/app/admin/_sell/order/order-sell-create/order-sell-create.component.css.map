@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "order-sell-create.component.scss"
+    ],
+    "names": [],
+    "file": "order-sell-create.component.css"
+}

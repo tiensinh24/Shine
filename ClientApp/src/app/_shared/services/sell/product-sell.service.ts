@@ -9,6 +9,7 @@ import { PagingParams } from "../../intefaces/public/paging-params";
 import { SortParams } from "../../intefaces/public/sort-params";
 import { PagedProductSellRemain } from "../../intefaces/sell/product/PagedProductSellRemain";
 import { ProductStorageRemain } from "../../intefaces/public/product-storage-remain";
+import { ProductSelect } from "../../intefaces/public/product-select";
 
 @Injectable({
   providedIn: "root"
@@ -45,6 +46,12 @@ export class ProductSellService {
     return this.http.get<PagedProductSell>(
       `${this.baseUrl}api/productSell/paged`,
       { params: queryParams }
+    );
+  }
+
+  getProductsSelect(): Observable<ProductSelect[]> {
+    return this.http.get<ProductSelect[]>(
+      `${this.baseUrl}api/productSell/select`
     );
   }
 

@@ -4,9 +4,9 @@ import { OrderBuyList } from '../../intefaces/buy/order/order-buy-list';
 import { OrderBuyProducts } from '../../intefaces/buy/order/order-buy-products';
 import { OrderBuyWithNavigations } from '../../intefaces/buy/order/order-buy-with-details-to-add-dto';
 import { PagedOrderBuy } from '../../intefaces/buy/order/paged-order-buy';
-import { ProductOrder } from '../../intefaces/buy/order/product-order';
+import { ProductOrder } from '../../intefaces/public/order/product-order';
 import { OrderValue } from '../../intefaces/public/order-value';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductSelect } from 'src/app/_shared/intefaces/public/product-select';
@@ -14,12 +14,12 @@ import { environment } from 'src/environments/environment';
 import { PagingParams } from '../../intefaces/public/paging-params';
 import { SortParams } from '../../intefaces/public/sort-params';
 import { OrderBuyQuery } from '../../intefaces/buy/order/query/order-buy-query';
-import { OrderAndCostPerMonth } from '../../intefaces/buy/order/report/order-and-cost-per-month';
-import { OrderAndCostPerQuarter } from '../../intefaces/buy/order/report/order-and-cost-per-quarter';
+import { OrderAndCostPerMonth } from '../../intefaces/public/order/order-and-cost-per-month';
+import { OrderAndCostPerQuarter } from '../../intefaces/public/order/order-and-cost-per-quarter';
 import { OrderBuyLatest } from '../../intefaces/buy/order/report/order-buy-latest';
 
 function isEmpty(obj) {
-  for (const x in obj) {
+  for (const i in obj) {
     return false;
   }
   return true;

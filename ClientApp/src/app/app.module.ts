@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './_shared/core/core.module';
-import { ConfirmDialogSharedModule } from './_shared/components/confirm-dialog/confirm-dialog-shared.module';
+import { ConfirmDialogModule } from './_shared/components/confirm-dialog/confirm-dialog.module';
 import { MaterialSharedModule } from './_shared/material-shared.module';
 import { SharedModule } from './_shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,7 +28,7 @@ import { HomeComponent } from './main/home/home.component';
     MaterialSharedModule,
 
     // Dialog
-    ConfirmDialogSharedModule,
+    ConfirmDialogModule,
 
     AppRoutingModule
   ],

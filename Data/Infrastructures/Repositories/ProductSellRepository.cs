@@ -70,6 +70,16 @@ namespace Shine.Data.Infrastructures.Repositories {
             return await PagedList<ProductSellListDto>.CreateAsync (source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
+        public async Task<IEnumerable<ProductSelectDto>> GetProductsSelectAsync () {
+            var products = await _context.Set<ProductSell> ()
+                .AsNoTracking ()
+                .ProjectToType<ProductSelectDto> ()
+                .OrderBy(p => p.ProductName)
+                .ToListAsync ();
+
+            return products;
+        }
+
         public async Task<ProductSellDetailDto> GetProductAsync (int productId) {
             var query = await _context.Set<ProductSell> ()
                 .AsNoTracking ()

@@ -13,6 +13,8 @@ namespace Shine.Data.Infrastructures.Interfaces {
         Task<PagedList<ProductSellListDto>> GetPagedProductsAsync (
             PagingParams pagingParams, SortParams sortParams, string filter);
 
+        Task<IEnumerable<ProductSelectDto>> GetProductsSelectAsync();
+
         Task<ProductSellDetailDto> GetProductAsync (int productId);
 
         #endregion

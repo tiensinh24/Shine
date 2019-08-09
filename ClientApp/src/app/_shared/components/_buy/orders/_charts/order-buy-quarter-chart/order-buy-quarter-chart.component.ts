@@ -6,7 +6,7 @@ import {
   ViewChild
   } from '@angular/core';
 import { GoogleChartComponent } from 'angular-google-charts';
-import { OrderAndCostPerQuarter } from 'src/app/_shared/intefaces/buy/order/report/order-and-cost-per-quarter';
+import { OrderAndCostPerQuarter } from 'src/app/_shared/intefaces/public/order/order-and-cost-per-quarter';
 
 @Component({
   selector: 'app-order-buy-quarter-chart',

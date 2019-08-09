@@ -149,14 +149,14 @@
       <!-- OrderNumber Column -->
       <ng-container matColumnDef="orderNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          <b>Order Number</b>
+          Order Number
         </th>
         <td mat-cell *matCellDef="let row">{{ row.orderNumber }}</td>
       </ng-container>
       <!-- DateOfIssue Column -->
       <ng-container matColumnDef="dateOfIssue">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          <b>Date of Issue</b>
+          Date of Issue
         </th>
         <td mat-cell *matCellDef="let row">
           {{ row.dateOfIssue | date: "dd/MM/yyyy" }}
@@ -165,7 +165,7 @@
       <!-- TimeForPayment Column -->
       <ng-container matColumnDef="timeForPayment">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          <b>Time for Payment</b>
+          Time for Payment
         </th>
         <td mat-cell *matCellDef="let row">
           {{ row.timeForPayment | date: "dd/MM/yyyy" }}
@@ -174,28 +174,28 @@
       <!-- SupplierName Column -->
       <ng-container matColumnDef="supplierName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          <b>Supplier Name</b>
+          Supplier Name
         </th>
         <td mat-cell *matCellDef="let row">{{ row.supplierName }}</td>
       </ng-container>
       <!-- EmployeeName Column -->
       <ng-container matColumnDef="employeeName">
-        <th mat-header-cell *matHeaderCellDef><b>Employee</b></th>
+        <th mat-header-cell *matHeaderCellDef>Employee</th>
         <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
       </ng-container>
       <!-- Value Column -->
       <ng-container matColumnDef="value">
-        <th mat-header-cell *matHeaderCellDef><b>Value</b></th>
+        <th mat-header-cell *matHeaderCellDef>Value</th>
         <td mat-cell *matCellDef="let row">{{ row.value | number }}</td>
       </ng-container>
       <!-- Cost Column -->
       <ng-container matColumnDef="cost">
-        <th mat-header-cell *matHeaderCellDef><b>Cost</b></th>
+        <th mat-header-cell *matHeaderCellDef>Cost</th>
         <td mat-cell *matCellDef="let row">{{ row.cost | number }}</td>
       </ng-container>
       <!-- Rating Column -->
       <ng-container matColumnDef="rating">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
         <td mat-cell *matCellDef="let row">
           <star-rating
             [starType]="'svg'"

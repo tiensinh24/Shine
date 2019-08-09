@@ -1,71 +1,83 @@
-import { OrderBuy } from '../../../../_shared/intefaces/buy/order/order-buy';
-import { OrderBuyList } from '../../../../_shared/intefaces/buy/order/order-buy-list';
-import { OrderBuyService } from '../../../../_shared/services/buy/order-buy.service';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
-import { fromEvent, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { OrderBuyDataSource } from '../_data-source/order-buy-data-source';
-import { PagingParams } from 'src/app/_shared/intefaces/public/paging-params';
-import { SortParams } from 'src/app/_shared/intefaces/public/sort-params';
-import { OrderBuyQuery } from 'src/app/_shared/intefaces/buy/order/query/order-buy-query';
-import { ConfirmDialogService } from 'src/app/_shared/services/public/confirm-dialog.service';
-import { OrderBuyEditDialogComponent } from 'src/app/_shared/components/_buy/orders/order-buy-edit-dialog/order-buy-edit-dialog.component';
+import { OrderBuy } from "../../../../_shared/intefaces/buy/order/order-buy";
+import { OrderBuyList } from "../../../../_shared/intefaces/buy/order/order-buy-list";
+import { OrderBuyService } from "../../../../_shared/services/buy/order-buy.service";
+import { animate, style, transition, trigger } from "@angular/animations";
+import { SelectionModel } from "@angular/cdk/collections";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatSort } from "@angular/material/sort";
+import { Router } from "@angular/router";
+import { fromEvent, merge } from "rxjs";
+import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
+import { OrderBuyDataSource } from "../_data-source/order-buy-data-source";
+import { PagingParams } from "src/app/_shared/intefaces/public/paging-params";
+import { SortParams } from "src/app/_shared/intefaces/public/sort-params";
+import { OrderBuyQuery } from "src/app/_shared/intefaces/buy/order/query/order-buy-query";
+import { ConfirmDialogService } from "src/app/_shared/services/public/confirm-dialog.service";
 
 @Component({
-  selector: 'app-order-buy-list',
-  templateUrl: './order-buy-list.component.html',
-  styleUrls: ['./order-buy-list.component.css'],
+  selector: "app-order-buy-list",
+  templateUrl: "./order-buy-list.component.html",
+  styleUrls: ["./order-buy-list.component.css"],
   animations: [
-    trigger('flyInOutHoz', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateX(100px)' }),
-        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
+    trigger("flyInOutHoz", [
+      transition(":enter", [
+        style({ opacity: 0, transform: "translateX(100px)" }),
+        animate(
+          "500ms cubic-bezier(0.35, 0, 0.25, 1)",
+          style({ opacity: 1, transform: "none" })
+        )
       ]),
-      transition(':leave', [animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 0, transform: 'translateX(100px)' }))])
+      transition(":leave", [
+        animate(
+          "500ms cubic-bezier(0.35, 0, 0.25, 1)",
+          style({ opacity: 0, transform: "translateX(100px)" })
+        )
+      ])
     ])
   ]
 })
 export class OrderBuyListComponent implements OnInit, AfterViewInit {
   dataSource: OrderBuyDataSource;
   displayedColumns = [
-    { key: 'select', value: 'Select' },
-    { key: 'orderNumber', value: 'Order Number' },
-    { key: 'dateOfIssue', value: 'Order Date' },
-    { key: 'timeForPayment', value: `Payment's Time` },
-    { key: 'supplierName', value: 'Supplier' },
-    { key: 'employeeName', value: 'Employee' },
-    { key: 'value', value: 'Values' },
-    { key: 'cost', value: 'Cost' },
-    { key: 'rating', value: 'Rating' },
-    { key: 'actions', value: 'Actions' }
+    { key: "select", value: "Select" },
+    { key: "orderNumber", value: "Order Number" },
+    { key: "dateOfIssue", value: "Order Date" },
+    { key: "timeForPayment", value: `Payment's Time` },
+    { key: "supplierName", value: "Supplier" },
+    { key: "employeeName", value: "Employee" },
+    { key: "value", value: "Values" },
+    { key: "cost", value: "Cost" },
+    { key: "rating", value: "Rating" },
+    { key: "actions", value: "Actions" }
   ];
   columnsToDisplay = [
-    'select',
-    'orderNumber',
-    'dateOfIssue',
-    'timeForPayment',
-    'supplierName',
-    'employeeName',
-    'value',
-    'cost',
-    'rating',
-    'actions'
+    "select",
+    "orderNumber",
+    "dateOfIssue",
+    "timeForPayment",
+    "supplierName",
+    "employeeName",
+    "value",
+    "cost",
+    "rating",
+    "actions"
   ];
 
   selection = new SelectionModel<OrderBuyList>(true, []);
-  title = 'Order List';
+  title = "Order List";
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('input', { static: true }) private input: ElementRef;
+  @ViewChild("input", { static: true }) private input: ElementRef;
 
   pagingParams = <PagingParams>{
     pageIndex: 0,
@@ -73,8 +85,8 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   };
 
   sortParams = <SortParams>{
-    sortColumn: '',
-    sortOrder: ''
+    sortColumn: "",
+    sortOrder: ""
   };
 
   queryParams = <OrderBuyQuery>{};
@@ -90,20 +102,23 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private router: Router,
     private confirmService: ConfirmDialogService,
-    private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     this.dataSource = new OrderBuyDataSource(this.orderBuyService);
-    this.dataSource.loadData(this.pagingParams, this.sortParams, this.queryParams);
+    this.dataSource.loadData(
+      this.pagingParams,
+      this.sortParams,
+      this.queryParams
+    );
 
     this.createFilterForm();
   }
 
   ngAfterViewInit(): void {
     // Server-side search
-    fromEvent(this.input.nativeElement, 'keyup')
+    fromEvent(this.input.nativeElement, "keyup")
       .pipe(
         debounceTime(250),
         distinctUntilChanged(),
@@ -130,8 +145,8 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
 
   createFilterForm() {
     this.filterForm = this.fb.group({
-      fromDate: [''],
-      toDate: ['']
+      fromDate: [""],
+      toDate: [""]
     });
   }
 
@@ -143,7 +158,9 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     this.sortParams.sortOrder = this.sort.direction;
 
     if (this.filterForm.value.fromDate) {
-      this.queryParams.fromDate = this.filterForm.value.fromDate.format('YYYY-MM-DD');
+      this.queryParams.fromDate = this.filterForm.value.fromDate.format(
+        "YYYY-MM-DD"
+      );
 
       if (this.queryParams.supplierId === undefined) {
         this.queryParams.supplierId = 0;
@@ -155,20 +172,27 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     }
 
     if (this.filterForm.value.toDate) {
-      this.queryParams.toDate = this.filterForm.value.toDate.format('YYYY-MM-DD');
+      this.queryParams.toDate = this.filterForm.value.toDate.format(
+        "YYYY-MM-DD"
+      );
     }
 
     const filter = this.input.nativeElement.value;
 
-    this.dataSource.loadData(this.pagingParams, this.sortParams, this.queryParams, filter);
+    this.dataSource.loadData(
+      this.pagingParams,
+      this.sortParams,
+      this.queryParams,
+      filter
+    );
   }
 
   onCreate() {
-    this.router.navigate(['/admin/buy/order/create']);
+    this.router.navigate(["/admin/buy/order/create"]);
   }
 
   onDetail(orderBuy: OrderBuy) {
-    this.router.navigate(['/admin/buy/order', orderBuy.orderId]);
+    this.router.navigate(["/admin/buy/order", orderBuy.orderId]);
   }
 
   onEdit(orderBuy: OrderBuy) {
@@ -176,14 +200,16 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(orderBuy: OrderBuy) {
-    const dialogRef = this.confirmService.openDialog(`Are you sure to delete order ${orderBuy.orderNumber}?`);
+    const dialogRef = this.confirmService.openDialog(
+      `Are you sure to delete order ${orderBuy.orderNumber}?`
+    );
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.orderBuyService.deleteOrder(orderBuy.orderId).subscribe(() => {
           this.loadOrdersPage();
         });
-        this.snackBar.open(`Order ${orderBuy.orderNumber} deleted`, 'Success');
+        this.snackBar.open(`Order ${orderBuy.orderNumber} deleted`, "Success");
         setTimeout(() => this.selection.clear(), 50);
       }
     });
@@ -194,7 +220,9 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
     const ordersToDelete: string[] = [];
     this.dataSource.data.subscribe(data => (orders = data));
 
-    const dialogRef = this.confirmService.openDialog(`Are you sure to delete those orders?`);
+    const dialogRef = this.confirmService.openDialog(
+      `Are you sure to delete those orders?`
+    );
 
     dialogRef.afterClosed().subscribe((res: boolean) => {
       if (res) {
@@ -203,15 +231,17 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
             ordersToDelete.push(order.orderId.toString());
           }
         });
-        this.orderBuyService.deleteOrders(ordersToDelete).subscribe((resp: boolean) => {
-          if (resp) {
-            this.loadOrdersPage();
-            this.snackBar.open('Orders deleted', 'Success');
-          } else {
-            this.snackBar.open('Can not delete orders', 'Error');
-          }
-          setTimeout(() => this.selection.clear(), 50);
-        });
+        this.orderBuyService
+          .deleteOrders(ordersToDelete)
+          .subscribe((resp: boolean) => {
+            if (resp) {
+              this.loadOrdersPage();
+              this.snackBar.open("Orders deleted", "Success");
+            } else {
+              this.snackBar.open("Can not delete orders", "Error");
+            }
+            setTimeout(() => this.selection.clear(), 50);
+          });
       }
     });
   }
@@ -300,7 +330,7 @@ export class OrderBuyListComponent implements OnInit, AfterViewInit {
   }
 
   clearSearch() {
-    this.input.nativeElement.value = '';
+    this.input.nativeElement.value = "";
     this.queryParams = {};
     this.loadOrdersPage();
   }

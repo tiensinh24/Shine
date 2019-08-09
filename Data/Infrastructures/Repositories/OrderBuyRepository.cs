@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
 using Mapster;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
 using Shine.Data.Dto._Paging;
 using Shine.Data.Dto.Orders;
 using Shine.Data.Dto.Orders.Buy;
@@ -19,156 +16,136 @@ using Shine.Data.Dto.Products;
 using Shine.Data.Infrastructures.Interfaces;
 using Shine.Data.Models;
 
-namespace Shine.Data.Infrastructures.Repositories
-{
-    public class OrderBuyRepository : Repository, IOrderBuyRepository
-    {
+namespace Shine.Data.Infrastructures.Repositories {
+    public class OrderBuyRepository : Repository, IOrderBuyRepository {
         private readonly DbSet<OrderBuy> _repository;
 
         #region Constructor
-        public OrderBuyRepository(AppDbContext context,
+        public OrderBuyRepository (AppDbContext context,
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager,
-            IConfiguration configuration) : base(context, roleManager, userManager, configuration)
-        {
-            this._repository = _context.Set<OrderBuy>();
+            IConfiguration configuration) : base (context, roleManager, userManager, configuration) {
+            this._repository = _context.Set<OrderBuy> ();
         }
         #endregion
 
         #region Get Values       
 
-        public async Task<IEnumerable<OrderBuyListDto>> GetOrdersAsync(
-            Expression<Func<OrderBuyListDto, object>> sortColumn, string sortOrder)
-        {
+        public async Task<IEnumerable<OrderBuyListDto>> GetOrdersAsync (
+            Expression<Func<OrderBuyListDto, object>> sortColumn, string sortOrder) {
 
-            var query = _context.Set<OrderBuy>()
-                .AsNoTracking()
-                .Include(p => p.Person)
-                .ProjectToType<OrderBuyListDto>();
+            var query = _context.Set<OrderBuy> ()
+                .AsNoTracking ()
+                .Include (p => p.Person)
+                .ProjectToType<OrderBuyListDto> ();
 
-            if (sortColumn != null)
-            {
-                if (sortOrder == "desc")
-                {
-                    query = query.OrderByDescending(sortColumn);
+            if (sortColumn != null) {
+                if (sortOrder == "desc") {
+                    query = query.OrderByDescending (sortColumn);
+                } else {
+                    query = query.OrderBy (sortColumn);
                 }
-                else
-                {
-                    query = query.OrderBy(sortColumn);
-                }
-            }
-            else
-            {
-                query = query.OrderBy(p => p.DateOfIssue);
+            } else {
+                query = query.OrderBy (p => p.DateOfIssue);
             }
 
-            return await query.ToListAsync();
+            return await query.ToListAsync ();
         }
 
-        public async Task<PagedList<OrderBuyListDto>> GetPagedOrdersAsync(
+        public async Task<PagedList<OrderBuyListDto>> GetPagedOrdersAsync (
             PagingParams pagingParams, SortParams sortParams, OrderBuyQuery queryParams, string filter
-            )
-        {
-            var source = _context.Set<OrderBuy>()
-                .AsNoTracking()
-                .ProjectToType<OrderBuyListDto>();
+        ) {
+            var source = _context.Set<OrderBuy> ()
+                .AsNoTracking ()
+                .ProjectToType<OrderBuyListDto> ();
 
-            switch (sortParams.SortOrder)
-            {
+            switch (sortParams.SortOrder) {
                 case "asc":
-                    switch (sortParams.SortColumn)
-                    {
+                    switch (sortParams.SortColumn) {
                         case "orderNumber":
-                            source = source.OrderBy(p => p.OrderNumber);
+                            source = source.OrderBy (p => p.OrderNumber);
                             break;
                         case "dateOfIssue":
-                            source = source.OrderBy(p => p.DateOfIssue);
+                            source = source.OrderBy (p => p.DateOfIssue);
                             break;
                         case "timeForPayment":
-                            source = source.OrderBy(p => p.TimeForPayment);
+                            source = source.OrderBy (p => p.TimeForPayment);
                             break;
                         case "supplierName":
-                            source = source.OrderBy(p => p.SupplierName);
+                            source = source.OrderBy (p => p.SupplierName);
                             break;
                         case "employeeName":
-                            source = source.OrderBy(p => p.EmployeeName);
+                            source = source.OrderBy (p => p.EmployeeName);
                             break;
                         case "rating":
-                            source = source.OrderBy(p => p.Rating);
+                            source = source.OrderBy (p => p.Rating);
                             break;
                     }
                     break;
 
                 case "desc":
-                    switch (sortParams.SortColumn)
-                    {
+                    switch (sortParams.SortColumn) {
                         case "orderNumber":
-                            source = source.OrderByDescending(p => p.OrderNumber);
+                            source = source.OrderByDescending (p => p.OrderNumber);
                             break;
                         case "dateOfIssue":
-                            source = source.OrderByDescending(p => p.DateOfIssue);
+                            source = source.OrderByDescending (p => p.DateOfIssue);
                             break;
                         case "timeForPayment":
-                            source = source.OrderByDescending(p => p.TimeForPayment);
+                            source = source.OrderByDescending (p => p.TimeForPayment);
                             break;
                         case "supplierName":
-                            source = source.OrderByDescending(p => p.SupplierName);
+                            source = source.OrderByDescending (p => p.SupplierName);
                             break;
                         case "employeeName":
-                            source = source.OrderByDescending(p => p.EmployeeName);
+                            source = source.OrderByDescending (p => p.EmployeeName);
                             break;
                         case "rating":
-                            source = source.OrderByDescending(p => p.Rating);
+                            source = source.OrderByDescending (p => p.Rating);
                             break;
                     }
                     break;
 
                 default:
-                    source = source.OrderByDescending(c => c.DateOfIssue);
+                    source = source.OrderByDescending (c => c.DateOfIssue);
                     break;
             }
 
-            if (queryParams.SupplierId > 0)
-            {
-                source = source.Where(o => o.PersonId == queryParams.SupplierId);
+            if (queryParams.SupplierId > 0) {
+                source = source.Where (o => o.PersonId == queryParams.SupplierId);
             }
 
-            if (queryParams.EmployeeId > 0)
-            {
-                source = source.Where(o => o.EmployeeId == queryParams.EmployeeId);
+            if (queryParams.EmployeeId > 0) {
+                source = source.Where (o => o.EmployeeId == queryParams.EmployeeId);
             }
 
-            if (queryParams.FromDate < queryParams.ToDate)
-            {
-                source = source.Where(o => o.DateOfIssue >= queryParams.FromDate && o.DateOfIssue <= queryParams.ToDate);
+            if (queryParams.FromDate < queryParams.ToDate) {
+                source = source.Where (o => o.DateOfIssue >= queryParams.FromDate && o.DateOfIssue <= queryParams.ToDate);
             }
 
-            if (!string.IsNullOrEmpty(filter))
-            {
-                source = source.Where(p => (p.OrderNumber + p.DateOfIssue + p.SupplierName).ToLower().Contains(filter.ToLower()));
+            if (!string.IsNullOrEmpty (filter)) {
+                source = source.Where (p => (p.OrderNumber + p.DateOfIssue + p.SupplierName).ToLower ().Contains (filter.ToLower ()));
             }
 
-            return await PagedList<OrderBuyListDto>.CreateAsync(source, pagingParams.PageIndex, pagingParams.PageSize);
+            return await PagedList<OrderBuyListDto>.CreateAsync (source, pagingParams.PageIndex, pagingParams.PageSize);
         }
 
-        public async Task<OrderBuyDetailDto> GetOrderDetailAsync(int orderId)
-        {
+        public async Task<OrderBuyDetailDto> GetOrderDetailAsync (int orderId) {
             var order = await _repository
-                .AsNoTracking()
-                .Include(o => o.Person)
-                .Include(o => o.Employee)
-                .Include(o => o.Payments)
-                .Include(o => o.ProductOrders)
-                .ThenInclude(p => p.Product)
-                .ProjectToType<OrderBuyDetailDto>()
-                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+                .AsNoTracking ()
+                .Include (o => o.Person)
+                .Include (o => o.Employee)
+                .Include (o => o.Payments)
+                .Include (o => o.ProductOrders)
+                .ThenInclude (p => p.Product)
+                .ProjectToType<OrderBuyDetailDto> ()
+                .FirstOrDefaultAsync (o => o.OrderId == orderId);
 
             return order;
         }
 
-        public async Task<bool> IsOrderNumberExistAsync(string orderNumber)
-        {
-            var order = await _repository.FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
+        public async Task<bool> IsOrderNumberExistAsync (string orderNumber) {
+            var order = await _repository.FirstOrDefaultAsync (o => o.OrderNumber == orderNumber);
 
             if (order == null) return false;
 
@@ -178,19 +155,16 @@ namespace Shine.Data.Infrastructures.Repositories
         #endregion
 
         #region Actions
-        public async Task<OrderBuy> AddOrderAsync(OrderBuy orderBuy)
-        {
-            await _repository.AddAsync(orderBuy);
+        public async Task<OrderBuy> AddOrderAsync (OrderBuy orderBuy) {
+            await _repository.AddAsync (orderBuy);
             return orderBuy;
         }
 
-        public async Task<OrderBuyDto> UpdateOrderAsync(OrderBuy orderBuy)
-        {
-            var order = await _context.Set<OrderBuy>()
-                .FirstOrDefaultAsync(p => p.OrderId == orderBuy.OrderId);
+        public async Task<OrderBuyDto> UpdateOrderAsync (OrderBuy orderBuy) {
+            var order = await _context.Set<OrderBuy> ()
+                .FirstOrDefaultAsync (p => p.OrderId == orderBuy.OrderId);
 
-            if (order != null)
-            {
+            if (order != null) {
                 order.OrderNumber = orderBuy.OrderNumber;
                 order.DateOfIssue = orderBuy.DateOfIssue;
                 order.TimeForPayment = orderBuy.TimeForPayment;
@@ -199,31 +173,27 @@ namespace Shine.Data.Infrastructures.Repositories
                 order.Rating = orderBuy.Rating;
             }
 
-            return order.Adapt<OrderBuyDto>();
+            return order.Adapt<OrderBuyDto> ();
         }
 
-        public async Task<OrderBuyDto> DeleteOrderAsync(int orderId)
-        {
-            var order = await _context.Set<OrderBuy>()
-                .FirstOrDefaultAsync(p => p.OrderId == orderId);
+        public async Task<OrderBuyDto> DeleteOrderAsync (int orderId) {
+            var order = await _context.Set<OrderBuy> ()
+                .FirstOrDefaultAsync (p => p.OrderId == orderId);
 
-            if (order != null)
-            {
-                _context.Set<OrderBuy>().Remove(order);
+            if (order != null) {
+                _context.Set<OrderBuy> ().Remove (order);
             }
 
-            return order.Adapt<OrderBuyDto>();
+            return order.Adapt<OrderBuyDto> ();
         }
 
-        public async Task<bool> DeleteOrdersAsync(string[] ids)
-        {
-            var orders = await _context.Set<OrderBuy>()
-                .Where(c => ids.Contains(c.OrderId.ToString()))
-                .ToListAsync();
+        public async Task<bool> DeleteOrdersAsync (string[] ids) {
+            var orders = await _context.Set<OrderBuy> ()
+                .Where (c => ids.Contains (c.OrderId.ToString ()))
+                .ToListAsync ();
 
-            if (orders != null)
-            {
-                _context.Set<OrderBuy>().RemoveRange(orders);
+            if (orders != null) {
+                _context.Set<OrderBuy> ().RemoveRange (orders);
 
                 return true;
             }
@@ -236,27 +206,25 @@ namespace Shine.Data.Infrastructures.Repositories
 
         #region Get Values
 
-        public async Task<IEnumerable<ProductSelectDto>> GetProductsNotAddedToOrderBySupplierForSelect(int orderId, int supplierId)
-        {
-            var products = await _context.Set<ProductBuy>()
-                .AsNoTracking()
-                .Where(p => p.PersonProducts.Any(pp => pp.PersonId == supplierId)
-                    && !(_context.ProductOrders
-                        .Where(po => po.OrderId == orderId)
-                        .Select(po => po.ProductId)).Contains(p.ProductId))
-                .ProjectToType<ProductSelectDto>()
-                .OrderBy(p => p.ProductName)
-                .ToListAsync();
+        public async Task<IEnumerable<ProductSelectDto>> GetProductsNotAddedToOrderBySupplierForSelect (int orderId, int supplierId) {
+            var products = await _context.Set<ProductBuy> ()
+                .AsNoTracking ()
+                .Where (p => p.PersonProducts.Any (pp => pp.PersonId == supplierId) &&
+                    (_context.ProductOrders
+                        .Where (po => po.OrderId == orderId)
+                        .Select (po => po.ProductId)).Contains (p.ProductId))
+                .ProjectToType<ProductSelectDto> ()
+                .OrderBy (p => p.ProductName)
+                .ToListAsync ();
 
             return products;
         }
 
-        public async Task<OrderBuyProducts> GetOrderProductAsync(ProductOrder productOrder)
-        {
+        public async Task<OrderBuyProducts> GetOrderProductAsync (ProductOrder productOrder) {
             var item = await _context.ProductOrders
-                .AsNoTracking()
-                .ProjectToType<OrderBuyProducts>()
-                .FirstOrDefaultAsync(i => i.OrderId == productOrder.OrderId && i.ProductId == productOrder.ProductId);
+                .AsNoTracking ()
+                .ProjectToType<OrderBuyProducts> ()
+                .FirstOrDefaultAsync (i => i.OrderId == productOrder.OrderId && i.ProductId == productOrder.ProductId);
 
             return item;
         }
@@ -264,27 +232,23 @@ namespace Shine.Data.Infrastructures.Repositories
         #endregion
 
         #region Actions
-        public async Task<ProductOrder> AddProductOrderAsync(ProductOrder productOrder)
-        {
-            var lineItem = await _context.Set<ProductOrder>()
-                .AddAsync(productOrder);
+        public async Task<ProductOrder> AddProductOrderAsync (ProductOrder productOrder) {
+            var lineItem = await _context.Set<ProductOrder> ()
+                .AddAsync (productOrder);
 
             return lineItem.Entity;
         }
 
-        public async Task AddProductOrderRangeAsync(IEnumerable<ProductOrder> productOrders)
-        {
-            await _context.Set<ProductOrder>().AddRangeAsync(productOrders);
+        public async Task AddProductOrderRangeAsync (IEnumerable<ProductOrder> productOrders) {
+            await _context.Set<ProductOrder> ().AddRangeAsync (productOrders);
         }
 
-        public async Task<ProductOrder> UpdateProductOrderAsync(ProductOrder productOrder)
-        {
+        public async Task<ProductOrder> UpdateProductOrderAsync (ProductOrder productOrder) {
             var dbItem = await _context.ProductOrders
-                .FirstOrDefaultAsync(p => p.ProductId == productOrder.ProductId
-                    && p.OrderId == productOrder.OrderId);
+                .FirstOrDefaultAsync (p => p.ProductId == productOrder.ProductId &&
+                    p.OrderId == productOrder.OrderId);
 
-            if (dbItem != null)
-            {
+            if (dbItem != null) {
                 dbItem.ProductId = productOrder.ProductId;
                 dbItem.Quantity = productOrder.Quantity;
                 dbItem.Price = productOrder.Price;
@@ -296,13 +260,11 @@ namespace Shine.Data.Infrastructures.Repositories
             return dbItem;
         }
 
-        public async Task<bool> DeleteProductOrderAsync(int orderId, int productId)
-        {
-            var productOrder = await _context.Set<ProductOrder>()
-                .FirstOrDefaultAsync(p => p.OrderId == orderId && p.ProductId == productId);
-            if (productOrder != null)
-            {
-                _context.Set<ProductOrder>().Remove(productOrder);
+        public async Task<bool> DeleteProductOrderAsync (int orderId, int productId) {
+            var productOrder = await _context.Set<ProductOrder> ()
+                .FirstOrDefaultAsync (p => p.OrderId == orderId && p.ProductId == productId);
+            if (productOrder != null) {
+                _context.Set<ProductOrder> ().Remove (productOrder);
 
                 return true;
             }
@@ -315,178 +277,154 @@ namespace Shine.Data.Infrastructures.Repositories
 
         #region Reports
 
-        public decimal GetOrdersSum(int year, int? month)
-        {
+        public decimal GetOrdersSum (int year, int? month) {
             decimal query;
 
-            if (month > 0)
-            {
+            if (month > 0) {
                 query = _context.ProductOrders
-                .AsNoTracking()
-                .Where(po => po.Order.OrderType == true && po.Order.DateOfIssue.Year == year && po.Order.DateOfIssue.Month == month)
-                .Sum(po => po.Quantity * po.Price * (1 + po.Tax));
-            }
-            else
-            {
+                    .AsNoTracking ()
+                    .Where (po => po.Order.OrderType == true && po.Order.DateOfIssue.Year == year && po.Order.DateOfIssue.Month == month)
+                    .Sum (po => po.Quantity * po.Price * (1 + po.Tax));
+            } else {
                 query = _context.ProductOrders
-                .AsNoTracking()
-                .Where(po => po.Order.OrderType == true && po.Order.DateOfIssue.Year == year)
-                .Sum(po => po.Quantity * po.Price * (1 + po.Tax));
+                    .AsNoTracking ()
+                    .Where (po => po.Order.OrderType == true && po.Order.DateOfIssue.Year == year)
+                    .Sum (po => po.Quantity * po.Price * (1 + po.Tax));
             }
 
             return query;
         }
 
-        public decimal GetOrdersCostSum(int year, int? month)
-        {
+        public decimal GetOrdersCostSum (int year, int? month) {
             decimal query;
 
-            if (month > 0)
-            {
+            if (month > 0) {
                 query = _context.Costs
-                .AsNoTracking()
-                .Where(c => c.Order.OrderType == true && c.Order.DateOfIssue.Year == year && c.Order.DateOfIssue.Month == month)
-                .Sum(c => c.Amount);
-            }
-            else
-            {
+                    .AsNoTracking ()
+                    .Where (c => c.Order.OrderType == true && c.Order.DateOfIssue.Year == year && c.Order.DateOfIssue.Month == month)
+                    .Sum (c => c.Amount);
+            } else {
                 query = _context.Costs
-                .AsNoTracking()
-                .Where(c => c.Order.OrderType == true && c.Order.DateOfIssue.Year == year)
-                .Sum(c => c.Amount);
+                    .AsNoTracking ()
+                    .Where (c => c.Order.OrderType == true && c.Order.DateOfIssue.Year == year)
+                    .Sum (c => c.Amount);
             }
 
             return query;
         }
 
-        public int GetOrdersCount(int year, int? month)
-        {
+        public int GetOrdersCount (int year, int? month) {
             int query;
 
-            if (month > 0)
-            {
+            if (month > 0) {
                 query = _repository
-                .AsNoTracking()
-                .Where(o => o.DateOfIssue.Year == year && o.DateOfIssue.Month == month)
-                .Count();
-            }
-            else
-            {
+                    .AsNoTracking ()
+                    .Where (o => o.DateOfIssue.Year == year && o.DateOfIssue.Month == month)
+                    .Count ();
+            } else {
                 query = _repository
-                .AsNoTracking()
-                .Where(o => o.DateOfIssue.Year == year)
-                .Count();
+                    .AsNoTracking ()
+                    .Where (o => o.DateOfIssue.Year == year)
+                    .Count ();
             }
 
             return query;
         }
 
-        public async Task<IEnumerable<OrderAndCostPerMonthDto>> GetOrderAndCostPerMonthAsync(int year)
-        {
-            var query = await _context.Set<OrderBuy>()
-              .AsNoTracking()
-              .Where(o => o.DateOfIssue.Year == year)
-              .GroupBy(o => o.DateOfIssue.Month)
-              .Select(g => new OrderAndCostPerMonthDto
-              {
-                  Month = g.Key,
-                  Amount = g.Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))),
-                  Cost = g.Sum(o => o.Costs.Sum(c => c.Amount))
-              })
-              .ToListAsync();
+        public async Task<IEnumerable<OrderAndCostPerMonthDto>> GetOrderAndCostPerMonthAsync (int year) {
+            var query = await _context.Set<OrderBuy> ()
+                .AsNoTracking ()
+                .Where (o => o.DateOfIssue.Year == year)
+                .GroupBy (o => o.DateOfIssue.Month)
+                .Select (g => new OrderAndCostPerMonthDto {
+                    Month = g.Key,
+                        Amount = g.Sum (o => o.ProductOrders.Sum (po => po.Quantity * po.Price * (1 + po.Tax))),
+                        Cost = g.Sum (o => o.Costs.Sum (c => c.Amount))
+                })
+                .ToListAsync ();
 
             return query;
         }
 
-        public async Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync(int year)
-        {
-            var query = await _context.Set<OrderBuy>()
-              .AsNoTracking()
-              .Where(o => o.DateOfIssue.Year == year)
-              .Select(o => new
-              {
-                  Quarter = Helpers.Helpers.GetQuarter(o.DateOfIssue.Month),
-                  Value = o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax)),
-                  Cost = o.Costs.Sum(c => c.Amount)
-              })
-              .GroupBy(g => g.Quarter)
-              .Select(g => new OrderAndCostPerQuarterDto
-              {
-                  Quarter = g.Key,
-                  Amount = g.Sum(i => i.Value),
-                  Cost = g.Sum(i => i.Cost)
-              })
-              .OrderBy(g => g.Quarter)
-              .ToListAsync();
+        public async Task<IEnumerable<OrderAndCostPerQuarterDto>> GetOrderAndCostPerQuarterAsync (int year) {
+            var query = await _context.Set<OrderBuy> ()
+                .AsNoTracking ()
+                .Where (o => o.DateOfIssue.Year == year)
+                .Select (o => new {
+                    Quarter = Helpers.Helpers.GetQuarter (o.DateOfIssue.Month),
+                        Value = o.ProductOrders.Sum (po => po.Quantity * po.Price * (1 + po.Tax)),
+                        Cost = o.Costs.Sum (c => c.Amount)
+                })
+                .GroupBy (g => g.Quarter)
+                .Select (g => new OrderAndCostPerQuarterDto {
+                    Quarter = g.Key,
+                        Amount = g.Sum (i => i.Value),
+                        Cost = g.Sum (i => i.Cost)
+                })
+                .OrderBy (g => g.Quarter)
+                .ToListAsync ();
 
             return query;
         }
 
-        public async Task<OrderBuyLatestDto> GetLatestOrderAsync()
-        {
+        public async Task<OrderBuyLatestDto> GetLatestOrderAsync () {
             var order = await _repository
-              .AsNoTracking()
-              .ProjectToType<OrderBuyLatestDto>()
-              .OrderByDescending(o => o.DateOfIssue)
-              .FirstOrDefaultAsync();
+                .AsNoTracking ()
+                .ProjectToType<OrderBuyLatestDto> ()
+                .OrderByDescending (o => o.DateOfIssue)
+                .FirstOrDefaultAsync ();
 
             return order;
         }
 
-        public decimal GetTotalOrderDebt()
-        {
+        public decimal GetTotalOrderDebt () {
             var debt = _repository
-              .AsNoTracking()
-              .Where(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
-                - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0) > 0)
-              .Sum(o => o.ProductOrders.Sum(po => po.Quantity * po.Price * (1 + po.Tax))
-                - (o.Payments.Any() ? o.Payments.Sum(p => p.Amount) : 0));
+                .AsNoTracking ()
+                .Where (o => o.ProductOrders.Sum (po => po.Quantity * po.Price * (1 + po.Tax)) -
+                    (o.Payments.Any () ? o.Payments.Sum (p => p.Amount) : 0) > 0)
+                .Sum (o => o.ProductOrders.Sum (po => po.Quantity * po.Price * (1 + po.Tax)) -
+                    (o.Payments.Any () ? o.Payments.Sum (p => p.Amount) : 0));
 
             return debt;
         }
 
-        public async Task<IEnumerable<OrderValueDto>> GetTopOrderValueAsync(int numRows, int year, int month, string type)
-        {
+        public async Task<IEnumerable<OrderValueDto>> GetTopOrderValueAsync (int numRows, int year, int month, string type) {
 
-            var query = _repository.AsNoTracking()
-              .Where(o => o.DateOfIssue.Year == year);
+            var query = _repository.AsNoTracking ()
+                .Where (o => o.DateOfIssue.Year == year);
 
             // Get by month
-            if (type == "m")
-            {
-                query = query.Where(o => o.DateOfIssue.Month == month);
+            if (type == "m") {
+                query = query.Where (o => o.DateOfIssue.Month == month);
             }
 
             // Get by quarter
-            if (type == "q")
-            {
-                var quarter = Helpers.Helpers.GetQuarter(month);
+            if (type == "q") {
+                var quarter = Helpers.Helpers.GetQuarter (month);
 
-                if (quarter >= 1 && quarter <= 4)
-                {
-                    switch (quarter)
-                    {
+                if (quarter >= 1 && quarter <= 4) {
+                    switch (quarter) {
                         case 1:
-                            query = query.Where(
-                              o => o.DateOfIssue.Month >= 1 && o.DateOfIssue.Month <= 3
+                            query = query.Where (
+                                o => o.DateOfIssue.Month >= 1 && o.DateOfIssue.Month <= 3
                             );
                             break;
 
                         case 2:
-                            query = query.Where(
-                              o => o.DateOfIssue.Month >= 4 && o.DateOfIssue.Month <= 6
+                            query = query.Where (
+                                o => o.DateOfIssue.Month >= 4 && o.DateOfIssue.Month <= 6
                             );
                             break;
 
                         case 3:
-                            query = query.Where(
-                              o => o.DateOfIssue.Month >= 7 && o.DateOfIssue.Month <= 9
+                            query = query.Where (
+                                o => o.DateOfIssue.Month >= 7 && o.DateOfIssue.Month <= 9
                             );
                             break;
 
                         case 4:
-                            query = query.Where(
-                              o => o.DateOfIssue.Month >= 10 && o.DateOfIssue.Month <= 12
+                            query = query.Where (
+                                o => o.DateOfIssue.Month >= 10 && o.DateOfIssue.Month <= 12
                             );
                             break;
 
@@ -497,14 +435,13 @@ namespace Shine.Data.Infrastructures.Repositories
 
             }
 
-            var orders = await query.ProjectToType<OrderValueDto>()
-              .OrderByDescending(o => o.Value)
-              .Take(numRows)
-              .ToListAsync();
+            var orders = await query.ProjectToType<OrderValueDto> ()
+                .OrderByDescending (o => o.Value)
+                .Take (numRows)
+                .ToListAsync ();
 
             return orders;
         }
-
 
         #endregion
 

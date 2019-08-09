@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
-import { OrderAndCostPerMonth } from 'src/app/_shared/intefaces/buy/order/report/order-and-cost-per-month';
-import { OrderAndCostPerQuarter } from 'src/app/_shared/intefaces/buy/order/report/order-and-cost-per-quarter';
+import { OrderAndCostPerMonth } from 'src/app/_shared/intefaces/public/order/order-and-cost-per-month';
+import { OrderAndCostPerQuarter } from 'src/app/_shared/intefaces/public/order/order-and-cost-per-quarter';
 import { OrderBuyService } from 'src/app/_shared/services/buy/order-buy.service';
 
 @Component({

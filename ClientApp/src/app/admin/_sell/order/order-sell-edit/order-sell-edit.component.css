@@ -1,0 +1,93 @@
+.main {
+  padding: 0;
+  min-height: calc(100vh - 64px);
+}
+
+.main .title-group {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 200px;
+  background: white;
+  z-index: 1;
+}
+
+.main .main-container .order mat-card.order-card mat-card-header {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  text-align: right;
+}
+
+.main .main-container .order mat-card.order-card mat-card-content .due .content {
+  padding-left: 2rem;
+}
+
+.main .main-container .order mat-card.order-card mat-card-content .customer img.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  vertical-align: middle;
+}
+
+.main .main-container .order mat-card.order-card mat-card-content .customer .content {
+  padding-left: 2rem;
+}
+
+.main .main-container .order mat-card.order-card mat-card-content .customer .content mat-icon {
+  vertical-align: middle;
+}
+
+.main .main-container .order mat-card.order-card mat-card-content .purchaser img.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  vertical-align: middle;
+}
+
+.main .main-container .order mat-card.order-card mat-card-content .purchaser .content {
+  padding-left: 2rem;
+}
+
+.main .main-container .order mat-card.order-card mat-card-content .purchaser .content mat-icon {
+  vertical-align: middle;
+}
+
+.main .main-container .order mat-card.order-card mat-card-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main .main-container .childs .value .content {
+  padding-left: 2rem;
+}
+
+.main .main-container .childs .value .content mat-expansion-panel table.value-table {
+  width: 100%;
+}
+
+.main .main-container .childs .cost .content {
+  padding-left: 2rem;
+}
+
+.main .main-container .childs .cost .content mat-expansion-panel table.cost-table {
+  width: 100%;
+}
+
+.main .main-container .childs .payment .content {
+  padding-left: 2rem;
+}
+
+.main .main-container .childs .payment .content mat-expansion-panel table.payment-table {
+  width: 100%;
+}
+
+.main .main-container .childs .debt .content {
+  padding-left: 2rem;
+}
+/*# sourceMappingURL=order-sell-edit.component.css.map */

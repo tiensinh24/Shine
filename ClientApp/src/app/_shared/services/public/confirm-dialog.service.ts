@@ -1,10 +1,10 @@
 import { Injectable, NgModule } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogSharedModule } from '../../components/confirm-dialog/confirm-dialog-shared.module';
+import { ConfirmDialogModule } from '../../components/confirm-dialog/confirm-dialog.module';
 
 @NgModule({
-  imports: [ConfirmDialogSharedModule]
+  imports: [ConfirmDialogModule]
 })
 
 

@@ -216,12 +216,14 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
         tax: lineItem.tax,
         rate: lineItem.rate,
         unit: lineItem.unit,
+        orderMode: true,
         edit: true
       };
     } else {
       dialogConfig.data = {
         orderId: this.order.orderId,
         supplierId: this.order.personId,
+        orderMode: true,
         edit: false
       };
     }
@@ -250,7 +252,7 @@ export class OrderBuyEditComponent implements OnInit, OnDestroy {
             );
             this.order.products.splice(index, 1, res);
 
-            this.snackBar.open("Line item has been udpated", "Success");
+            this.snackBar.open("Line item has been updated", "Success");
           }
 
           // Refresh mat-table data
