@@ -8,7 +8,12 @@ import {
 } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { CustomerSelect } from "src/app/_shared/intefaces/sell/customer/customer-select";
-import { FormGroup, FormBuilder, Validators, AbstractControl } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 import { EmployeeSelect } from "src/app/_shared/intefaces/public/employee-select";
 import { Subscription, merge, fromEvent, of } from "rxjs";
 import { OrderSellService } from "src/app/_shared/services/sell/order-sell.service";
@@ -21,6 +26,7 @@ import {
   catchError
 } from "rxjs/operators";
 import { OrderSell } from "src/app/_shared/intefaces/sell/order/order-sell";
+import { CustomerService } from "src/app/_shared/services/sell/customer.service";
 
 @Component({
   selector: "app-order-sell-edit-dialog",
@@ -38,6 +44,9 @@ export class OrderSellEditDialogComponent implements OnInit, OnDestroy {
   filteredEmployees: EmployeeSelect[];
   @ViewChild("employeeInput", { static: true }) employeeInput: ElementRef;
 
+  // Customer
+  customers: CustomerSelect[];
+
   // Star rating
   rating: number;
 
@@ -47,6 +56,7 @@ export class OrderSellEditDialogComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private orderSellService: OrderSellService,
     private employeeService: EmployeeService,
+    private customerService: CustomerService,
     private dialogRef: MatDialogRef<OrderSellEditDialogComponent>,
     // Inject data from parent component
     @Inject(MAT_DIALOG_DATA) public parentData
@@ -67,6 +77,7 @@ export class OrderSellEditDialogComponent implements OnInit, OnDestroy {
     this.updateForm();
 
     this.getEmployeesSelect();
+    this.getCustomersSelect();
 
     // Filter employee autocomplete
     merge(
@@ -97,12 +108,22 @@ export class OrderSellEditDialogComponent implements OnInit, OnDestroy {
     );
   }
 
+  getCustomersSelect() {
+    this.sub$.add(
+      this.customerService
+        .getCustomersSelect()
+        .subscribe((res: CustomerSelect[]) => {
+          this.customers = res;
+        })
+    );
+  }
+
   createForm() {
     this.formGroup = this.fb.group({
       orderNumber: ["", Validators.required],
       dateOfIssue: ["", Validators.required],
       timeForPayment: ["", Validators.required],
-      customerName: [""],
+      customerId: [""],
       employee: [""],
       rating: [0]
     });
@@ -115,7 +136,7 @@ export class OrderSellEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: this.parentData.orderNumber,
       dateOfIssue: this.parentData.dateOfIssue,
       timeForPayment: this.parentData.timeForPayment,
-      customerName: this.parentData.customerName,
+      customerId: this.parentData.personId,
       employee: <EmployeeSelect>{
         employeeId: this.parentData.employeeId,
         fullName: this.parentData.employeeName
@@ -130,7 +151,7 @@ export class OrderSellEditDialogComponent implements OnInit, OnDestroy {
       orderNumber: this.formGroup.value.orderNumber,
       dateOfIssue: this.formGroup.value.dateOfIssue,
       timeForPayment: this.formGroup.value.timeForPayment,
-      personId: this.parentData.personId,
+      personId: this.formGroup.value.customerId,
       employeeId: this.formGroup.value.employee.employeeId,
       rating: this.formGroup.value.rating
     };

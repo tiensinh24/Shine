@@ -93,7 +93,15 @@
     <!-- PersonId -->
     <mat-form-field appearance="outline">
       <mat-label>Customer</mat-label>
-      <input matInput formControlName="customerName" />
+
+      <mat-select formControlName="customerId" placeholder="Select customer">
+        <mat-option
+          *ngFor="let customer of customers"
+          [value]="customer.personId"
+        >
+          {{ customer.fullName }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </form>
 </mat-dialog-content>

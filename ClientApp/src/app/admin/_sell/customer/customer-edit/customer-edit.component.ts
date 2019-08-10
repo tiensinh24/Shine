@@ -85,7 +85,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   getCustomer(customerId: number) {
     this.sub$.add(
       this.customerService
-        .getCustomer(customerId)
+        .getCustomerDetail(customerId)
         .subscribe((res: CustomerDetail) => {
           this.customer = res;
 

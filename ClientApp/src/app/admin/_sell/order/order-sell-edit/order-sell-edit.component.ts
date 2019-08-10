@@ -20,6 +20,8 @@ import { EmployeeList } from "src/app/_shared/intefaces/public/employee-list";
 import { OrderProductsEditDialogComponent } from "src/app/_shared/components/order-products-edit-dialog/order-products-edit-dialog.component";
 import { CostEditDialogComponent } from "src/app/_shared/components/cost-edit-dialog/cost-edit-dialog.component";
 import { PaymentEditDialogComponent } from "src/app/_shared/components/payment-edit-dialog/payment-edit-dialog.component";
+import { CustomerService } from "src/app/_shared/services/sell/customer.service";
+import { CustomerList } from "src/app/_shared/intefaces/sell/customer/customer-list";
 
 @Component({
   selector: "app-order-sell-edit",
@@ -83,6 +85,7 @@ export class OrderSellEditComponent implements OnInit, OnDestroy {
     private costService: CostService,
     private paymentService: PaymentService,
     private employeeService: EmployeeService,
+    private customerService: CustomerService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
@@ -169,13 +172,18 @@ export class OrderSellEditComponent implements OnInit, OnDestroy {
     this.order.orderNumber = order.orderNumber;
     this.order.dateOfIssue = order.dateOfIssue;
     this.order.timeForPayment = order.timeForPayment;
-    this.order.rating = order.rating;
-    this.order.personId = order.personId;
+    this.order.rating = order.rating;    
 
     if (this.order.employeeId !== order.employeeId) {
       this.order.employeeId = order.employeeId;
 
       this.refreshEmployee(order.employeeId);
+    }
+
+    if (this.order.personId !== order.personId) {
+      this.order.personId = order.personId;
+
+      this.refreshCustomer(order.personId);
     }
   }
 
@@ -186,6 +194,18 @@ export class OrderSellEditComponent implements OnInit, OnDestroy {
         .subscribe((res: EmployeeList) => {
           if (res) {
             this.order.employee = res;
+          }
+        })
+    );
+  }
+
+  private refreshCustomer(personId: number) {
+    this.sub$.add(
+      this.customerService
+        .getCustomer(personId)
+        .subscribe((res: CustomerList) => {
+          if (res) {
+            this.order.customer = res;
           }
         })
     );

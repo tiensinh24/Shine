@@ -46,13 +46,24 @@ namespace Shine.Controllers {
             return new Paged<CustomerListDto> (query);
         }
 
-        [HttpGet ("{customerId}")]
+        [HttpGet ("{customerId}/detail")]
         [ProducesResponseType (StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CustomerDetailDto>> GetCustomer (int customerId) {
-            var customer = await _repository.GetCustomerAsync (customerId);
+        public async Task<ActionResult<CustomerDetailDto>> GetCustomerDetail (int customerId) {
+            var customer = await _repository.GetCustomerDetailAsync (customerId);
 
             if (customer == null) {
                 return NotFound ();
+            }
+
+            return customer;
+        }
+
+        [HttpGet("{customerId}")]
+        public async Task<ActionResult<CustomerListDto>> GetCustomer(int customerId) {
+            var customer = await _repository.GetCustomerAsync(customerId);
+
+            if (customer == null) {
+                return NotFound();
             }
 
             return customer;
@@ -68,7 +79,7 @@ namespace Shine.Controllers {
             await _repository.AddCustomerAsync (customer);
             await _repository.CommitAsync ();
 
-            return CreatedAtAction (nameof (GetCustomer),
+            return CreatedAtAction (nameof (GetCustomerDetail),
                 new { id = customer.PersonId },
                 customer.Adapt<CustomerDto> ());
 

@@ -67,11 +67,11 @@ namespace Shine.Data.Dto._Mapster {
                 )
                 .Map (
                     dest => dest.OrderTotal,
-                    src => src.ProductOrders.Sum (p => p.Price * p.Quantity * (1 + p.Tax))
+                    src => src.ProductOrders.Any () ? src.ProductOrders.Sum (p => p.Price * p.Quantity * (1 + p.Tax)) : 0
                 )
                 .Map (
                     dest => dest.PaymentTotal,
-                    src => src.Payments.Sum (p => p.Amount)
+                    src => src.Payments.Any () ? src.Payments.Sum (p => p.Amount) : 0
                 )
                 .Map (
                     dest => dest.Products,

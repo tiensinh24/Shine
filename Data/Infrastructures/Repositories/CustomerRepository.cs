@@ -97,15 +97,24 @@ namespace Shine.Data.Infrastructures.Repositories {
 
         }
 
-        public async Task<CustomerDetailDto> GetCustomerAsync (int customerId) {
+        public async Task<CustomerDetailDto> GetCustomerDetailAsync (int customerId) {
             var query = await _repository
                 .AsNoTracking ()
                 .Include (c => c.Country)
                 .Include (c => c.Photos)
                 .Include (c => c.Orders)
-                .FirstOrDefaultAsync (s => s.PersonId == customerId);
+                .FirstOrDefaultAsync (c => c.PersonId == customerId);
 
             return query.Adapt<CustomerDetailDto> ();
+        }
+
+        public async Task<CustomerListDto> GetCustomerAsync(int customerId) {
+            var query = await _repository
+                .AsNoTracking()
+                .ProjectToType<CustomerListDto>()
+                .FirstOrDefaultAsync(c => c.PersonId == customerId);
+
+            return query;
         }
 
         #endregion

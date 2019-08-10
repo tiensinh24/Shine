@@ -16,7 +16,9 @@ namespace Shine.Controllers.Interfaces {
         Task<ActionResult<Paged<CustomerListDto>>> GetPagedCustomers (
             [FromQuery] PagingParams pagingParams, [FromQuery] SortParams sortParams, string filter);
 
-        Task<ActionResult<CustomerDetailDto>> GetCustomer (int customerId);
+        Task<ActionResult<CustomerDetailDto>> GetCustomerDetail (int customerId);
+
+        Task<ActionResult<CustomerListDto>> GetCustomer(int customerId);
         #endregion
 
         #region Actions

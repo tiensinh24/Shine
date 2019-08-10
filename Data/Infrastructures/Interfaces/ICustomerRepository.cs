@@ -16,7 +16,9 @@ namespace Shine.Data.Infrastructures.Interfaces
         Task<PagedList<CustomerListDto>> GetPagedCustomersAsync(
             PagingParams pagingParams, SortParams sortParams, string filter);
 
-        Task<CustomerDetailDto> GetCustomerAsync(int customerId);
+        Task<CustomerDetailDto> GetCustomerDetailAsync(int customerId);
+
+        Task<CustomerListDto> GetCustomerAsync(int customerId);
 
         #endregion
 
